@@ -1,0 +1,21 @@
+:root {
+    --bg-orange: #FF7A00;
+    --bg-violet: #9327FF; 
+    --bg-coral: #FF745E;
+    --bg-gold: #FFC701; 
+    --bg-lemon: #FFE62B;
+    --bg-red: #FF4646;
+    --bg-blue: #0038FF; 
+    --bg-peach: #FFA35E; 
+    --bg-cyan: #00BEE8; 
+    --bg-pink: #FF5EB3; 
+    --bg-indigo: #6E52FF;
+    --bg-mint: #1FD7C1; 
+    --bg-magenta: #FC71FF;
+    --bg-lime: #C3FF2B; 
+    --bg-amber: #FFBB2B; 
+    --btn-bg-default: #2A3647;
+    --btn-bg-hover: #29ABE2;
+    --btn-bg-active: #091931;
+    --btn-menu-bg-hover:#2A3D59;
+}
