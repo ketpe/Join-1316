@@ -30,10 +30,36 @@
 }
 
 .summary-img {
-    content: url("../assets/summery-icon.svg");
+    content: url("../assets/summary-icon.svg");
 }
 
+.nav-desktop-btn:hover .summary-img:hover {
+    content: url("../assets/summary-icon-hover.svg");
+}
 
+.add-task-img {
+    content: url("../assets/add-task-icon.svg");
+}
+
+.nav-desktop-btn:hover .add-task-img {
+    content: url("../assets/add-task-icon-hover.svg");
+}
+
+.board-img {
+    content: url("../assets/board-icon.svg");
+}
+
+.nav-desktop-btn:hover .board-img {
+    content: url("../assets/board-icon-hover.svg");
+}
+
+.contact-img {
+    content: url("../assets/contacts-icon.svg");
+}
+
+.nav-desktop-btn:hover .contact-img {
+    content: url("../assets/contacts-icon-hover.svg");
+}
 
 .nav-desktop-btn div p {
     margin-left: 8px;
