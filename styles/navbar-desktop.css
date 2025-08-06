@@ -29,11 +29,21 @@
     justify-content: center;
 }
 
+.nav-desktop-btn img {
+    width: 34px;
+    object-fit: contain;
+}
+
+.nav-desktop-btn:hover img:hover {
+    width: 34px !important;
+    object-fit: contain;
+}
+
 .summary-img {
     content: url("../assets/summary-icon.svg");
 }
 
-.nav-desktop-btn:hover .summary-img:hover {
+.nav-desktop-btn:hover .summary-img {
     content: url("../assets/summary-icon-hover.svg");
 }
 
@@ -72,10 +82,6 @@
     background-color: var(--btn-menu-bg-hover);
     color: white;
 
-}
-
-.nav-desktop-btn:hover .summary-img:hover {
-    content: url("../assets/summery-icon-hover.svg");
 }
 
 
