@@ -1,5 +1,6 @@
 function init() {
     includeHtml("navbar", "navbar-desktop.html");
+    includeHtml("header", "header-desktop.html");
 }
 
 function includeHtml(target, file) {
