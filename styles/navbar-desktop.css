@@ -70,7 +70,7 @@
     width: 70px;
     font-size: 16px;
     font-weight: 400;
-    
+    font-family: 'Inter';
 }
 
 .nav-desktop-btn:hover {
@@ -98,5 +98,11 @@
 }
 
 .compliance-links a {
+    font-family: "Inter";
     color: var(--btn-compliance-links-font-color);
+}
+
+.compliance-links a:hover{
+    color: var(--btn-bg-hover);
+    font-weight: 700;
 }
