@@ -1,14 +1,97 @@
-.login-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;    
-    justify-content: center;
-    height: 100vh;
+.login-page{
+    background-color: var(--default-bg-color);
+}
+
+.login-main{
     margin-left: auto;
     margin-right: auto;
+    max-width: 1920px;
+    height: 100vh;
+   
+}
+
+.login-join-logo {
+    margin-top: 80px;
+    margin-left: 77px;
+    height: 121px;
+    width: 100px;
+    position: absolute;
+    background-image: url('../assets/logo-for-Favicon.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    animation: moveLogo 450ms ease-in;
+    z-index: 1000;
+    /* display: none; */
+}
+
+.login-section {
+    animation: startup 500ms ease-in;
+}
+
+.login-header {
+    padding-right: 64px;
+    padding-top: 64px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
 }
 
 
-.login-form{
+.login-container {
+    height: calc(100vh - (114px + 64px));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+   
+}
+
+.login-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 32px;
+}
+
+
+.login-form {
+    background-color: white;
+    height: 450px;
+    width: 650px;
+    margin-bottom: 80px;
+    border-radius: 30px;
+    padding: 48px 115px;
+}
+
+@keyframes startup {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes moveLogo{
+    0% {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: scale(2.74);
+    }
+
+    100% {
+        /* margin-top: 80px;
+        margin-left: 77px; */
+        top: 80px;
+        left: 77px;
+        transform: scale(1);
+    }
 
 }
