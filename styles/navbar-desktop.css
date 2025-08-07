@@ -24,54 +24,47 @@
 }
 
 .nav-desktop-btn div {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
-.nav-desktop-btn img {
-    width: 34px;
-    object-fit: contain;
-}
-
-.nav-desktop-btn:hover img:hover {
-    width: 34px !important;
-    object-fit: contain;
-}
 
 .summary-img {
-    content: url("../assets/summary-icon.svg");
+    background-image: url("../assets/summary-icon.svg");
 }
 
 .nav-desktop-btn:hover .summary-img {
-    content: url("../assets/summary-icon-hover.svg");
+    background-image: url("../assets/summary-icon-hover.svg");
 }
 
 .add-task-img {
-    content: url("../assets/add-task-icon.svg");
+    background-image: url("../assets/add-task-icon.svg");
 }
 
 .nav-desktop-btn:hover .add-task-img {
-    content: url("../assets/add-task-icon-hover.svg");
+    background-image: url("../assets/add-task-icon-hover.svg");
 }
 
 .board-img {
-    content: url("../assets/board-icon.svg");
+    background-image: url("../assets/board-icon.svg");
 }
 
 .nav-desktop-btn:hover .board-img {
-    content: url("../assets/board-icon-hover.svg");
+    background-image: url("../assets/board-icon-hover.svg");
 }
 
 .contact-img {
-    content: url("../assets/contacts-icon.svg");
+    background-image: url("../assets/contacts-icon.svg");
 }
 
 .nav-desktop-btn:hover .contact-img {
-    content: url("../assets/contacts-icon-hover.svg");
+    background-image: url("../assets/contacts-icon-hover.svg");
 }
 
-.nav-desktop-btn div p {
+.nav-desktop-btn p {
     margin-left: 8px;
     text-align: left;
     width: 60px;
