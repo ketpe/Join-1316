@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Inter", sans-serif;
+    src: url("./fonts/Inter/Inter-VariableFont_opsz_wght.ttf");
+}
+
 body {
     margin: 0;
     box-sizing: border-box;
@@ -11,3 +16,4 @@ a {
 .d-none {
     display: none;
 }
+
