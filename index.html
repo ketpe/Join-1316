@@ -8,14 +8,34 @@
     <link rel="shortcut icon" href="./assets/logo-for-Favicon.svg" type="image/x-icon">
     <link rel="stylesheet" href="./styles/colors.css">
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./styles/navbar-desktop.css">
+    <link rel="stylesheet" href="./styles/login.css">
 </head>
 
-<body onload="init()">
+<body>
 
-    <div id="navbar"></div>
+    <div class="login-overlay">
 
-    <script src="./script.js"></script>
+    </div>
+
+    <main class="login-container">
+        <form class="login-form">
+            <h1>Log in</h1>
+            <input type="text" id="username" placeholder="Benutzername" required>
+            <input type="password" id="password" placeholder="Passwort" required>
+            <p id="error-message"></p>
+
+            <div>
+                <button type="submit">Anmelden</button>
+                <button type="button">Guest Log in</button>
+            </div>
+
+
+        </form>
+    </main>
+
+
+
+    <script src="./scripts/login.js"></script>
 </body>
 
 </html>
