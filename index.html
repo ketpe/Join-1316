@@ -11,26 +11,48 @@
     <link rel="stylesheet" href="./styles/login.css">
 </head>
 
-<body>
+<body class="login-page">
 
-    <div class="login-overlay">
+    
 
-    </div>
+    <main class="login-main">
 
-    <main class="login-container">
-        <form class="login-form">
-            <h1>Log in</h1>
-            <input type="text" id="username" placeholder="Benutzername" required>
-            <input type="password" id="password" placeholder="Passwort" required>
-            <p id="error-message"></p>
+        <div class="login-join-logo" aria-label="The logo of application "></div>
 
-            <div>
-                <button type="submit">Anmelden</button>
-                <button type="button">Guest Log in</button>
-            </div>
+        <section class="login-section" aria-label="Login section">
+            <header class="login-header">
+                <p>Not a Join user?</p>
+                <button type="button">Sign up</button>
+            </header>
+
+            <section aria-label="form section" class="login-container">
+                <form class="login-form">
+                    <h1>Log in</h1>
+                    <input type="text" id="username" placeholder="Benutzername" required>
+                    <input type="password" id="password" placeholder="Passwort" required>
+                    <p id="error-message"></p>
+
+                    <div>
+                        <button type="submit">Anmelden</button>
+                        <button type="button">Guest Log in</button>
+                    </div>
 
 
-        </form>
+                </form>
+
+            </section>
+
+
+            <footer>
+                <div class="login-footer">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Legal notice</a>
+                </div>
+            </footer>
+        </section>
+
+
+
     </main>
 
 
