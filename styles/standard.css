@@ -1,9 +1,10 @@
 .btn{
-    padding: 15px 24px;
+    height: 48px;
+    padding: 0 24px;
     border-radius: 8px;
     border: none;
     font-family: 'Inter';
-    font-weight: 400;
+    font-weight: 700;
     font-size: 16px;
     color: white;
     cursor: pointer;
@@ -12,6 +13,11 @@
 
 .btn-fill{
     background-color: var(--bg-default);
+}
+
+.btn-fill-sm{
+    padding: 15px 16px !important;
+    font-size: 14px;
 }
 
 .btn-fill:hover{

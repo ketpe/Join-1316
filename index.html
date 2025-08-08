@@ -14,26 +14,62 @@
 
 <body class="login-page">
 
-    
+
 
     <main class="login-main">
 
-        <div class="login-join-logo" aria-label="The logo of application "></div>
+        <div class="login-join-logo" aria-label="Join Application Logo" role="img"></div>
 
-        <section class="login-section" aria-label="Login section">
+        <section class="login-section" aria-labelledby="login-section-title">
             <header class="login-header">
                 <p>Not a Join user?</p>
-                <button type="button">Sign up</button>
+                <button type="button" class="btn btn-fill btn-fill-sm" aria-label="Sign up if you are not a user">Sign up</button>
             </header>
 
-            <section aria-label="form section" class="login-container">
-                <form class="login-form">
+            <section aria-label="form section" class="login-container" aria-labelledby="login-form-title">
+                <form class="login-form" aria-describedby="login-error-text">
                     <h1>Log in</h1>
-                    <div class="login-h1-line"></div>
-                    <input type="text" id="username" class="login-input input-mail" placeholder="Email" required>
-                    <input type="password" id="password" class="login-input" placeholder="Password" required>
+                    <div class="login-h1-line" aria-hidden="true"></div>
 
-                    <div>
+                    <div class="login-input-field-container">
+                        <label for="username" class="visually-hidden">Email</label>
+                        <input 
+                            type="email" 
+                            id="username" 
+                            class="login-input input-mail" 
+                            placeholder="Email" 
+                            autocomplete="email"
+                            >
+                        <label for="password" class="visually-hidden">Password</label>
+
+                        <div class="login-password-container">
+                            <input 
+                                type="password" 
+                                id="password" 
+                                class="login-input login-password" 
+                                placeholder="Password" 
+                                autocomplete="current-password"
+                            >
+
+                            <button type="button" 
+                                class="login-toggle-password login-password-lock" role="img"
+                                aria-labelledby="Password visibility toggle button" 
+                                alt="Toggle password visibility"
+                                ></button>
+
+                        </div>
+
+
+                        
+
+                        <span class="login-error-text-container">
+                            <p id="login-error-text" role="alert" hidden>
+                                Check your email and password. Please try again.
+                            </p>
+                        </span>
+                    </div>
+
+                    <div class="login-form-buttons">
                         <button type="submit" class="btn btn-fill">Log in</button>
                         <button type="button" class="btn btn-outline">Guest Log in</button>
                     </div>
@@ -46,8 +82,8 @@
 
             <footer>
                 <div class="login-footer">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Legal notice</a>
+                    <a href="#" aria-label="Read our Privacy Policy">Privacy Policy</a>
+                    <a href="#" aria-label="Read our Legal Notice">Legal notice</a>
                 </div>
             </footer>
         </section>
