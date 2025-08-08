@@ -18,6 +18,24 @@ a {
 }
 
 .visually-hidden {
-  position: absolute;
-  left: -9999px;
+    position: absolute;
+    left: -9999px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 80px;
+    margin-left: 232px;
+    box-sizing: border-box;
+}
+
+.main-container {
+    position: relative;
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
 }
