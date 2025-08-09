@@ -19,11 +19,15 @@
 }
 
 .summary-subtitle {
-    margin: 0;
-    font-size: 27 px;
+    font-family: Inter;
     font-weight: 400;
-    font-family: 'Inter';
-    font-style: regular;
+    font-style: Regular;
+    font-size: 27px;
+}
+
+.summary-content {
+    display: flex;
+    flex-direction: row
 }
 
 .summary-user {
@@ -41,11 +45,10 @@
 
 .task-actions {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    width: 560px;
+    height: 168px;
 }
 
 .btn-task {
@@ -54,6 +57,25 @@
     border: none;
     padding: 38px 19px 38px 19px;
     gap: 18px;
+
+}
+
+.btn-task {
+    width: 264px;
+    height: 168;
+    left: 296px;
+    opacity: 1;
+    gap: 18px;
+    padding: 38px 58px 38px 58px;
+    border-radius: 30px;
+
+}
+
+.btn-task img {
+    gap: 10px;
+    height: 69px;
+    width: 69px;
+
 }
 
 .quantity-task {
@@ -82,6 +104,20 @@
 
 }
 
+.btn-urgent {
+    width: 560px;
+    height: 168px;
+    top: 196px;
+    opacity: 1;
+    gap: 61px;
+    padding-top: 28px;
+    padding-right: 48px;
+    padding-bottom: 28px;
+    padding-left: 48px;
+    border-radius: 30px;
+
+}
+
 .urgent-date-container {
     display: flex;
     flex-direction: column;
@@ -89,11 +125,14 @@
 }
 
 .urgent-display {
+    width: 130px;
+    height: 96px;
+    opacity: 1;
+    gap: 18px;
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 18px;
+
 }
 
 .urgent-display img {
@@ -146,4 +185,31 @@
     font-family: Inter;
     font-weight: 400;
     font-size: 20px;
+}
+
+.personal-greets {
+    position: absolute;
+    width: 385;
+    height: 136px;
+    top: calc(547.5px - var(--header-height));
+    left: calc(968px - var(--navbar-width));
+    opacity: 1;
+    gap: 3px;
+}
+
+.headline-greet {
+    margin: 0;
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 47px;
+    color: var(--bg-default);
+}
+
+.personal-greets-user {
+    margin: 0;
+    font-family: Inter;
+    font-weight: 700;
+    font-size: 64px;
+    color: var(--btn-bg-hover);
 }
