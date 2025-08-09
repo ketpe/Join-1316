@@ -1,0 +1,25 @@
+.summary-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    position: absolute;
+    top: calc(206px - 96px);
+    left: calc(328px - 232px);
+}
+
+.summary-title {
+    font-size: 61px;
+    font-weight: 700;
+    font-family: 'Inter';
+    font-style: bold;
+}
+
+
+.summary-subtitle {
+    font-size: 27 px;
+    font-weight: 400;
+    font-family: 'Inter';
+    font-style: regular;
+}
