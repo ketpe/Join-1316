@@ -274,7 +274,7 @@
     position: absolute;
     left:64px;
     top: 120px;
-    width: 32px;
+    width: 33px;
     height: 32px;
     background-repeat: no-repeat;
     background-position: center center;
@@ -284,8 +284,8 @@
 }
 
 .signup-arrow-left:hover{
-    left: 60px;
-    width: 36px;
+    left: 58px;
+    width: 38px;
     background-image: url("../assets/arrow-left-variant1.svg");
 }
 
