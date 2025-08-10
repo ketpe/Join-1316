@@ -8,35 +8,33 @@
     <link rel="shortcut icon" href="./assets/logo-for-Favicon.svg" type="image/x-icon">
     <link rel="stylesheet" href="./styles/colors.css">
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./styles/login.css">
+    <link rel="stylesheet" href="./styles/login-signup.css">
     <link rel="stylesheet" href="./styles/standard.css">
 </head>
 
-<body class="login-page">
+<body class="login-signup-page">
 
+    <main class="login-signup-main">
 
-
-    <main class="login-main">
-
-        <div class="login-join-logo" aria-label="Join Application Logo" role="img"></div>
+        <div class="login-signup-logo logo-for-login" aria-label="Join Application Logo" role="img"></div>
 
         <section class="login-section" aria-labelledby="login-section-title">
-            <header class="login-header">
+            <header class="login-sigup-header">
                 <p>Not a Join user?</p>
-                <button type="button" class="btn btn-fill btn-fill-sm" aria-label="Sign up if you are not a user">Sign up</button>
+                <button type="button" class="btn btn-fill btn-fill-sm" aria-label="Sign up if you are not a user" onclick="navigateToSignUp()">Sign up</button>
             </header>
 
-            <section aria-label="form section" class="login-container" aria-labelledby="login-form-title">
-                <form class="login-form" aria-describedby="login-error-text">
+            <section aria-label="form section" class="login-signup-container" aria-labelledby="login-form-title">
+                <form class="login-signup-form form-for-login" aria-describedby="login-error-text">
                     <h1>Log in</h1>
-                    <div class="login-h1-line" aria-hidden="true"></div>
+                    <div class="login-signup-h1-line" aria-hidden="true"></div>
 
-                    <div class="login-input-field-container">
+                    <div class="login-signup-input-field-container">
                         <label for="username" class="visually-hidden">Email</label>
                         <input 
                             type="email" 
                             id="username" 
-                            class="login-input input-mail" 
+                            class="login-signup-input input-mail" 
                             placeholder="Email" 
                             autocomplete="email"
                             >
@@ -46,7 +44,7 @@
                             <input 
                                 type="password" 
                                 id="password" 
-                                class="login-input login-password" 
+                                class="login-signup-input login-password" 
                                 placeholder="Password" 
                                 autocomplete="current-password"
                             >
@@ -62,7 +60,7 @@
 
                         
 
-                        <span class="login-error-text-container">
+                        <span class="login-signup-error-text-container">
                             <p id="login-error-text" role="alert" hidden>
                                 Check your email and password. Please try again.
                             </p>
@@ -71,7 +69,7 @@
 
                     <div class="login-form-buttons">
                         <button type="submit" class="btn btn-fill">Log in</button>
-                        <button type="button" class="btn btn-outline">Guest Log in</button>
+                        <button type="button" class="btn btn-outline" onclick="navigateToSummaryGuest()">Guest Log in</button>
                     </div>
 
 
@@ -81,7 +79,7 @@
 
 
             <footer>
-                <div class="login-footer">
+                <div class="login-signup-footer">
                     <a href="#" aria-label="Read our Privacy Policy">Privacy Policy</a>
                     <a href="#" aria-label="Read our Legal Notice">Legal notice</a>
                 </div>
