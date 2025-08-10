@@ -3,12 +3,16 @@
 }
 
 .nav-desktop {
+    position: fixed;
+    top: 0;
+    left: 0;
     height: 100vh;
-    width: 232px;
+    width: var(--navbar-width);
     background-color: var(--bg-default);
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 300;
 }
 
 .nav-desktop-btn {

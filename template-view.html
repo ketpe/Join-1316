@@ -10,15 +10,21 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./styles/navbar-desktop.css">
     <link rel="stylesheet" href="./styles/header-desktop.css">
+    <link rel="stylesheet" href="./styles/summary-desktop.css">
+    <link rel="stylesheet" href="./styles/sizes.css">
 </head>
 
 <body onload="init()">
-    <div class="content">
-        <div id="navbar"></div>
-        <div id="header"></div>
-        <div id="kanban"></div>
+    <div class="page-wrapper">
+        <div class="content">
+            <div id="navbar"></div>
+            <main class="main-container">
+                <div id="header"></div>
+                <!-- Hier kann für jede View das div eingesetzt werden -->
+                <div id="kanban"></div>
+            </main>
+        </div>
     </div>
-
     <script src="./script.js"></script>
 </body>
 

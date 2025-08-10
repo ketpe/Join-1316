@@ -1,33 +1,35 @@
 .header-desktop {
     position: fixed;
     top: 0;
-    /* left: 0; */
-    width: calc(100vw - 232px);
+    left: 0;
+    width: 100vw;
+    height: var(--header-height);
     z-index: 200;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     align-items: center;
-    padding: 20px 40px 20px 348px;
-    /* padding-left: calc(348px - 232px); */
+    background: #fff;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
-
+    max-width: calc(1440px);
 }
 
-
 .header-headline {
+    position: absolute;
+    left: var(--header-position-left);
+    top: 50%;
+    transform: translateY(-50%);
     text-align: left;
     font-size: 20px;
     font-weight: 400;
     font-family: 'Inter';
+    margin: 0;
 }
 
 .help-profile-actions {
+    margin-left: auto;
+    margin-right: 40px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     gap: 16px;
-
 }
 
 .help-btn {
@@ -59,11 +61,4 @@
 .profil-btn:hover {
     background-color: var(--btn-profil-hover);
 
-}
-
-/* *FIXME - Test */
-.content {
-    display: flex;
-    max-width: 1440px;
-    /* margin: 0 auto; */
 }

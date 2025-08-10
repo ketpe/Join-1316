@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary</title>
+    <link rel="shortcut icon" href="./assets/logo-for-Favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./styles/colors.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./styles/navbar-desktop.css">
+    <link rel="stylesheet" href="./styles/header-desktop.css">
+    <link rel="stylesheet" href="./styles/summary-desktop.css">
+    <link rel="stylesheet" href="./styles/sizes.css">
+    <link rel="stylesheet" href="./styles/standard.css">
+</head>
+
+<body onload="init()">
+    <div class="page-wrapper">
+        <div class="content">
+            <div id="navbar"></div>
+            <main class="main-container">
+                <div id="header"></div>
+                <div id="summary">
+                    <header class="summary-header">
+                        <p class="summary-title">Join 360</p>
+                        <img class="headings-separator" src="./assets/headings-separator.svg" alt="Headings  separator"
+                            srcset="">
+                        <p class="summary-subtitle">Key Metrics at a Glance</p>
+                    </header>
+                    <articel class="summary-content">
+                        <section class="summary-user">
+                            <div class="task-actions">
+                                <button class="btn-task">
+                                    <div class="todo-icon"></div>
+                                    <div class="quantity-container">
+                                        <p class="quantity-task">1</p>
+                                        <p class="quantity-label-task">To-do</p>
+                                    </div>
+                                </button>
+                                <button class="btn-task">
+                                    <div class="done-icon"></div>
+                                    <div class="quantity-container">
+                                        <p class="quantity-task">1</p>
+                                        <p class="quantity-label-task">Done</p>
+                                    </div>
+                                </button>
+                            </div>
+                            <button class="btn-urgent">
+                                <section class="urgent-display">
+                                    <div class="urgent-icon"></div>
+                                    <div class="quantity-container">
+                                        <p class="quantity-task">1</p>
+                                        <p class="quantity-label-task">Urgent</p>
+                                    </div>
+                                </section>
+                                <img src="./assets/ugents-separator.svg" alt="">
+                                <div class="urgent-date-container">
+                                    <time class="urgent-time" datetime="2025-10-16">October 16, 2022</time>
+                                    <p class="urgent-time-underline">Upcoming Deadline</p>
+                                </div>
+                            </button>
+                            <section class="summary-tasks">
+                                <button class="btn-summary-tasks">
+                                    <p class="number-of-Tasks">5</p>
+                                    <p class="description-of-task">Tasks in Board</p>
+                                </button>
+                                <button class="btn-summary-tasks">
+                                    <p class="number-of-Tasks">2</p>
+                                    <p class="description-of-task">Tasks in Progress</p>
+                                </button>
+                                <button class="btn-summary-tasks">
+                                    <p class="number-of-Tasks">2</p>
+                                    <p class="description-of-task">Awaiting Feedback</p>
+                                </button>
+                            </section>
+                        </section>
+                        <section class="personal-greets">
+                            <p class="headline-greet">Good Morning,</p>
+                            <p class="personal-greets-user">Sofia Müller</p>
+                        </section>
+                    </articel>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+
+</html>
