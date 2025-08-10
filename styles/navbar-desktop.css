@@ -68,6 +68,10 @@
     background-image: url("../assets/contacts-icon-hover.svg");
 }
 
+.login-img{
+    background-image: url("../assets/login-icon.svg");
+}
+
 .nav-desktop-btn p {
     margin-left: 8px;
     text-align: left;
