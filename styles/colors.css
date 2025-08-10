@@ -22,7 +22,10 @@
     --btn-compliance-links-font-color: #A8A8A8;
     --btn-profil-hover: #0C2E621F;
     --default-bg-color: #f5f6f7;
-    --input-border-color:#D1D1D1;
+    --input-border-color: #D1D1D1;
     --input-error-color: #FF8190;
+    --bg-shadow-btn-task: #00000040;
+
+
 
 }
