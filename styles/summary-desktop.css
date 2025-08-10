@@ -59,25 +59,41 @@
     width: 264px;
     height: 168px;
     border-radius: 30px;
-    background: #f5f6f7;
+    background: --default-bg-color;
     align-items: center;
     justify-content: center;
+    transition: background-color 100ms ease-in-out, box-shadow 100ms ease-in-out;
 }
 
 .btn-task:hover {
-    background: var(--bg-default);
+    background-color: var(--bg-default);
+}
+
+.btn-task:active {
+    background-color: var(--default-bg-color);
+    box-shadow: 0px 4px 4px 0px var(--bg-shadow-btn-task);
+
 }
 
 .btn-task:hover .todo-icon {
     background-image: url('../assets/todo-icon-hover.svg');
 }
 
+.btn-task:active .todo-icon {
+    background-image: url('../assets/todo-icon.svg');
+}
+
+
 .btn-task:hover .quantity-task {
     color: #FFFFFF;
 }
 
+.btn-task:active .quantity-task {
+    color: inherit;
+}
+
 .btn-task:hover .quantity-label-task {
-    color: #FFFFFF;
+    color: inherit;
 }
 
 .todo-icon {
@@ -96,6 +112,10 @@
 
 .btn-task:hover .done-icon {
     background-image: url('../assets/done-icon-hover.svg');
+}
+
+.btn-task:active .done-icon {
+    background-image: url('../assets/done-icon.svg');
 }
 
 .quantity-task {
@@ -120,21 +140,35 @@
     gap: 61px;
     padding: 28px 48px;
     border-radius: 30px;
-    background: #f5f6f7;
+    background: --default-bg-color;
     align-items: center;
     justify-content: center;
+    transition: background-color 100ms ease-in-out, box-shadow 100ms ease-in-out;
 }
 
 .btn-urgent:hover {
     background: var(--bg-default);
 }
 
+.btn-urgent:active {
+    background: var(--default-bg-color);
+    box-shadow: 0px 4px 4px 0px var(--bg-shadow-btn-task);
+}
+
 .btn-urgent:hover .quantity-task {
     color: #FFFFFF;
 }
 
+.btn-urgent:active .quantity-task {
+    color: inherit;
+}
+
 .btn-urgent:hover .quantity-label-task {
     color: #FFFFFF;
+}
+
+.btn-urgent:active .quantity-label-task {
+    color: inherit;
 }
 
 .urgent-icon {
@@ -169,6 +203,10 @@
     color: #FFFFFF;
 }
 
+.btn-urgent:active .urgent-time {
+    color: inherit;
+}
+
 .urgent-time-underline {
     font-family: Inter;
     font-weight: 400;
@@ -177,6 +215,10 @@
 
 .btn-urgent:hover .urgent-time-underline {
     color: #FFFFFF;
+}
+
+.btn-urgent:active .urgent-time-underline {
+    color: inherit;
 }
 
 .summary-tasks {
@@ -201,18 +243,33 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    transition: background-color 100ms ease-in-out, box-shadow 100ms ease-in-out;
 }
 
 .btn-summary-tasks:hover {
     background: var(--bg-default);
 }
 
+.btn-summary-tasks:active {
+    background: inherit;
+    box-shadow: 0px 4px 4px 0px var(--bg-shadow-btn-task);
+}
+
 .btn-summary-tasks:hover .number-of-Tasks {
     color: #FFFFFF;
 }
 
+.btn-summary-tasks:active .number-of-Tasks {
+    color: inherit;
+}
+
+
 .btn-summary-tasks:hover .description-of-task {
     color: #FFFFFF;
+}
+
+.btn-summary-tasks:active .description-of-task {
+    color: inherit;
 }
 
 .number-of-Tasks {
