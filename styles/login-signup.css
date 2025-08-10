@@ -1,10 +1,10 @@
-.login-page {
+.login-signup-page {
     background-color: var(--default-bg-color);
     display: flex;
     justify-content: center;
 }
 
-.login-main {
+.login-signup-main {
     max-width: 1920px;
     width: 100%;
     height: 100vh; 
@@ -12,7 +12,7 @@
     margin: 0 auto; 
 }
 
-.login-join-logo {
+.login-signup-logo {
     position: absolute; 
     top: 80px;
     left: 77px;
@@ -22,24 +22,28 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-    animation: moveLogo 450ms ease-in;
     z-index: 1000;
 }
+
+.logo-for-login{
+    animation: moveLogo 450ms ease-in;
+}
+
 
 .login-section {
     animation: startup 500ms ease-in;
 }
 
-.login-header {
+.login-sigup-header {
     padding-right: 64px;
     padding-top: 64px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-
+    min-height: 48px;
 }
 
-.login-header p{
+.login-sigup-header p{
     font-family: 'Inter';
     font-size: 20px;
     font-weight: 400;
@@ -47,7 +51,7 @@
     margin-right: 35px;
 }
 
-.login-container {
+.login-signup-container {
     height: calc(100vh - (114px + 72px));
     display: flex;
     flex-direction: column;
@@ -58,7 +62,8 @@
     
 }
 
-.login-footer {
+
+.login-signup-footer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -66,20 +71,19 @@
     padding-bottom: 32px;
 }
 
-.login-footer a{
+.login-signup-footer a{
     font-family: "Inter";
     color: var(--btn-compliance-links-font-color);
 }
 
-.login-footer a:hover {
+.login-signup-footer a:hover {
     color: var(--btn-bg-hover);
     font-weight: 700;
 }
 
-.login-form {
+.login-signup-form {
+    position: relative;
     background-color: white;
-    height: 450px;
-    width: 650px;
     margin-bottom: 80px;
     border-radius: 30px;
     display: flex;
@@ -89,7 +93,17 @@
     box-shadow: 0px 0px 14px 3px rgba(0,0,0,0.05);
 }
 
-.login-form h1{
+.form-for-login{
+    height: 450px;
+    width: 650px;
+}
+
+.form-for-signup{
+    height: 598px;
+    width: 630px;
+}
+
+.login-signup-form h1{
     font-family: 'Inter';
     font-weight: 700;
     font-size: 61px;
@@ -97,21 +111,22 @@
     margin-bottom: 16px;
 }
 
-.login-h1-line{
+.login-signup-h1-line{
     height: 3px;
     width: 150px;
     background-color: var(--btn-bg-hover);
     margin-bottom: 20px;
 }
 
-.login-input-field-container{
+.login-signup-input-field-container{
     width: 422px;
     display: flex;
     flex-direction: column;
 }
 
-.login-input{
-    max-width: 100%;
+.login-signup-input{
+    width: 100%;
+    box-sizing: border-box;
     border: 1px solid var(--input-border-color);
     border-radius: 10px;
     padding: 12px 50px 12px 21px;
@@ -127,7 +142,11 @@
     background-image: url("../assets/mail-icon.svg");
 }
 
-.login-input::placeholder{
+.input-name{
+    background-image: url("../assets/person-icon.svg");
+}
+
+.login-signup-input::placeholder{
     font-family: 'Inter';
     font-size: 16px;
     font-weight: 400;
@@ -150,7 +169,7 @@
     border: none;
     position: absolute;
     top: 50%;
-    right: 20px;
+    right: 18px;
     transform: translateY(-50%);
     cursor: pointer;
     -webkit-user-select: none;
@@ -163,6 +182,7 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    background-color: transparent;
 }
 
 .login-password-visible-off {
@@ -172,6 +192,7 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    background-color: transparent;
 }
 
 .login-password-visible-on {
@@ -181,9 +202,10 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    background-color: transparent;
 }
 
-.login-error-text-container{
+.login-signup-error-text-container{
     height: 20px;
     width: 100%;
 
@@ -204,6 +226,68 @@
     margin-top: 16px;
 }
 
+.signup-confirm-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-confirm-container span{
+    margin-left: 12px;
+    font-family: 'Inter';
+    font-size: 16px;
+    font-style: regular;
+    font-weight: 400;
+    color: var(--btn-compliance-links-font-color);
+}
+
+.signup-confirm-container span a{
+    color: var(--btn-bg-hover);
+}
+
+.signup-confirm-button{
+    width: 16px;
+    height: 16px;
+    border: none;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    cursor: pointer;
+    background-color: white;
+}
+
+
+
+.signup-confirm-default{
+    background-image: url("../assets/signup-confirm-default.svg");
+}
+
+.signup-confirm-checked{
+    background-image: url("../assets/signup-confirm-checked.svg");
+}
+
+.signup-confirm-button:hover {
+    background-image: url("../assets/signup-confirm-checked.svg");
+}
+
+.signup-arrow-left{
+    position: absolute;
+    left:64px;
+    top: 120px;
+    width: 32px;
+    height: 32px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    cursor: pointer;
+    background-image: url("../assets/arrow-left-default.svg");
+}
+
+.signup-arrow-left:hover{
+    left: 60px;
+    width: 36px;
+    background-image: url("../assets/arrow-left-variant1.svg");
+}
 
 @keyframes startup {
     0% {

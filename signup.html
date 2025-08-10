@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <link rel="shortcut icon" href="./assets/logo-for-Favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./styles/colors.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./styles/login-signup.css">
+    <link rel="stylesheet" href="./styles/standard.css">
+</head>
+
+<body class="login-signup-page">
+    <main class="login-signup-main">
+        <div class="login-signup-logo" aria-label="Join Application Logo" role="img"></div>
+
+        <header class="login-sigup-header">
+            <button type="button" class="btn btn-fill btn-fill-sm" aria-label="Sign up success" hidden >You Signed Up
+                successfully</button>
+        </header>
+
+        <section aria-label="form section" class="login-signup-container" aria-labelledby="signup-form-title">
+
+            <form class="login-signup-form form-for-signup">
+
+                <div class="signup-arrow-left" aria-label="Arrow to navigate back to login" role="img" onclick="navigateToLogin()"></div>
+
+                <h1>Sign up</h1>
+                <div class="login-signup-h1-line" aria-hidden="true"></div>
+
+                <div class="login-signup-input-field-container">
+
+                    <label for="contact-name" class="visually-hidden">Contact Name</label>
+                    <input type="text" id="contact-name" class="login-signup-input input-name" placeholder="Name">
+
+                    <label for="username" class="visually-hidden">Username</label>
+                    <input type="email" id="username" class="login-signup-input input-mail" placeholder="Email">
+
+                    <label for="password" class="visually-hidden">Password</label>
+                    <div class="login-password-container">
+                        <input type="password" id="password" class="login-signup-input login-password"
+                            placeholder="Password">
+
+                        <button type="button" class="login-toggle-password login-password-lock" role="img"
+                            aria-labelledby="Password visibility toggle button"
+                            alt="Toggle password visibility"></button>
+                    </div>
+
+                    <label for="password-confirm" class="visually-hidden">Password Confirm</label>
+                    <div class="login-password-container">
+                        <input type="password" id="password-confirm" class="login-signup-input login-password"
+                            placeholder="Confirm Password">
+
+                        <button type="button" class="login-toggle-password login-password-lock" role="img"
+                            aria-labelledby="Password visibility toggle button"
+                            alt="Toggle password visibility"></button>
+
+                    </div>
+
+                    <span class="login-signup-error-text-container">
+                        <p id="login-error-text" role="alert" hidden>
+                            Your passwords dont´t match. Please try again.
+                        </p>
+                    </span>
+
+                </div>
+
+                <div class="signup-confirm-container">
+                    <button type="button" class="signup-confirm-button signup-confirm-default" ></button>
+                    <span>I accept the <a href="#">Privacy policy</a></span>
+                </div>
+
+            </form>
+
+
+        </section>
+
+
+        <footer>
+            <div class="login-signup-footer">
+                <a href="#" aria-label="Read our Privacy Policy">Privacy Policy</a>
+                <a href="#" aria-label="Read our Legal Notice">Legal notice</a>
+            </div>
+        </footer>
+
+    </main>
+
+    <script src="./scripts/signup.js"></script>
+
+</body>
+
+</html>
