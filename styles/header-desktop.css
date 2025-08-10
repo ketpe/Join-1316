@@ -38,6 +38,7 @@
     background-image: url(../assets/help-icon.svg);
     background-size: contain;
     border: none;
+    background-color: transparent;
 }
 
 .help-btn:hover {
