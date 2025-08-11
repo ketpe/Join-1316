@@ -1,0 +1,40 @@
+.contact-list {
+    width: 456px;
+    height: 928px;
+}
+
+.contact-list-content {
+    width: 100%;
+    height: 101px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.add-contact {
+    width: 400;
+    height: 1188;
+    left: 28px;
+    angle: 0 deg;
+    opacity: 1;
+    padding-top: 32px;
+    padding-right: 24px;
+    padding-bottom: 32px;
+    padding-left: 24px;
+
+}
+
+.btn-add-contacts-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.btn-add-contacts-text {
+    font-family: Inter;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 21px;
+    padding: 12px 0;
+
+}

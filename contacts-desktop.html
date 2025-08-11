@@ -7,23 +7,38 @@
     <title>Contacts</title>
     <link rel="shortcut icon" href="./assets/logo-for-Favicon.svg" type="image/x-icon">
     <link rel="stylesheet" href="./style.css">
+    <!-- Hier Style-links einfügen für die aktuelle View -->
     <link rel="stylesheet" href="./styles/contacts-desktop.css">
 
 </head>
 
 <body onload="init()">
-    <div class="page-wrapper">
-        <div id="header"></div>
-        <div id="navbar"></div>
-        <div class="content">
-            <main class="main-container">
-                <article class="contact-table">
-                    <button class="btn">Add new contact</button>
+
+    <div class="main-container">
+        <div class="left-container">
+            <div id="navbar"></div>
+        </div>
+        <div class="right-container">
+            <div id="header"></div>
+            <main class="right-content">
+                <article class="contact-list">
+                    <section class="contact-list-content">
+                        <div class="add-contact">
+                            <button class="btn-add-contacts btn-fill">
+                                <p class="btn-add-contacts-text">Add new contact</p>
+                                <img class="btn-add-contacts-icon" src="./assets/person-add-icon.svg"
+                                    alt="Add Contact Icon">
+                            </button>
+                        </div>
+                    </section>
                 </article>
+
             </main>
         </div>
     </div>
-    <script src="./script.js"></script>
+
+
 </body>
+<script src="./script.js"></script>
 
 </html>
