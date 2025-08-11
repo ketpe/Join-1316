@@ -1,60 +1,26 @@
-.btn {
-    height: 48px;
-    padding: 0 24px;
-    border-radius: 10px;
-    border: none;
-    font-family: 'Inter';
-    font-weight: 700;
-    font-size: 16px;
-    color: white;
-    cursor: pointer;
-    transition: background-color 100ms ease-in-out, box-shadow 100ms ease-in-out;
+body {
+    margin: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    background-color: var(--default-bg-color);
 }
 
-.btn-fill {
-    background-color: var(--bg-default);
-}
-
-.btn-fill-sm {
-    padding: 15px 16px !important;
-    font-size: 14px;
-}
-
-.btn-fill:hover {
-    background-color: var(--btn-bg-hover);
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-.btn-fill:active {
-    background-color: var(--btn-bg-active);
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-button {
-    cursor: pointer;
-}
-
-.btn-outline {
-    border: 1px solid var(--bg-default);
-    color: var(--bg-default);
-    transition: border 100ms ease-in-out, box-shadow 100ms ease-in-out, color 100ms ease-in-out;
-}
-
-.btn-outline:hover {
-    border: 2px solid var(--btn-bg-hover);
-    color: var(--btn-bg-hover);
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-.btn-outline:active {
-    border: 1px solid var(--btn-bg-active);
-    color: var(--btn-bg-active);
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-.join-h1{
+.join-h1 {
     font-family: 'Inter';
     font-size: 61px;
     font-weight: 700;
     color: black;
+}
+
+a {
+    text-decoration: none;
+}
+
+.d-none {
+    display: none;
+}
+
+.visually-hidden {
+    position: absolute;
+    left: -9999px;
 }

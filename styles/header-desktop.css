@@ -9,12 +9,12 @@
 }
 
 .header-content-container {
-    /* padding-left: 348px; */
-    max-width: 1440px;
+    max-width: calc(var(--max-width) - var(--navbar-width));
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-left: calc(348px - var(--navbar-width));
 }
 
 .header-headline {

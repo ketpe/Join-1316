@@ -3,31 +3,12 @@
 @import url("./styles/header-desktop.css");
 @import url("./styles/sizes.css");
 @import url("./styles/standard.css");
+@import url("./styles/buttons.css");
 
 
 @font-face {
     font-family: "Inter";
     src: url("./fonts/Inter/Inter-VariableFont_opsz_wght.ttf");
-}
-
-body {
-    margin: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-    background-color: var(--default-bg-color);
-}
-
-a {
-    text-decoration: none;
-}
-
-.d-none {
-    display: none;
-}
-
-.visually-hidden {
-    position: absolute;
-    left: -9999px;
 }
 
 .content {
@@ -38,36 +19,26 @@ a {
     margin: 0 auto;
     margin-left: 232px;
     box-sizing: border-box;
-
 }
 
 .main-container {
-    position: relative;
-    max-width: 1440px;
-    margin: 0 auto;
-    width: 100%;
-    
-}
-
-
-.main-container-new{
     display: flex;
 }
 
-.right{
+.right-container {
     height: 100vh;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
-.left{
+.left-container {
     width: 232px;
     height: 100vh;
     background-color: aqua;
 }
 
-.right-content{
+.right-content {
     max-width: calc(1440px - 232px);
-    background-color: brown;
+
 }
