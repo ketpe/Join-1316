@@ -38,6 +38,7 @@ a {
     margin: 0 auto;
     margin-left: 232px;
     box-sizing: border-box;
+
 }
 
 .main-container {
@@ -45,4 +46,28 @@ a {
     max-width: 1440px;
     margin: 0 auto;
     width: 100%;
+    
+}
+
+
+.main-container-new{
+    display: flex;
+}
+
+.right{
+    height: 100vh;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.left{
+    width: 232px;
+    height: 100vh;
+    background-color: aqua;
+}
+
+.right-content{
+    max-width: calc(1440px - 232px);
+    background-color: brown;
 }

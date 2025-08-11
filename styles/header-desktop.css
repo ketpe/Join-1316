@@ -9,7 +9,7 @@
 }
 
 .header-content-container {
-    padding-left: 348px;
+    /* padding-left: 348px; */
     max-width: 1440px;
     width: 100%;
     display: flex;
