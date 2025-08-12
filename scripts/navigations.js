@@ -27,3 +27,12 @@ function navigateToLegalNotice(source) {
 function navigateToLogin() {
     window.location.href = './index.html';
 }
+
+function navigateToHelp(){
+
+    const currentURL = window.location.pathname;
+    const currentPath = currentURL.substring(1, currentURL.length);
+    const cuurentPathName = currentPath.split('.')[0];
+   
+    window.location.href = './help.html?source=' + cuurentPathName;
+}

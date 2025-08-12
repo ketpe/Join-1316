@@ -1,4 +1,4 @@
-.phl-content-section{
+.phl-content-section {
     box-sizing: border-box;
     font-family: 'Inter';
     font-size: 16px;
@@ -6,16 +6,60 @@
 }
 
 
-.phl-content-section a{
+.phl-content-section a {
     color: var(--btn-bg-hover);
 }
 
-.phl-content-section p{
+.phl-content-section p {
     margin-block-start: 0;
     margin-block-end: 0;
     margin-bottom: 16px;
 }
 
-.legal-spezial-text-color{
+.join-spezial-text-color {
     color: var(--btn-bg-hover);
+}
+
+.help-list {
+    list-style-type: none;
+    counter-reset: help-counter;
+    margin: 0;
+    padding: 0;
+}
+
+.help-list li {
+    counter-increment: help-counter;
+    position: relative;
+    padding-left: 58px;
+}
+
+
+.help-list li:before {
+    content: counter(help-counter) ".";
+    font-size: 27px;
+    font-family: 'Inter';
+    font-weight: 700;
+    position: absolute;
+    left: 0;
+
+}
+
+
+.help-actions-sticky {
+    position: sticky;
+    top: 210px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 1000;
+    padding: 10px 0;
+    background-color: transparent;
+    border: none;
+}
+
+/* Button-Optik */
+.help-back {
+    padding: 0.5em 1em;
+    font-size: 1rem;
+    cursor: pointer;
 }
