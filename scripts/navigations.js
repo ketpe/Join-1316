@@ -31,10 +31,8 @@ function navigateToLogin() {
 function navigateToHelp(){
 
     const currentURL = window.location.pathname;
-
-    
-
-    console.log(currentURL);
-    
-    //window.location.href = './help.html';
+    const currentPath = currentURL.substring(1, currentURL.length);
+    const cuurentPathName = currentPath.split('.')[0];
+   
+    window.location.href = './help.html?source=' + cuurentPathName;
 }
