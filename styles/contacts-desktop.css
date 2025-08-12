@@ -1,28 +1,53 @@
 .contact-list {
-    width: 456px;
-    height: 928px;
+    height: calc(100vh - var(--header-height));
+    max-width: var(--contacts-scrollbar-width);
+    box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
+}
+
+.contacts-main {
+    display: flex;
 }
 
 .contact-list-content {
-    width: 100%;
-    height: 101px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
     gap: 16px;
-}
-
-.add-contact {
-    width: 400;
-    height: 1188;
-    left: 28px;
-    angle: 0 deg;
-    opacity: 1;
     padding-top: 32px;
     padding-right: 24px;
     padding-bottom: 32px;
     padding-left: 24px;
+    height: 100%;
+    box-sizing: border-box;
+}
 
+.add-btn {
+    width: 352px;
+    height: 56px;
+    padding-top: 12px;
+    padding-right: 16px;
+    padding-bottom: 12px;
+    padding-left: 16px;
+    gap: 16px;
+    border-radius: 10px;
+    border-width: 1px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.add-contact {
+    width: 352px;
+    height: 56px;
+    padding-top: 12px;
+    padding-right: 16px;
+    padding-bottom: 12px;
+    padding-left: 16px;
+    gap: 16px;
+    border-radius: 10px;
+    border-width: 1px;
+    position: static;
+    z-index: 2;
+    background: white;
 }
 
 .btn-add-contacts-icon {
@@ -36,5 +61,114 @@
     font-style: Bold;
     font-size: 21px;
     padding: 12px 0;
+}
 
+.contacts-scroll-wrapper {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    max-height: calc(100vh - var(--header-height));
+
+}
+
+.contacts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contact-initials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 2px solid var(--bg-orange);
+    background-color: var(--bg-orange);
+    border-radius: 50%;
+    gap: 10px;
+}
+
+.contact-initials-text {
+    background-color: var(--bg-orange);
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+}
+
+.separator-contact-list {
+    height: 1px;
+    background-color: var(--input-border-color);
+    width: 100%;
+}
+
+.contact-letter {
+    width: 352;
+    height: 58;
+    padding-top: 17px;
+    padding-right: 36px;
+    padding-bottom: 17px;
+    padding-left: 36px;
+    gap: 8px;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+    vertical-align: middle;
+
+}
+
+.contact-item {
+    display: flex;
+    padding: 15px 24px;
+    gap: 35px;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.contact-name {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+.contact-email {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    vertical-align: middle;
+    color: var(--font-email-color);
+}
+
+.contacts-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    padding-top: calc(208px - var(--header-height));
+    padding-left: calc(743px - var(--navbar-width) - var(--contacts-scrollbar-width));
+}
+
+.contacts-title {
+    margin: 0;
+    font-size: 61px;
+    font-weight: 700;
+    font-family: 'Inter';
+}
+
+.contacts-subtitle {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 27px;
+    margin: 0;
 }
