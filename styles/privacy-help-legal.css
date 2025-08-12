@@ -16,6 +16,32 @@
     margin-bottom: 16px;
 }
 
-.legal-spezial-text-color{
+.join-spezial-text-color{
     color: var(--btn-bg-hover);
 }
+
+.help-list{
+    list-style-type: none;
+    counter-reset: help-counter; 
+    margin: 0;
+    padding: 0;
+}
+
+.help-list li{
+    counter-increment: help-counter; 
+    position: relative;
+    padding-left: 58px;
+}
+
+
+.help-list li:before{
+    content: counter(help-counter) ".";
+    font-size: 27px;
+    font-family: 'Inter';
+    font-weight: 700; 
+    position: absolute;
+    left: 0;
+
+}
+
+
