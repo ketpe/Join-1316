@@ -6,14 +6,22 @@ function navigateToSummaryGuest(){
     window.location.href = './summary-desktop.html';
 }
 
-function navigateToPrivacy(target = "") {
+function navigateToPrivacy(source = "") {
 
-    if(target == "login"){
+    if(source == "login"){
         window.location.href = './privacy-policy.html?backToLogin=true';
     }else{
         window.location.href = './privacy-policy.html';
     }
 
+}
+
+function navigateToLegalNotice(source) {
+    if(source == "login" || source == "signin"){
+        window.location.href = "./legal-notice.html?backToLogin=true";
+    }else{
+        window.location.href = "./legal-notice.html";
+    }
 }
 
 function navigateToLogin() {

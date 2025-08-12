@@ -5,11 +5,17 @@
     margin: 0 24px;
 }
 
-.phl-content-section h3, h2{
-    font-size: 27px;
-    font-family: 'Inter';
-}
 
 .phl-content-section a{
+    color: var(--btn-bg-hover);
+}
+
+.phl-content-section p{
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-bottom: 16px;
+}
+
+.legal-spezial-text-color{
     color: var(--btn-bg-hover);
 }

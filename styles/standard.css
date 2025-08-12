@@ -12,6 +12,21 @@ body {
     color: black;
 }
 
+.join-h2 {
+    font-family: 'Inter';
+    font-size: 27px;
+    font-weight: 700;
+    color: black;
+}
+
+.join-h3 {
+    font-family: 'Inter';
+    font-size: 22px;
+    font-weight: 700;
+    color: black;
+    margin: 0;
+}
+
 a {
     text-decoration: none;
 }
