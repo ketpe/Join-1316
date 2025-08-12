@@ -1,8 +1,6 @@
 :root {
     --navbar-width: 232px;
     --header-position-left: 0px;
-    /* --header-position-left: 328px; */
     --header-height: 96px;
     --max-width: 1440px;
-    --content-width: calc(100vh - var(--navbar-width));
 }
