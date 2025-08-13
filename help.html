@@ -14,16 +14,17 @@
 <body onload="onHelpLoad()">
 
     <div class="main-container">
-        <div class="left-container">
-            <div id="navbar"></div>
-        </div>
+        <aside class="left-container">
+            <nav id="navbar" aria-label="Mainnavigation"></nav>
+        </aside>
         <div class="right-container">
             <div class="header-section" id="header"></div>
-            <main class="right-content">
+            <main class="right-content" aria-labelledby="help-title">
                 <section class="phl-content-section">
 
                     <div class="help-actions-sticky">
-                        <div class="help-back" aria-label="Arrow to navigate back to source page." role="img" onclick="navigateBackToSource()"></div>
+                        <button type="button" class="help-back" aria-label="Arrow to navigate back to source page." role="img"
+                            onclick="navigateBackToSource()"></button>
                     </div>
 
                     <h1 class="join-h1">Help</h1>

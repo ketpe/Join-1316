@@ -62,8 +62,10 @@
 
 .help-back {
     cursor: pointer;
+    border: none;
     width: 33px;
     height: 32px;
+    background-color: transparent;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;

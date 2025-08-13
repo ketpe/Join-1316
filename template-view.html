@@ -15,12 +15,12 @@
 <body onload="init()">
 
     <div class="main-container">
-        <div class="left-container">
-            <div id="navbar"></div>
-        </div>
+        <aside class="left-container">
+            <nav id="navbar" aria-label="Mainnavigation"></nav>
+        </aside>
         <div class="right-container">
             <div class="header-section" id="header"></div>
-            <main class="right-content">
+            <main class="right-content" aria-labelledby="...-title">
                 <!-- Hier euren Content einfügen -->
                 <div class="meinContent">TEST!</div>
             </main>
@@ -30,5 +30,6 @@
 
 </body>
 <script src="./script.js"></script>
+<script src="./scripts/navigations.js"></script>
 
 </html>
