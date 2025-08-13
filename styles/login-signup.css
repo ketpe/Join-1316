@@ -270,7 +270,7 @@
     background-image: url("../assets/signup-confirm-checked.svg");
 }
 
-.signup-arrow-left{
+.arrow-left{
     position: absolute;
     left:64px;
     top: 120px;
@@ -283,7 +283,7 @@
     background-image: url("../assets/arrow-left-default.svg");
 }
 
-.signup-arrow-left:hover{
+.arrow-left:hover{
     left: 58px;
     width: 38px;
     background-image: url("../assets/arrow-left-variant1.svg");

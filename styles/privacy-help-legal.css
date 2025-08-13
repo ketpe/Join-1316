@@ -2,7 +2,9 @@
     box-sizing: border-box;
     font-family: 'Inter';
     font-size: 16px;
-    margin: 0 24px;
+    margin-left: 96px;
+    margin-right: 24px;
+    margin-bottom: 36px;
 }
 
 
@@ -57,9 +59,23 @@
     border: none;
 }
 
-/* Button-Optik */
+
 .help-back {
-    padding: 0.5em 1em;
-    font-size: 1rem;
     cursor: pointer;
+    width: 33px;
+    height: 32px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-image: url("../assets/arrow-left-default.svg");
+}
+
+.help-back:hover{
+    left: 58px;
+    width: 38px;
+    background-image: url("../assets/arrow-left-variant1.svg");
+}
+
+.phl-content-section p{
+    margin-right: 24px;
 }

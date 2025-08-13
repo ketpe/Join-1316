@@ -6,6 +6,10 @@ function navigateToSummaryGuest(){
     window.location.href = './summary-desktop.html';
 }
 
+function navigateToContact(){
+    window.location.href = './contacts-desktop.html';
+}
+
 function navigateToPrivacy(source = "") {
 
     if(source == "login"){
