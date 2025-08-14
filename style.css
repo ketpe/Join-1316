@@ -40,9 +40,10 @@
 .right-content {
     max-width: calc(1440px - var(--navbar-width));
     width: 100%;
+    background-color: var(--bg-default-sites);
 }
 
-.header-section{
+.header-section {
     position: sticky;
     top: 0;
 }
