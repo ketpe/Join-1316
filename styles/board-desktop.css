@@ -78,7 +78,6 @@
 .board-search-wrapper {
     position: relative;
     width: 312px;
-    /* feste Breite wie das Input-Feld */
     height: 48px;
 }
 
@@ -112,13 +111,12 @@
     height: 24px;
 }
 
-
-
 .board-content {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding-left: 64px;
+    /* padding-top: calc(336px - var(--header-height)); */
     gap: 24px;
 }
 
