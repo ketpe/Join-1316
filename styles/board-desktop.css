@@ -1,0 +1,61 @@
+.board-header {
+    height: 232px;
+    width: 100%
+}
+
+.board-headline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 79.5px;
+    padding-left: 64px;
+}
+
+.board-headline-text {
+    font-family: Inter;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 61px;
+}
+
+.board-right-headline-content {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.add-btn {
+    width: 352px;
+    height: 56px;
+    padding-top: 12px;
+    padding-right: 16px;
+    padding-bottom: 12px;
+    padding-left: 16px;
+    gap: 16px;
+    border-radius: 10px;
+    border-width: 1px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.btn-add-task {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-add-task-icon {
+    background-image: url(./assets/add-task-icon.svg);
+    width: 32px;
+    height: 32px;
+
+}
+
+.btn-add-task-text {
+    font-family: Inter;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 21px;
+    padding: 12px 0;
+}
