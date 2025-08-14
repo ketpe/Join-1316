@@ -53,6 +53,12 @@ button {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
+.btn-clear-cancel{
+    width: 126px;
+}
+
+
+
 .btn-add-contacts {
     height: 56px;
     padding: 12px 0;
@@ -88,42 +94,121 @@ button {
     font-style: Bold;
     font-size: 21px;
     color: white;
-    transition: background-color 100ms ease-in-out, box-shadow 100ms ease-in-out;
+
+
+
 }
 
-.btn-priority{
+
+
+.btn-priority {
     width: 136px;
     border: none;
     border-radius: 10px;
-    padding: 10px 16px;
+    padding: 16px 10px;
     background-color: white;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+
 }
 
-.prio-alta-default{
-    div{
-        display: flex;
-        justify-content: center;
-        align-items: center;
+.btn-priority div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-        p{
-            font-family: 'Inter';
-            font-size: 20px;
-            font-weight: 400;
-            color: black;
-            margin-right: 8px;
-            margin-block-start: 0;
-            margin-block-end: 0;
+}
+
+.btn-priority div>div {
+    width: 20px;
+    height: 15px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.btn-priority div>p {
+    font-family: 'Inter';
+    font-size: 20px;
+    font-weight: 400;
+    color: black;
+    margin-right: 8px;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+
+.btn-priority:hover {
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+}
+
+.btn-priority:not(:active) {
+    transition: background-color 100ms ease-in-out, box-shadow 100ms ease-in-out;
+}
+
+.prio-alta div>div {
+    background-image: url('../assets/prio-alta-red.svg');
+}
+
+.prio-alta:active {
+    background-color: var(--bg-prio-alta-active);
+    box-shadow: none;
+
+
+    div {
+        p {
+            font-weight: 700;
+            font-size: 21px;
+            color: white;
         }
 
-        div{
-            width: 20px;
-            height: 15px;
-            background-image: url('../assets/prio-alta-red.svg');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: cover;
-            object-fit: cover;
+        div {
+            background-image: url('../assets/prio-alta-white.svg');
         }
     }
 }
+
+.prio-media div>div{
+    background-image: url('../assets/prio-media-default.svg');
+}
+
+.prio-media:active {
+    background-color: var(--bg-prio-media-active);
+    box-shadow: none;
+
+
+    div {
+        p {
+            font-weight: 700;
+            font-size: 21px;
+            color: white;
+        }
+
+        div {
+            background-image: url('../assets/prio-media-active.svg');
+        }
+    }
+}
+
+.prio-baja div>div{
+    background-image: url('../assets/prio-baja-default.svg');
+}
+
+.prio-baja:active {
+    background-color: var(--bg-prio-baja-active);
+    box-shadow: none;
+
+
+    div {
+        p {
+            font-weight: 700;
+            font-size: 21px;
+            color: white;
+        }
+
+        div {
+            background-image: url('../assets/prio-baja-active.svg');
+        }
+    }
+}
+

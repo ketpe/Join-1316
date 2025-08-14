@@ -80,6 +80,7 @@
 
 .a-t-priority-button-container{
     width: 440px;
+    height: 58px;
     display: flex;
     justify-content: space-between;
     align-items: center;
