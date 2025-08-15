@@ -99,7 +99,7 @@
     background: none;
     border: none;
     position: absolute;
-    right: 8px;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
@@ -108,11 +108,18 @@
     align-items: center;
     height: 32px;
     width: 32px;
+    gap: 16px
 }
 
 .board-search-btn img {
     width: 24px;
     height: 24px;
+}
+
+.search-seperator {
+    width: 0px;
+    height: 31px;
+    border: 1px solid var(--input-border-color);
 }
 
 .board-content {
