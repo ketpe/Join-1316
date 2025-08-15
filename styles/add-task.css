@@ -159,3 +159,10 @@
     font-weight: 400;
     color: var(--input-border-color);
 }
+
+.add-task-form-buttons{
+    height: 61px;
+    display: flex;
+    align-items: center;
+    gap:16px
+}

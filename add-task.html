@@ -3,7 +3,7 @@
     <form class="add-task-form">
         <header class="add-task-head">
             <h1 class="join-h1">Add Task</h1>
-            <button type="button">X</button>
+            <button class="btn-overlay-close" type="button"></button>
         </header>
 
         <section class="add-task-fields">
@@ -74,14 +74,18 @@
                 <p><span>*</span>This field is required</p>
 
                 <div class="add-task-form-buttons">
-                    <button class="btn btn-outline" type="button">
+                    <button class="btn-clear-cancel" type="button">
                         <div>
                             <p>Clear</p>
-                            <div role="img" title="Low-Icon"></div>
+                            <div role="img" title="Clear-Icon"></div>
                         </div>
                     </button> <!-- Nur sichtbar wenn aus der NAV aufgerufen!-->
-                    <button type="button">Cancel</button> <!-- Nur sichtbar wenn aus dem Board aufgerufen-->
-                    <button type="button">Create Task</button>
+                    <button type="button" class="btn-create-task">
+                        <div>
+                            <p>Create Task</p>
+                            <div role="img" title="Check-Icon"></div>
+                        </div>
+                    </button>
                 </div>
             </footer>
         </section>

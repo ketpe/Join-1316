@@ -53,7 +53,7 @@ button {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-.btn-clear-cancel {
+
 .btn-clear-cancel {
     width: 126px;
     border-radius: 10px;
@@ -74,10 +74,97 @@ button {
     font-family: 'Inter';
     font-size: 20px;
     font-weight: 400;
-    color: black;
+    color: var(--bg-default);
     margin-right: 8px;
     margin-block-start: 0;
     margin-block-end: 0;
+}
+
+.btn-clear-cancel>div>div {
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-image: url('../assets/cancel-clear-default.svg');
+}
+
+.btn-clear-cancel:hover {
+    border: 2px solid var(--btn-bg-hover);
+    color: var(--btn-bg-hover);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+    div {
+        p {
+            color: var(--btn-bg-hover);
+            ;
+        }
+
+        div {
+            background-image: url('../assets/cancel-clear-secondary.svg');
+        }
+    }
+}
+
+.btn-clear-cancel:active {
+    border: 1px solid var(--btn-bg-active);
+    color: var(--btn-bg-active);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+    div {
+        p {
+            color: var(--btn-bg-active);
+        }
+
+        div {
+            background-image: url('../assets/cancel-clear-active.svg');
+        }
+    }
+}
+
+.btn-create-task {
+    width: 183px;
+    border-radius: 10px;
+    padding: 16px;
+    border: none;
+    background-color: var(--bg-default);
+    transition: border 100ms ease-in-out, box-shadow 100ms ease-in-out, color 100ms ease-in-out;
+
+    div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        p {
+            font-family: 'Inter';
+            font-size: 21px;
+            font-weight: 400;
+            color: white;
+            margin-right: 8px;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+
+        div {
+            width: 24px;
+            height: 24px;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-image: url('../assets/check-icon.svg');
+        }
+    }
+
+}
+
+.btn-create-task:hover{
+    background-color: var(--btn-bg-hover);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.btn-create-task:active{
+    background-color: var(--btn-bg-active);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 
@@ -189,7 +276,7 @@ button {
     }
 }
 
-.prio-media div>div {
+
 .prio-media div>div {
     background-image: url('../assets/prio-media-default.svg');
 }
@@ -212,7 +299,7 @@ button {
     }
 }
 
-.prio-baja div>div {
+
 .prio-baja div>div {
     background-image: url('../assets/prio-baja-default.svg');
 }
@@ -248,4 +335,23 @@ button {
 
 .btn-add-board-task:hover {
     background-image: url(../assets/plus-button-hover.svg);
+}
+
+.btn-overlay-close{
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    border-radius: 56px;
+    background-image: url('../assets/close-icon.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.btn-overlay-close:hover{
+    background-color: var(--bg-btn-hover-special);
 }
