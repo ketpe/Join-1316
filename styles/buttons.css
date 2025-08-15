@@ -53,8 +53,30 @@ button {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-.btn-clear-cancel{
+.btn-clear-cancel {
     width: 126px;
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid var(--bg-default);
+    color: var(--bg-default);
+    transition: border 100ms ease-in-out, box-shadow 100ms ease-in-out, color 100ms ease-in-out;
+
+}
+
+.btn-clear-cancel>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-clear-cancel>div>p {
+    font-family: 'Inter';
+    font-size: 20px;
+    font-weight: 400;
+    color: black;
+    margin-right: 8px;
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
 
 
@@ -94,8 +116,6 @@ button {
     font-style: Bold;
     font-size: 21px;
     color: white;
-
-
 
 }
 
@@ -168,7 +188,7 @@ button {
     }
 }
 
-.prio-media div>div{
+.prio-media div>div {
     background-image: url('../assets/prio-media-default.svg');
 }
 
@@ -190,7 +210,7 @@ button {
     }
 }
 
-.prio-baja div>div{
+.prio-baja div>div {
     background-image: url('../assets/prio-baja-default.svg');
 }
 
@@ -211,4 +231,3 @@ button {
         }
     }
 }
-
