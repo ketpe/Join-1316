@@ -59,13 +59,28 @@
                             </div>
                         </div>
                     </header>
-                    <article class="board-content">
-                        <div class="board-column">
-                            <div class="board-tasks-empty">No tasks To do</div>
+                    <article class="board-kanban">
+                        <div class="kanban-column" id="todo">
+                            <div class="kanban-tasks">
+                                <div class="kanban-task" draggable="true" id="task1">Aufgabe 1</div>
+                                <div class="kanban-task" draggable="true" id="task2">Aufgabe 2</div>
+                            </div>
                         </div>
-                        <div class="board-column"></div>
-                        <div class="board-column"></div>
-                        <div class="board-column"></div>
+                        <div class="kanban-column" id="inprogress">
+                            <div class="kanban-tasks">
+                                <div class="kanban-task" draggable="true" id="task3">Aufgabe 3</div>
+                            </div>
+                        </div>
+                        <div class="kanban-column" id="awaiting">
+                            <div class="kanban-tasks">
+                                <div class="kanban-task" draggable="true" id="task4">Aufgabe 4</div>
+                            </div>
+                        </div>
+                        <div class="kanban-column" id="done">
+                            <div class="kanban-tasks">
+                                <div class="kanban-task" draggable="true" id="task5">Aufgabe 5</div>
+                            </div>
+                        </div>
                     </article>
                 </section>
             </main>
