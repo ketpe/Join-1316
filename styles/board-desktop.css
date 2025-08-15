@@ -4,11 +4,12 @@
 }
 
 .board-headline {
+    height: 73px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 79.5px;
     padding-left: 64px;
+    padding-top: 73px;
 }
 
 .board-headline-text {
@@ -24,25 +25,15 @@
     gap: 32px;
 }
 
-.add-btn {
-    width: 352px;
-    height: 56px;
-    padding-top: 12px;
-    padding-right: 16px;
-    padding-bottom: 12px;
-    padding-left: 16px;
-    gap: 16px;
-    border-radius: 10px;
-    border-width: 1px;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-}
-
 .btn-add-task {
     display: flex;
     align-items: center;
     justify-content: center;
+    color: white;
+    height: 48px;
+    border-radius: 10px;
+    gap: 4px;
+    padding: 8px 16px;
 }
 
 .btn-add-task-icon {
@@ -58,4 +49,96 @@
     font-style: Bold;
     font-size: 21px;
     padding: 12px 0;
+}
+
+.board-headline-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 24px;
+    padding: 64px;
+}
+
+.board-headline-column {
+    max-width: 244px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.board-column-text {
+    font-family: Inter;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 20px;
+}
+
+.board-search-wrapper {
+    position: relative;
+    width: 312px;
+    height: 48px;
+}
+
+.board-input-search {
+    width: 100%;
+    height: 48px;
+    border-radius: 10px;
+    border-width: 1px;
+    padding: 8px 16px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.board-search-btn {
+    background: none;
+    border: none;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    height: 32px;
+    width: 32px;
+}
+
+.board-search-btn img {
+    width: 24px;
+    height: 24px;
+}
+
+.board-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 64px;
+    /* padding-top: calc(336px - var(--header-height)); */
+    gap: 24px;
+}
+
+.board-main-content {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - var(--header-height));
+}
+
+.board-column {
+    width: 248px;
+    height: 100px;
+    gap: 24px;
+    /* background-color: blue; */
+}
+
+.board-tasks-empty {
+    background-color: var(--bg-light-gray);
+    height: 48px;
+    border: 1px dashed var(--btn-compliance-links-font-color);
+    border-radius: 10px;
+    border-width: 1px;
+    gap: 10px;
+
 }

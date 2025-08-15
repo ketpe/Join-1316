@@ -54,6 +54,7 @@ button {
 }
 
 .btn-clear-cancel {
+.btn-clear-cancel {
     width: 126px;
     border-radius: 10px;
     padding: 16px;
@@ -189,6 +190,7 @@ button {
 }
 
 .prio-media div>div {
+.prio-media div>div {
     background-image: url('../assets/prio-media-default.svg');
 }
 
@@ -211,6 +213,7 @@ button {
 }
 
 .prio-baja div>div {
+.prio-baja div>div {
     background-image: url('../assets/prio-baja-default.svg');
 }
 
@@ -230,4 +233,19 @@ button {
             background-image: url('../assets/prio-baja-active.svg');
         }
     }
+}
+
+.btn-add-board-task {
+    background-image: url(../assets/plus-button.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
+    width: 24px;
+    height: 24px;
+    gap: 10px;
+    transition: background-image 100ms ease-in-out;
+}
+
+.btn-add-board-task:hover {
+    background-image: url(../assets/plus-button-hover.svg);
 }

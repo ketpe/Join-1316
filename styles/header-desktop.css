@@ -52,6 +52,7 @@
     height: 56px;
     border: 3px solid var(--bg-default);
     border-radius: 50%;
+    background-color: transparent;
 }
 
 .user-initial {
