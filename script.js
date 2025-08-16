@@ -3,6 +3,7 @@ function init() {
     includeHtml("header", "header-desktop.html");
 }
 
+
 function includeHtml(target, file) {
     let element = document.getElementById(target);
 

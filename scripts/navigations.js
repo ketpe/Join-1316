@@ -44,3 +44,7 @@ function navigateToHelp(){
 function navigateToAddTask(loadValue) {
     window.location.href = './add-task-desktop.html?loadValue=' + loadValue;
 }
+
+function navigateToBord() {
+    window.location.href = './board-desktop.html';
+}

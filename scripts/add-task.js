@@ -1,3 +1,6 @@
+//import * as dbFunction from "./db-contact.js";
+
+
 function onLoadAddTask(){
 
     let param = new URLSearchParams(document.location.search);
@@ -16,4 +19,5 @@ function renderAddTaskWithNavAndHeader() {
     includeHtml("navbar", "navbar-desktop.html");
     includeHtml("header", "header-desktop.html");
     includeHtml("add-task-content", "add-task.html");
+
 }
