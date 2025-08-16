@@ -1,0 +1,41 @@
+#add-task-dialog{
+    padding: 0;
+    border: none !important;
+    margin: auto;
+    border-radius: 30px;
+    background-color: white;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0, 0.10);
+    transform: translateX(150%);
+    
+}
+
+.dialog-open {
+    overflow: hidden;
+}
+
+.dialog-show{
+    animation: slide-Dialog-in 1000ms ease-in-out forwards;
+}
+
+.dialog-hide{
+    animation: slide-Dialog-out 1000ms ease-in-out forwards;
+}
+
+
+#dialog-content{
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+@keyframes slide-Dialog-in {
+  from { transform: translateX(150%); }
+  to   { transform: translateX(0%); }
+}
+
+@keyframes slide-Dialog-out {
+  from { transform: translateX(0%); }
+  to   { transform: translateX(150%); }
+}

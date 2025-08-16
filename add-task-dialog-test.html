@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary</title>
+    <link rel="shortcut icon" href="./assets/logo-for-Favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./style.css">
+    <!-- Hier Style-links einfügen für die aktuelle View -->
+    <!-- <link rel="stylesheet" href="./styles/summary-desktop.css"> -->
+     <link rel="stylesheet" href="./styles/add-task-dialog.css">
+     <link rel="stylesheet" href="./styles/add-task.css">
+
+</head>
+
+<body onload="init()">
+
+    <div class="main-container">
+        <aside class="left-container">
+            <nav id="navbar" aria-label="Mainnavigation"></nav>
+        </aside>
+        <div class="right-container">
+            <div class="header-section" id="header"></div>
+            <main class="right-content" aria-labelledby="...-title">
+                <button type="button" onclick="onAddTaskDialogOpen()">TEST</button>
+                <section id="add-task-dialog-section" class="add-task-dialog-section">
+                    <dialog id="add-task-dialog" class="" onclick="addTaskDialogClose(event)">
+                        <div id="dialog-content"></div>
+                    </dialog>
+                </section>
+            </main>
+        </div>
+    </div>
+
+
+</body>
+<script src="./script.js"></script>
+<script src="./scripts/navigations.js"></script>
+<script src="./scripts/add-task-dialog.js"></script>
+
+</html>
