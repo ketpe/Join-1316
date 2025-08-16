@@ -2,6 +2,7 @@ let draggedTask = null;
 
 const tasks = document.querySelectorAll('.kanban-task');
 const columns = document.querySelectorAll('.kanban-column');
+updateEmptyColumns();
 
 tasks.forEach(task => {
     task.addEventListener('dragstart', (e) => {
@@ -29,5 +30,18 @@ columns.forEach(column => {
         if (draggedTask) {
             column.appendChild(draggedTask);
         }
+        updateEmptyColumns();
     });
 });
+
+function updateEmptyColumns() {
+    document.querySelectorAll('.kanban-column').forEach(column => {
+        const tasks = column.querySelectorAll('.kanban-task');
+        const emptyState = column.querySelector('.kanban-task-empty');
+        if (tasks.length === 0 && emptyState) {
+            emptyState.hidden = false;
+        } else if (emptyState) {
+            emptyState.hidden = true;
+        }
+    });
+}
