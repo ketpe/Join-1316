@@ -40,3 +40,33 @@ a {
     left: -9999px;
 }
 
+.dialog-open {
+    overflow: hidden;
+}
+
+.dialog-show{
+    animation: slide-Dialog-in 1000ms ease-in-out forwards;
+}
+
+.dialog-hide{
+    animation: slide-Dialog-out 1000ms ease-in-out forwards;
+}
+
+
+#dialog-content{
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+@keyframes slide-Dialog-in {
+  from { transform: translateX(150%); }
+  to   { transform: translateX(0%); }
+}
+
+@keyframes slide-Dialog-out {
+  from { transform: translateX(0%); }
+  to   { transform: translateX(150%); }
+}
