@@ -1,3 +1,5 @@
+const BASE_URL = "https://join-1316-default-rtdb.europe-west1.firebasedatabase.app/";
+
 function init() {
     includeHtml("navbar", "navbar-desktop.html");
     includeHtml("header", "header-desktop.html");

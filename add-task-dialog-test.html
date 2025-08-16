@@ -24,6 +24,10 @@
             <div class="header-section" id="header"></div>
             <main class="right-content" aria-labelledby="...-title">
                 <button type="button" onclick="onAddTaskDialogOpen()">TEST</button>
+                <button onclick="newContakt()">Add new Contact</button>
+                <button onclick="allCantacts()">Get all Contacts</button>
+                <button onclick="deleteContactByID('7b703364-33d9-405b-85d3-1919e08798af')">delete</button>
+                <button onclick="getContactByID('7b703364-33d9-405b-85d3-1919e08798af')">suchen</button>
                 <section id="add-task-dialog-section" class="add-task-dialog-section">
                     <dialog id="add-task-dialog" class="" onclick="addTaskDialogClose(event)">
                         <div id="dialog-content"></div>
@@ -36,7 +40,9 @@
 
 </body>
 <script src="./script.js"></script>
+<script src="./scripts/db-functions.js"></script>
 <script src="./scripts/navigations.js"></script>
 <script src="./scripts/add-task-dialog.js"></script>
+<script src="./scripts/contact-db.js"></script>
 
 </html>
