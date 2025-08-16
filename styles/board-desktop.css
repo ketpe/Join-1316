@@ -189,9 +189,5 @@
     font-weight: 400;
     font-style: Regular;
     font-size: 16px;
-    leading-trim: NONE;
-    line-height: 120%;
-    letter-spacing: 0%;
     color: var(--btn-compliance-links-font-color);
-
 }
