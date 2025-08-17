@@ -9,7 +9,31 @@
             </aside>
         </section>
         <section class="right-container-contacts">
-            <h1>TESCHD</h1>
-        </section>
+            <div class="close-contact-overlay">
+                <button class="btn-overlay-close" type="button"></button>
+            </div>
+            <section class="add-contact-form-and-picture">
+                <img src="./assets/profil-picture.svg" alt="profil-picture" class="add-contact-profil-picture">
+                <form class="add-contact-form form-for-add-contact">
+
+                    <div class="add-contact-input-field-container">
+
+                        <label for="contact-name" class="visually-hidden">Contact Name</label>
+                        <input type="text" id="contact-name" class="add-contact-input input-name" placeholder="Name">
+
+                        <label for="username" class="visually-hidden">Username</label>
+                        <input type="email" id="username" class="add-contact-input input-mail" placeholder="Email">
+
+                        <label for="phone" class="visually-hidden">Phone</label>
+                        <input type="tel" id="phone" class="add-contact-input input-phone" placeholder="Phone">
+
+                        <div class="login-form-buttons">
+                            <button type="button" class="btn-cancel btn btn-outline btn-md"
+                                onclick="cancelAddContact()">Cancel</button>
+                            <button type="submit" class="btn-create btn btn-fill btn-md">Create contact</button>
+                        </div>
+
+                </form>
+            </section>
     </main>
 </body>
