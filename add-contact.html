@@ -9,7 +9,41 @@
             </aside>
         </section>
         <section class="right-container-contacts">
-            <h1>TESCHD</h1>
-        </section>
+            <div class="close-contact-overlay">
+                <button class="btn-overlay-close" type="button">
+                    <div></div>
+                </button>
+            </div>
+            <section class="add-contact-form-and-picture">
+                <div role="img" class="add-contact-profil-picture" title="profil-avatar"></div>
+                <form class="add-contact-form form-for-add-contact">
+
+                    <div class="add-contact-input-field-container">
+
+                        <label for="contact-name" class="visually-hidden">Contact Name</label>
+                        <input type="text" id="contact-name" class="add-contact-input input-name" placeholder="Name">
+
+                        <label for="username" class="visually-hidden">Username</label>
+                        <input type="email" id="username" class="add-contact-input input-mail" placeholder="Email">
+
+                        <label for="phone" class="visually-hidden">Phone</label>
+                        <input type="tel" id="phone" class="add-contact-input input-phone" placeholder="Phone">
+
+                        <div class="login-form-buttons">
+                            <button type="button" class=" btn-clear-cancel btn btn-outline btn-md"
+                                onclick="cancelAddContact()">
+                                <p class="">Cancel</p>
+                                <div role="img" class="btn-cancel-icon"></div>
+                            </button>
+                            <button type="submit" class="btn-create btn btn-fill btn-md">
+                                <p class="">Create contact</p>
+                                <div role="img" class="btn-create-icon"></div>
+                            </button>
+                        </div>
+                        </button>
+                    </div>
+
+                </form>
+            </section>
     </main>
 </body>
