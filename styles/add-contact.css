@@ -91,7 +91,7 @@
     flex-direction: row;
     align-items: center;
     margin-left: calc(550px - 467px);
-    width: 422px;
+
 }
 
 .add-contact-profil-picture {
@@ -100,6 +100,10 @@
     border-radius: 70%;
     object-fit: cover;
     border: 3px solid rgba(255, 255, 255, 1);
+    background-image: url("../assets/profil-picture.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     /* padding-top: calc(204px - 80px - 57px); */
 }
 
@@ -110,18 +114,17 @@
 
 .add-contact-input {
     width: 100%;
-    display: flex;
     box-sizing: border-box;
     border: 1px solid var(--input-border-color);
     border-radius: 10px;
-    padding: 13px 21px 13px 21px;
-    margin: 8px 0;
+    padding: 13px 50px 13px 21px;
+    margin: 10px 0;
     background-color: white;
     background-repeat: no-repeat;
-    background-position: right center;
+    background-position: 380px center;
     font-family: 'Inter';
     font-size: 16px;
-    gap: 10px;
+
 }
 
 .input-mail {
@@ -153,8 +156,29 @@
 
 .btn-cancel {}
 
+
+.btn-create,
+.btn-cancel {
+    /* width: 126px; */
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
 .btn-create-icon {
-    background-image: url(../assets/done-icon.svg);
+    width: 24px;
+    height: 24px;
+    background-image: url(../assets/check-icon.svg);
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+.btn-cancel-icon {
+    width: 24px;
+    height: 24px;
+    background-image: url(../assets/cancel-clear-default.svg);
     background-position: right center;
     background-repeat: no-repeat;
 }
