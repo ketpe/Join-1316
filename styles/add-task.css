@@ -117,21 +117,17 @@
     color: var(--input-border-color);
 }
 
-/* .a-t-input[input="date"]:not(.has-value):before{
-    font-family: 'Inter';
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--input-border-color);
-    content: attr(placeholder);
-} */
 
-/* .a-t-input[type="date"]:before{
+.date-input {
+    background-repeat: no-repeat;
+    background-position: 400px center;
+    background-size: 24px;
+    background-image: url('../assets/calendar-icon.svg');
     font-family: 'Inter';
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--input-border-color);
-    content: attr(placeholder) !important;
-} */
+    color: (--input-border-color);
+}
+
+
 
 .mb-24 {
     margin-bottom: 24px;

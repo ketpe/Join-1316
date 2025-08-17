@@ -21,7 +21,13 @@
                     placeholder="Enter a Description"></textarea>
 
                 <Label for="task-due-date">Due date<span>*</span></Label>
-                <input class="a-t-input" type="text" id="task-due-date" name="task-due-date" placeholder="dd/mm/yyyy">
+                <input class="a-t-input date-input" 
+                    type="text" 
+                    id="task-due-date" 
+                    name="task-due-date" 
+                    placeholder="dd/mm/yyyy"
+                    inputmode="numeric"
+                    >
 
                 <div class="a-t-error-text-container">
                     <p id="a-t-due-date-required" class="error-text-hidden">This field is required</p>
