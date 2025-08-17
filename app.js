@@ -1,14 +1,21 @@
 async function includeHtml(targetId, file) {
-  const el = document.getElementById(targetId);
-  if (!el) throw new Error(`Target #${targetId} nicht gefunden`);
 
-  const res = await fetch(file, { cache: "no-cache" });
-  if (!res.ok) throw new Error(`Fehler beim Laden: ${file} (${res.status})`);
+  try {
+    const element = document.getElementById(targetId);
+    if (!element) throw new Error(`Target #${targetId} not found`);
 
-  const html = await res.text();
-  el.innerHTML = html;
+    const res = await fetch(file, { cache: "no-cache" });
+    if (!res.ok) throw new Error(`Error loading: ${file} (${res.status})`);
 
-  return el;
+    const html = await res.text();
+    element.innerHTML = html;
+
+    return element;
+  } catch (error) {
+    return error.message;
+  }
+
+
 }
 
 window.includeHtml = includeHtml;
