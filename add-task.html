@@ -13,7 +13,7 @@
                 <label for="task-title">Title<span>*</span></label>
                 <input class="a-t-input" id="task-title" name="task-title" type="text" placeholder="Enter a title">
                 <div class="a-t-error-text-container">
-                    <p>This field is required</p>
+                    <p id="a-t-title-required" class="error-text-hidden">This field is required</p>
                 </div>
 
                 <label for="task-sescription">Description</label>
@@ -21,9 +21,16 @@
                     placeholder="Enter a Description"></textarea>
 
                 <Label for="task-due-date">Due date<span>*</span></Label>
-                <input class="a-t-input" type="date" id="task-due-date" name="task-due-date" placeholder="dd/mm/yyyy">
+                <input class="a-t-input date-input" 
+                    type="text" 
+                    id="task-due-date" 
+                    name="task-due-date" 
+                    placeholder="dd/mm/yyyy"
+                    inputmode="numeric"
+                    >
+
                 <div class="a-t-error-text-container">
-                    <p>This field is required</p>
+                    <p id="a-t-due-date-required" class="error-text-hidden">This field is required</p>
                 </div>
 
             </div>
@@ -61,7 +68,7 @@
                 <input class="a-t-input" type="text" name="task-category" id="task-category"
                     placeholder="Select task category">
                 <div class="a-t-error-text-container">
-                    <p>This field is required</p>
+                    <p id="a-t-category-required" class="error-text-hidden">This field is required</p>
                 </div>
 
                 <label for="task-sub-task">Subtasks</label>
