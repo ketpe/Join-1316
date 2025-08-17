@@ -21,7 +21,7 @@ function changeAddTaskViewToStandard() {
     document.getElementById('a-t-dialog-close-btn').classList.add('display-hidden');
     document.getElementById('a-t-cancel-btn').classList.add('display-hidden');
     document.getElementById('a-t-clear-btn').classList.remove('display-hidden');
-    
+    document.getElementById('add-task-form').classList.add('add-task-form-desktop').classList.remove('add-task-form-dialog');
 }
 
 
