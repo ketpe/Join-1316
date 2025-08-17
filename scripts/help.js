@@ -1,9 +1,11 @@
 let currentSource = "";
 
-function onHelpLoad() {
+async function onHelpLoad() {
     getCurrentSource();
-    includeHtml("navbar", "navbar-desktop.html");
-    includeHtml("header", "header-desktop.html");
+    await Promise.all([
+        includeHtml("navbar", "navbar-desktop.html"),
+        includeHtml("header", "header-desktop.html")
+    ]);
 }
 
 function getCurrentSource() {

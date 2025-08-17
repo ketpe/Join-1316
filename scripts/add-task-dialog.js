@@ -1,13 +1,16 @@
-function onAddTaskDialogOpen() {
+async function onAddTaskDialogOpen() {
     toggleScrollOnBody();
     addDialogShowClass();
     document.getElementById('add-task-dialog').showModal();
-    renderAddTaskIntoDialog();
+    await renderAddTaskIntoDialog();
+    changeAddTaskViewToDialog();
 }
 
 function addTaskDialogClose(event) {
+
     const dialog = document.getElementById('add-task-dialog');
-    if(event.target == dialog){
+    const closeDiv = document.getElementById('a-t-dialog-close-div');
+    if(event.target == dialog || event.target == closeDiv){
         addDialogHideClass();
         setTimeout(function() {
             dialog.close();
@@ -22,8 +25,16 @@ function toggleScrollOnBody() {
 }
 
 
-function renderAddTaskIntoDialog() {
-    includeHtml("dialog-content", "add-task.html");
+async function renderAddTaskIntoDialog() {
+    await Promise.all([
+        includeHtml("dialog-content", "add-task.html")
+    ]);
+}
+
+function changeAddTaskViewToDialog() {
+    document.getElementById('a-t-dialog-close-btn').classList.remove('display-hidden');
+    document.getElementById('a-t-cancel-btn').classList.remove('display-hidden');
+    document.getElementById('a-t-clear-btn').classList.add('display-hidden');
 }
 
 function addDialogShowClass() {
