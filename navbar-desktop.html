@@ -1,35 +1,31 @@
+<nav class="nav-desktop">
+    <img class="join-logo" src="./assets/join-logo.svg" alt="Join Logo" />
 
-<body>
-    <nav class="nav-desktop">
-        <img class="join-logo" src="./assets/join-logo.svg" alt="Join Logo" />
-
-        <menu class="nav-desktop-menu">
-            <button class="nav-desktop-btn">
-                <div class="summary-img"></div>
-                <p>Summary</p>
-            </button>
-            <button type="button" class="nav-desktop-btn" onclick="navigateToAddTask('FromNav')">
-                <div class="add-task-img"></div>
-                <p>Add Task </p>
-            </button>
-            <button type="button" class="nav-desktop-btn" onclick="navigateToBord()">
-                <div class="board-img"></div>
-                <p>Board</p>
-            </button>
-            <button type="button" class="nav-desktop-btn"  onclick="navigateToContact()">
-                <div class="contact-img"></div>
-                <p>Contacts</p>
-            </button>
-        </menu>
+    <menu class="nav-desktop-menu">
+        <button type="button" id="summary-desktop-btn" class="nav-desktop-btn">
+            <div class="summary-img"></div>
+            <p>Summary</p>
+        </button>
+        <button type="button" class="nav-desktop-btn" onclick="navigateToAddTask()">
+            <div class="add-task-img"></div>
+            <p>Add Task </p>
+        </button>
+        <button type="button" class="nav-desktop-btn" onclick="navigateToBord()">
+            <div class="board-img"></div>
+            <p>Board</p>
+        </button>
+        <button type="button" class="nav-desktop-btn" onclick="navigateToContact()">
+            <div class="contact-img"></div>
+            <p>Contacts</p>
+        </button>
+    </menu>
 
 
-        <section class="compliance-links" aria-label="compliance-links">
-            <a href="./privacy-policy.html">Privacy Policy</a>
-            <a href="./legal-notice.html">Legal notice</a>
-        </section>
+    <section class="compliance-links" aria-label="compliance-links">
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <a href="./legal-notice.html">Legal notice</a>
+    </section>
 
 
 
-    </nav>
-</body>
-
+</nav>

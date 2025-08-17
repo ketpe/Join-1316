@@ -8,6 +8,8 @@
     <link rel="shortcut icon" href="./assets/logo-for-Favicon.svg" type="image/x-icon">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./styles/board-desktop.css">
+    <link rel="stylesheet" href="./styles/add-task-dialog.css">
+    <link rel="stylesheet" href="./styles/add-task.css">
 
 </head>
 
@@ -36,7 +38,7 @@
                                         </button>
                                     </div>
                                 </form>
-                                <button type="button" class="btn btn-fill btn-lg btn-add-tasks">
+                                <button type="button" class="btn btn-fill btn-lg btn-add-tasks" onclick="onAddTaskDialogOpen()">
                                     <p>Add new Task</p>
                                     <img src="./assets/plus-icon.svg" alt="" srcset="">
                                 </button>
@@ -109,14 +111,23 @@
                         </div>
                     </article>
                 </section>
+                <section id="add-task-dialog-section" class="add-task-dialog-section">
+                    <dialog id="add-task-dialog" class="" onclick="addTaskDialogClose(event)">
+                        <div id="dialog-content"></div>
+                    </dialog>
+                </section>
             </main>
         </div>
     </div>
 
+    <script type="module" src="./app.js"></script>
+    <script src="./script.js"></script>
+    <script src="./scripts/db-functions.js"></script>
+    <script src="./scripts/add-task-dialog.js"></script>
+    <script src="./scripts/navigations.js"></script>
+    <script src="./scripts/drag-and-drop.js"></script>
 
 </body>
-<script src="./script.js"></script>
-<script src="./scripts/navigations.js"></script>
-<script src="./scripts/drag-and-drop.js"></script>
+
 
 </html>

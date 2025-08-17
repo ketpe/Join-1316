@@ -1,23 +1,27 @@
-//import * as dbFunction from "./db-contact.js";
 
-
-function onLoadAddTask(){
-
-    let param = new URLSearchParams(document.location.search);
-    let loadValue = param.get('loadValue');
-
-    if(loadValue !== null && loadValue.startsWith("FromNav")){
-        renderAddTaskWithNavAndHeader();
-    }else{
-        renderAddTaskAsOverlay();
-    }
-
+async function onLoadAddTask(){
+    await renderAddTaskWithNavAndHeader();
+    changeAddTaskViewToStandard()
 }
 
 
-function renderAddTaskWithNavAndHeader() {
-    includeHtml("navbar", "navbar-desktop.html");
-    includeHtml("header", "header-desktop.html");
-    includeHtml("add-task-content", "add-task.html");
+async function renderAddTaskWithNavAndHeader() {
 
+    await Promise.all([
+        includeHtml("navbar", "navbar-desktop.html"),
+        includeHtml("header", "header-desktop.html"),
+        includeHtml("add-task-content", "add-task.html")
+    ]);
+  
 }
+
+
+
+function changeAddTaskViewToStandard() {
+    document.getElementById('a-t-dialog-close-btn').classList.add('display-hidden');
+    document.getElementById('a-t-cancel-btn').classList.add('display-hidden');
+    document.getElementById('a-t-clear-btn').classList.remove('display-hidden');
+    
+}
+
+
