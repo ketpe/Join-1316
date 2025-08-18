@@ -1,7 +1,7 @@
 
-//Beispiel zum erstellen eines neuen 
+//Beispiel zum erstellen eines neuen
 async function newContakt() {
-    
+
     const uid = getNewUid();
 
     let contact = {
@@ -25,7 +25,7 @@ async function newContakt() {
 async function allCantacts() {
     let t = await getAllData('contacts');
     console.log(t);
-    
+
 }
 
 //einen Kontakt löschen
@@ -34,11 +34,11 @@ async function deleteContactByID(id = "") {
     let res = await deleteData(`/contacts/${id}`);
 
     console.log(res);
-    
+
 }
 
 //einen Kontakt für die ID suchen
-async function getContactByID(id="") {
+async function getContactByID(id = "") {
     let contact = await getDataByKey("id", id, "contacts");
 
     console.log(contact);

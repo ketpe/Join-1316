@@ -1,5 +1,5 @@
-
-async function newContact() {
+async function newContact(event) {
+    if (event) event.preventDefault(); // verhindert das Neuladen der Seite
     const uid = getNewUid();
     const contact = createContactObject(uid);
     var t = await putData(`/contacts/${uid}`, contact);
