@@ -1,5 +1,5 @@
 
-async function onLoadAddTask(){
+async function onLoadAddTask() {
     await renderAddTaskWithNavAndHeader();
     changeAddTaskViewToStandard()
 }
@@ -12,7 +12,7 @@ async function renderAddTaskWithNavAndHeader() {
         includeHtml("header", "header-desktop.html"),
         includeHtml("add-task-content", "add-task.html")
     ]);
-  
+
 }
 
 
@@ -28,19 +28,17 @@ function changeAddTaskViewToStandard() {
 
 function dateFieldOnFocus() {
     let dateField = document.getElementById('task-due-date');
-
-    let t = dateField.getAttribute('type');
-
-    console.log(t);
-
-    dateField.setAttribute('type', 'date');
-
-    console.log(dateField);
     
+}
 
-    /* if(dateField.type !== 'date'){
-        dateField.type == 'date';
-    }
+function onDateIconClick(){
+    let datePicker = document.getElementById('due-date-hidden');
+    datePicker.showPicker();
+}
 
-    console.log(dateField); */
+function datePickerSelectionChange(e) {
+    let newDateArr = String(e.target.value).split('-');
+    let newDateString = `${newDateArr[2]}/${newDateArr[1]}/${newDateArr[0]}`;
+    document.getElementById('due-date-display').value = newDateString;
+   
 }
