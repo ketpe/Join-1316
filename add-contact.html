@@ -10,7 +10,8 @@
         </section>
         <section class="right-container-contacts">
             <div class="close-contact-overlay">
-                <button class="btn-overlay-close" type="button">
+                <button onclick="addContactDialogClose(event)" class="btn-overlay-close" id="btn-overlay-close-contacts"
+                    type="button">
                     <div></div>
                 </button>
             </div>
@@ -23,11 +24,11 @@
                         <label for="contact-name" class="visually-hidden">Contact Name</label>
                         <input type="text" id="contact-name" class="add-contact-input input-name" placeholder="Name">
 
-                        <label for="username" class="visually-hidden">Username</label>
-                        <input type="email" id="username" class="add-contact-input input-mail" placeholder="Email">
+                        <label for="email" class="visually-hidden">Email</label>
+                        <input type="email" id="contact-email" class="add-contact-input input-mail" placeholder="Email">
 
                         <label for="phone" class="visually-hidden">Phone</label>
-                        <input type="tel" id="phone" class="add-contact-input input-phone" placeholder="Phone">
+                        <input type="tel" id="contact-phone" class="add-contact-input input-phone" placeholder="Phone">
 
                         <div class="login-form-buttons">
                             <button type="button" class=" btn-clear-cancel btn btn-outline btn-md"
@@ -35,7 +36,7 @@
                                 <p class="">Cancel</p>
                                 <div role="img" class="btn-cancel-icon"></div>
                             </button>
-                            <button type="submit" class="btn-create btn btn-fill btn-md">
+                            <button type="submit" onclick="newContact()" class="btn-create btn btn-fill btn-md">
                                 <p class="">Create contact</p>
                                 <div role="img" class="btn-create-icon"></div>
                             </button>

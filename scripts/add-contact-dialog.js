@@ -16,6 +16,20 @@ function addContactDialogClose(event) {
 
     }
 }
+//FIXME - Selektor ändern
+function addContactDialogClose(event) {
+
+    const dialog = document.getElementById('add-contact-dialog');
+    const closeDiv = document.getElementById('btn-overlay-close-contacts');
+    if (event.target == dialog || event.target == closeDiv) {
+        addDialogHideClass();
+        setTimeout(function () {
+            dialog.close();
+            toggleScrollOnBody();
+        }, 1000);
+
+    }
+}
 
 function toggleScrollOnBody() {
     document.getElementsByTagName('body')[0].classList.toggle('dialog-open');
@@ -33,7 +47,7 @@ function addDialogShowClass() {
 }
 
 function addDialogHideClass() {
-    let dialog = document.getElementById('add-contacts-dialog');
+    let dialog = document.getElementById('add-contact-dialog');
     dialog.classList.remove('dialog-show');
     dialog.classList.add('dialog-hide');
 }
