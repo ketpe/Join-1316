@@ -118,6 +118,15 @@
 }
 
 
+/* Datumsfeld*/
+
+.date-field {
+    position: relative;
+    display: inline-block;
+    width: 440px;
+
+}
+
 .date-input {
     background-repeat: no-repeat;
     background-position: 400px center;
@@ -125,12 +134,54 @@
     background-image: url('../assets/calendar-icon.svg');
     font-family: 'Inter';
     color: (--input-border-color);
+    z-index: 200;
 }
 
-.date-input::-webkit-calendar-picker-indicator {
-  display: none;
+.date-input.focus{
+    outline: none;
+    border-color: var(--btn-bg-hover);
 }
 
+.a-t-input:focus{
+    outline: none;
+    border-color: var(--btn-bg-hover);
+}
+
+.date-input-hidden{
+    position: absolute;
+    width: 100%;
+    color: transparent;
+    pointer-events: unset;
+    transform: translateY(-100%);
+    z-index: -1; 
+}
+
+
+/* .date-input::-webkit-calendar-picker-indicator {
+    display: none;
+} */
+
+.date-field .date-trigger {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+#due-date-hidden::-webkit-datetime-edit-fields-wrapper {
+    position: relative;
+    left: 10%;
+}
+#due-date-hidden::-webkit-datetime-edit {
+    position: relative;
+    left: 10%;
+}
 
 
 .mb-24 {
