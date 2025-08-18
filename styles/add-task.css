@@ -127,6 +127,10 @@
     color: (--input-border-color);
 }
 
+.date-input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
 
 
 .mb-24 {
