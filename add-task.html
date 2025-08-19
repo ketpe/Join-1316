@@ -24,7 +24,10 @@
 
                 <div class="date-field">
                     <input class="a-t-input date-input" id="due-date-display" type="text" placeholder="dd/mm/yyyy"
-                    inputmode="numeric"
+                        inputmode="numeric"
+                        onfocus="dateFieldOnFocus()"
+                        onblur="dateFieldOnChange()"
+                        oninput="dateFieldOnChange()"
                     >
                     <input type="date"  id="due-date-hidden" placeholder="Date" class="date-input-hidden" onchange="datePickerSelectionChange(event)">
                     <button type="button" class="date-trigger" aria-label="Kalender öffnen" onclick="onDateIconClick()"></button>

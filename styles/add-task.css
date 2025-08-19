@@ -147,6 +147,11 @@
     border-color: var(--btn-bg-hover);
 }
 
+.input-has-error{
+    outline: none;
+    border-color: var(--input-error-color);
+}
+
 .date-input-hidden{
     position: absolute;
     width: 100%;
@@ -198,9 +203,12 @@
     font-family: 'Inter';
     font-size: 12;
     font-weight: 400;
-    color: var(--input-error-color);
     margin-block-start: 0;
     margin-block-end: 0;
+}
+
+.error-text-show{
+    color: var(--input-error-color) !important;
 }
 
 .error-text-hidden {
