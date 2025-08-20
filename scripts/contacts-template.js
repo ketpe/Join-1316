@@ -9,7 +9,7 @@ function getContactListContent(obj) {
                                             <p class="contact-initials-text">${obj.initial}</p>
                                         </div>
                                         <div class="contact-info">
-                                            <div class="contact-name">${obj.firstname} ${obj.lastname}'</div>
+                                            <div class="contact-name">${obj.firstname} ${obj.lastname}</div>
                                             <div class="contact-email">${obj.email}</div>
                                         </div>
                                     </li>`

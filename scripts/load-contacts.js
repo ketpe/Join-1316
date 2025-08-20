@@ -1,33 +1,32 @@
+/**
+ * Renders the contact list
+ * @returns
+ */
 async function renderContacts() {
     const contactList = document.getElementById("contact-list");
     contactList.innerHTML = "";
-    const contacts = await getAllData("contacts");
-    console.log(contacts);
-    let contactssorted = contacts.sort((a, b) => a.firstname.localeCompare(b.firstname));
-    console.log(contactssorted);
-
+    let sortedContacts = await getSortedContact();
     let currentLetter = null;
-    let htmlOutput = ""
+    createContactList(currentLetter, sortedContacts, contactList)
+}
 
-    for (const obj of contactssorted) {
+/**
+ * Creates the contact list
+ * @param {*} currentLetter
+ * @param {*} sortedContacts
+ * @param {*} contactList
+ */
+function createContactList(currentLetter, sortedContacts, contactList) {
+    for (const obj of sortedContacts) {
         let firstLetter = obj.firstname[0].toUpperCase();
-        //NOTE - Prüft ob Der erste Buchstaben im aktuellen lauf den gleichen Buchstaben hat wie in currentLetter
         if (firstLetter !== currentLetter) {
-            //NOTE - Falls ja wird ein neuer Trenner erstellt
-
-            if (currentLetter !== null) {
-                // contactList.innerHTML += getContactListHeaderTemplate(firstLetter);
-
-                // currentLetter = firstLetter;
-                // contactList.innerHTML += htmlOutput;
-
-            }
             contactList.innerHTML += getContactListHeaderTemplate(firstLetter);
             contactList.innerHTML += getContactListContent(obj);
-
-            // contactList.innerHTML += htmlOutput;
+        } else {
+            contactList.innerHTML += getContactListContent(obj);
         }
+        currentLetter = firstLetter;
     }
-
 }
+
 

@@ -1,5 +1,5 @@
-
-//Beispiel zum erstellen eines neuen
+//FIXME - DB-Beispiel Funktionen tatsächlich verwendete sind in db-funktionen oder den jeweiligen JS-Dateien
+//Beispiel zum erstellen eines neuen Kontakts
 async function newContakt() {
 
     const uid = getNewUid();
@@ -44,8 +44,3 @@ async function getContactByID(id = "") {
     console.log(contact);
 }
 
-async function getSortedContact() {
-    const contacts = await getAllData("contacts");
-    let contactssorted = contacts.sort((a, b) => a.firstname.localeCompare(b.firstname));
-    return contactssorted
-}

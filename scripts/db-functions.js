@@ -1,7 +1,7 @@
 /**
  * Get all Data from Firebase database by tablename.
- * @param {string} tableName 
- * @returns 
+ * @param {string} tableName
+ * @returns
  */
 async function getAllData(tableName = "") {
     let dataArray = [];
@@ -21,21 +21,21 @@ async function getAllData(tableName = "") {
 
 /**
  * Get data by searchkey and value of database by tablename.
- * @param {string} key 
- * @param {*} values 
- * @param {string} tableName 
- * @returns 
+ * @param {string} key
+ * @param {*} values
+ * @param {string} tableName
+ * @returns
  */
-async function getDataByKey(key="", values, tableName = "") {
+async function getDataByKey(key = "", values, tableName = "") {
     let dataArray = await getAllData(tableName);
     return dataArray.length > 0 ? dataArray.find(x => x[key] == values) : null;
 }
 
 /**
  * Put or add data in database by path.
- * @param {string} path 
- * @param {*} data 
- * @returns 
+ * @param {string} path
+ * @param {*} data
+ * @returns
  */
 async function putData(path = "", data = {}) {
     let response;
@@ -61,13 +61,13 @@ async function putData(path = "", data = {}) {
 
 /**
  * Remove data by path.
- * @param {string} path 
- * @returns 
+ * @param {string} path
+ * @returns
  */
 async function deleteData(path = "") {
 
     try {
-        let response = await fetch(BASE_URL + path + ".json",{
+        let response = await fetch(BASE_URL + path + ".json", {
             method: "DELETE",
         });
 
@@ -83,9 +83,20 @@ async function deleteData(path = "") {
 
 /**
  * Create a unique id as string.
- * @returns 
+ * @returns
  */
 function getNewUid() {
-    
+
     return crypto.randomUUID();
+}
+
+/**
+ * Gets all contacts from the database in a sorted order.
+ * @returns
+ */
+
+async function getSortedContact() {
+    const contacts = await getAllData("contacts");
+    let contactssorted = contacts.sort((a, b) => a.firstname.localeCompare(b.firstname));
+    return contactssorted
 }
