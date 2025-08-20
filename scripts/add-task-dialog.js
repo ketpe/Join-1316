@@ -37,6 +37,7 @@ function changeAddTaskViewToDialog() {
     document.getElementById('a-t-clear-btn').classList.add('display-hidden');
     document.getElementById('add-task-form').classList.remove('add-task-form-desktop');
     document.getElementById('add-task-form').classList.add('add-task-form-dialog');
+    document.getElementById('a-t-middle-container').classList.add('a-t-f-i-midle-dialog');
 }
 
 function addDialogShowClass() {

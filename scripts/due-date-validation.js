@@ -10,8 +10,7 @@ function startDueDateValidation() {
         checkTheDateValue(dateField.value);
 
     } else {
-        showAndLeaveErrorMessage("a-t-due-date-required", true);
-        showAndLeaveErrorBorder("due-date-display", true);
+        dueDateSetError();
     }
 }
 

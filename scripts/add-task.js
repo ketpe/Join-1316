@@ -1,4 +1,5 @@
 let currentDueDate = "";
+let cuurentTitle = "";
 
 
 async function onLoadAddTask() {
@@ -24,6 +25,7 @@ function changeAddTaskViewToStandard() {
     document.getElementById('a-t-clear-btn').classList.remove('display-hidden');
     document.getElementById('add-task-form').classList.add('add-task-form-desktop');
     document.getElementById('add-task-form').classList.remove('add-task-form-dialog');
+    document.getElementById('a-t-middle-container').classList.remove('a-t-f-i-midle-dialog');
 }
 
 
@@ -48,6 +50,31 @@ function datePickerSelectionChange(e) {
     document.getElementById('due-date-display').value = newDateString;
     dateFieldOnChange();
 
+}
+
+
+function addTaskTitleOnInput() {
+    let titleValue = document.getElementById('task-title');
+
+    if(!titleValue.value){
+        showAndLeaveErrorMessage("a-t-title-required", true);
+        showAndLeaveErrorBorder("task-title", true);
+    }else {
+        taskTitleValidation(titleValue.value);
+    }
+}
+
+
+function taskTitleValidation(titleValue) {
+    const cleanTitleValue = (titleValue ?? "").trim();
+    
+    if(cleanTitleValue.length > 3){
+        showAndLeaveErrorMessage("a-t-title-required", false);
+        showAndLeaveErrorBorder("task-title", false);
+    }else{
+        showAndLeaveErrorMessage("a-t-title-required", true);
+        showAndLeaveErrorBorder("task-title", true);
+    }
 }
 
 function showAndLeaveErrorMessage(messageTarget, visibilty = true) {

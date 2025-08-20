@@ -74,6 +74,10 @@
     margin-right: 24px;
 }
 
+.a-t-f-i-midle-dialog{
+    height: 440px;
+}
+
 .add-task-footer {
     margin-top: 32px;
     width: calc((2 * 440px) + (2 * 24px) + 2px);
@@ -153,11 +157,11 @@
 }
 
 .date-input-hidden{
-    position: absolute;
-    width: 100%;
+    position: relative;
+    width: 80%;
     color: transparent;
     pointer-events: unset;
-    transform: translateY(-100%);
+    transform: translateY(-100%) translateX(5px);
     z-index: -1; 
 }
 
@@ -177,15 +181,6 @@
     border: 0;
     background: none;
     cursor: pointer;
-}
-
-#due-date-hidden::-webkit-datetime-edit-fields-wrapper {
-    position: relative;
-    left: 10%;
-}
-#due-date-hidden::-webkit-datetime-edit {
-    position: relative;
-    left: 10%;
 }
 
 
