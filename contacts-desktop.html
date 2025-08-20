@@ -13,7 +13,7 @@
 
 </head>
 
-<body onload="init()">
+<body onload="init(),  renderContacts()">
 
     <div class="main-container">
         <div class="left-container">
@@ -34,10 +34,10 @@
                                 </button>
                             </div>
                             <div class="contacts-scroll-wrapper">
-                                <ul class="contacts">
+                                <ul class="contacts" id="contact-list">
                                     <li class="contact-letter">A</li>
                                     <li class="separator-contact-list"></li>
-                                    <li class="contact-item">
+                                    <!-- <li class="contact-item">
                                         <div class="contact-initials">
                                             <p class="contact-initials-text">AM</p>
                                         </div>
@@ -45,8 +45,8 @@
                                             <div class="contact-name">Anton Mayer</div>
                                             <div class="contact-email">antom@gmail.com</div>
                                         </div>
-                                    </li>
-                                    <li class="contact-item">
+                                    </li> -->
+                                    <!-- <li class="contact-item">
                                         <div class="contact-initials">
                                             <p class="contact-initials-text">AS</p>
                                         </div>
@@ -54,10 +54,10 @@
                                             <div class="contact-name">Anja Schulz</div>
                                             <div class="contact-email">schulz@hotmal.com</div>
                                         </div>
-                                    </li>
+                                    </li> -->
                                     <li class="contact-letter">B</li>
                                     <li class="separator-contact-list"></li>
-                                    <li class="contact-item">
+                                    <!-- <li class="contact-item">
                                         <div class="contact-initials">
                                             <p class="contact-initials-text">AS</p>
                                         </div>
@@ -65,7 +65,7 @@
                                             <div class="contact-name">Benedikt Ziegler</div>
                                             <div class="contact-email">benedikt@gmail.com</div>
                                         </div>
-                                    </li>
+                                    </li> -->
                                     <li class="contact-letter">C</li>
                                     <li class="separator-contact-list"></li>
                                     <li class="contact-letter">D</li>
@@ -145,6 +145,8 @@
     <!-- <script src="./scripts/contact-db.js"></script> -->
     <script src="./scripts/db-functions.js"></script>
     <script src="./scripts/add-new-contact.js"></script>
+    <script src="./scripts/load-contacts.js"></script>
+    <script src="./scripts/contacts-template.js"></script>
 
 
 </body>
