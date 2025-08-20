@@ -221,6 +221,12 @@
     font-size: 20px;
 }
 
+.a-t-text-area:focus{
+    outline: none;
+    border-color: var(--btn-bg-hover);
+    
+}
+
 .a-t-text-area::placeholder {
     font-family: 'Inter';
     font-size: 20px;
