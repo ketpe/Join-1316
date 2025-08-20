@@ -43,3 +43,9 @@ async function getContactByID(id = "") {
 
     console.log(contact);
 }
+
+async function getSortedContact() {
+    const contacts = await getAllData("contacts");
+    let contactssorted = contacts.sort((a, b) => a.firstname.localeCompare(b.firstname));
+    return contactssorted
+}
