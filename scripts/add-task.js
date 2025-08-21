@@ -1,10 +1,12 @@
 let currentDueDate = "";
 let cuurentTitle = "";
+let contactAllListFromDB = [];
 
 
 async function onLoadAddTask() {
     await renderAddTaskWithNavAndHeader();
     changeAddTaskViewToStandard()
+    await loadDataForAddTaskViewAndRenderView();
 }
 
 
@@ -29,9 +31,25 @@ function changeAddTaskViewToStandard() {
 }
 
 
-function dateFieldOnFocus() {
-    let dateField = document.getElementById('task-due-date');
 
+async function loadDataForAddTaskViewAndRenderView(){
+    await loadContactsAllFomDB();
+    renderContactOptions(contactAllListFromDB);
+    
+}
+
+function renderContactOptions(contactList) {
+    let contactSelectElement = document.getElementById('task-assign-to');
+
+    contactSelectElement.innerHTML += "<option value=''>Select contacts to assign</option>"
+
+    for(let i = 0; i < contactList.length; i++){
+        contactSelectElement.innerHTML += addTaskContactOption(contactList[i]);
+    }
+}
+
+async function loadContactsAllFomDB() {
+    contactAllListFromDB = await getSortedContact()
 }
 
 

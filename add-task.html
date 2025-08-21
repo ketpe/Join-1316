@@ -70,8 +70,21 @@
                 </div>
 
                 <label for="task-assign-to">Assigned to</label>
-                <input class="a-t-input mb-24" type="text" name="task-assign-to" id="task-assign-to"
+                <input class="a-t-input mb-24" type="text" name="task-assign-to" id="task-assign"
+                    placeholder="Select contacts to assign"
+                >
+
+                <!-- 
+                    - Das Select hinter das Inputfeld schieben
+                    - 2 verschiedene Buttons mit den Pfeilen einbauen
+                    - beim drücken auf den Pfeil nach unten geht die Auswahlliste auf und der Button wird geändert
+                    - beim drücken auf den Pfeil nach oben geht die Auswahlliste zu, wie bei verlassen des Focus
+                
+                -->
+
+                <select class="a-t-input a-t-select mb-24" type="text" name="task-assign-to" id="task-assign-to"
                     placeholder="Select contacts to assign">
+                </select>
 
                 <label for="task-category">Category<span>*</span></label>
                 <input class="a-t-input" type="text" name="task-category" id="task-category"

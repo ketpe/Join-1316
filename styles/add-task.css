@@ -121,8 +121,12 @@
     color: var(--input-border-color);
 }
 
+.a-t-select{
+    width: 100%;
+    height: 48px;
+}
 
-/* Datumsfeld*/
+
 
 .date-field {
     position: relative;

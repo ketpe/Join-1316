@@ -100,3 +100,4 @@ async function getSortedContact() {
     let contactssorted = contacts.sort((a, b) => a.firstname.localeCompare(b.firstname));
     return contactssorted
 }
+
