@@ -6,18 +6,6 @@ function onAddContactDialogOpen() {
 }
 
 function addContactDialogClose(event) {
-    const dialog = document.getElementById('add-contact-dialog');
-    if (event.target == dialog) {
-        addDialogHideClass();
-        setTimeout(function () {
-            dialog.close();
-            toggleScrollOnBody();
-        }, 1000);
-
-    }
-}
-//FIXME - Selektor ändern
-function addContactDialogClose(event) {
 
     const dialog = document.getElementById('add-contact-dialog');
     const closeDiv = document.getElementById('btn-overlay-close-contacts');
