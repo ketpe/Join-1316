@@ -1,3 +1,5 @@
+
+//FIXME - Dialoge könnten mit add-task-dialog zusammengelegt werden
 function onAddContactDialogOpen() {
     toggleScrollOnBody();
     addDialogShowClass();
