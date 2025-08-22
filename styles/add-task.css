@@ -4,7 +4,7 @@
 }
 
 .add-task-form-desktop {
-    /* box-sizing: border-box; */
+    box-sizing: border-box;
     margin-left: 96px;
     margin-right: 24px;
     margin-bottom: 36px;
@@ -30,6 +30,7 @@
 .add-task-fields {
     display: flex;
     flex-direction: column;
+    overflow-y: hidden;
 }
 
 .add-task-fields label {
@@ -49,6 +50,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+
 }
 
 .a-t-f-i-left {
@@ -74,11 +76,13 @@
     margin-right: 24px;
 }
 
-.a-t-f-i-midle-dialog{
+.a-t-f-i-midle-dialog {
     height: 440px;
 }
 
 .add-task-footer {
+    position: absolute;
+    bottom: 80px;
     margin-top: 32px;
     width: calc((2 * 440px) + (2 * 24px) + 2px);
     display: flex;
@@ -121,7 +125,7 @@
     color: var(--input-border-color);
 }
 
-.a-t-select{
+.a-t-select {
     width: 100%;
     height: 48px;
 }
@@ -145,28 +149,28 @@
     z-index: 200;
 }
 
-.date-input.focus{
+.date-input.focus {
     outline: none;
     border-color: var(--btn-bg-hover);
 }
 
-.a-t-input:focus{
+.a-t-input:focus {
     outline: none;
     border-color: var(--btn-bg-hover);
 }
 
-.input-has-error{
+.input-has-error {
     outline: none;
     border-color: var(--input-error-color);
 }
 
-.date-input-hidden{
+.date-input-hidden {
     position: relative;
     width: 80%;
     color: transparent;
     pointer-events: unset;
     transform: translateY(-100%) translateX(5px);
-    z-index: -1; 
+    z-index: -1;
 }
 
 
@@ -206,7 +210,7 @@
     margin-block-end: 0;
 }
 
-.error-text-show{
+.error-text-show {
     color: var(--input-error-color) !important;
 }
 
@@ -225,10 +229,10 @@
     font-size: 20px;
 }
 
-.a-t-text-area:focus{
+.a-t-text-area:focus {
     outline: none;
     border-color: var(--btn-bg-hover);
-    
+
 }
 
 .a-t-text-area::placeholder {
@@ -245,7 +249,54 @@
     gap: 16px
 }
 
+.contact-List-container {
+    box-sizing: border-box;
+    position: relative;
+    transform: translateY(-50px);
+    max-height: 592px;
+    height: 0;
+    width: 416px;
+    border-radius: 0px 0px 10px 10px;
+    background-color: white;
+    z-index: 1;
+    box-shadow: 0 0 14px 3px rgba(0, 0, 0, .2);
+    overflow: hidden;
+    transition: height 0.3s ease;
+
+}
+
+.contact-List-for-task {
+    width: 100%;
+    margin-top: 24px;
+    margin-bottom: 10px;
+    height: 0;
+    background-color: white;
+    overflow-y: scroll;
+    z-index: 1;
+}
 
 .display-hidden {
     display: none;
+}
+
+.show-front {
+    z-index: 5;
+}
+
+.contact-ellipse{
+    height: 42px;
+    width: 42px;
+    border: 2px solid white;
+    border-radius: 56px;
+/*     display: flex;
+    justify-self: center;
+    align-items: center; */
+
+    span{
+        font-family: 'Inter';
+        font-size: 12px;
+        font-weight: 400;
+        color: white;
+        align-self: center;
+    }
 }

@@ -44,6 +44,7 @@ a {
     overflow: hidden;
 }
 
+/**TODO - Am Ende anpassen */
 .dialog-show{
     animation: slide-Dialog-in 1000ms ease-in-out forwards;
 }

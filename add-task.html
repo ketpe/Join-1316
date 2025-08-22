@@ -11,11 +11,8 @@
             <div class="a-t-f-i-left">
 
                 <label for="task-title">Title<span>*</span></label>
-                <input class="a-t-input" id="task-title" name="task-title" type="text" 
-                    placeholder="Enter a title" 
-                    oninput="addTaskTitleOnInput()"
-                    onblur="addTaskTitleOnInput()"
-                    >
+                <input class="a-t-input" id="task-title" name="task-title" type="text" placeholder="Enter a title"
+                    oninput="addTaskTitleOnInput()" onblur="addTaskTitleOnInput()">
                 <div class="a-t-error-text-container">
                     <p id="a-t-title-required" class="error-text-hidden">This field is required</p>
                 </div>
@@ -28,13 +25,12 @@
 
                 <div class="date-field">
                     <input class="a-t-input date-input" id="due-date-display" type="text" placeholder="dd/mm/yyyy"
-                        inputmode="numeric"
-                        onfocus="dateFieldOnFocus()"
-                        onblur="dateFieldOnChange()"
-                        oninput="dateFieldOnChange()"
-                    >
-                    <input type="date"  id="due-date-hidden" placeholder="Date" class="date-input-hidden" onchange="datePickerSelectionChange(event)">
-                    <button type="button" class="date-trigger" aria-label="Kalender öffnen" onclick="onDateIconClick()"></button>
+                        inputmode="numeric" onfocus="dateFieldOnFocus()" onblur="dateFieldOnChange()"
+                        oninput="dateFieldOnChange()">
+                    <input type="date" id="due-date-hidden" placeholder="Date" class="date-input-hidden"
+                        onchange="datePickerSelectionChange(event)">
+                    <button type="button" class="date-trigger" aria-label="Kalender öffnen"
+                        onclick="onDateIconClick()"></button>
                 </div>
 
 
@@ -70,9 +66,28 @@
                 </div>
 
                 <label for="task-assign-to">Assigned to</label>
-                <input class="a-t-input mb-24" type="text" name="task-assign-to" id="task-assign"
-                    placeholder="Select contacts to assign"
-                >
+                <button type="button" onclick="showContactListForSelect()">show</button>
+                <button type="button" onclick="hideContactListForSelect()">hide</button>
+                <input class="a-t-input mb-24 show-front" type="text" name="task-assign-to" id="task-assign-to"
+                    placeholder="Select contacts to assign">
+
+                <div id="contact-List-container" class="contact-List-container">
+                    <div id="contact-List-for-task" class="contact-List-for-task">
+                        <div class="contact-list-item">
+                            <div>
+                                <div class="contact-ellipse cyan"><span>SM</span></div>
+                                <p>Solfa Müller</p>
+                            </div>
+                            <button type="button" title="option check"></button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div id="contact-to-task-assigned" class="contact-to-task-assigned">
+
+                </div>
 
                 <!-- 
                     - Das Select hinter das Inputfeld schieben
@@ -82,9 +97,6 @@
                 
                 -->
 
-                <select class="a-t-input a-t-select mb-24" type="text" name="task-assign-to" id="task-assign-to"
-                    placeholder="Select contacts to assign">
-                </select>
 
                 <label for="task-category">Category<span>*</span></label>
                 <input class="a-t-input" type="text" name="task-category" id="task-category"

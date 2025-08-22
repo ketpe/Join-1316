@@ -33,8 +33,8 @@ function changeAddTaskViewToStandard() {
 
 
 async function loadDataForAddTaskViewAndRenderView(){
-    await loadContactsAllFomDB();
-    renderContactOptions(contactAllListFromDB);
+    //await loadContactsAllFomDB();
+    //renderContactOptions(contactAllListFromDB);
     
 }
 
@@ -118,6 +118,31 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
 }
 
 
+function showContactListForSelect(){
+    const contactListContainer = document.getElementById('contact-List-container');
+    const contactList = document.getElementById('contact-List-for-task');
+    
+    //contactListContainer.style.height = contactList.scrollHeight + "px";
+    //contactList.style.height = contactList.scrollHeight + "px";
+
+    contactListContainer.style.height = "100px";
+    contactList.style.height = "80px";
+}
+
+
+function hideContactListForSelect() {
+    const contactListContainer = document.getElementById('contact-List-container');
+    const contactList = document.getElementById('contact-List-for-task');
+
+    contactListContainer.style.height = "100px";
+    contactList.style.height = "80px";
+
+    requestAnimationFrame(() => {
+        contactListContainer.style.height = "0";
+        contactList.style.height = "0";
+    });
+
+}
 
 
 

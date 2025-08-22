@@ -36,3 +36,63 @@
 
 
 }
+
+.orange {
+    background-color: var(--bg-orange);
+}
+
+.vilolet {
+    background-color: var(--bg-violet);
+}
+
+.coral {
+    background-color: var(--bg-coral);
+}
+
+.gold {
+    background-color: var(--bg-gold);
+}
+
+.lemon {
+    background-color: var(--bg-lemon);
+}
+
+.red {
+    background-color: var(--bg-red);
+}
+
+.blue {
+    background-color: var(--bg-blue);
+}
+
+.peach {
+    background-color: var(--bg-peach);
+}
+
+.cyan {
+    background-color: var(--bg-cyan);
+}
+
+.pink {
+    background-color: var(--bg-pink);
+}
+
+.indigo {
+    background-color: var(--bg-indigo);
+}
+
+.mint {
+    background-color: var(--bg-mint);
+}
+
+.magenta {
+    background-color: var(--bg-magent);
+}
+
+.lime {
+    background-color: var(--bg-lime);
+}
+
+.amber {
+    background-color: var(--bg-amber);
+}
