@@ -6,6 +6,7 @@ async function onHelpLoad() {
         includeHtml("navbar", "navbar-desktop.html"),
         includeHtml("header", "header-desktop.html")
     ]);
+    hideHelpButton();
 }
 
 function getCurrentSource() {
@@ -17,4 +18,8 @@ function navigateBackToSource() {
     if(currentSource.length > 0){
         window.location.href = `./${currentSource}.html`;
     }
+}
+
+function hideHelpButton() {
+    document.getElementById('help-button').classList.add('visually-hidden');
 }
