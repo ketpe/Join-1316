@@ -28,3 +28,38 @@ function getContactListContent(obj) {
                                         </div>
                                     </li>`
 }
+
+
+function getContactDetailView(cd) {
+    return `<div class="first-line-detail-view">
+                                <div class="initial-avatar ${cd.initialColor}">
+                                    <p class="detail-view-initials">${cd.initial}</p>
+                                </div>
+                                <div class="name-and-action-panel">
+                                    <div class="contacts-detailview-name">${cd.firstname} ${cd.lastname}</div>
+                                    <div class="contacts-detailview-actions">
+                                        <button class="btn-contact-action btn-contact-edit">
+                                            <div class="action-icons action-edit-icon"></div>
+                                            <p>Edit</p>
+                                        </button>
+                                        <button class="btn-contact-action btn-contact-delete">
+                                            <div class="action-icons action-delete-icon"></div>
+                                            <p>Delete</p>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="detail-c-view-subline">
+                                <p>Contact Information</p>
+                            </div>
+                            <div class="detail-c-view-information">
+                                <div class="detail-c-view-email">
+                                    <p>Email:</p>
+                                    <p>anton.meier@example.com</p>
+                                </div>
+                                <div class="detail-c-view-phone">
+                                    <p>Phone:</p>
+                                    <p> +41 79 123 45 67</p>
+                                </div>
+                            </div>`
+}
