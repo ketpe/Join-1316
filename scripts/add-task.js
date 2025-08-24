@@ -235,51 +235,9 @@ function contactRemoveFromTask(currentContact) {
 }
 
 function addTaskWindowMouseClick(e) {
-    const contactInputField = document.getElementById('task-assign-to');
-    const profileContainer =  filterElementsBySelector(".contact-profil-container", e.target);
-    const profileContainerP = filterElementsBySelector(".contact-profil-container > p", e.target);
-    const contacList = document.getElementById('contact-List-for-task');
-    const contactlistContainer = document.getElementById('contact-List-container');
-    const buttonsSelect = filterElementsBySelector('.contact-list-btn', e.target);
-    const iconsSelect = filterElementsBySelector('.contact-check-icon', e.target);
-    const showAndHideIcon = document.getElementById('show-or-hide-icon');
-    const showAndHideButton = document.getElementById('show-and-hide-contacts');
-    const profileContainerSpans = filterElementsBySelector('.contact-profil-container > div > span', e.target);
-    const elipse = filterElementsBySelector('.contact-ellipse', e.target);
-    const contactSelectContainer = filterElementsBySelector('.contact-select-container', e.target);
 
-   
-
-    if(e.target != contactInputField && 
-        e.target != showAndHideButton &&
-        !profileContainer &&
-        e.target != contacList &&
-        e.target != contactlistContainer &&
-        e.target != showAndHideIcon &&
-        !profileContainerP &&
-        isContactListOpen && !buttonsSelect && !iconsSelect && !profileContainerSpans && !elipse && !contactSelectContainer
-    ){
+    if(!e.target.closest(".contact-select-container") && !e.target.closest(".contact-List-container")){
         showAndHideContacts("hide");
-       
     }
-
 }
 
-function filterElementsBySelector(selector, target) {
-    const elements = document.querySelectorAll(selector);
-    let BreakException = {};
-    try {
-        elements.forEach((e) => {
-        if(e == target){
-            throw BreakException;
-        }
-    });
-    } catch (e) {
-        if(e == BreakException){
-            return true;
-        }
-    }
-
-    return false;
-
-}
