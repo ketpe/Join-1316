@@ -20,6 +20,7 @@ function toggleActiveContactClass(activeContact) {
 function clearActiveContactClass() {
     const detailContact = document.getElementById('contact-detail-content');
     detailContact.innerHTML = "";
+    renderContacts(); /*TODO - neue funktion zum zurücksetzen des Aktiven Kontakts*/
 }
 
 function onEditContactDialogOpen(id) {
