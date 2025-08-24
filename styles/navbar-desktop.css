@@ -68,7 +68,7 @@
     background-image: url("../assets/contacts-icon-hover.svg");
 }
 
-.login-img{
+.login-img {
     background-image: url("../assets/login-icon.svg");
 }
 
@@ -86,7 +86,6 @@
     color: white;
 
 }
-
 
 .nav-desktop-menu {
     padding: 0;
@@ -113,4 +112,20 @@
 .compliance-links a:hover {
     color: var(--btn-bg-hover);
     font-weight: 700;
+}
+
+.resp-menu-box {
+    position: absolute;
+    top: var(--header-height);
+    right: max(calc((100vw - var(--max-width)) / 2), 0px);
+    background-color: var(--bg-default);
+    border-radius: 20px 0px 20px 20px;
+    color: var(--btn-menu-text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    margin-right: 40px;
+    gap: 8px;
+    z-index: 400;
 }
