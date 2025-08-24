@@ -31,18 +31,20 @@ function getContactListContent(obj) {
 
 
 function getContactDetailView(cd) {
-    return `<div class="first-line-detail-view">
+    return ` <div class="first-line-detail-view">
                                 <div class="initial-avatar ${cd.initialColor}">
                                     <p class="detail-view-initials">${cd.initial}</p>
                                 </div>
                                 <div class="name-and-action-panel">
                                     <div class="contacts-detailview-name">${cd.firstname} ${cd.lastname}</div>
                                     <div class="contacts-detailview-actions">
-                                        <button class="btn-contact-action btn-contact-edit">
+                                        <button onclick="onEditContact(${cd.id})"
+                                            class="btn-contact-action btn-contact-edit">
                                             <div class="action-icons action-edit-icon"></div>
                                             <p>Edit</p>
                                         </button>
-                                        <button class="btn-contact-action btn-contact-delete">
+                                        <button onclick="onDeleteContact(${cd.id})"
+                                            class="btn-contact-action btn-contact-delete">
                                             <div class="action-icons action-delete-icon"></div>
                                             <p>Delete</p>
                                         </button>
@@ -55,11 +57,11 @@ function getContactDetailView(cd) {
                             <div class="detail-c-view-information">
                                 <div class="detail-c-view-email">
                                     <p>Email:</p>
-                                    <p>anton.meier@example.com</p>
+                                    <p>${cd.email}</p>
                                 </div>
                                 <div class="detail-c-view-phone">
                                     <p>Phone:</p>
-                                    <p> +41 79 123 45 67</p>
+                                    <p>${cd.phone}</p>
                                 </div>
                             </div>`
 }
