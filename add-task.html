@@ -66,20 +66,24 @@
                 </div>
 
                 <label for="task-assign-to">Assigned to</label>
-                <button type="button" onclick="showContactListForSelect()">show</button>
-                <button type="button" onclick="hideContactListForSelect()">hide</button>
-                <input class="a-t-input mb-24 show-front" type="text" name="task-assign-to" id="task-assign-to"
-                    placeholder="Select contacts to assign">
+                <div class="contact-select-container show-front">
+                    <input class="a-t-input mb-24 show-front a-t-contact-input" type="text" name="task-assign-to" id="task-assign-to"
+                    value="Select contacts to assign"
+                    onclick="showAndHideContacts('show')"
+                    >
+
+                    <button id="show-and-hide-contacts" class="btn-show-hide-contact-list" type="button" 
+                        title="show and hide button for contactlist"
+                        onclick="showAndHideContacts('show')"
+                    >
+                        <div id="show-or-hide-icon" class="icon-show-contacts" role="img" title="show or hide icon"></div>
+                    </button>
+                </div>
+
+                
 
                 <div id="contact-List-container" class="contact-List-container">
                     <div id="contact-List-for-task" class="contact-List-for-task">
-                        <!-- <button id="uuid-from-contact" type="button" class="contact-list-btn" active="false" onclick="contactButtonOnListSelect(this)">
-                            <div class="contact-profil-container">
-                                <div class="contact-ellipse cyan"><span>SM</span></div>
-                                <p>Solfa Müller</p>
-                            </div>
-                            <div class="contact-check-icon contact-unchecked" role="img" title="Check or uncheck Icon"></div>
-                        </button> -->
                     </div>
                 </div>
 
@@ -88,14 +92,6 @@
                 <div id="contact-to-task-assigned" class="contact-to-task-assigned">
 
                 </div>
-
-                <!-- 
-                    - Das Select hinter das Inputfeld schieben
-                    - 2 verschiedene Buttons mit den Pfeilen einbauen
-                    - beim drücken auf den Pfeil nach unten geht die Auswahlliste auf und der Button wird geändert
-                    - beim drücken auf den Pfeil nach oben geht die Auswahlliste zu, wie bei verlassen des Focus
-                
-                -->
 
 
                 <label for="task-category">Category<span>*</span></label>

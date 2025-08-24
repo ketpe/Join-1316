@@ -1,6 +1,7 @@
 let currentDueDate = "";
 let cuurentTitle = "";
 let contactAllListFromDB = [];
+let isContactListOpen = false;
 
 
 async function onLoadAddTask() {
@@ -28,13 +29,14 @@ function changeAddTaskViewToStandard() {
     document.getElementById('add-task-form').classList.add('add-task-form-desktop');
     document.getElementById('add-task-form').classList.remove('add-task-form-dialog');
     document.getElementById('a-t-middle-container').classList.remove('a-t-f-i-midle-dialog');
+    document.getElementsByTagName('body')[0].setAttribute("onmouseup", "addTaskWindowMouseClick(event)");
 }
 
 
 
 async function loadDataForAddTaskViewAndRenderView() {
     await loadContactsAllFomDB();
-   
+
 
 }
 
@@ -110,20 +112,48 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
 
 
 
+function showAndHideContacts(showOrHide = "show") {
+    const buttonShowOhrHide = document.getElementById('show-and-hide-contacts');
+    buttonShowOhrHide.setAttribute('onclick', (showOrHide == "show" ? 'showAndHideContacts("hide")' : 'showAndHideContacts("show")'));
+    const inputField = document.getElementById('task-assign-to');
+    if (showOrHide == "show") {
+        inputField.value = "";
+        inputField.focus();
+        showContactListForSelect();
+        renderHideContactsIcon();
+    } else {
+        inputField.value = "Select contacts to assign";
+        hideContactListForSelect();
+        renderShowContactsIcon();
+    }
+}
 
+
+function renderShowContactsIcon() {
+    const iconDiv = document.getElementById('show-or-hide-icon');
+    iconDiv.classList.remove('icon-hide-contacts');
+    iconDiv.classList.add('icon-show-contacts');
+}
+
+function renderHideContactsIcon() {
+    const iconDiv = document.getElementById('show-or-hide-icon');
+    iconDiv.classList.add('icon-hide-contacts');
+    iconDiv.classList.remove('icon-show-contacts');
+}
 
 
 function showContactListForSelect(currentContactList = []) {
 
-    const contactListArray = currentContactList.length !== 0 ? currentContactList : contactAllListFromDB; 
+    const contactListArray = currentContactList.length !== 0 ? currentContactList : contactAllListFromDB;
+    if (contactListArray == null || contactListArray.length == 0) { return; }
     renderContactOptions(contactListArray);
     const contactListContainer = document.getElementById('contact-List-container');
     const contactList = document.getElementById('contact-List-for-task');
     const heightOfOneContact = document.getElementById(contactListArray[0]['id']).offsetHeight;
-    let heightOfContainer = contactListArray.length <= 5 ? heightOfOneContact * contactListArray.length : heightOfOneContact * 5;
+    let heightOfContainer = (contactListArray.length <= 5 ? heightOfOneContact * contactListArray.length : heightOfOneContact * 5) + 40;
     contactListContainer.style.height = heightOfContainer + "px";
-    contactList.style.height = (heightOfContainer - 20) + "px"; 
-
+    contactList.style.height = (heightOfContainer - 27) + "px";
+    isContactListOpen = true;
 }
 
 
@@ -139,6 +169,7 @@ function hideContactListForSelect() {
     });
 
     contactList.innerHTML = "";
+    isContactListOpen = false;
 }
 
 function renderContactOptions(contactList) {
@@ -164,6 +195,8 @@ function contactButtonOnListSelect(currentContactBtn) {
     } else {
         checkInContact(currentContactBtn, contactID);
     }
+
+    document.getElementById('contact-List-for-task').focus();
 
 }
 
@@ -201,4 +234,52 @@ function contactRemoveFromTask(currentContact) {
 
 }
 
+function addTaskWindowMouseClick(e) {
+    const contactInputField = document.getElementById('task-assign-to');
+    const profileContainer =  filterElementsBySelector(".contact-profil-container", e.target);
+    const profileContainerP = filterElementsBySelector(".contact-profil-container > p", e.target);
+    const contacList = document.getElementById('contact-List-for-task');
+    const contactlistContainer = document.getElementById('contact-List-container');
+    const buttonsSelect = filterElementsBySelector('.contact-list-btn', e.target);
+    const iconsSelect = filterElementsBySelector('.contact-check-icon', e.target);
+    const showAndHideIcon = document.getElementById('show-or-hide-icon');
+    const showAndHideButton = document.getElementById('show-and-hide-contacts');
+    const profileContainerSpans = filterElementsBySelector('.contact-profil-container > div > span', e.target);
+    const elipse = filterElementsBySelector('.contact-ellipse', e.target);
+    const contactSelectContainer = filterElementsBySelector('.contact-select-container', e.target);
 
+   
+
+    if(e.target != contactInputField && 
+        e.target != showAndHideButton &&
+        !profileContainer &&
+        e.target != contacList &&
+        e.target != contactlistContainer &&
+        e.target != showAndHideIcon &&
+        !profileContainerP &&
+        isContactListOpen && !buttonsSelect && !iconsSelect && !profileContainerSpans && !elipse && !contactSelectContainer
+    ){
+        showAndHideContacts("hide");
+       
+    }
+
+}
+
+function filterElementsBySelector(selector, target) {
+    const elements = document.querySelectorAll(selector);
+    let BreakException = {};
+    try {
+        elements.forEach((e) => {
+        if(e == target){
+            throw BreakException;
+        }
+    });
+    } catch (e) {
+        if(e == BreakException){
+            return true;
+        }
+    }
+
+    return false;
+
+}
