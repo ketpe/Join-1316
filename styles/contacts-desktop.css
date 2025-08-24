@@ -150,6 +150,14 @@
     color: var(--font-email-color);
 }
 
+.contact-detail-view {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 21px;
+
+}
+
 .contacts-header {
     display: flex;
     flex-direction: row;
@@ -171,4 +179,165 @@
     font-weight: 400;
     font-size: 27px;
     margin: 0;
+}
+
+.contact-detail-content {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    gap: 21px;
+    padding-left: calc(750px - var(--navbar-width) - var(--contacts-scrollbar-width));
+}
+
+.first-line-detail-view {
+    display: flex;
+    flex-direction: row;
+    gap: 54px;
+}
+
+.initial-avatar {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--bg-orange);
+    background-color: var(--bg-orange);
+    border-radius: 50%;
+    gap: 10px;
+}
+
+.detail-view-initials {
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 47px;
+    text-align: center;
+    vertical-align: middle;
+    color: #ffffff;
+}
+
+.name-and-action-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+}
+
+.contacts-detailview-name {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 47px;
+    vertical-align: middle;
+
+}
+
+.contacts-detailview-actions {
+    display: flex;
+    gap: 13px;
+
+}
+
+.action-icons {
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+
+}
+
+/**FIXME - apply .action-icons  funktioniert nicht*/
+.action-edit-icon {
+    /* @apply .action-icons; */
+    background-image: url(../assets/edit-contacts-icon.svg);
+}
+
+.action-delete-icon {
+    /* @apply .action-icons; */
+    background-image: url(../assets/delete-contacts-icon.svg);
+
+}
+
+.btn-contact-edit {
+    width: 63px;
+    height: 24px;
+}
+
+.btn-contact-delete {
+    width: 83px;
+    height: 24px;
+}
+
+/*TODO - Btn sollten noch verschoben werden*/
+.btn-contact-action {
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding-inline: 0;
+    gap: 8px;
+
+    p {
+        font-family: Inter;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 16px;
+        vertical-align: middle;
+        margin: 0;
+    }
+}
+
+.btn-contact-action:hover p {
+    color: var(--btn-bg-hover);
+    font-family: Inter;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 16px;
+    vertical-align: middle;
+
+}
+
+.btn-contact-action:hover .action-edit-icon {
+    background-image: url(../assets/edit-contacts-icon-hover.svg);
+}
+
+.btn-contact-action:hover .action-delete-icon {
+    background-image: url(../assets/delete-contacts-icon-hover.svg);
+}
+
+.detail-c-view-subline {
+    display: flex;
+    justify-content: start;
+
+    p {
+        font-family: Inter;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 20px;
+    }
+}
+
+.detail-c-view-email :first-child,
+.detail-c-view-phone :first-child {
+    font-family: Inter;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 16px;
+}
+
+
+.detail-c-view-email :last-child,
+.detail-c-view-phone :last-child {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+}
+
+.detail-c-view-email :last-child {
+    color: var(--font-email-color);
 }
