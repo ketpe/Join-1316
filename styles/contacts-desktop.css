@@ -125,25 +125,59 @@
     display: flex;
     padding: 15px 24px;
     gap: 35px;
+    cursor: pointer;
 }
 
-.contact-item:active {
+.contact-item-active {
+    display: flex;
+    padding: 15px 24px;
+    gap: 35px;
     background-color: var(--bg-default);
     border-radius: 10px;
 }
 
-.contact-item:active .contact-name {
+.contact-item-active .contact-name {
     color: white;
 }
 
-.contact-item:active .contact-initials {
+.contact-item-active .contact-initials {
     border: 2px solid white;
+}
+
+.contact-item-active:hover {
+    background-color: var(--bg-default);
 }
 
 .contact-info {
     display: flex;
     flex-direction: column;
     gap: 5px;
+}
+
+.contact-item:hover {
+    background-color: var(--bg-contact-item);
+    border-radius: 10px;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.contact-item:not(.contact-item-active):hover {
+    background-color: var(--bg-contact-item);
+    border-radius: 10px;
+}
+
+.contact-item-active {
+    background-color: var(--bg-default);
+    border-radius: 10px;
+
+}
+
+.contact-item-active:hover {
+    background-color: var(--bg-default);
 }
 
 .contact-name {
