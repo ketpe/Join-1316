@@ -1,7 +1,7 @@
 const BASE_URL = "https://join-1316-default-rtdb.europe-west1.firebasedatabase.app/";
 
 let contact = {
-    'id' : 1,
+    'id' : 'eine UID',
     'firstname': '',
     'lastname' : '',
     'password': '',

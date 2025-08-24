@@ -33,20 +33,11 @@ function changeAddTaskViewToStandard() {
 
 
 async function loadDataForAddTaskViewAndRenderView() {
-    //await loadContactsAllFomDB();
-    //renderContactOptions(contactAllListFromDB);
+    await loadContactsAllFomDB();
+   
 
 }
 
-function renderContactOptions(contactList) {
-    let contactSelectElement = document.getElementById('task-assign-to');
-
-    contactSelectElement.innerHTML += "<option value=''>Select contacts to assign</option>"
-
-    for (let i = 0; i < contactList.length; i++) {
-        contactSelectElement.innerHTML += addTaskContactOption(contactList[i]);
-    }
-}
 
 async function loadContactsAllFomDB() {
     contactAllListFromDB = await getSortedContact()
@@ -118,22 +109,27 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
 }
 
 
-function showContactListForSelect() {
+
+
+
+
+function showContactListForSelect(currentContactList = []) {
+
+    const contactListArray = currentContactList.length !== 0 ? currentContactList : contactAllListFromDB; 
+    renderContactOptions(contactListArray);
     const contactListContainer = document.getElementById('contact-List-container');
     const contactList = document.getElementById('contact-List-for-task');
+    const heightOfOneContact = document.getElementById(contactListArray[0]['id']).offsetHeight;
+    let heightOfContainer = contactListArray.length <= 5 ? heightOfOneContact * contactListArray.length : heightOfOneContact * 5;
+    contactListContainer.style.height = heightOfContainer + "px";
+    contactList.style.height = (heightOfContainer - 20) + "px"; 
 
-    //contactListContainer.style.height = contactList.scrollHeight + "px";
-    //contactList.style.height = contactList.scrollHeight + "px";
-
-    contactListContainer.style.height = "100px";
-    contactList.style.height = "80px";
 }
 
 
 function hideContactListForSelect() {
     const contactListContainer = document.getElementById('contact-List-container');
     const contactList = document.getElementById('contact-List-for-task');
-
     contactListContainer.style.height = "100px";
     contactList.style.height = "80px";
 
@@ -142,6 +138,16 @@ function hideContactListForSelect() {
         contactList.style.height = "0";
     });
 
+    contactList.innerHTML = "";
+}
+
+function renderContactOptions(contactList) {
+    let contactSelectElement = document.getElementById('contact-List-for-task');
+    contactSelectElement.innerHTML = "";
+
+    for (let i = 0; i < contactList.length; i++) {
+        contactSelectElement.innerHTML += getContactListElement(contactList[i]);
+    }
 }
 
 
@@ -168,9 +174,9 @@ function checkIfContactAvailable(currentContact) {
 function checkInContact(currentContact, contactID) {
     contactAddToTask(contactID);
     currentContact.classList.add('contact-selected');
-    const elementName = document.querySelector(`#${contactID} .contact-profil-container p`);
+    const elementName = currentContact.querySelector(`.contact-profil-container p`);
     elementName.classList.add('white');
-    const elementCheck = document.querySelector(`#${contactID} .contact-check-icon`);
+    const elementCheck = currentContact.querySelector(`.contact-check-icon`);
     elementCheck.classList.remove('contact-unchecked');
     elementCheck.classList.add('contact-checked');
     currentContact.setAttribute('active', 'true');
@@ -179,9 +185,9 @@ function checkInContact(currentContact, contactID) {
 function checkOutContact(currentContact, contactID) {
     contactRemoveFromTask(contactID);
     currentContact.classList.remove('contact-selected');
-    const elementName = document.querySelector(`#${contactID} .contact-profil-container p`);
+    const elementName = currentContact.querySelector(`.contact-profil-container p`);
     elementName.classList.remove('white');
-    const elementCheck = document.querySelector(`#${contactID} .contact-check-icon`);
+    const elementCheck = currentContact.querySelector(`.contact-check-icon`);
     elementCheck.classList.add('contact-unchecked');
     elementCheck.classList.remove('contact-checked');
     currentContact.setAttribute('active', 'false');
