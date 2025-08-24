@@ -29,3 +29,33 @@ async function init() {
        
     }
 } */
+
+/**
+ * 
+ * @param {*} id 
+ */
+function toggleDNone(id, event) {
+    if (event) event.stopPropagation();
+    document.getElementById(id).classList.toggle('d-none')
+};
+
+/**
+ * 
+ * @param {*} event 
+ */
+
+function noBubbling(event) {
+    event.stopPropagation()
+};
+
+document.addEventListener('click', function (event) {
+    const respMenu = document.getElementById('resp-menu');
+    if (
+        respMenu &&
+        !respMenu.classList.contains('d-none') &&
+        !respMenu.contains(event.target)
+    ) {
+        respMenu.classList.add('d-none');
+    }
+});
+

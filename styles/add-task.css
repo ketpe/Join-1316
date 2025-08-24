@@ -285,6 +285,7 @@
 
 .contact-list-btn{
     width: 100%;
+    height: 54px;
     border: none;
     outline: none;
     display: flex;
