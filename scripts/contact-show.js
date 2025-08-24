@@ -1,14 +1,23 @@
-async function openContactDetail(id) {
-    let detailContact = await getDataByKey(key = "id", values = id, tableName = "contacts");
-    let currentContactInList = document.getElementById(id);
-    console.log(currentContactInList);
-    toggleActiveContactInList(currentContactInList)
-    console.log(detailContact);
+async function openContactDetail(element) {
+    const listContactElement = element;
+    toggleActiveContactClass(listContactElement);
+    let detailContact = await getDataByKey(key = "id", values = listContactElement.id, tableName = "contacts");
     let renderDetailContact = document.getElementById('contact-detail-content');
     renderDetailContact.innerHTML = "";
     renderDetailContact.innerHTML = getContactDetailView(detailContact);
 }
 
-function toggleActiveContactInList(currentContactInList) {
-    currentContactInList.classList.toggle("active");
+function toggleActiveContactClass(activeContact) {
+    const contactItems = document.querySelectorAll('#contact-list .contact-item');
+    contactItems.forEach(item => {
+        item.classList.remove('contact-item-active');
+    });
+    if (activeContact) {
+        activeContact.classList.add('contact-item-active');
+    }
+}
+
+function clearActiveContactClass() {
+    const detailContact = document.getElementById('contact-detail-content');
+    detailContact.innerHTML = "";
 }

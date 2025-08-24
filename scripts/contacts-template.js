@@ -4,8 +4,8 @@
  * @returns {string} HTML template for the letter header
  */
 function getContactListHeaderTemplate(firstLetter) {
-    return `<li class="contact-letter">${firstLetter}</li>
-                                    <li class="separator-contact-list"></li>`
+    return `<li onclick="clearActiveContactClass()" class="contact-letter">${firstLetter}</li>
+<li class="separator-contact-list"></li>`
 };
 
 /**
@@ -18,15 +18,15 @@ function getContactListHeaderTemplate(firstLetter) {
  * @returns {string} HTML template for the contact
  */
 function getContactListContent(obj) {
-    return `<li class="contact-item" id="${obj.id}" onclick="openContactDetail('${obj.id}')">
-                                        <div class="contact-initials">
-                                            <p class="contact-initials-text">${obj.initial}</p>
-                                        </div>
-                                        <div class="contact-info">
-                                            <div class="contact-name">${obj.firstname} ${obj.lastname}</div>
-                                            <div class="contact-email">${obj.email}</div>
-                                        </div>
-                                    </li>`
+    return `<li class="contact-item" id="${obj.id}" active="false" onclick="openContactDetail(this)">
+    <div class="contact-initials">
+        <p class="contact-initials-text">${obj.initial}</p>
+    </div>
+    <div class="contact-info">
+        <div class="contact-name">${obj.firstname} ${obj.lastname}</div>
+        <div class="contact-email">${obj.email}</div>
+    </div>
+</li>`
 }
 
 
