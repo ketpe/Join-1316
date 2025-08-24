@@ -127,6 +127,19 @@
     gap: 35px;
 }
 
+.contact-item:active {
+    background-color: var(--bg-default);
+    border-radius: 10px;
+}
+
+.contact-item:active .contact-name {
+    color: white;
+}
+
+.contact-item:active .contact-initials {
+    border: 2px solid white;
+}
+
 .contact-info {
     display: flex;
     flex-direction: column;
