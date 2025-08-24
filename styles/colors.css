@@ -33,8 +33,13 @@
     --bg-light-gray: #E7E7E7;
     --bg-btn-hover-special: #D9D9D9;
     --menu-font-color-board: #42526E;
+    --bg-contact-item:#EEEEEE;
 
 
+}
+
+.white{
+    color: white !important;
 }
 
 .orange {
