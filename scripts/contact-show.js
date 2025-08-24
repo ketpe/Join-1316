@@ -21,3 +21,44 @@ function clearActiveContactClass() {
     const detailContact = document.getElementById('contact-detail-content');
     detailContact.innerHTML = "";
 }
+
+function onEditContactDialogOpen(id) {
+    toggleScrollOnBody();
+    addDialogShowClass();
+    document.getElementById('add-contact-dialog').showModal();
+    renderEditContactIntoDialog(id);
+}
+
+async function editContact(event, button) {
+    if (event) event.preventDefault();
+    const contact = createUpdateContactObject();
+    await updateData(`/contacts/${button.id}`, contact);
+    addContactDialogClose(event);
+    renderContacts();
+
+}
+
+function createUpdateContactObject() {
+    const { firstname, lastname, email, phone } = getContactFormData();
+    return {
+        'firstname': firstname,
+        'lastname': lastname,
+        'email': email,
+        'phone': phone,
+        'initial': getInitials(firstname, lastname),
+    };
+}
+
+
+async function onDeleteContact(event, element) {
+    if (event) event.preventDefault();
+    if (element.id !== "") {
+        await deleteData(`/contacts/${element.id}`);
+        clearActiveContactClass();
+        addContactDialogClose(event);
+        console.log(event);
+        renderContacts();
+    } else {
+        console.warn("Keine gültige ID übergeben!");
+    }
+}

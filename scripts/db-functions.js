@@ -101,3 +101,24 @@ async function getSortedContact() {
     return contactssorted
 }
 
+async function updateData(path = "", data = {}) {
+    let response;
+
+    try {
+        response = await fetch(BASE_URL + path + ".json", {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) { throw new Error(`Response status: ${response.status}`); }
+
+    } catch (error) {
+        console.error(`Error update contact: ${error.message}`);
+        return;
+    }
+
+    return await response.json();
+}
