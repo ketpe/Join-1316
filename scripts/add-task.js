@@ -32,10 +32,10 @@ function changeAddTaskViewToStandard() {
 
 
 
-async function loadDataForAddTaskViewAndRenderView(){
+async function loadDataForAddTaskViewAndRenderView() {
     //await loadContactsAllFomDB();
     //renderContactOptions(contactAllListFromDB);
-    
+
 }
 
 function renderContactOptions(contactList) {
@@ -43,7 +43,7 @@ function renderContactOptions(contactList) {
 
     contactSelectElement.innerHTML += "<option value=''>Select contacts to assign</option>"
 
-    for(let i = 0; i < contactList.length; i++){
+    for (let i = 0; i < contactList.length; i++) {
         contactSelectElement.innerHTML += addTaskContactOption(contactList[i]);
     }
 }
@@ -74,10 +74,10 @@ function datePickerSelectionChange(e) {
 function addTaskTitleOnInput() {
     let titleValue = document.getElementById('task-title');
 
-    if(!titleValue.value){
+    if (!titleValue.value) {
         showAndLeaveErrorMessage("a-t-title-required", true);
         showAndLeaveErrorBorder("task-title", true);
-    }else {
+    } else {
         taskTitleValidation(titleValue.value);
     }
 }
@@ -85,11 +85,11 @@ function addTaskTitleOnInput() {
 
 function taskTitleValidation(titleValue) {
     const cleanTitleValue = (titleValue ?? "").trim();
-    
-    if(cleanTitleValue.length > 3){
+
+    if (cleanTitleValue.length > 3) {
         showAndLeaveErrorMessage("a-t-title-required", false);
         showAndLeaveErrorBorder("task-title", false);
-    }else{
+    } else {
         showAndLeaveErrorMessage("a-t-title-required", true);
         showAndLeaveErrorBorder("task-title", true);
     }
@@ -118,10 +118,10 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
 }
 
 
-function showContactListForSelect(){
+function showContactListForSelect() {
     const contactListContainer = document.getElementById('contact-List-container');
     const contactList = document.getElementById('contact-List-for-task');
-    
+
     //contactListContainer.style.height = contactList.scrollHeight + "px";
     //contactList.style.height = contactList.scrollHeight + "px";
 
@@ -145,10 +145,54 @@ function hideContactListForSelect() {
 }
 
 
+function contactButtonOnListSelect(currentContactBtn) {
 
+    const contactID = currentContactBtn.getAttribute('id');
 
+    if (!checkIfContactAvailable(contactID)) { return; }
 
+    const contactState = currentContactBtn.getAttribute('active');
 
+    if (contactState == "true") {
+        checkOutContact(currentContactBtn, contactID);
+    } else {
+        checkInContact(currentContactBtn, contactID);
+    }
 
+}
+
+function checkIfContactAvailable(currentContact) {
+    return true;
+}
+
+function checkInContact(currentContact, contactID) {
+    contactAddToTask(contactID);
+    currentContact.classList.add('contact-selected');
+    const elementName = document.querySelector(`#${contactID} .contact-profil-container p`);
+    elementName.classList.add('white');
+    const elementCheck = document.querySelector(`#${contactID} .contact-check-icon`);
+    elementCheck.classList.remove('contact-unchecked');
+    elementCheck.classList.add('contact-checked');
+    currentContact.setAttribute('active', 'true');
+}
+
+function checkOutContact(currentContact, contactID) {
+    contactRemoveFromTask(contactID);
+    currentContact.classList.remove('contact-selected');
+    const elementName = document.querySelector(`#${contactID} .contact-profil-container p`);
+    elementName.classList.remove('white');
+    const elementCheck = document.querySelector(`#${contactID} .contact-check-icon`);
+    elementCheck.classList.add('contact-unchecked');
+    elementCheck.classList.remove('contact-checked');
+    currentContact.setAttribute('active', 'false');
+}
+
+function contactAddToTask(currentContact) {
+
+}
+
+function contactRemoveFromTask(currentContact) {
+
+}
 
 
