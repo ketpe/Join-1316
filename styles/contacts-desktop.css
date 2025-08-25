@@ -18,6 +18,7 @@
     padding-left: 24px;
     height: 100%;
     box-sizing: border-box;
+    background-color: white;
 }
 
 .add-btn {
@@ -47,7 +48,6 @@
     border-width: 1px;
     position: static;
     z-index: 2;
-    background: white;
 }
 
 .btn-add-contacts-icon {
@@ -82,14 +82,13 @@
     justify-content: center;
     width: 42px;
     height: 42px;
-    border: 2px solid var(--bg-orange);
-    background-color: var(--bg-orange);
+    border: 2px solid (inherit);
     border-radius: 50%;
     gap: 10px;
 }
 
 .contact-initials-text {
-    background-color: var(--bg-orange);
+
     font-family: Inter;
     font-weight: 400;
     font-style: Regular;
@@ -231,10 +230,13 @@
 .contact-detail-content {
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     justify-content: center;
     gap: 21px;
     padding-left: calc(750px - var(--navbar-width) - var(--contacts-scrollbar-width));
+}
+
+.slide-Details-in {
+    animation: slide-Dialog-in 1000ms ease-in-out forwards;
 }
 
 .first-line-detail-view {
@@ -249,8 +251,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid var(--bg-orange);
-    background-color: var(--bg-orange);
+    border: 2px solid (inherit);
     border-radius: 50%;
     gap: 10px;
 }
