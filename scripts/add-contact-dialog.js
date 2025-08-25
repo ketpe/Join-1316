@@ -8,7 +8,7 @@ function onAddContactDialogOpen() {
 
 function addContactDialogClose(event) {
     const dialog = document.getElementById('add-contact-dialog');
-    const closeDiv = document.getElementById('btn-overlay-close-contacts');
+    const closeDiv = document.getElementById('btn-overlay-close-div');
     if (
         event.target == dialog ||
         event.target == closeDiv ||
