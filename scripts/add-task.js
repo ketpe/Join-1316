@@ -1,7 +1,8 @@
 let currentDueDate = "";
-let cuurentTitle = "";
+let currentTitle = "";
 let contactAllListFromDB = [];
 let isContactListOpen = false;
+let currentContactAssignList = [];
 
 
 async function onLoadAddTask() {
@@ -33,28 +34,30 @@ function changeAddTaskViewToStandard() {
 }
 
 
-
+//NOTE - Startfunktion 1. Kontakte laden
 async function loadDataForAddTaskViewAndRenderView() {
     await loadContactsAllFomDB();
 
 
 }
 
-
+//NOTE - Lade alle Kontakte aus der DB in das Array
 async function loadContactsAllFomDB() {
     contactAllListFromDB = await getSortedContact()
 }
 
-
+//NOTE - Hier hat sich das Datumsfeld geändert
 function dateFieldOnChange() {
     startDueDateValidation();
 }
 
+//NOTE - Der "Datepicker" wurde geklickt
 function onDateIconClick() {
     let datePicker = document.getElementById('due-date-hidden');
     datePicker.showPicker();
 }
 
+//NOTE - Das Datum aus dem Picker hat sich geändert
 function datePickerSelectionChange(e) {
     let newDateArr = String(e.target.value).split('-');
     let newDateString = `${newDateArr[2]}/${newDateArr[1]}/${newDateArr[0]}`;
@@ -63,7 +66,7 @@ function datePickerSelectionChange(e) {
 
 }
 
-
+//NOTE - Inputfeld -> Titel -> es wurde eine Inputänderung erkannt
 function addTaskTitleOnInput() {
     let titleValue = document.getElementById('task-title');
 
@@ -75,7 +78,7 @@ function addTaskTitleOnInput() {
     }
 }
 
-
+//NOTE - Validierung des Titels
 function taskTitleValidation(titleValue) {
     const cleanTitleValue = (titleValue ?? "").trim();
 
@@ -88,6 +91,7 @@ function taskTitleValidation(titleValue) {
     }
 }
 
+//NOTE - Generische Funktion zum Anzeigen / Ausblenden der Errormeldung
 function showAndLeaveErrorMessage(messageTarget, visibilty = true) {
     let errorField = document.getElementById(messageTarget);
     if (errorField == null) { return; }
@@ -100,6 +104,7 @@ function showAndLeaveErrorMessage(messageTarget, visibilty = true) {
     }
 }
 
+//NOTE - Generische Funktion zum Anzeigen / Ausblenden des Fehlerrahmens
 function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
     let inputField = document.getElementById(inputTarget);
     if (inputField == null) { return; }
@@ -111,7 +116,8 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
 }
 
 
-
+//NOTE - Diese Funktion wird duch einen Button in der UI im Inputfeld der Kontaktauswahl aufgerufen
+//  Bei der Übergabe des Parameters wird entschieden was zu tun ist
 function showAndHideContacts(showOrHide = "show") {
     const buttonShowOhrHide = document.getElementById('show-and-hide-contacts');
     buttonShowOhrHide.setAttribute('onclick', (showOrHide == "show" ? 'showAndHideContacts("hide")' : 'showAndHideContacts("show")'));
@@ -128,20 +134,23 @@ function showAndHideContacts(showOrHide = "show") {
     }
 }
 
+//TODO - Zusammenfassen, in eine Funktion -> show oder hide übergeben
 
+//NOTE - Anzeigen des Pfeil nach unten -> Show
 function renderShowContactsIcon() {
     const iconDiv = document.getElementById('show-or-hide-icon');
     iconDiv.classList.remove('icon-hide-contacts');
     iconDiv.classList.add('icon-show-contacts');
 }
 
+//NOTE - Anzeigen des Pfeils nach oben -> Hide
 function renderHideContactsIcon() {
     const iconDiv = document.getElementById('show-or-hide-icon');
     iconDiv.classList.add('icon-hide-contacts');
     iconDiv.classList.remove('icon-show-contacts');
 }
 
-
+//NOTE - Kontaktlist zum rendern erstellen. Vorbereitung für die Suche.
 function showContactListForSelect(currentContactList = []) {
 
     const contactListArray = currentContactList.length !== 0 ? currentContactList : contactAllListFromDB;
@@ -156,7 +165,7 @@ function showContactListForSelect(currentContactList = []) {
     isContactListOpen = true;
 }
 
-
+//NOTE - Das Kontaktauswahlfenster schliessen -> Sonderfunktion erkären!
 function hideContactListForSelect() {
     const contactListContainer = document.getElementById('contact-List-container');
     const contactList = document.getElementById('contact-List-for-task');
@@ -170,24 +179,32 @@ function hideContactListForSelect() {
 
     contactList.innerHTML = "";
     isContactListOpen = false;
+    
 }
 
+//NOTE - Render der Kontaktliste. Prüfen, ob der Kontakt bereits zugefügt wurde -> Anzeige entsprechend ändern
 function renderContactOptions(contactList) {
     let contactSelectElement = document.getElementById('contact-List-for-task');
     contactSelectElement.innerHTML = "";
 
     for (let i = 0; i < contactList.length; i++) {
-        contactSelectElement.innerHTML += getContactListElement(contactList[i]);
+        const currentContactAssigned = findContactInAssignList(contactList[i]);
+        contactSelectElement.innerHTML += getContactListElement(contactList[i], currentContactAssigned);
     }
 }
 
+//NOTE - einen Kontakt in der Assigned Liste suchen, sofern vorhanden. Damit das Aussehen angepasst werden kann.
+function findContactInAssignList(contact) {
+    if(currentContactAssignList.length == 0){return false;}
+    return getIndexOfContactOfArray(contact['id'], currentContactAssignList) != -1;
+}
 
+//NOTE - Hinzufügen oder löschen aus der Assigned Liste, jenachdem ob das Attibut "active" true oder nicht gesetzt ist.
+//TODO - Vieleicht eine bessere Möglichkeit finden
 function contactButtonOnListSelect(currentContactBtn) {
 
     const contactID = currentContactBtn.getAttribute('id');
-
     if (!checkIfContactAvailable(contactID)) { return; }
-
     const contactState = currentContactBtn.getAttribute('active');
 
     if (contactState == "true") {
@@ -195,15 +212,15 @@ function contactButtonOnListSelect(currentContactBtn) {
     } else {
         checkInContact(currentContactBtn, contactID);
     }
-
-    document.getElementById('contact-List-for-task').focus();
-
+    
 }
 
-function checkIfContactAvailable(currentContact) {
-    return true;
+//NOTE - Prüfen, ob der Kontakt überhaupt vorhanden ist
+function checkIfContactAvailable(currentContactID) {
+    return getIndexOfContactOfArray(currentContactID, contactAllListFromDB) != -1;
 }
 
+//NOTE - Den Kontakt der Liste zuführen und Styling anpassen.
 function checkInContact(currentContact, contactID) {
     contactAddToTask(contactID);
     currentContact.classList.add('contact-selected');
@@ -215,6 +232,7 @@ function checkInContact(currentContact, contactID) {
     currentContact.setAttribute('active', 'true');
 }
 
+//NOTE - Den Kontakt aus der Liste entfernen und Styling anpassen.
 function checkOutContact(currentContact, contactID) {
     contactRemoveFromTask(contactID);
     currentContact.classList.remove('contact-selected');
@@ -226,18 +244,39 @@ function checkOutContact(currentContact, contactID) {
     currentContact.setAttribute('active', 'false');
 }
 
-function contactAddToTask(currentContact) {
-
+//NOTE Den Kontakt mit der ID aus dem gesammten Array filtern und in die Assigned Liste einfügen
+function contactAddToTask(currentContactID) {
+    const indexOfContact = getIndexOfContactOfArray(currentContactID, contactAllListFromDB);
+    if(indexOfContact > -1){
+        currentContactAssignList.push(contactAllListFromDB[indexOfContact]);
+    }
+   
 }
 
-function contactRemoveFromTask(currentContact) {
-
+//NOTE - Den Kontakt mit der ID in der Assigned Liste suchen und dann entfernen
+function contactRemoveFromTask(currentContactID) {
+    const indexOfContact = getIndexOfContactOfArray(currentContactID, currentContactAssignList);
+    if(indexOfContact > -1){
+        currentContactAssignList.splice(indexOfContact, 1);
+    }
 }
 
+//NOTE - Diese Funktion wurde dem Body inzugefügt, um die Mausklicks abzufangen. Wenn die Liste offen ist und ein anders Elemet
+// Ausser den hier angegebenen geklickt wird, schliesst sich das Fenster, wie beim Klick auf den Pfeil nach oben.
 function addTaskWindowMouseClick(e) {
 
-    if(!e.target.closest(".contact-select-container") && !e.target.closest(".contact-List-container")){
+    if(!e.target.closest(".contact-select-container") && !e.target.closest(".contact-List-container") && isContactListOpen){
         showAndHideContacts("hide");
     }
 }
+
+//NOTE -  den Index eines KontaktArrays aus der ID finden
+//TODO - Generisch machen, kann auch für Categorie und Subtask genutzt werden
+function getIndexOfContactOfArray(contactID, contactArray) {
+
+    let contactFind = contactArray.find(x => x['id'] == contactID);
+    if(contactFind == null) {return -1;}
+    return contactArray.indexOf(contactFind);
+}
+
 
