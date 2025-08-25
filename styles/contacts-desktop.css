@@ -231,10 +231,13 @@
 .contact-detail-content {
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     justify-content: center;
     gap: 21px;
     padding-left: calc(750px - var(--navbar-width) - var(--contacts-scrollbar-width));
+}
+
+.slide-Details-in {
+    animation: slide-Dialog-in 1000ms ease-in-out forwards;
 }
 
 .first-line-detail-view {
