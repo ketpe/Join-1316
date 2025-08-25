@@ -4,8 +4,8 @@ async function openContactDetail(element) {
     let detailContact = await getDataByKey(key = "id", values = listContactElement.id, tableName = "contacts");
     let renderDetailContact = document.getElementById('contact-detail-content');
     renderDetailContact.innerHTML = "";
-    renderDetailContact.classList.remove('slide-Details-in'); // Animation zurücksetzen
-    void renderDetailContact.offsetWidth; // Reflow erzwingen
+    renderDetailContact.classList.remove('slide-Details-in');
+    void renderDetailContact.offsetWidth;
     renderDetailContact.classList.add('slide-Details-in');
     renderDetailContact.innerHTML = getContactDetailView(detailContact);
 }

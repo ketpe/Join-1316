@@ -42,6 +42,8 @@ function renderEditContactIntoDialog(id) {
             document.getElementById('contact-name').value = `${contact.firstname} ${contact.lastname}`;
             document.getElementById('contact-email').value = contact.email;
             document.getElementById('contact-phone').value = contact.phone;
+            document.getElementById('initial-avatar').classList.add(contact.initialColor);
+            document.querySelector('#initial-avatar .detail-view-initials').innerText = contact.initial;
             document.querySelector('#login-form-buttons .btn-create').id = contact.id;
             document.querySelector('#login-form-buttons .btn-clear-cancel').id = contact.id;
         });
