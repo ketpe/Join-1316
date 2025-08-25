@@ -18,6 +18,7 @@
     padding-left: 24px;
     height: 100%;
     box-sizing: border-box;
+    background-color: white;
 }
 
 .add-btn {
@@ -47,7 +48,6 @@
     border-width: 1px;
     position: static;
     z-index: 2;
-    background: white;
 }
 
 .btn-add-contacts-icon {
