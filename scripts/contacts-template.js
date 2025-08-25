@@ -18,8 +18,8 @@ function getContactListHeaderTemplate(firstLetter) {
  * @returns {string} HTML template for the contact
  */
 function getContactListContent(obj) {
-    return `<li class="contact-item" id="${obj.id}" active="false" onclick="openContactDetail(this)">
-    <div class="contact-initials">
+    return `<li class="contact-item obj" id="${obj.id}" active="false" onclick="openContactDetail(this)">
+    <div class="contact-initials ${obj.initialColor}">
         <p class="contact-initials-text">${obj.initial}</p>
     </div>
     <div class="contact-info">

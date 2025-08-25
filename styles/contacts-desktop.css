@@ -82,14 +82,13 @@
     justify-content: center;
     width: 42px;
     height: 42px;
-    border: 2px solid var(--bg-orange);
-    background-color: var(--bg-orange);
+    border: 2px solid (inherit);
     border-radius: 50%;
     gap: 10px;
 }
 
 .contact-initials-text {
-    background-color: var(--bg-orange);
+
     font-family: Inter;
     font-weight: 400;
     font-style: Regular;
@@ -252,8 +251,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid var(--bg-orange);
-    background-color: var(--bg-orange);
+    border: 2px solid (inherit);
     border-radius: 50%;
     gap: 10px;
 }

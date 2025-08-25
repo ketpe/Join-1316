@@ -49,7 +49,7 @@ function createUpdateContactObject() {
         'lastname': lastname,
         'email': email,
         'phone': phone,
-        'initial': getInitials(firstname, lastname),
+        'initial': getInitials(firstname, lastname)
     };
 }
 

@@ -17,7 +17,7 @@ function createContactObject(uid) {
         'email': email,
         'phone': phone,
         'initial': getInitials(firstname, lastname),
-        'initialColor': '--bg-cyan'
+        'initialColor': getRandomColor(),
     };
 }
 
@@ -32,4 +32,14 @@ function getContactFormData() {
 function getInitials(firstname, lastname) {
     return firstname.charAt(0).toUpperCase() + lastname.charAt(0).toUpperCase();
 }
+
+function getRandomColor() {
+    const colorClasses = [
+        'orange', 'vilolet', 'coral', 'gold', 'lemon', 'red', 'blue',
+        'peach', 'cyan', 'pink', 'indigo', 'mint', 'magenta', 'lime', 'amber'
+    ];
+    const randomIndex = Math.floor(Math.random() * colorClasses.length);
+    return colorClasses[randomIndex];
+}
+
 
