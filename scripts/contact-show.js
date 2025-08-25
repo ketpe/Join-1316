@@ -38,6 +38,7 @@ async function editContact(event, button) {
     const contact = createUpdateContactObject();
     await updateData(`/contacts/${button.id}`, contact);
     addContactDialogClose(event);
+    clearActiveContactClass();
     renderContacts();
 
 }
