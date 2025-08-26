@@ -73,8 +73,6 @@
     padding-top: 48px;
 }
 
-
-
 .add-contact-form {
     display: flex;
     flex-direction: column;
@@ -83,7 +81,6 @@
     padding-top: calc(137px - 80px);
     padding-left: calc(742px - 467px - 120px - 83px);
     gap: 32px;
-
 }
 
 .add-contact-form-and-picture {
@@ -93,6 +90,48 @@
     margin-left: calc(550px - 467px);
 
 }
+
+/*NOTE - - Warnung invalid aus add-task*/
+.contact-error-text-container {
+    height: 12px;
+    margin-top: 8px;
+    margin-bottom: 24px;
+}
+
+.contact-name-required {
+    font-family: 'Inter';
+    font-size: 12;
+    font-weight: 400;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.contact-error-text-container p {
+    font-family: 'Inter';
+    font-size: 12;
+    font-weight: 400;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.add-contact-input:focus {
+    outline: none;
+    border-color: var(--btn-bg-hover);
+}
+
+.error-text-show {
+    color: var(--input-error-color) !important;
+}
+
+.error-text-hidden {
+    color: var(--default-bg-color) !important;
+}
+
+.input-has-error {
+    border-color: var(--input-error-color) !important;
+}
+
+/* Geht bis hierhin */
 
 .add-contact-profil-picture {
     width: 120px;
