@@ -76,3 +76,69 @@ async function onDeleteContact(event, element) {
     }
 }
 
+//REVIEW - Validierung der Kontaktdaten, könnte zusammengelegt werden mit Validierung in add-task
+//TODO - Styling in anpassen da dauerhaft sichtbar
+
+//NOTE - Validierung des Titels
+// function taskTitleValidation(titleValue) {
+//     const cleanTitleValue = (titleValue ?? "").trim();
+
+//     if (cleanTitleValue.length > 3) {
+//         showAndLeaveErrorMessage("a-t-title-required", false);
+//         showAndLeaveErrorBorder("task-title", false);
+//     } else {
+//         showAndLeaveErrorMessage("a-t-title-required", true);
+//         showAndLeaveErrorBorder("task-title", true);
+//     }
+// }
+
+//NOTE - Generische Funktion zum Anzeigen / Ausblenden der Errormeldung
+function showAndLeaveErrorMessage(messageTarget, visibilty = true) {
+    let errorField = document.getElementById(messageTarget);
+    if (errorField == null) { return; }
+    if (visibilty) {
+        errorField.classList.remove("error-text-hidden");
+        errorField.classList.add('error-text-show');
+    } else {
+        errorField.classList.add("error-text-hidden");
+        errorField.classList.remove('error-text-show');
+    }
+}
+
+//NOTE - Generische Funktion zum Anzeigen / Ausblenden des Fehlerrahmens
+function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
+    let inputField = document.getElementById(inputTarget);
+    if (inputField == null) { return; }
+    if (visibilty) {
+        inputField.classList.add('input-has-error');
+    } else {
+        inputField.classList.remove('input-has-error');
+    }
+}
+
+function contactEmailValidation(emailValue) {
+    const cleanEmailValue = (emailValue ?? "").trim();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (cleanEmailValue.length > 0 && emailPattern.test(cleanEmailValue)) {
+        showAndLeaveErrorMessage("contact-email-required", false);
+        showAndLeaveErrorBorder("contact-email", false);
+    } else {
+        showAndLeaveErrorMessage("contact-email-required", true);
+        showAndLeaveErrorBorder("contact-email", true);
+    }
+}
+
+function contactPhoneValidation(phoneValue) {
+    const cleanPhoneValue = (phoneValue ?? "").trim();
+    const phonePattern = /^[\d\s\-+]{5,}$/;
+
+    if (cleanPhoneValue.length > 0 && phonePattern.test(cleanPhoneValue)) {
+        showAndLeaveErrorMessage("contact-phone-required", false);
+        showAndLeaveErrorBorder("contact-phone", false);
+    } else {
+        showAndLeaveErrorMessage("contact-phone-required", true);
+        showAndLeaveErrorBorder("contact-phone", true);
+    }
+}
+

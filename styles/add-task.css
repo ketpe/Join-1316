@@ -191,6 +191,9 @@
     margin-bottom: 24px;
 }
 
+/*NOTE[192-241] - Validierung der Kontaktdaten Styles für anzeigen beginnen hier. Entnommen aus add-Task*/
+/*REVIEW - Könnte mit dem Styling aus add-Task zusammengelegt werden*/
+
 .a-t-error-text-container {
     height: 12px;
     margin-top: 8px;
@@ -278,18 +281,18 @@
     z-index: 5;
 }
 
-.contact-select-container{
+.contact-select-container {
     position: relative;
     width: 100%;
 }
 
-.a-t-contact-input{
+.a-t-contact-input {
     padding-right: 50px;
     width: calc(440px - (2 * 1px) - 21px - 50px);
     cursor: pointer;
 }
 
-.btn-show-hide-contact-list{
+.btn-show-hide-contact-list {
     height: 24px;
     width: 24px;
     border: none;
@@ -301,7 +304,7 @@
     background-color: transparent;
 }
 
-.icon-show-contacts{
+.icon-show-contacts {
     background-image: url('../assets/arrow_drop_down.svg');
     width: 7.21px;
     height: 4.6px;
@@ -312,7 +315,7 @@
     background-color: transparent;
 }
 
-.icon-hide-contacts{
+.icon-hide-contacts {
     background-image: url('../assets/arrow_drop_up.svg');
     width: 7.21px;
     height: 4.6px;
@@ -330,7 +333,7 @@
     color: black;
 }
 
-.a-t-contact-input:focus::placeholder{
+.a-t-contact-input:focus::placeholder {
     color: transparent;
 }
 
