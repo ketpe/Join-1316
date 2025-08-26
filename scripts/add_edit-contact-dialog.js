@@ -37,7 +37,7 @@ function renderAddContactIntoDialog() {
 }
 
 function renderEditContactIntoDialog(id) {
-    includeHtml("dialog-content-contacts", "add-contact-edit.html").then(() => {
+    includeHtml("dialog-content-contacts", "edit-contact.html").then(() => {
         getDataByKey("id", id, "contacts").then(contact => {
             document.getElementById('contact-name').value = `${contact.firstname} ${contact.lastname}`;
             document.getElementById('contact-email').value = contact.email;
