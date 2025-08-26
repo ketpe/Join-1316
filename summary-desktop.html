@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./styles/summary-desktop.css">
 </head>
 
-<body onload="init()">
+<body onload="init(); renderGreetings()">
 
     <div class="main-container">
         <div class="left-container">
@@ -74,7 +74,7 @@
                             </section>
                         </section>
                         <section class="personal-greets">
-                            <p class="headline-greet">Good Morning,</p>
+                            <p class="headline-greet" id="greeting">${greetBack},</p>
                             <p class="personal-greets-user">Sofia Müller</p>
                         </section>
                     </articel>
@@ -91,5 +91,6 @@
 <script type="module" src="./app.js"></script>
 <script defer src="./script.js"></script>
 <script defer src="./scripts/navigations.js"></script>
+<script defer src="./scripts/greeting.js"></script>
 
 </html>
