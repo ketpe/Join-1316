@@ -45,19 +45,19 @@
             <div class="a-t-f-i-right">
                 <label for="task-priority-button">Priority</label>
                 <div id="task-priority-button" class="a-t-priority-button-container">
-                    <button class="btn btn-priority prio-alta" type="button">
+                    <button id="btn-priority-alta" class="btn btn-priority prio-alta" type="button" name="alta" onclick="addTaskPrioritySelect(this)">
                         <div>
                             <p>Urgent</p>
                             <div role="img" title="Urgent-Icon"></div>
                         </div>
                     </button>
-                    <button class="btn btn-priority prio-media" type="button">
+                    <button id="btn-priority-media" class="btn btn-priority prio-media" type="button" name="media" onclick="addTaskPrioritySelect(this)">
                         <div>
                             <p>Medium</p>
                             <div role="img" title="Medium-Icon"></div>
                         </div>
                     </button>
-                    <button class="btn btn-priority prio-baja" type="button">
+                    <button id="btn-priority-baja" class="btn btn-priority prio-baja" type="button" name="baja" onclick="addTaskPrioritySelect(this)">
                         <div>
                             <p>Low</p>
                             <div role="img" title="Low-Icon"></div>
@@ -89,8 +89,7 @@
 
 
 
-                <div id="contact-to-task-assigned" class="contact-to-task-assigned">
-
+                <div id="contact-assigned-badge" class="contact-assigned-badge">
                 </div>
 
 

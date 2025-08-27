@@ -191,6 +191,14 @@
     margin-bottom: 24px;
 }
 
+.mb-16 {
+    margin-bottom: 16px;
+}
+
+.mb-8 {
+    margin-bottom: 8px;
+}
+
 /*NOTE[192-241] - Validierung der Kontaktdaten Styles für anzeigen beginnen hier. Entnommen aus add-Task*/
 /*REVIEW - Könnte mit dem Styling aus add-Task zusammengelegt werden*/
 
@@ -420,4 +428,10 @@
 
 .contact-checked {
     background-image: url('../assets/add-task-contact-check-checked.svg');
+}
+
+.contact-assigned-badge{
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
 }

@@ -9,3 +9,9 @@ function getContactListElement(contact, isAssinged){
         </button>
     `;
 }
+
+function getAssignedContactBadge(contact) {
+    return `
+        <div class="contact-ellipse ${contact['initialColor']}"><span>${contact['initial']}</span></div>
+    `;
+}

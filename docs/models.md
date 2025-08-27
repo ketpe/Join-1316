@@ -11,6 +11,10 @@ let contact = {
     'initialColor' : '--bg-test' 
 };
 
+let questContact = {
+    
+};
+
 let category = {
     'id': 1,
     'title' :'',

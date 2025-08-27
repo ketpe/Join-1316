@@ -201,37 +201,59 @@
   background-image: url('../assets/prio-baja-default.svg');
 }
 
+.prio-alta-selected,
+.prio-alta-selected:hover {
+  box-shadow: none !important
+}
+
+.prio-alta-selected,
 .prio-alta:active:enabled {
   background-color: var(--bg-prio-alta-active);
   box-shadow: none;
 }
 
+.prio-media-selected,
+.prio-media-selected:hover {
+  box-shadow: none !important;
+}
+
+.prio-media-selected,
 .prio-media:active:enabled {
   background-color: var(--bg-prio-media-active);
   box-shadow: none;
 }
 
+.prio-baja-selected,
+.prio-baja-selected:hover {
+  box-shadow: none !important;
+}
+
+.prio-baja-selected,
 .prio-baja:active:enabled {
   background-color: var(--bg-prio-baja-active);
   box-shadow: none;
 }
 
+.prio-selected,
 .prio-alta:active:enabled div>p,
 .prio-media:active:enabled div>p,
 .prio-baja:active:enabled div>p {
-  font-weight: 700;
-  font-size: 21px;
-  color: white;
+  font-weight: 700 !important;
+  font-size: 21px !important;
+  color: white !important;
 }
 
-.prio-alta:active:enabled div>div {
+.prio-alta-selected>div>div,
+.prio-alta:active:enabled>div>div {
   background-image: url('../assets/prio-alta-white.svg');
 }
 
+.prio-media-selected>div>div,
 .prio-media:active:enabled div>div {
   background-image: url('../assets/prio-media-active.svg');
 }
 
+.prio-baja-selected>div>div,
 .prio-baja:active:enabled div>div {
   background-image: url('../assets/prio-baja-active.svg');
 }
