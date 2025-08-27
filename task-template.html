@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/task-template.css">
+    <link rel="stylesheet" href="./styles/task-template.css">
+    <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <section class="task-section">
+        <div class="kanban-task" draggable="true" id="task1" ondragstart="startDrag(event, this)"
+            ondragend="endDrag(this)">
+            <header class="task-header">
+                <div class="left-header blue">
+                    <p>User Story</p>
+                </div>
+                <button onclick="addContactDialogClose(event)" class="btn-overlay-close" id="btn-overlay-close-contacts"
+                    type="button">
+                    <div id="btn-overlay-close-div" role="img" title="Close dialog icon"></div>
+                </button>
+            </header>
+            <main class="task-main">
+                <p class="task-title">Kochwelt Page & Recipe Recommender</p>
+                <p class="task-description">Build start page with recipe recommendation.</p>
+                <table class="task-details-table">
+                    <thead>
+                        <tr class="task-due-date-section">
+                            <td class="task-due-date-label">Due Date:</td>
+                            <td class="task-due-date">10/05/2025</td>
+                        </tr>
+                        <tr class="task-priority-section">
+                            <td class="task-priority-label">Priority:</td>
+                            <td class="task-priority">High</td>
+                        </tr>
+                </table>
+                <p>Assigned To:</p>
+                <ul>
+                    <li>User 1</li>
+                    <li>User 2</li>
+                </ul>
+
+
+            </main>
+        </div>
+    </section>
+</body>
+
+</html>

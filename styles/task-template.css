@@ -1,0 +1,64 @@
+.task-section {
+    max-width: 525px;
+    max-height: 931px;
+    border-radius: 30px;
+    padding-top: 48px;
+    padding-right: 40px;
+    padding-bottom: 48px;
+    padding-left: 40px;
+    gap: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-header {
+    width: 164;
+    height: 36;
+    /* background-color: #0038FF; platzhalter da per classname zugewiesen*/
+    border-radius: 8px;
+    padding-top: 4px;
+    padding-right: 24px;
+    padding-bottom: 4px;
+    padding-left: 24px;
+    gap: 10px;
+
+    p {
+        font-family: Inter;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 23px;
+        color: white;
+    }
+}
+
+.task-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-title {
+    font-family: Inter;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 61px;
+}
+
+.task-description {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+}
+
+.task-details-table {}
+
+tr {
+    display: table-row;
+    gap: 12px;
+}
