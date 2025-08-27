@@ -3,6 +3,7 @@ let currentTitle = "";
 let contactAllListFromDB = [];
 let isContactListOpen = false;
 let currentContactAssignList = [];
+let currentPrioity = "";
 
 
 async function onLoadAddTask() {
@@ -127,10 +128,12 @@ function showAndHideContacts(showOrHide = "show") {
         inputField.focus();
         showContactListForSelect();
         renderHideContactsIcon();
+        showOrHideBadgeContainer("hide");
     } else {
         inputField.value = "Select contacts to assign";
         hideContactListForSelect();
         renderShowContactsIcon();
+        showOrHideBadgeContainer("show");
     }
 }
 
@@ -163,6 +166,7 @@ function showContactListForSelect(currentContactList = []) {
     contactListContainer.style.height = heightOfContainer + "px";
     contactList.style.height = (heightOfContainer - 27) + "px";
     isContactListOpen = true;
+    
 }
 
 //NOTE - Das Kontaktauswahlfenster schliessen -> Sonderfunktion erkären!
@@ -179,6 +183,7 @@ function hideContactListForSelect() {
 
     contactList.innerHTML = "";
     isContactListOpen = false;
+    
     
 }
 
@@ -280,3 +285,106 @@ function getIndexOfContactOfArray(contactID, contactArray) {
 }
 
 
+function showOrHideBadgeContainer(showOrHide = "") {
+    if(showOrHide.length == 0) {return;}
+    let container = document.getElementById('contact-assigned-badge');
+    if(showOrHide == "show"){
+        container.classList.remove('d-none');
+        renderAsignedProfilBadge();
+    }else{
+        container.classList.add('d-none');
+        container.innerHTML = "";
+    }
+}
+
+
+function renderAsignedProfilBadge(){
+    if(currentContactAssignList.length == 0){
+        changeStyleFromSelectContactInput();
+        return;
+    }
+
+    let badgeContainer = document.getElementById('contact-assigned-badge');
+    badgeContainer.innerHTML = "";
+    let counter = 0;
+    for (let i = 0; i < currentContactAssignList.length; i++){
+        badgeContainer.innerHTML += getAssignedContactBadge(currentContactAssignList[i]);
+        counter++;
+        if(counter == 4){break;}
+    }
+    changeStyleFromSelectContactInput();
+}
+
+function changeStyleFromSelectContactInput () {
+    document.getElementById('task-assign-to').classList.toggle('mb-24');
+    document.getElementById('task-assign-to').classList.toggle('mb-8');
+}
+
+function addTaskPrioritySelect(button) {
+    if(!button){return;}
+    
+    const buttonName = button.getAttribute('name');
+    const isActiv = button.getAttribute('activ') == "true";
+
+    if(currentPrioity == buttonName && isActiv){
+        allPriortyButtonsReset();
+    }else {
+        setNewPriority(buttonName);
+    }
+
+}
+
+function allPriortyButtonsReset() {
+    currentPrioity = "";
+    const btnContainer = document.getElementById('task-priority-button');
+    const buttons = btnContainer.querySelectorAll('.btn');
+
+    buttons.forEach((b) => {
+        b.setAttribute('activ', '');
+        setButtonSytleNotActiv(b);
+    });
+}
+
+function setNewPriority(priority) {
+    const btnContainer = document.getElementById('task-priority-button');
+    const buttons = btnContainer.querySelectorAll('.btn');
+
+    buttons.forEach((b) => {
+
+        if(b.getAttribute('name') == priority){
+            b.setAttribute('activ', 'true');
+            setButtonStyleActiv(b);
+            
+        }else{
+            b.setAttribute('activ', '');
+            setButtonSytleNotActiv(b);
+        }
+        
+    });
+
+    currentPrioity = priority;
+}
+
+
+function setButtonStyleActiv(button){
+    if(!button){return;}
+    button.classList.add(`prio-${button.getAttribute('name')}-selected`);
+    togglePrioButtonTextColor(button, "white");
+}
+
+function setButtonSytleNotActiv(button) {
+    if(!button){return;}
+    button.classList.remove(`prio-${button.getAttribute('name')}-selected`);
+    togglePrioButtonTextColor(button, "black");
+}
+
+function togglePrioButtonTextColor(button, whiteOrBlack) {
+    if(!button){return;}
+    let btnText = button.querySelector('p');
+    if(whiteOrBlack == "white"){
+        btnText.classList.add('prio-selected');
+    }else{
+        btnText.classList.remove('prio-selected');
+    }
+    
+}
