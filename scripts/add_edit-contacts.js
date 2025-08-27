@@ -77,20 +77,6 @@ async function onDeleteContact(event, element) {
 }
 
 //REVIEW - Validierung der Kontaktdaten, könnte zusammengelegt werden mit Validierung in add-task
-//TODO - Styling in anpassen da dauerhaft sichtbar
-
-//NOTE - Validierung des Titels
-// function taskTitleValidation(titleValue) {
-//     const cleanTitleValue = (titleValue ?? "").trim();
-
-//     if (cleanTitleValue.length > 3) {
-//         showAndLeaveErrorMessage("a-t-title-required", false);
-//         showAndLeaveErrorBorder("task-title", false);
-//     } else {
-//         showAndLeaveErrorMessage("a-t-title-required", true);
-//         showAndLeaveErrorBorder("task-title", true);
-//     }
-// }
 
 //NOTE - Generische Funktion zum Anzeigen / Ausblenden der Errormeldung
 function showAndLeaveErrorMessage(messageTarget, visibilty = true) {
@@ -115,10 +101,24 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
         inputField.classList.remove('input-has-error');
     }
 }
+//NOTE - Validierung des Namensfeldes
+function contactNameValidation(nameValue) {
+    const cleanNameValue = (nameValue ?? "").trim();
+    const namePattern = /\w{3,10}\s\w{3,10}/;
 
+    if (cleanNameValue.length > 0 && namePattern.test(cleanNameValue)) {
+        showAndLeaveErrorMessage("contact-name-required", false);
+        showAndLeaveErrorBorder("contact-name", false);
+    } else {
+        showAndLeaveErrorMessage("contact-name-required", true);
+        showAndLeaveErrorBorder("contact-name", true);
+    }
+}
+
+//NOTE - Validierung des Emailfeldes
 function contactEmailValidation(emailValue) {
     const cleanEmailValue = (emailValue ?? "").trim();
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
     if (cleanEmailValue.length > 0 && emailPattern.test(cleanEmailValue)) {
         showAndLeaveErrorMessage("contact-email-required", false);
@@ -129,6 +129,7 @@ function contactEmailValidation(emailValue) {
     }
 }
 
+//NOTE - Validierung des Telefonfeldes
 function contactPhoneValidation(phoneValue) {
     const cleanPhoneValue = (phoneValue ?? "").trim();
     const phonePattern = /^[\d\s\-+]{5,}$/;
