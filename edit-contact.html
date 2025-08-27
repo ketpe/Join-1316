@@ -23,18 +23,32 @@
                     <div class="add-contact-input-field-container">
 
                         <label for="contact-name" class="visually-hidden">Contact Name</label>
-                        <input type="text" id="contact-name" class="add-contact-input input-name" placeholder="Name">
-
+                        <input oninput="contactNameValidation(this.value)" type="text" id="contact-name"
+                            class="add-contact-input input-name" placeholder="Name">
+                        <div class="contact-error-text-container">
+                            <p id="contact-name-required" class="error-text-hidden">This field is required. John Doe
+                            </p>
+                        </div>
                         <label for="email" class="visually-hidden">Email</label>
-                        <input type="email" id="contact-email" class="add-contact-input input-mail" placeholder="Email">
+                        <input oninput="contactEmailValidation(this.value)" type="email" id="contact-email"
+                            class="add-contact-input input-mail" placeholder="Email">
+                        <div class="contact-error-text-container">
+                            <p id="contact-email-required" class="error-text-hidden">This field is required.
+                                example@domain.com</p>
+                        </div>
 
                         <label for="phone" class="visually-hidden">Phone</label>
-                        <input type="tel" id="contact-phone" class="add-contact-input input-phone" placeholder="Phone">
-
-                        <div class="login-form-buttons" id="login-form-buttons">
-                            <button type="button" class="btn-clear-cancel btn btn-outline btn-md"
-                                onclick="onDeleteContact(event,this)">
-                                <p class="">Delete</p>
+                        <input oninput="contactPhoneValidation(this.value)" type="tel" id="contact-phone"
+                            class="add-contact-input input-phone" placeholder="Phone">
+                        <div class="contact-error-text-container">
+                            <p id="contact-phone-required" class="error-text-hidden">This field is required. +1234567890
+                            </p>
+                        </div>
+                        <div class="login-form-buttons">
+                            <button type="button" class=" btn-clear-cancel btn btn-outline btn-md"
+                                onclick="cancelAddContact()">
+                                <p class="">Cancel</p>
+                                <div role="img" class="btn-cancel-icon"></div>
                             </button>
                             <button type="button" onclick="editContact(event,this)"
                                 class="btn-create btn btn-fill btn-md">
