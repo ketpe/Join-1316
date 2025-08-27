@@ -126,7 +126,8 @@
 }
 
 .error-text-hidden {
-    color: var(--default-bg-color) !important;
+    color: transparent !important;
+    cursor: inherit;
 }
 
 .input-has-error {
