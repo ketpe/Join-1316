@@ -94,8 +94,10 @@
 /*NOTE - - Warnung invalid aus add-task*/
 .contact-error-text-container {
     height: 12px;
-    margin-top: 8px;
-    margin-bottom: 24px;
+    /* /* margin-top: 8px;
+    margin-bottom: 24px; */
+    margin: 0;
+
 }
 
 .contact-name-required {
@@ -147,7 +149,6 @@
 
 .add-contact-input-field-container {
     width: 422px;
-
 }
 
 .add-contact-input {
