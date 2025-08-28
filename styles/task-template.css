@@ -56,9 +56,143 @@
     font-size: 20px;
 }
 
-.task-details-table {}
+.task-details-table {
+    display: flex;
+    flex-direction: row;
 
-tr {
-    display: table-row;
-    gap: 12px;
+    td {
+        padding-right: 25px;
+    }
+}
+
+.task-due-date-section,
+.task-priority-section {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+}
+
+/*NOTE - Listenelemente*/
+
+.assigned-contact-label {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+}
+
+.assigned-contact {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.assigned-contact-item {
+    display: flex;
+    align-items: center;
+    padding: 7px 16px;
+    gap: 16px;
+}
+
+.assigned-contact-item-active {
+    display: flex;
+    padding: 15px 24px;
+    gap: 35px;
+    background-color: var(--bg-default);
+    border-radius: 10px;
+}
+
+
+.assigned-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.contact-item:hover {
+    background-color: var(--bg-contact-item);
+    border-radius: 10px;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.contact-name {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+.contact-initials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 2px solid (inherit);
+    border-radius: 50%;
+    gap: 10px;
+}
+
+.contact-initials-text {
+
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+}
+
+.task-subtask {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+}
+
+.subtask-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+}
+
+.subtask-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
+    border: 2px solid #26347C;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+}
+
+.subtask-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    width: 8.5px;
+    height: 22px;
+    top: -10.5px;
+    left: 9px;
+    border-right: 2px solid #26347C;
+    border-bottom: 2px solid #26347C;
+    transform: rotate(43deg);
+}
+
+
+.subtask-label {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
 }

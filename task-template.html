@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/task-template.css">
-    <link rel="stylesheet" href="./styles/task-template.css">
+    <!-- <link rel="stylesheet" href="./styles/task-template.css"> -->
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./styles/task-template.css">
     <title>Document</title>
 </head>
 
@@ -37,14 +37,39 @@
                             <td class="task-priority">High</td>
                         </tr>
                 </table>
-                <p>Assigned To:</p>
-                <ul>
-                    <li>User 1</li>
-                    <li>User 2</li>
+                <p class="assigned-contact-label">Assigned To:</p>
+                <ul class="assigned-contact" id="contact-list">
+                    <li class="assigned-contact-item">
+                        <div class="contact-initials blue">
+                            <p class="contact-initials-text">PK</p>
+                        </div>
+                        <div class="contact-info">
+                            <div class="contact-name">Peter Ketterlinus</div>
+
+                        </div>
+                    </li>
+                    <li class="assigned-contact-item">
+                        <div class="contact-initials red">
+                            <p class="contact-initials-text">PK</p>
+                        </div>
+                        <div class="contact-info">
+                            <div class="contact-name">Peter Ketterlinus</div>
+                        </div>
+                    </li>
                 </ul>
+                <section class="task-subtask">
+                    <p>Subtasks</p>
+                    <div class="subtask-content">
+                        <input class="subtask-checkbox" type="checkbox" id="subtask1">
+                        <label class="subtask-label" for="subtask1">Subtask 1</label>
+                    </div>
+                </section>
+        </div>
 
 
-            </main>
+
+
+        </main>
         </div>
     </section>
 </body>
