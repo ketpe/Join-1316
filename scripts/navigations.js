@@ -2,7 +2,7 @@ function navigateToSignUp() {
     window.location.href = './signup.html';
 }
 
-function navigateToSummaryGuest(){
+function navigateToSummary(){
     window.location.href = './summary-desktop.html';
 }
 

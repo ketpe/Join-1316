@@ -25,7 +25,7 @@
             </header>
 
             <section aria-label="form section" class="login-signup-container" aria-labelledby="login-form-title">
-                <form class="login-signup-form form-for-login" aria-describedby="login-error-text">
+                <form class="login-signup-form form-for-login" aria-describedby="login-error-text" method = "get" onsubmit="loginForm(event)">
                     <h1>Log in</h1>
                     <div class="login-signup-h1-line" aria-hidden="true"></div>
 
@@ -33,7 +33,8 @@
                         <label for="username" class="visually-hidden">Email</label>
                         <input 
                             type="email" 
-                            id="username" 
+                            id="username"
+                            name="email" 
                             class="login-signup-input input-mail" 
                             placeholder="Email" 
                             autocomplete="email"
@@ -43,7 +44,8 @@
                         <div class="login-password-container">
                             <input 
                                 type="password" 
-                                id="password" 
+                                id="password"
+                                name="password" 
                                 class="login-signup-input login-password" 
                                 placeholder="Password" 
                                 autocomplete="current-password"
@@ -69,7 +71,7 @@
 
                     <div class="login-form-buttons">
                         <button type="submit" class="btn btn-fill btn-md">Log in</button>
-                        <button type="button" class="btn btn-outline btn-md" onclick="navigateToSummaryGuest()">Guest Log in</button>
+                        <button type="submit" class="btn btn-outline btn-md">Guest Log in</button>
                     </div>
 
 
@@ -92,6 +94,8 @@
 
 
     <script src="./scripts/navigations.js"></script>
+    <script src="./scripts/login.js"></script>
+    <script src="./scripts/db-functions.js"></script>
     <script src="./scripts/login.js"></script>
 </body>
 
