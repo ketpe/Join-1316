@@ -15,7 +15,7 @@ let questContact = {
     
 };
 
-let category = {
+let categories = {
     'id': 1,
     'title' :'',
     'categoryColor' : '' 

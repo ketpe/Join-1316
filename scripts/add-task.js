@@ -4,6 +4,7 @@ let contactAllListFromDB = [];
 let isContactListOpen = false;
 let currentContactAssignList = [];
 let currentPrioity = "";
+let categories = [];
 
 
 async function onLoadAddTask() {
@@ -38,14 +39,20 @@ function changeAddTaskViewToStandard() {
 //NOTE - Startfunktion 1. Kontakte laden
 async function loadDataForAddTaskViewAndRenderView() {
     await loadContactsAllFomDB();
-
-
+    await loadCategoriesFromDB();
+   
 }
 
 //NOTE - Lade alle Kontakte aus der DB in das Array
 async function loadContactsAllFomDB() {
     contactAllListFromDB = await getSortedContact()
 }
+
+
+async function loadCategoriesFromDB() {
+    categories = await getAllData("categories");
+}
+
 
 //NOTE - Hier hat sich das Datumsfeld geändert
 function dateFieldOnChange() {
@@ -266,6 +273,17 @@ function contactRemoveFromTask(currentContactID) {
     }
 }
 
+
+function filterContactFromInputValue(inputValue) {
+    const inputCleanValue = (inputValue ?? "").trim();
+    if(inputCleanValue.length < 2){return;}
+    const filteredContacts = contactAllListFromDB.filter((c) => c['firstname'].toLowerCase().startsWith(inputCleanValue.toLowerCase()));
+    showContactListForSelect(filteredContacts);
+} 
+
+
+
+
 //NOTE - Diese Funktion wurde dem Body inzugefügt, um die Mausklicks abzufangen. Wenn die Liste offen ist und ein anders Elemet
 // Ausser den hier angegebenen geklickt wird, schliesst sich das Fenster, wie beim Klick auf den Pfeil nach oben.
 function addTaskWindowMouseClick(e) {
@@ -300,7 +318,6 @@ function showOrHideBadgeContainer(showOrHide = "") {
 
 function renderAsignedProfilBadge(){
     if(currentContactAssignList.length == 0){
-        changeStyleFromSelectContactInput();
         return;
     }
 
@@ -312,13 +329,9 @@ function renderAsignedProfilBadge(){
         counter++;
         if(counter == 4){break;}
     }
-    changeStyleFromSelectContactInput();
 }
 
-function changeStyleFromSelectContactInput () {
-    document.getElementById('task-assign-to').classList.toggle('mb-24');
-    document.getElementById('task-assign-to').classList.toggle('mb-8');
-}
+
 
 function addTaskPrioritySelect(button) {
     if(!button){return;}

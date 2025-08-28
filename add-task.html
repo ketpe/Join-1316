@@ -45,19 +45,22 @@
             <div class="a-t-f-i-right">
                 <label for="task-priority-button">Priority</label>
                 <div id="task-priority-button" class="a-t-priority-button-container">
-                    <button id="btn-priority-alta" class="btn btn-priority prio-alta" type="button" name="alta" onclick="addTaskPrioritySelect(this)">
+                    <button id="btn-priority-alta" class="btn btn-priority prio-alta" type="button" name="alta"
+                        onclick="addTaskPrioritySelect(this)">
                         <div>
                             <p>Urgent</p>
                             <div role="img" title="Urgent-Icon"></div>
                         </div>
                     </button>
-                    <button id="btn-priority-media" class="btn btn-priority prio-media" type="button" name="media" onclick="addTaskPrioritySelect(this)">
+                    <button id="btn-priority-media" class="btn btn-priority prio-media" type="button" name="media"
+                        onclick="addTaskPrioritySelect(this)">
                         <div>
                             <p>Medium</p>
                             <div role="img" title="Medium-Icon"></div>
                         </div>
                     </button>
-                    <button id="btn-priority-baja" class="btn btn-priority prio-baja" type="button" name="baja" onclick="addTaskPrioritySelect(this)">
+                    <button id="btn-priority-baja" class="btn btn-priority prio-baja" type="button" name="baja"
+                        onclick="addTaskPrioritySelect(this)">
                         <div>
                             <p>Low</p>
                             <div role="img" title="Low-Icon"></div>
@@ -67,38 +70,45 @@
 
                 <label for="task-assign-to">Assigned to</label>
                 <div class="contact-select-container show-front">
-                    <input class="a-t-input mb-24 show-front a-t-contact-input" type="text" name="task-assign-to" id="task-assign-to"
-                    value="Select contacts to assign"
-                    onclick="showAndHideContacts('show')"
-                    >
+                    <input class="a-t-input mb-24 show-front a-t-contact-input" type="text" name="task-assign-to"
+                        id="task-assign-to" value="Select contacts to assign" onclick="showAndHideContacts('show')"
+                        oninput="filterContactFromInputValue(this.value)">
 
-                    <button id="show-and-hide-contacts" class="btn-show-hide-contact-list" type="button" 
-                        title="show and hide button for contactlist"
-                        onclick="showAndHideContacts('show')"
-                    >
-                        <div id="show-or-hide-icon" class="icon-show-contacts" role="img" title="show or hide icon"></div>
+                    <button id="show-and-hide-contacts" class="btn-show-hide-contact-list" type="button"
+                        title="show and hide button for contactlist" onclick="showAndHideContacts('show')">
+                        <div id="show-or-hide-icon-co" class="icon-show-contacts" role="img" title="show or hide icon">
+                        </div>
                     </button>
                 </div>
 
-                
+
 
                 <div id="contact-List-container" class="contact-List-container">
                     <div id="contact-List-for-task" class="contact-List-for-task">
                     </div>
                 </div>
 
-
-
                 <div id="contact-assigned-badge" class="contact-assigned-badge">
                 </div>
 
-
                 <label for="task-category">Category<span>*</span></label>
-                <input class="a-t-input" type="text" name="task-category" id="task-category"
-                    placeholder="Select task category">
-                <div class="a-t-error-text-container">
-                    <p id="a-t-category-required" class="error-text-hidden">This field is required</p>
+
+                <div class="category-select-container show-front ">
+                    <input class="a-t-input show-front a-t-category-input" type="text" name="task-category" id="task-category"
+                        placeholder="Select task category">
+
+                    <button id="show-and-hide-categories" class="btn-show-hide-category-list" type="button"
+                        title="show and hide button for categories" onclick="showAndHideCategories('show')">
+                        <div id="show-or-hide-icon-ca" class="icon-show-contacts" role="img" title="show or hide icon">
+                        </div>
+                    </button>
+
+                    <div class="a-t-error-text-container show-front">
+                        <p id="a-t-category-required" class="error-text-hidden">This field is required</p>
+                    </div>
                 </div>
+
+
 
                 <label for="task-sub-task">Subtasks</label>
                 <input class="a-t-input" type="text" name="task-sub-task" id="task-sub-task">
