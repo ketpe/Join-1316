@@ -86,7 +86,7 @@ async function deleteData(path = "") {
  * @returns
  */
 function getNewUid() {
-
+  
     return crypto.randomUUID();
 }
 

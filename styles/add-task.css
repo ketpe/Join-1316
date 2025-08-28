@@ -261,7 +261,7 @@
     position: relative;
     transform: translateY(-50px);
     height: 0;
-    width: 416px;
+    width: 100%;
     border-radius: 0px 0px 10px 10px;
     background-color: white;
     z-index: 1;
@@ -289,11 +289,13 @@
     z-index: 5;
 }
 
+.category-select-container,
 .contact-select-container {
     position: relative;
     width: 100%;
 }
 
+.a-t-category-input,
 .a-t-contact-input {
     padding-right: 50px;
     width: calc(440px - (2 * 1px) - 21px - 50px);
@@ -434,4 +436,7 @@
     display: flex;
     gap: 8px;
     margin-bottom: 16px;
+    position: relative;
+    transform: translateY(-10px);
 }
+
