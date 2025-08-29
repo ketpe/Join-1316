@@ -76,7 +76,7 @@
 
                     <button id="show-and-hide-contacts" class="btn-show-hide-contact-list" type="button"
                         title="show and hide button for contactlist" onclick="showAndHideContacts('show')">
-                        <div id="show-or-hide-icon-co" class="icon-show-contacts" role="img" title="show or hide icon">
+                        <div id="show-hide-icon-contacts" class="icon-show-list" role="img" title="show or hide icon">
                         </div>
                     </button>
                 </div>
@@ -94,21 +94,25 @@
                 <label for="task-category">Category<span>*</span></label>
 
                 <div class="category-select-container show-front ">
-                    <input class="a-t-input show-front a-t-category-input" type="text" name="task-category" id="task-category"
-                        placeholder="Select task category">
+                    <input class="a-t-input  a-t-category-input" type="text" name="task-category" id="task-category"
+                        value="Select task category" placeholder="Select task category">
 
                     <button id="show-and-hide-categories" class="btn-show-hide-category-list" type="button"
                         title="show and hide button for categories" onclick="showAndHideCategories('show')">
-                        <div id="show-or-hide-icon-ca" class="icon-show-contacts" role="img" title="show or hide icon">
+                        <div id="show-hide-icon-category" class="icon-show-list" role="img" title="show or hide icon">
                         </div>
                     </button>
 
-                    <div class="a-t-error-text-container show-front">
-                        <p id="a-t-category-required" class="error-text-hidden">This field is required</p>
+                    <div class="a-t-error-text-container show-hidden">
+                        <p id="a-t-category-required show-hidden" class="error-text-hidden">This field is required</p>
                     </div>
                 </div>
 
 
+                <div id="category-list-container" class="category-list-container">
+                    <div id="category-list-for-task" class="category-list-for-task">
+                    </div>
+                </div>
 
                 <label for="task-sub-task">Subtasks</label>
                 <input class="a-t-input" type="text" name="task-sub-task" id="task-sub-task">

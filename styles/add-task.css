@@ -87,6 +87,7 @@
     width: calc((2 * 440px) + (2 * 24px) + 2px);
     display: flex;
     justify-content: space-between;
+    z-index: 1000;
 }
 
 .add-task-footer p {
@@ -221,7 +222,12 @@
 }
 
 .error-text-hidden {
-    color: var(--default-bg-color) !important;
+    /* color: var(--default-bg-color) !important; */
+    color: transparent !important;
+}
+
+.show-hidden{
+    z-index: -1;
 }
 
 .a-t-text-area {
@@ -256,6 +262,7 @@
     gap: 16px
 }
 
+.category-list-container, 
 .contact-List-container {
     box-sizing: border-box;
     position: relative;
@@ -271,6 +278,11 @@
 
 }
 
+.category-list-container {
+    transform: translateY(-70px);
+}
+
+.category-list-for-task,
 .contact-List-for-task {
     width: 100%;
     margin-top: 28px;
@@ -278,7 +290,11 @@
     height: 0;
     background-color: white;
     overflow-y: scroll;
-    z-index: 1;
+   
+}
+
+.category-list-for-task{
+    overflow-y:hidden;
 }
 
 .display-hidden {
@@ -302,6 +318,7 @@
     cursor: pointer;
 }
 
+.btn-show-hide-category-list,
 .btn-show-hide-contact-list {
     height: 24px;
     width: 24px;
@@ -314,25 +331,27 @@
     background-color: transparent;
 }
 
-.icon-show-contacts {
+.btn-show-hide-category-list{
+    transform: translateY(-140%);
+}
+
+.icon-show-list {
     background-image: url('../assets/arrow_drop_down.svg');
     width: 7.21px;
     height: 4.6px;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    /* background-color: var(--bg-btn-hover-special); */
     background-color: transparent;
 }
 
-.icon-hide-contacts {
+.icon-hide-list {
     background-image: url('../assets/arrow_drop_up.svg');
     width: 7.21px;
     height: 4.6px;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    /* background-color: var(--bg-btn-hover-special); */
     background-color: transparent;
 }
 
@@ -347,6 +366,7 @@
     color: transparent;
 }
 
+.category-list-btn,
 .contact-list-btn {
     width: 100%;
     height: 54px;
@@ -361,6 +381,15 @@
     cursor: pointer;
 }
 
+
+
+.category-list-btn>p{
+    font-family: 'Inter';
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.category-list-btn:hover, 
 .contact-list-btn:hover {
     background-color: var(--bg-contact-item);
 }

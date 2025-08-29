@@ -5,6 +5,8 @@ let isContactListOpen = false;
 let currentContactAssignList = [];
 let currentPrioity = "";
 let categories = [];
+let isCategoryListOpen = false;
+let currentCategory = "";
 
 
 async function onLoadAddTask() {
@@ -134,12 +136,12 @@ function showAndHideContacts(showOrHide = "show") {
         inputField.value = "";
         inputField.focus();
         showContactListForSelect();
-        renderHideContactsIcon();
+        renderHideContactsIcon('show-hide-icon-contacts');
         showOrHideBadgeContainer("hide");
     } else {
         inputField.value = "Select contacts to assign";
         hideContactListForSelect();
-        renderShowContactsIcon();
+        renderShowContactsIcon('show-hide-icon-contacts');
         showOrHideBadgeContainer("show");
     }
 }
@@ -147,17 +149,19 @@ function showAndHideContacts(showOrHide = "show") {
 //TODO - Zusammenfassen, in eine Funktion -> show oder hide übergeben
 
 //NOTE - Anzeigen des Pfeil nach unten -> Show
-function renderShowContactsIcon() {
-    const iconDiv = document.getElementById('show-or-hide-icon');
-    iconDiv.classList.remove('icon-hide-contacts');
-    iconDiv.classList.add('icon-show-contacts');
+function renderShowContactsIcon(elementID) {
+    const iconDiv = document.getElementById(elementID);
+    if(!iconDiv){return;}
+    iconDiv.classList.remove('icon-hide-list');
+    iconDiv.classList.add('icon-show-list');
 }
 
 //NOTE - Anzeigen des Pfeils nach oben -> Hide
-function renderHideContactsIcon() {
-    const iconDiv = document.getElementById('show-or-hide-icon');
-    iconDiv.classList.add('icon-hide-contacts');
-    iconDiv.classList.remove('icon-show-contacts');
+function renderHideContactsIcon(elementID) {
+    const iconDiv = document.getElementById(elementID);
+    if(!iconDiv){return;}
+    iconDiv.classList.add('icon-hide-list');
+    iconDiv.classList.remove('icon-show-list');
 }
 
 //NOTE - Kontaktlist zum rendern erstellen. Vorbereitung für die Suche.
@@ -400,4 +404,42 @@ function togglePrioButtonTextColor(button, whiteOrBlack) {
         btnText.classList.remove('prio-selected');
     }
     
+}
+
+
+function showAndHideCategories(showOrHide = "show") {
+    const buttonShowOhrHide = document.getElementById('show-and-hide-categories');
+    buttonShowOhrHide.setAttribute('onclick', (showOrHide == "show" ? 'showAndHideCategories("hide")' : 'showAndHideCategories("show")'));
+    /* const inputField = document.getElementById('task-category'); */
+    if (showOrHide == "show") {
+        showCategoryListForSelect();
+        //renderHideContactsIcon();
+        //showOrHideBadgeContainer("hide");
+    } else {
+        /* inputField.value = "Select contacts to assign"; */
+        /* hideContactListForSelect();
+        renderShowContactsIcon();
+        showOrHideBadgeContainer("show"); */
+    }
+}
+
+function showCategoryListForSelect() {
+    if (categories == null || categories.length == 0) { return; }
+    renderCategoryOptions(categories);
+    const categoryListContainer = document.getElementById('category-list-container');
+    const categoryList = document.getElementById('category-list-for-task');
+    const heightOfOneCategory = document.getElementById(categories[0]['id']).offsetHeight;
+    let heightOfContainer = (categories.length <= 5 ? heightOfOneCategory * categories.length : heightOfOneCategory * 5) + 40;
+    categoryListContainer.style.height = heightOfContainer + "px";
+    categoryList.style.height = (heightOfContainer - 27) + "px";
+    isCategoryListOpen = true;
+}
+
+function renderCategoryOptions(categories) {
+    let categorySelectElement = document.getElementById('category-list-for-task');
+    categorySelectElement.innerHTML = "";
+
+    for (let i = 0; i < categories.length; i++) {
+        categorySelectElement.innerHTML += getCategoryListElement(categories[i]);
+    }
 }
