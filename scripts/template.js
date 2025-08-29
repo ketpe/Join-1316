@@ -15,3 +15,11 @@ function getAssignedContactBadge(contact) {
         <div class="contact-ellipse ${contact['initialColor']}"><span>${contact['initial']}</span></div>
     `;
 }
+
+function getCategoryListElement(category) {
+    return `
+        <button type="button" id="${category['id']}" class="category-list-btn" onclick="categoryButtonOnListSelect(this)">
+            <p>${category['title']}</p>
+        </button>
+    `;
+}
