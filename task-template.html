@@ -34,7 +34,7 @@
                         </tr>
                         <tr class="task-priority-section">
                             <td class="task-priority-label">Priority:</td>
-                            <td class="task-priority">High</td>
+                            <td class="task-priority"><!-- Hier muss prio art rein --></td>
                         </tr>
                 </table>
                 <p class="assigned-contact-label">Assigned To:</p>
@@ -60,8 +60,9 @@
                 <section class="task-subtask">
                     <p>Subtasks</p>
                     <div class="subtask-content">
-                        <input class="subtask-checkbox" type="checkbox" id="subtask1">
-                        <label class="subtask-label" for="subtask1">Subtask 1</label>
+                        <button onclick="toggleSubtaskCheckbox(this)" type="button" id="subtask"
+                            class="checkbox-btn checkbox-btn-default"></button>
+                        <span class="subtask-text">Implement Recipe Recommendation</span>
                     </div>
                 </section>
         </div>
@@ -73,5 +74,6 @@
         </div>
     </section>
 </body>
+<script src="./scripts/task-template.js"></script>
 
 </html>

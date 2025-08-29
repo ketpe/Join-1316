@@ -80,6 +80,7 @@
     font-weight: 400;
     font-style: Regular;
     font-size: 20px;
+    color: var(--bg-default);
 }
 
 .assigned-contact {
@@ -127,6 +128,7 @@
     font-style: Regular;
     font-size: 20px;
     vertical-align: middle;
+    color: black;
 }
 
 .contact-initials {
@@ -156,43 +158,43 @@
     font-weight: 400;
     font-style: Regular;
     font-size: 20px;
+    color: var(--bg-default);
 }
 
 .subtask-content {
     display: flex;
     align-items: center;
     gap: 16px;
+    padding-top: 6px;
+    padding-right: 16px;
+    padding-bottom: 6px;
+    padding-left: 16px;
+
+
 
 }
 
-.subtask-checkbox {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 24px;
-    height: 24px;
-    border-radius: 3px;
-    border: 2px solid #26347C;
-    background: transparent;
-    position: relative;
+/* .checkbox-btn-default-hover:hover, */
+.checkbox-btn-default {
+    background-image: url("../assets/signup-confirm-default.svg");
+}
+
+.checkbox-btn {
+    width: 16px;
+    height: 16px;
+    border: none;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
     cursor: pointer;
+    background-color: white;
 }
 
-.subtask-checkbox:checked::after {
-    content: '';
-    position: absolute;
-    width: 8.5px;
-    height: 22px;
-    top: -10.5px;
-    left: 9px;
-    border-right: 2px solid #26347C;
-    border-bottom: 2px solid #26347C;
-    transform: rotate(43deg);
+/* .checkbox-btn-default:hover, */
+.checkbox-btn-default-hover {
+    background-image: url("../assets/signup-confirm-checked.svg");
 }
 
-
-.subtask-label {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 16px;
+.subtask-text {
+    color: black;
 }
