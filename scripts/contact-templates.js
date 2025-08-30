@@ -38,11 +38,11 @@ function getContactDetailView(cd) {
     <div class="name-and-action-panel">
         <div class="contacts-detailview-name">${cd.firstname} ${cd.lastname}</div>
         <div class="contacts-detailview-actions">
-            <button onclick="onEditContactDialogOpen('${cd.id}')" class="btn-contact-action btn-contact-edit">
+            <button onclick="openDialog('add-contact-dialog', ()  => renderEditContactIntoDialog('${cd.id}'))" class="btn-contact-action btn-contact-edit">
                 <div class="action-icons action-edit-icon"></div>
                 <p>Edit</p>
             </button>
-            <button onclick="onDeleteContact(event,this)" id="${cd.id}" class="btn-contact-action btn-contact-delete">
+            <button onclick="closeDialogByEvent(event,'add-contact-dialog')" id="${cd.id}" class="btn-contact-action btn-contact-delete">
                 <div class="action-icons action-delete-icon"></div>
                 <p>Delete</p>
             </button>
