@@ -46,7 +46,7 @@ async function editContact(event, button) {
     if (event) event.preventDefault();
     const contact = createUpdateContactObject();
     await updateData(`/contacts/${button.id}`, contact);
-    addContactDialogClose(event);
+    closeDialogByEvent(event, 'add-contact-dialog');
     clearActiveContactClass();
     renderContacts();
 
@@ -142,4 +142,17 @@ function contactPhoneValidation(phoneValue) {
         showAndLeaveErrorBorder("contact-phone", true);
     }
 }
-
+//NOTE -  Funktion zum Rendern der Kontaktdaten im Edit-Dialog
+function renderEditContactIntoDialog(id) {
+    includeHtml("dialog-content-contacts", "edit-contact.html").then(() => {
+        getDataByKey("id", id, "contacts").then(contact => {
+            document.getElementById('contact-name').value = `${contact.firstname} ${contact.lastname}`;
+            document.getElementById('contact-email').value = contact.email;
+            document.getElementById('contact-phone').value = contact.phone;
+            document.getElementById('initial-avatar').classList.add(contact.initialColor);
+            document.querySelector('#initial-avatar .detail-view-initials').innerText = contact.initial;
+            document.querySelector('.btn-create').id = contact.id;
+            document.querySelector('.btn-clear-cancel').id = contact.id;
+        });
+    });
+}

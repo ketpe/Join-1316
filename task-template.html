@@ -65,12 +65,22 @@
                         <span class="subtask-text">Implement Recipe Recommendation</span>
                     </div>
                 </section>
-        </div>
+                <div class="contacts-detailview-actions">
+                    <button onclick="onEditContactDialogOpen('${cd.id}')" class="btn-contact-action btn-contact-edit">
+                        <div class="action-icons action-edit-icon"></div>
+                        <p>Edit</p>
+                    </button>
+                    <button onclick="onDeleteContact(event,this)" id="${cd.id}"
+                        class="btn-contact-action btn-contact-delete">
+                        <div class="action-icons action-delete-icon"></div>
+                        <p>Delete</p>
+                    </button>
+                </div>
 
 
 
 
-        </main>
+            </main>
         </div>
     </section>
 </body>
