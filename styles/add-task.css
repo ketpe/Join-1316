@@ -266,7 +266,7 @@
 .contact-List-container {
     box-sizing: border-box;
     position: relative;
-    transform: translateY(-50px);
+    transform: translateY(-25px);
     height: 0;
     width: 100%;
     border-radius: 0px 0px 10px 10px;
@@ -305,17 +305,29 @@
     z-index: 5;
 }
 
+.sub-input-container,
 .category-select-container,
 .contact-select-container {
     position: relative;
     width: 100%;
+    height: 48px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
+.a-t-sub-input,
 .a-t-category-input,
 .a-t-contact-input {
     padding-right: 50px;
     width: calc(440px - (2 * 1px) - 21px - 50px);
     cursor: pointer;
+}
+
+.a-t-sub-input{
+    padding-right: 75px;
+    width: calc(440px - (2 * 1px) - 21px - 75px);
 }
 
 .btn-show-hide-category-list,
@@ -324,16 +336,12 @@
     width: 24px;
     border: none;
     position: absolute;
-    top: 50%;
     right: 18px;
-    transform: translateY(-100%);
     cursor: pointer;
     background-color: transparent;
+    z-index: 5;
 }
 
-.btn-show-hide-category-list{
-    transform: translateY(-140%);
-}
 
 .icon-show-list {
     background-image: url('../assets/arrow_drop_down.svg');
@@ -466,6 +474,55 @@
     gap: 8px;
     margin-bottom: 16px;
     position: relative;
-    transform: translateY(-10px);
+    margin-top: 8px;
 }
 
+.sub-input-writing-btn-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 20px;
+}
+
+.sub-input-writing-btn-container button{
+    border: none;
+    background-color: transparent;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.sub-input-writing-btn-container button:hover{
+    border-radius: 50%;
+    background-color: var(--bg-btn-hover-special);
+}
+
+.sub-input-writing-btn-container button:nth-child(1)>div{
+    height: 13.5px;
+    width: 13.5px;
+    background-image: url('../assets/close-sub-icon.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.sub-input-writing-btn-container div:nth-child(2){
+    margin-left: 2px;
+    margin-right: 2px;
+    width: 1px;
+    border: 1px;
+    height: 24px;
+    background-color: var(--input-border-color);
+    
+}
+
+.sub-input-writing-btn-container button:nth-child(3)>div{
+    height: 11.25px;
+    width: 15.49px;
+    background-image: url('../assets/check-sub-icon.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
