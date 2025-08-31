@@ -8,17 +8,17 @@ let contact = {
     'email' : '',
     'phone' : '',
     'initial' : 'AM',
-    'initialColor' : '--bg-test' 
+    'initialColor' : '--bg-test'
 };
 
 let questContact = {
-    
+
 };
 
 let categories = {
     'id': 1,
     'title' :'',
-    'categoryColor' : '' 
+    'categoryColor' : ''
 };
 
 //Die 'category' kommt aus der 'category.id' Beziehung 1 : 1
@@ -33,7 +33,8 @@ let task = {
 
 let subTask = {
     'id' : 1,
-    'title' : ''
+    'title' : '',
+    'taskChecked' : false
 };
 
 //Jeder Task mit einen oder mehrere Kontakten haben. Beispiel Task:1 und Contact:2 / Task:1 und Contact:3 Beziehung 1 > n

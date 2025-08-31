@@ -86,7 +86,7 @@ async function deleteData(path = "") {
  * @returns
  */
 function getNewUid() {
-  
+
     return crypto.randomUUID();
 }
 
@@ -122,3 +122,32 @@ async function updateData(path = "", data = {}) {
 
     return await response.json();
 }
+// Kann Task erzeugen
+// async function createTaskTest() {
+//     let newTask = {
+//         'id': getNewUid(),
+//         'title': 'Kochwelt Page & Recipe Recommender',
+//         'description': 'Build start page with recipe recommendation.',
+//         'dueDate': '10/05/2025',
+//         'priority': 'Medium',
+//         'category': '41f159bf-1703-4ff5-a80d-d397aaf99ec3'
+//     }
+//     let subTask = {
+//         'id': getNewUid(),
+//         'title': 'Implement Recipe Recommendation',
+//         'taskChecked': false
+//     }
+//     let taskContactAssinged = {
+//         'taskID': newTask['id'],
+//         'contatactId': '16dc4eed-9df3-43b5-aff8-0efce36106a8'
+//     };
+//     let taskSubtask = {
+//         'maintaskID': newTask['id'],
+//         'subTaskID': subTask['id']
+//     };
+//     await putData(`/tasks/${newTask.id}`, newTask);
+//     await putData(`/subTasks/${subTask.id}`, subTask);
+//     await putData(`/taskContactAssigned/${taskContactAssinged.id}`, taskContactAssinged);
+//     await putData(`/taskSubtask/${taskSubtask.id}`, taskSubtask);
+
+// }

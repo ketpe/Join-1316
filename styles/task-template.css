@@ -9,6 +9,7 @@
     gap: 24px;
     display: flex;
     flex-direction: column;
+    border: 1px solid var(--input-border-color);
 }
 
 .task-header {
@@ -18,22 +19,23 @@
 }
 
 .left-header {
-    width: 164;
-    height: 36;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 164px;
+    height: 36px;
     /* background-color: #0038FF; platzhalter da per classname zugewiesen*/
     border-radius: 8px;
-    padding-top: 4px;
-    padding-right: 24px;
-    padding-bottom: 4px;
-    padding-left: 24px;
     gap: 10px;
 
     p {
+
         font-family: Inter;
         font-weight: 400;
         font-style: Regular;
         font-size: 23px;
         color: white;
+        margin: 0;
     }
 }
 
@@ -47,6 +49,7 @@
     font-weight: 700;
     font-style: Bold;
     font-size: 61px;
+    margin: 0;
 }
 
 .task-description {
@@ -61,7 +64,7 @@
     flex-direction: row;
 
     td {
-        padding-right: 25px;
+        padding: 0 25px 25px 0;
     }
 }
 
@@ -71,6 +74,50 @@
     font-weight: 400;
     font-style: Regular;
     font-size: 20px;
+    color: var(--bg-default);
+}
+
+.task-priority {
+    display: flex;
+    flex-direction: row;
+}
+
+.priority-indicator {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    p {
+        font-family: Inter;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 20px;
+    }
+}
+
+.priority-icon-low,
+.priority-icon-medium,
+.priority-icon-urgent {
+    width: 17px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.priority-icon-urgent {
+    height: 12px;
+    background-image: url('../assets/prio-alta-red.svg');
+
+}
+
+.priority-icon-medium {
+    height: 6.33px;
+    background-image: url('../assets/prio-media-default.svg');
+}
+
+.priority-icon-low {
+    height: 12px;
+    background-image: url('../assets/prio-alta-red.svg');
 }
 
 /*NOTE - Listenelemente*/
@@ -81,12 +128,15 @@
     font-style: Regular;
     font-size: 20px;
     color: var(--bg-default);
+    margin: 0;
+    padding-bottom: 24px;
 }
 
 .assigned-contact {
     list-style: none;
     padding: 0;
     margin: 0;
+    gap: 4px;
 }
 
 .assigned-contact-item {
@@ -103,7 +153,6 @@
     background-color: var(--bg-default);
     border-radius: 10px;
 }
-
 
 .assigned-contact {
     display: flex;
@@ -143,7 +192,6 @@
 }
 
 .contact-initials-text {
-
     font-family: Inter;
     font-weight: 400;
     font-style: Regular;
@@ -169,9 +217,6 @@
     padding-right: 16px;
     padding-bottom: 6px;
     padding-left: 16px;
-
-
-
 }
 
 /* .checkbox-btn-default-hover:hover, */
@@ -207,7 +252,6 @@
     background-repeat: no-repeat;
     background-position: center;
     background-color: transparent;
-
 }
 
 /**FIXME - apply .action-icons  funktioniert nicht*/
@@ -219,28 +263,28 @@
 .action-delete-icon {
     /* @apply .action-icons; */
     background-image: url(../assets/delete-contacts-icon.svg);
-
 }
 
 
-.contacts-detailview-actions {
+.task-detailview-actions {
     display: flex;
     justify-content: end;
-    gap: 13px;
+    gap: 24px;
+    padding-top: 24px;
 }
 
-.btn-contact-edit {
+.btn-task-edit {
     width: 63px;
     height: 24px;
 }
 
-.btn-contact-delete {
+.btn-task-delete {
     width: 83px;
     height: 24px;
 }
 
 /*TODO - Btn sollten noch verschoben werden*/
-.btn-contact-action {
+.btn-task-action {
     display: flex;
     align-items: center;
     border: none;
@@ -259,14 +303,13 @@
     }
 }
 
-.btn-contact-action:hover p {
+.btn-task-action:hover p {
     color: var(--btn-bg-hover);
     font-family: Inter;
     font-weight: 700;
     font-style: Bold;
     font-size: 16px;
     vertical-align: middle;
-
 }
 
 .btn-contact-action:hover .action-edit-icon {
@@ -275,4 +318,10 @@
 
 .btn-contact-action:hover .action-delete-icon {
     background-image: url(../assets/delete-contacts-icon-hover.svg);
+}
+
+.vertical-seperator {
+    width: 1px;
+    height: 24px;
+    background-color: var(--input-border-color);
 }

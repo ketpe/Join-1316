@@ -1,0 +1,141 @@
+.board-task-content {
+    width: 220px;
+    height: 212px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.board-task-head-category {
+    width: 113px;
+    height: 27px;
+    border-radius: 8px;
+    background-color: var(--bg-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p {
+        font-family: Inter;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 16px;
+        margin: 0;
+        color: white;
+    }
+
+}
+
+.board-task-title {
+    width: 220px;
+    height: 19px;
+
+    p {
+        font-family: Inter;
+        font-weight: 700;
+        font-style: Bold;
+        font-size: 16px;
+
+    }
+}
+
+.board-task-description {
+    width: 220px;
+    height: 38px;
+
+    p {
+        font-family: Inter;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 16px;
+        color: var(--btn-compliance-links-font-color);
+    }
+}
+
+.board-task-progress {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    appearance: none;
+    width: 220px;
+
+
+}
+
+.sub-task-progressbar progress {
+    appearance: none;
+    height: 8px;
+    border-radius: 8px;
+    accent-color: var(--bg-blue);
+    background-color: var(--bg-light-gray);
+}
+
+.progress-value-Text {
+    height: 14px;
+    padding-left: 17px;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.board-task-assigned-priority {
+    display: flex;
+    position: relative;
+}
+
+.board-task-assigned {
+    display: flex;
+
+}
+
+/*FIXME - Die ids müssen dynamisch generiert werden. #assigned-contact-1 jeweils 25px + */
+#assigned-contact-1 {
+    position: absolute;
+    left: 25px;
+}
+
+#assigned-contact-3 {
+    position: absolute;
+    left: 50px;
+}
+
+.assigned-contact-board {
+    height: 32px;
+    display: flex;
+    align-items: center;
+}
+
+.contact-initials-board {
+    width: 32px;
+    height: 32px;
+    gap: 10px;
+    border-radius: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.board-contact-initials-text {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+}
+
+.board-task-priority {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 32px;
+    width: 32px;
+    margin-left: auto;
+}
