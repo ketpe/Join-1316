@@ -21,46 +21,36 @@
         <section class="login-section" aria-labelledby="login-section-title">
             <header class="login-sigup-header">
                 <p>Not a Join user?</p>
-                <button type="button" class="btn btn-fill btn-sm" aria-label="Sign up if you are not a user" onclick="navigateToSignUp()">Sign up</button>
+                <button type="button" class="btn btn-fill btn-sm" aria-label="Sign up if you are not a user"
+                    onclick="navigateToSignUp()">Sign up</button>
             </header>
 
             <section aria-label="form section" class="login-signup-container" aria-labelledby="login-form-title">
-                <form class="login-signup-form form-for-login" aria-describedby="login-error-text" method = "get" onsubmit="loginForm(event)">
+                <form class="login-signup-form form-for-login" aria-describedby="login-error-text" method="get"
+                    onsubmit="loginForm(event)">
                     <h1>Log in</h1>
                     <div class="login-signup-h1-line" aria-hidden="true"></div>
 
                     <div class="login-signup-input-field-container">
                         <label for="username" class="visually-hidden">Email</label>
-                        <input 
-                            type="email" 
-                            id="username"
-                            name="email" 
-                            class="login-signup-input input-mail" 
-                            placeholder="Email" 
-                            autocomplete="email"
-                            >
+                        <input type="email" id="username" name="email" class="login-signup-input input-mail"
+                            placeholder="Email" autocomplete="email">
                         <label for="password" class="visually-hidden">Password</label>
 
                         <div class="login-password-container">
-                            <input 
-                                type="password" 
-                                id="password"
-                                name="password" 
-                                class="login-signup-input login-password" 
-                                placeholder="Password" 
-                                autocomplete="current-password"
-                            >
+                            <input type="password" id="password" name="password"
+                                class="login-signup-input login-password" placeholder="Password"
+                                autocomplete="current-password">
 
                             <button type="button" title="password icon"
                                 class="login-toggle-password login-password-lock" role="img"
-                                aria-labelledby="Password visibility toggle button" 
-                                alt="Toggle password visibility"
-                                ></button>
+                                aria-labelledby="Password visibility toggle button"
+                                alt="Toggle password visibility"></button>
 
                         </div>
 
 
-                        
+
 
                         <span class="login-signup-error-text-container">
                             <p id="login-error-text" role="alert" hidden>
@@ -71,7 +61,8 @@
 
                     <div class="login-form-buttons">
                         <button type="submit" class="btn btn-fill btn-md">Log in</button>
-                        <button type="submit" class="btn btn-outline btn-md">Guest Log in</button>
+                        <button type="button" class="btn btn-outline btn-md" onclick="loginGuest()">Guest Log
+                            in</button>
                     </div>
 
 
@@ -82,7 +73,8 @@
 
             <footer>
                 <div class="login-signup-footer">
-                    <a href="./privacy-policy.html?backToLogin=true" aria-label="Read our Privacy Policy">Privacy Policy</a>
+                    <a href="./privacy-policy.html?backToLogin=true" aria-label="Read our Privacy Policy">Privacy
+                        Policy</a>
                     <a href="./legal-notice.html?backToLogin=true" aria-label="Read our Legal Notice">Legal notice</a>
                 </div>
             </footer>
@@ -92,7 +84,7 @@
 
     </main>
 
-    <script src=".script.js"></script>
+    <script src="./script.js"></script>
     <script src="./scripts/navigations.js"></script>
     <script src="./scripts/db-functions.js"></script>
     <script src="./scripts/login.js"></script>

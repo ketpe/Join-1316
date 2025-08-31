@@ -6,12 +6,19 @@ function loginForm(event) {
     checkLogin(email, password);
 };
 
-function checkLogin(email, password) {
-    let logInUser = getDataByKey("email", email, "contact");
-    if (logInUser.password === password && logInUser.email === email) {
-        sessionStorage.setItem('LogInStatus', JSON.stringify(id));
+async function checkLogin(email, password) {
+    let logInUser = await getDataByKey("email", email, "contacts");
+    if (logInUser && logInUser.password === password && logInUser.email === email) {
+        sessionStorage.setItem('logInStatus', logInUser.id);
+        navigateToSummary();
+
     } else {
-        sessionStorage.setItem('LogInStatus', '0');
+        sessionStorage.setItem('logInStatus', '0');
+        location.reload();
     }
+};
+
+function loginGuest() {
+    sessionStorage.setItem('logInStatus', '0');
     navigateToSummary();
 };
