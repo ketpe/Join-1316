@@ -23,3 +23,23 @@ function getCategoryListElement(category) {
         </button>
     `;
 }
+
+function getSubtaskListElementReadOnly(subTask) {
+    return `
+        <li class="li-readonly" id="${subTask['id']}">
+            <div class="subtask-list-input-container">
+                <input class="sub-task-list-input-readonly" type="text" title="subtask list inputfield" value="${subTask['title']}" readonly>
+                <div class="sub-list-edit-btn-container">
+                    <button type="button" title="edit current entry button" onclick="editCurrentSelectedSubTask('${subTask['id']}')">
+                        <div role="img" title="edit icon"></div>
+                    </button>
+                    <div></div>
+                    <button type="button" title="delete current entry" onclick="deleteCurrentSelectedSubTask('${subTask['id']}')">
+                        <div role="img" title="delete icon"></div>
+                    </button>
+                </div>
+            </div>
+
+        </li>
+    `;
+}

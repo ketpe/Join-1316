@@ -7,6 +7,7 @@ let currentPrioity = "";
 let categories = [];
 let isCategoryListOpen = false;
 let currentCategory = {};
+let currentSubTasks = [];
 
 
 async function onLoadAddTask() {
@@ -135,14 +136,12 @@ function showAndHideContacts(showOrHide = "show") {
     if (showOrHide == "show") {
         inputField.value = "";
         inputField.focus();
-        //toggleMarginOfInputContainer('.contact-select-container', false);
         showContactListForSelect();
         renderHideIcon('show-hide-icon-contacts');
         showOrHideBadgeContainer("hide");
     } else {
         inputField.value = "Select contacts to assign";
         hideContactListForSelect();
-        //toggleMarginOfInputContainer('.contact-select-container', true);
         renderShowIcon('show-hide-icon-contacts');
         showOrHideBadgeContainer("show");
     }
@@ -181,18 +180,6 @@ function showContactListForSelect(currentContactList = []) {
     isContactListOpen = true;
     
 }
-
-/* function toggleMarginOfInputContainer(elementClass, visibilty) {
-    let element = document.querySelector(elementClass);
-    if(!element){return;}
-
-    if(visibilty){
-        element.classList.add('mb-24');
-    }else{
-        element.classList.remove('mb-24');
-    }
-
-} */
 
 
 //NOTE - Das Kontaktauswahlfenster schliessen -> Sonderfunktion erkären!
@@ -554,4 +541,63 @@ function onclickSubtaskInput(input) {
 
 function toggleSubWritingButtons() {
     document.getElementById('sub-writing-buttons').classList.toggle('d-none');
+}
+
+function adoptCurrentSubEntry() {
+    let inputfield = document.getElementById('task-sub-task');
+    if(!inputfield){return;}
+    const inputValueClean = (inputfield.value ?? "").trim();
+    if(inputValueClean.length > 3){
+        createNewSubtask(inputValueClean);
+    }
+
+    clearSubInputField();
+    renderSubtasks();
+    
+}
+
+function clearSubInputField() {
+    let inputfield = document.getElementById('task-sub-task');
+    if(!inputfield){return;}
+    inputfield.value = "";
+    toggleSubWritingButtons();
+    inputfield.blur();
+
+}
+
+function createNewSubtask(subTaskEntry) {
+    let newSubTask = {
+        'id' : getNewUid(),
+        'title' : subTaskEntry
+    };
+
+    currentSubTasks.push(newSubTask);
+    console.log(currentSubTasks);
+    
+}
+
+function deleteCurrentSelectedSubTask(subtaskID) {
+    console.log("SubtaskID -> delete: " + subtaskID);
+    let indexOfSubtask = getIndexOfObjectOfArray(subtaskID, currentSubTasks);
+    if(indexOfSubtask < 0){return;}
+    currentSubTasks.splice(indexOfSubtask, 1);
+    renderSubtasks();
+}
+
+function editCurrentSelectedSubTask(subtaskID) {
+    console.log("SubtaskID -> edit: " + subtaskID);
+}
+
+function renderSubtasks() {
+    let subTaskList = document.querySelector('.sub-task-list');
+    subTaskList.innerHTML = "";
+    if(currentSubTasks.length == 0){return;}
+    let counter = 0;
+    if(!subTaskList){return;}
+    
+    for(let i = 0; i < currentSubTasks.length; i++){
+        subTaskList.innerHTML += getSubtaskListElementReadOnly(currentSubTasks[i]);
+        counter++;
+        if(counter >= 3){break;}
+    }
 }

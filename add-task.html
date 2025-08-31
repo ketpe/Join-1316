@@ -114,25 +114,40 @@
                     </div>
                 </div>
 
-                
+
                 <label for="task-sub-task">Subtasks</label>
                 <div class="sub-input-container">
-                    <input class="a-t-input a-t-sub-input" 
-                        type="text" 
-                        name="task-sub-task" id="task-sub-task"
-                        onclick="onclickSubtaskInput(this)"
-                        >
+                    <input class="a-t-input a-t-sub-input" type="text" name="task-sub-task" id="task-sub-task"
+                        onclick="onclickSubtaskInput(this)" placeholder="Add new subtask">
                     <div id="sub-writing-buttons" class="sub-input-writing-btn-container d-none">
-                        <button type="button">
-                            <div role="img" title="close icon"></div>
+                        <button type="button" title="delete current entry button" onclick="clearSubInputField()">
+                            <div role="img" title="delete icon"></div>
                         </button>
                         <div></div>
-                        <button type="button">
+                        <button type="button" title="adopt current entry" onclick="adoptCurrentSubEntry()">
                             <div role="img" title="check icon"></div>
                         </button>
                     </div>
                 </div>
-                
+
+                <ul class="sub-task-list">
+                    <!-- <li class="li-edit" id="">
+                        <div class="subtask-list-input-container">
+                            <input class="sub-task-list-input-edit" type="text" title="subtask list inputfield"
+                                value="Contact Form">
+                            <div class="sub-list-writing-btn-container">
+                                <button type="button" title="delete current entry">
+                                    <div role="img" title="delete icon"></div>
+                                </button>
+                                <div></div>
+                                 <button type="button" title="accept current entry button">
+                                    <div role="img" title="accept icon"></div>
+                                </button>
+                            </div>
+                        </div>
+                    </li> -->
+                </ul>
+
 
             </div>
         </div>

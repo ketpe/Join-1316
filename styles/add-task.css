@@ -305,6 +305,7 @@
     z-index: 5;
 }
 
+.subtask-list-input-container,
 .sub-input-container,
 .category-select-container,
 .contact-select-container {
@@ -315,6 +316,10 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+}
+
+.subtask-list-input-container{
+    height: 32px;
 }
 
 .a-t-sub-input,
@@ -477,6 +482,7 @@
     margin-top: 8px;
 }
 
+
 .sub-input-writing-btn-container{
     display: flex;
     justify-content: center;
@@ -485,6 +491,8 @@
     right: 20px;
 }
 
+.sub-list-writing-btn-container button, 
+.sub-list-edit-btn-container button,
 .sub-input-writing-btn-container button{
     border: none;
     background-color: transparent;
@@ -508,6 +516,7 @@
     background-size: cover;
 }
 
+.sub-list-edit-btn-container div:nth-child(2),
 .sub-input-writing-btn-container div:nth-child(2){
     margin-left: 2px;
     margin-right: 2px;
@@ -525,4 +534,76 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+
+.sub-task-list{
+    width: 100%;
+    box-sizing: border-box;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+}
+
+.sub-task-list li{
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 32px;
+    cursor: pointer;
+    transition: background 0.1s ease-in-out;
+}
+
+.sub-task-list .li-readonly::before {
+    content: "•";
+    margin-right: 0.5em;
+    padding-left: 1em;
+    color: black;
+}
+
+.sub-task-list-input-readonly{
+    font-family: 'Inter';
+    font-size: 16px;
+    font-weight: 400;
+    color: black;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.sub-list-edit-btn-container button:nth-child(1)>div{
+    height: 18.25px;
+    width: 18.25px;
+    background-image: url('../assets/edit-sub-icon.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.sub-list-edit-btn-container button:nth-child(3)>div{
+    height: 18px;
+    width: 16px;
+    background-image: url('../assets/delete-icon.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.sub-list-edit-btn-container{
+    display: none;
+}
+
+.sub-task-list .li-readonly:hover{
+    background-color: var(--bg-contact-item);
+    border-radius: 10px;
+}
+
+.sub-task-list .li-readonly:hover .sub-list-edit-btn-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 20px;
 }
