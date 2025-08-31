@@ -5,6 +5,9 @@ let isContactListOpen = false;
 let currentContactAssignList = [];
 let currentPrioity = "";
 let categories = [];
+let isCategoryListOpen = false;
+let currentCategory = {};
+let currentSubTasks = [];
 
 
 async function onLoadAddTask() {
@@ -134,12 +137,12 @@ function showAndHideContacts(showOrHide = "show") {
         inputField.value = "";
         inputField.focus();
         showContactListForSelect();
-        renderHideContactsIcon();
+        renderHideIcon('show-hide-icon-contacts');
         showOrHideBadgeContainer("hide");
     } else {
         inputField.value = "Select contacts to assign";
         hideContactListForSelect();
-        renderShowContactsIcon();
+        renderShowIcon('show-hide-icon-contacts');
         showOrHideBadgeContainer("show");
     }
 }
@@ -147,17 +150,19 @@ function showAndHideContacts(showOrHide = "show") {
 //TODO - Zusammenfassen, in eine Funktion -> show oder hide übergeben
 
 //NOTE - Anzeigen des Pfeil nach unten -> Show
-function renderShowContactsIcon() {
-    const iconDiv = document.getElementById('show-or-hide-icon');
-    iconDiv.classList.remove('icon-hide-contacts');
-    iconDiv.classList.add('icon-show-contacts');
+function renderShowIcon(elementID) {
+    const iconDiv = document.getElementById(elementID);
+    if(!iconDiv){return;}
+    iconDiv.classList.remove('icon-hide-list');
+    iconDiv.classList.add('icon-show-list');
 }
 
 //NOTE - Anzeigen des Pfeils nach oben -> Hide
-function renderHideContactsIcon() {
-    const iconDiv = document.getElementById('show-or-hide-icon');
-    iconDiv.classList.add('icon-hide-contacts');
-    iconDiv.classList.remove('icon-show-contacts');
+function renderHideIcon(elementID) {
+    const iconDiv = document.getElementById(elementID);
+    if(!iconDiv){return;}
+    iconDiv.classList.add('icon-hide-list');
+    iconDiv.classList.remove('icon-show-list');
 }
 
 //NOTE - Kontaktlist zum rendern erstellen. Vorbereitung für die Suche.
@@ -176,12 +181,11 @@ function showContactListForSelect(currentContactList = []) {
     
 }
 
+
 //NOTE - Das Kontaktauswahlfenster schliessen -> Sonderfunktion erkären!
 function hideContactListForSelect() {
     const contactListContainer = document.getElementById('contact-List-container');
     const contactList = document.getElementById('contact-List-for-task');
-    contactListContainer.style.height = "100px";
-    contactList.style.height = "80px";
 
     requestAnimationFrame(() => {
         contactListContainer.style.height = "0";
@@ -190,7 +194,7 @@ function hideContactListForSelect() {
 
     contactList.innerHTML = "";
     isContactListOpen = false;
-    
+    //toggleMarginOfInputContainer('.contact-select-container', true);
     
 }
 
@@ -208,7 +212,7 @@ function renderContactOptions(contactList) {
 //NOTE - einen Kontakt in der Assigned Liste suchen, sofern vorhanden. Damit das Aussehen angepasst werden kann.
 function findContactInAssignList(contact) {
     if(currentContactAssignList.length == 0){return false;}
-    return getIndexOfContactOfArray(contact['id'], currentContactAssignList) != -1;
+    return getIndexOfObjectOfArray(contact['id'], currentContactAssignList) != -1;
 }
 
 //NOTE - Hinzufügen oder löschen aus der Assigned Liste, jenachdem ob das Attibut "active" true oder nicht gesetzt ist.
@@ -229,7 +233,7 @@ function contactButtonOnListSelect(currentContactBtn) {
 
 //NOTE - Prüfen, ob der Kontakt überhaupt vorhanden ist
 function checkIfContactAvailable(currentContactID) {
-    return getIndexOfContactOfArray(currentContactID, contactAllListFromDB) != -1;
+    return getIndexOfObjectOfArray(currentContactID, contactAllListFromDB) != -1;
 }
 
 //NOTE - Den Kontakt der Liste zuführen und Styling anpassen.
@@ -258,7 +262,7 @@ function checkOutContact(currentContact, contactID) {
 
 //NOTE Den Kontakt mit der ID aus dem gesammten Array filtern und in die Assigned Liste einfügen
 function contactAddToTask(currentContactID) {
-    const indexOfContact = getIndexOfContactOfArray(currentContactID, contactAllListFromDB);
+    const indexOfContact = getIndexOfObjectOfArray(currentContactID, contactAllListFromDB);
     if(indexOfContact > -1){
         currentContactAssignList.push(contactAllListFromDB[indexOfContact]);
     }
@@ -267,13 +271,13 @@ function contactAddToTask(currentContactID) {
 
 //NOTE - Den Kontakt mit der ID in der Assigned Liste suchen und dann entfernen
 function contactRemoveFromTask(currentContactID) {
-    const indexOfContact = getIndexOfContactOfArray(currentContactID, currentContactAssignList);
+    const indexOfContact = getIndexOfObjectOfArray(currentContactID, currentContactAssignList);
     if(indexOfContact > -1){
         currentContactAssignList.splice(indexOfContact, 1);
     }
 }
 
-
+//NOTE - Contacte nach der Eingabe filtern und anzeigen
 function filterContactFromInputValue(inputValue) {
     const inputCleanValue = (inputValue ?? "").trim();
     if(inputCleanValue.length < 2){return;}
@@ -291,18 +295,21 @@ function addTaskWindowMouseClick(e) {
     if(!e.target.closest(".contact-select-container") && !e.target.closest(".contact-List-container") && isContactListOpen){
         showAndHideContacts("hide");
     }
+
+    if(!e.target.closest('.category-select-container') && !e.target.closest('.category-list-container') && isCategoryListOpen){
+        showAndHideCategories('hide');
+    }
 }
 
-//NOTE -  den Index eines KontaktArrays aus der ID finden
-//TODO - Generisch machen, kann auch für Categorie und Subtask genutzt werden
-function getIndexOfContactOfArray(contactID, contactArray) {
+//NOTE -  den Index eines Arrays aus der ID finden
+function getIndexOfObjectOfArray(obejctID, objectArray) {
 
-    let contactFind = contactArray.find(x => x['id'] == contactID);
-    if(contactFind == null) {return -1;}
-    return contactArray.indexOf(contactFind);
+    let objectFind = objectArray.find(x => x['id'] == obejctID);
+    if(objectFind == null) {return -1;}
+    return objectArray.indexOf(objectFind);
 }
 
-
+//NOTE - Contactbadges anzeigen oder nicht
 function showOrHideBadgeContainer(showOrHide = "") {
     if(showOrHide.length == 0) {return;}
     let container = document.getElementById('contact-assigned-badge');
@@ -315,7 +322,8 @@ function showOrHideBadgeContainer(showOrHide = "") {
     }
 }
 
-
+//NOTE - Die Profilicons der Contactauswahl anzeigen.
+//Es werden nur 4 Badges angezeigt.
 function renderAsignedProfilBadge(){
     if(currentContactAssignList.length == 0){
         return;
@@ -331,8 +339,9 @@ function renderAsignedProfilBadge(){
     }
 }
 
-
-
+//SECTION - Auswahl Prio
+//NOTE - Ein Button wurde in der UI ausgewählt. Jenachdem ob dieser schon aktiv war oder nicht.
+// Werden alle resettet oder dieser wird auf aktiv gesetzt.
 function addTaskPrioritySelect(button) {
     if(!button){return;}
     
@@ -347,6 +356,7 @@ function addTaskPrioritySelect(button) {
 
 }
 
+//NOTE - Alle Prio-buttons werden auf inActiv gesetzt.
 function allPriortyButtonsReset() {
     currentPrioity = "";
     const btnContainer = document.getElementById('task-priority-button');
@@ -358,6 +368,8 @@ function allPriortyButtonsReset() {
     });
 }
 
+//NOTE - Eine andere Prioität wurde gewählt.
+// Dieser Button wird aktiv geschaltet und entsprechend gestylt. Alle anderen werden inaktiv gesetzt.
 function setNewPriority(priority) {
     const btnContainer = document.getElementById('task-priority-button');
     const buttons = btnContainer.querySelectorAll('.btn');
@@ -378,19 +390,21 @@ function setNewPriority(priority) {
     currentPrioity = priority;
 }
 
-
+//NOTE - Einen Button auf ACTIV schalten -> dieser ist ausgewählt
 function setButtonStyleActiv(button){
     if(!button){return;}
     button.classList.add(`prio-${button.getAttribute('name')}-selected`);
     togglePrioButtonTextColor(button, "white");
 }
 
+//NOTE - Einen Button auf NICHT-ACTIV schalten -> dieser ist nicht ausgewählt
 function setButtonSytleNotActiv(button) {
     if(!button){return;}
     button.classList.remove(`prio-${button.getAttribute('name')}-selected`);
     togglePrioButtonTextColor(button, "black");
 }
 
+//NOTE - Die Farbe des Textes in dem Button entsprechend umschalten
 function togglePrioButtonTextColor(button, whiteOrBlack) {
     if(!button){return;}
     let btnText = button.querySelector('p');
@@ -400,4 +414,190 @@ function togglePrioButtonTextColor(button, whiteOrBlack) {
         btnText.classList.remove('prio-selected');
     }
     
+}
+//!SECTION Ende der Prio - Auswahl
+
+//SECTION Categie Auswahl
+//NOTE - Funktionsaufruf vom Button in Inputfeld
+function showAndHideCategories(showOrHide = "show") {
+    if (showOrHide == "show") {
+        showCategoryListForSelect();
+        setCategoryShowOrHideButton(showOrHide);
+        renderHideIcon('show-hide-icon-category');
+    } else {
+        hideCategoryListForSelect();
+        checkCategoryInputValue();
+    }
+}
+
+//NOTE - die Auswahlliste der Categirien anzeigen
+//Die Categorien rendern lassen
+//Die Höhe eines Elementes berechnen
+//Daraus die resultierende Höhe den Container und der Liste zuweisen
+//Inputfeld -> Text ändern
+//Aktuelle Categorie leeren
+function showCategoryListForSelect() {
+    if (categories == null || categories.length == 0) { return; }
+    renderCategoryOptions(categories);
+    const categoryListContainer = document.getElementById('category-list-container');
+    const categoryList = document.getElementById('category-list-for-task');
+    const heightOfOneCategory = document.getElementById(categories[0]['id']).offsetHeight;
+    let heightOfContainer = heightOfOneCategory * categories.length + 40;
+    categoryListContainer.style.height = heightOfContainer + "px";
+    categoryList.style.height = (heightOfContainer - 27) + "px";
+    setCategoryInputfieldValue('Select task category');
+    currentCategory = {};
+    isCategoryListOpen = true;
+}
+
+//NOTE - die Auswahlliste wieder einklappen.
+//Den Button ändern und das Icon anpassen
+function hideCategoryListForSelect(){
+    const categoryListContainer = document.getElementById('category-list-container');
+    const categoryList = document.getElementById('category-list-for-task');
+
+    requestAnimationFrame(() => {
+        categoryListContainer.style.height = "0";
+        categoryList.style.height = "0";
+    });
+
+    categoryList.innerHTML = "";
+    setCategoryShowOrHideButton('hide');
+    renderShowIcon('show-hide-icon-category');
+    isCategoryListOpen = false;
+}
+
+//NOTE - Die Categorien in der Liste anueigen
+function renderCategoryOptions(categories) {
+    let categorySelectElement = document.getElementById('category-list-for-task');
+    categorySelectElement.innerHTML = "";
+
+    for (let i = 0; i < categories.length; i++) {
+        categorySelectElement.innerHTML += getCategoryListElement(categories[i]);
+    }
+}
+
+//NOTE - Eine Categorie wurde gewählt.
+//Den Index der Categorie bestimmen
+//Die Aktuelle Categorie setzen
+//Die Auswahlliste schiessen
+//Den Titel in das Inputfeld schreiben
+//Den Check durchführen
+function categoryButtonOnListSelect(button) {
+    if(!button){showCategoryError();}
+    let indexOfCategory = getIndexOfObjectOfArray(button.getAttribute('id'), categories);
+    if(indexOfCategory < 0){showCategoryError();}
+    currentCategory = categories[indexOfCategory];
+    hideCategoryListForSelect();
+    setCategoryInputfieldValue(currentCategory['title']);
+    checkCategoryInputValue();
+}
+
+
+//NOTE - Den entsprechenden Text in das Categorie Inputfeld schreiben
+function setCategoryInputfieldValue(value){
+    document.getElementById('task-category').value = value;
+}
+
+//NOTE - Hier bekommt der Kleine Buttun im Inputfeld die passende Funktion show oder hide
+function setCategoryShowOrHideButton(showOrHide) {
+    const buttonShowOhrHide = document.getElementById('show-and-hide-categories');
+    buttonShowOhrHide.setAttribute('onclick', (showOrHide == "show" ? 'showAndHideCategories("hide")' : 'showAndHideCategories("show")'));
+}
+
+//NOTE - Auslöser, wenn in das Inputfeld 'Category' geklickt wird. Wenn die Auswahlliste offen ist, wird diese geschlossen, 
+// sonst öffnet sich die Liste.
+function onclickCategoryInput(inputField) {
+    if(isCategoryListOpen){
+        inputField.blur();
+        hideCategoryListForSelect();
+        checkCategoryInputValue();
+    }else{
+        showAndHideCategories('show');
+    }
+}
+
+//NOTE - Categorie Inputfeld abfragen und prüfen, ob dies eine Auswahl besitzt oder nicht.
+// Wenn keine Auswahl getroffen wurde, wird der Errortext angezeigt und der Rahmen eingefärbt.
+function checkCategoryInputValue() {
+    let categoryInput = document.getElementById('task-category');
+    if(!categoryInput){return;}
+    if(categoryInput.value == "Select task category") {
+        showAndLeaveErrorMessage('a-t-category-required', true);
+        showAndLeaveErrorBorder('task-category', true);
+    }else{
+       showAndLeaveErrorMessage('a-t-category-required', false);
+       showAndLeaveErrorBorder('task-category', false);
+    }
+}
+//!SECTION Ende der Section Categorieauswahl
+
+//SECTION - Subtask Auswahl
+
+function onclickSubtaskInput(input) {
+    if(!input){return;}
+    toggleSubWritingButtons();
+}
+
+function toggleSubWritingButtons() {
+    document.getElementById('sub-writing-buttons').classList.toggle('d-none');
+}
+
+function adoptCurrentSubEntry() {
+    let inputfield = document.getElementById('task-sub-task');
+    if(!inputfield){return;}
+    const inputValueClean = (inputfield.value ?? "").trim();
+    if(inputValueClean.length > 3){
+        createNewSubtask(inputValueClean);
+    }
+
+    clearSubInputField();
+    renderSubtasks();
+    
+}
+
+function clearSubInputField() {
+    let inputfield = document.getElementById('task-sub-task');
+    if(!inputfield){return;}
+    inputfield.value = "";
+    toggleSubWritingButtons();
+    inputfield.blur();
+
+}
+
+function createNewSubtask(subTaskEntry) {
+    let newSubTask = {
+        'id' : getNewUid(),
+        'title' : subTaskEntry
+    };
+
+    currentSubTasks.push(newSubTask);
+    console.log(currentSubTasks);
+    
+}
+
+function deleteCurrentSelectedSubTask(subtaskID) {
+    console.log("SubtaskID -> delete: " + subtaskID);
+    let indexOfSubtask = getIndexOfObjectOfArray(subtaskID, currentSubTasks);
+    if(indexOfSubtask < 0){return;}
+    currentSubTasks.splice(indexOfSubtask, 1);
+    renderSubtasks();
+}
+
+function editCurrentSelectedSubTask(subtaskID) {
+    console.log("SubtaskID -> edit: " + subtaskID);
+}
+
+function renderSubtasks() {
+    let subTaskList = document.querySelector('.sub-task-list');
+    subTaskList.innerHTML = "";
+    if(currentSubTasks.length == 0){return;}
+    let counter = 0;
+    if(!subTaskList){return;}
+    
+    for(let i = 0; i < currentSubTasks.length; i++){
+        subTaskList.innerHTML += getSubtaskListElementReadOnly(currentSubTasks[i]);
+        counter++;
+        if(counter >= 3){break;}
+    }
 }

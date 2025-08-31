@@ -87,6 +87,7 @@
     width: calc((2 * 440px) + (2 * 24px) + 2px);
     display: flex;
     justify-content: space-between;
+    z-index: 1000;
 }
 
 .add-task-footer p {
@@ -221,7 +222,12 @@
 }
 
 .error-text-hidden {
-    color: var(--default-bg-color) !important;
+    /* color: var(--default-bg-color) !important; */
+    color: transparent !important;
+}
+
+.show-hidden{
+    z-index: -1;
 }
 
 .a-t-text-area {
@@ -256,10 +262,11 @@
     gap: 16px
 }
 
+.category-list-container, 
 .contact-List-container {
     box-sizing: border-box;
     position: relative;
-    transform: translateY(-50px);
+    transform: translateY(-25px);
     height: 0;
     width: 100%;
     border-radius: 0px 0px 10px 10px;
@@ -271,6 +278,11 @@
 
 }
 
+.category-list-container {
+    transform: translateY(-70px);
+}
+
+.category-list-for-task,
 .contact-List-for-task {
     width: 100%;
     margin-top: 28px;
@@ -278,7 +290,11 @@
     height: 0;
     background-color: white;
     overflow-y: scroll;
-    z-index: 1;
+   
+}
+
+.category-list-for-task{
+    overflow-y:hidden;
 }
 
 .display-hidden {
@@ -289,12 +305,24 @@
     z-index: 5;
 }
 
+.subtask-list-input-container,
+.sub-input-container,
 .category-select-container,
 .contact-select-container {
     position: relative;
     width: 100%;
+    height: 48px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
+.subtask-list-input-container{
+    height: 32px;
+}
+
+.a-t-sub-input,
 .a-t-category-input,
 .a-t-contact-input {
     padding-right: 50px;
@@ -302,37 +330,41 @@
     cursor: pointer;
 }
 
+.a-t-sub-input{
+    padding-right: 75px;
+    width: calc(440px - (2 * 1px) - 21px - 75px);
+}
+
+.btn-show-hide-category-list,
 .btn-show-hide-contact-list {
     height: 24px;
     width: 24px;
     border: none;
     position: absolute;
-    top: 50%;
     right: 18px;
-    transform: translateY(-100%);
     cursor: pointer;
     background-color: transparent;
+    z-index: 5;
 }
 
-.icon-show-contacts {
+
+.icon-show-list {
     background-image: url('../assets/arrow_drop_down.svg');
     width: 7.21px;
     height: 4.6px;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    /* background-color: var(--bg-btn-hover-special); */
     background-color: transparent;
 }
 
-.icon-hide-contacts {
+.icon-hide-list {
     background-image: url('../assets/arrow_drop_up.svg');
     width: 7.21px;
     height: 4.6px;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    /* background-color: var(--bg-btn-hover-special); */
     background-color: transparent;
 }
 
@@ -347,6 +379,7 @@
     color: transparent;
 }
 
+.category-list-btn,
 .contact-list-btn {
     width: 100%;
     height: 54px;
@@ -361,6 +394,15 @@
     cursor: pointer;
 }
 
+
+
+.category-list-btn>p{
+    font-family: 'Inter';
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.category-list-btn:hover, 
 .contact-list-btn:hover {
     background-color: var(--bg-contact-item);
 }
@@ -437,6 +479,131 @@
     gap: 8px;
     margin-bottom: 16px;
     position: relative;
-    transform: translateY(-10px);
+    margin-top: 8px;
 }
 
+
+.sub-input-writing-btn-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 20px;
+}
+
+.sub-list-writing-btn-container button, 
+.sub-list-edit-btn-container button,
+.sub-input-writing-btn-container button{
+    border: none;
+    background-color: transparent;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.sub-input-writing-btn-container button:hover{
+    border-radius: 50%;
+    background-color: var(--bg-btn-hover-special);
+}
+
+.sub-input-writing-btn-container button:nth-child(1)>div{
+    height: 13.5px;
+    width: 13.5px;
+    background-image: url('../assets/close-sub-icon.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.sub-list-edit-btn-container div:nth-child(2),
+.sub-input-writing-btn-container div:nth-child(2){
+    margin-left: 2px;
+    margin-right: 2px;
+    width: 1px;
+    border: 1px;
+    height: 24px;
+    background-color: var(--input-border-color);
+    
+}
+
+.sub-input-writing-btn-container button:nth-child(3)>div{
+    height: 11.25px;
+    width: 15.49px;
+    background-image: url('../assets/check-sub-icon.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.sub-task-list{
+    width: 100%;
+    box-sizing: border-box;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+}
+
+.sub-task-list li{
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 32px;
+    cursor: pointer;
+    transition: background 0.1s ease-in-out;
+}
+
+.sub-task-list .li-readonly::before {
+    content: "•";
+    margin-right: 0.5em;
+    padding-left: 1em;
+    color: black;
+}
+
+.sub-task-list-input-readonly{
+    font-family: 'Inter';
+    font-size: 16px;
+    font-weight: 400;
+    color: black;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.sub-list-edit-btn-container button:nth-child(1)>div{
+    height: 18.25px;
+    width: 18.25px;
+    background-image: url('../assets/edit-sub-icon.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.sub-list-edit-btn-container button:nth-child(3)>div{
+    height: 18px;
+    width: 16px;
+    background-image: url('../assets/delete-icon.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.sub-list-edit-btn-container{
+    display: none;
+}
+
+.sub-task-list .li-readonly:hover{
+    background-color: var(--bg-contact-item);
+    border-radius: 10px;
+}
+
+.sub-task-list .li-readonly:hover .sub-list-edit-btn-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 20px;
+}

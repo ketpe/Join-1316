@@ -80,6 +80,7 @@
     font-weight: 400;
     font-style: Regular;
     font-size: 20px;
+    color: var(--bg-default);
 }
 
 .assigned-contact {
@@ -127,6 +128,7 @@
     font-style: Regular;
     font-size: 20px;
     vertical-align: middle;
+    color: black;
 }
 
 .contact-initials {
@@ -156,43 +158,121 @@
     font-weight: 400;
     font-style: Regular;
     font-size: 20px;
+    color: var(--bg-default);
 }
 
 .subtask-content {
     display: flex;
     align-items: center;
     gap: 16px;
+    padding-top: 6px;
+    padding-right: 16px;
+    padding-bottom: 6px;
+    padding-left: 16px;
+
+
 
 }
 
-.subtask-checkbox {
-    appearance: none;
-    -webkit-appearance: none;
+/* .checkbox-btn-default-hover:hover, */
+.checkbox-btn-default {
+    background-image: url("../assets/signup-confirm-default.svg");
+}
+
+.checkbox-btn {
+    width: 16px;
+    height: 16px;
+    border: none;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    cursor: pointer;
+    background-color: white;
+}
+
+/* .checkbox-btn-default:hover, */
+.checkbox-btn-default-hover {
+    background-image: url("../assets/signup-confirm-checked.svg");
+}
+
+.subtask-text {
+    color: black;
+}
+
+/*NOTE - Btns */
+
+.action-icons {
     width: 24px;
     height: 24px;
-    border-radius: 3px;
-    border: 2px solid #26347C;
-    background: transparent;
-    position: relative;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+
+}
+
+/**FIXME - apply .action-icons  funktioniert nicht*/
+.action-edit-icon {
+    /* @apply .action-icons; */
+    background-image: url(../assets/edit-contacts-icon.svg);
+}
+
+.action-delete-icon {
+    /* @apply .action-icons; */
+    background-image: url(../assets/delete-contacts-icon.svg);
+
+}
+
+
+.contacts-detailview-actions {
+    display: flex;
+    justify-content: end;
+    gap: 13px;
+}
+
+.btn-contact-edit {
+    width: 63px;
+    height: 24px;
+}
+
+.btn-contact-delete {
+    width: 83px;
+    height: 24px;
+}
+
+/*TODO - Btn sollten noch verschoben werden*/
+.btn-contact-action {
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: transparent;
     cursor: pointer;
+    padding-inline: 0;
+    gap: 8px;
+
+    p {
+        font-family: Inter;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 16px;
+        vertical-align: middle;
+        margin: 0;
+    }
 }
 
-.subtask-checkbox:checked::after {
-    content: '';
-    position: absolute;
-    width: 8.5px;
-    height: 22px;
-    top: -10.5px;
-    left: 9px;
-    border-right: 2px solid #26347C;
-    border-bottom: 2px solid #26347C;
-    transform: rotate(43deg);
-}
-
-
-.subtask-label {
+.btn-contact-action:hover p {
+    color: var(--btn-bg-hover);
     font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
+    font-weight: 700;
+    font-style: Bold;
     font-size: 16px;
+    vertical-align: middle;
+
+}
+
+.btn-contact-action:hover .action-edit-icon {
+    background-image: url(../assets/edit-contacts-icon-hover.svg);
+}
+
+.btn-contact-action:hover .action-delete-icon {
+    background-image: url(../assets/delete-contacts-icon-hover.svg);
 }

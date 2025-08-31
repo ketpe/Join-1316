@@ -70,18 +70,16 @@
 
                 <label for="task-assign-to">Assigned to</label>
                 <div class="contact-select-container show-front">
-                    <input class="a-t-input mb-24 show-front a-t-contact-input" type="text" name="task-assign-to"
+                    <input class="a-t-input show-front a-t-contact-input" type="text" name="task-assign-to"
                         id="task-assign-to" value="Select contacts to assign" onclick="showAndHideContacts('show')"
                         oninput="filterContactFromInputValue(this.value)">
 
                     <button id="show-and-hide-contacts" class="btn-show-hide-contact-list" type="button"
                         title="show and hide button for contactlist" onclick="showAndHideContacts('show')">
-                        <div id="show-or-hide-icon-co" class="icon-show-contacts" role="img" title="show or hide icon">
+                        <div id="show-hide-icon-contacts" class="icon-show-list" role="img" title="show or hide icon">
                         </div>
                     </button>
                 </div>
-
-
 
                 <div id="contact-List-container" class="contact-List-container">
                     <div id="contact-List-for-task" class="contact-List-for-task">
@@ -94,24 +92,62 @@
                 <label for="task-category">Category<span>*</span></label>
 
                 <div class="category-select-container show-front ">
-                    <input class="a-t-input show-front a-t-category-input" type="text" name="task-category" id="task-category"
-                        placeholder="Select task category">
+                    <input class="a-t-input a-t-category-input" type="text" name="task-category" id="task-category"
+                        value="Select task category" placeholder="Select task category" readonly
+                        onclick="onclickCategoryInput(this)">
 
                     <button id="show-and-hide-categories" class="btn-show-hide-category-list" type="button"
                         title="show and hide button for categories" onclick="showAndHideCategories('show')">
-                        <div id="show-or-hide-icon-ca" class="icon-show-contacts" role="img" title="show or hide icon">
+                        <div id="show-hide-icon-category" class="icon-show-list" role="img" title="show or hide icon">
                         </div>
                     </button>
 
-                    <div class="a-t-error-text-container show-front">
-                        <p id="a-t-category-required" class="error-text-hidden">This field is required</p>
+                </div>
+
+                <div class="a-t-error-text-container">
+                    <p id="a-t-category-required" class="error-text-hidden">This field is required</p>
+                </div>
+
+
+                <div id="category-list-container" class="category-list-container">
+                    <div id="category-list-for-task" class="category-list-for-task">
                     </div>
                 </div>
 
 
-
                 <label for="task-sub-task">Subtasks</label>
-                <input class="a-t-input" type="text" name="task-sub-task" id="task-sub-task">
+                <div class="sub-input-container">
+                    <input class="a-t-input a-t-sub-input" type="text" name="task-sub-task" id="task-sub-task"
+                        onclick="onclickSubtaskInput(this)" placeholder="Add new subtask">
+                    <div id="sub-writing-buttons" class="sub-input-writing-btn-container d-none">
+                        <button type="button" title="delete current entry button" onclick="clearSubInputField()">
+                            <div role="img" title="delete icon"></div>
+                        </button>
+                        <div></div>
+                        <button type="button" title="adopt current entry" onclick="adoptCurrentSubEntry()">
+                            <div role="img" title="check icon"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <ul class="sub-task-list">
+                    <!-- <li class="li-edit" id="">
+                        <div class="subtask-list-input-container">
+                            <input class="sub-task-list-input-edit" type="text" title="subtask list inputfield"
+                                value="Contact Form">
+                            <div class="sub-list-writing-btn-container">
+                                <button type="button" title="delete current entry">
+                                    <div role="img" title="delete icon"></div>
+                                </button>
+                                <div></div>
+                                 <button type="button" title="accept current entry button">
+                                    <div role="img" title="accept icon"></div>
+                                </button>
+                            </div>
+                        </div>
+                    </li> -->
+                </ul>
+
 
             </div>
         </div>
