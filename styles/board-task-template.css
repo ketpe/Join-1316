@@ -24,7 +24,6 @@
         margin: 0;
         color: white;
     }
-
 }
 
 .board-task-title {
@@ -36,7 +35,6 @@
         font-weight: 700;
         font-style: Bold;
         font-size: 16px;
-
     }
 }
 
@@ -61,8 +59,6 @@
     align-items: center;
     appearance: none;
     width: 220px;
-
-
 }
 
 .sub-task-progressbar progress {

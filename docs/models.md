@@ -28,7 +28,8 @@ let task = {
     'description' : '',
     'dueDate' : '',
     'priority' : '',
-    'category' : ''
+    'category' : '',
+    'taskStateCategory': 1
 };
 
 let subTask = {
@@ -39,12 +40,14 @@ let subTask = {
 
 //Jeder Task mit einen oder mehrere Kontakten haben. Beispiel Task:1 und Contact:2 / Task:1 und Contact:3 Beziehung 1 > n
 let taskContactAssinged = {
+    'id': 112,
     'taskID': 1,
     'contatactId' : 1
 };
 
 //Jeder Task kann einen oder mehrere Subtasks haben Beziehung 1 > n
 let taskSubtask = {
+    'id': 123,
     'maintaskID':1,
     'subTaskID' :2
 };
