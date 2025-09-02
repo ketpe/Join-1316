@@ -29,7 +29,7 @@ let task = {
     'dueDate' : '',
     'priority' : '',
     'category' : '',
-    'taskStateCategory': 1
+    'taskStateCategory': 'todo'
 };
 
 let subTask = {

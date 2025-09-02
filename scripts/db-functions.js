@@ -130,7 +130,8 @@ async function updateData(path = "", data = {}) {
 //         'description': 'Build start page with recipe recommendation.',
 //         'dueDate': '10/05/2025',
 //         'priority': 'Medium',
-//         'category': '41f159bf-1703-4ff5-a80d-d397aaf99ec3'
+//         'category': '41f159bf-1703-4ff5-a80d-d397aaf99ec3',
+//         'taskStateCategory': 'inprogress'
 //     }
 //     let subTask = {
 //         'id': getNewUid(),
@@ -138,10 +139,12 @@ async function updateData(path = "", data = {}) {
 //         'taskChecked': false
 //     }
 //     let taskContactAssinged = {
+//         'id': getNewUid(),
 //         'taskID': newTask['id'],
-//         'contatactId': '16dc4eed-9df3-43b5-aff8-0efce36106a8'
+//         'contatactId': '4571a939-6baa-434c-8d9e-9b96ee8c32b6'
 //     };
 //     let taskSubtask = {
+//         'id': getNewUid(),
 //         'maintaskID': newTask['id'],
 //         'subTaskID': subTask['id']
 //     };
@@ -151,3 +154,4 @@ async function updateData(path = "", data = {}) {
 //     await putData(`/taskSubtask/${taskSubtask.id}`, taskSubtask);
 
 // }
+
