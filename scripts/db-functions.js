@@ -141,7 +141,7 @@ async function updateData(path = "", data = {}) {
 //     let taskContactAssinged = {
 //         'id': getNewUid(),
 //         'taskID': newTask['id'],
-//         'contatactId': '4571a939-6baa-434c-8d9e-9b96ee8c32b6'
+//         'contactId': '4571a939-6baa-434c-8d9e-9b96ee8c32b6'
 //     };
 //     let taskSubtask = {
 //         'id': getNewUid(),
