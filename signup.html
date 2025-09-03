@@ -15,13 +15,13 @@
         <div class="login-signup-logo" aria-label="Join Application Logo" role="img"></div>
 
         <header class="login-sigup-header">
-            <button type="button" class="btn btn-fill btn-sm" aria-label="Sign up success" hidden>You Signed Up
+            <button type="button" class="btn btn-fill btn-sm d-none" aria-label="Sign up success">You Signed Up
                 successfully</button>
         </header>
 
         <section aria-label="form section" class="login-signup-container" aria-labelledby="signup-form-title">
 
-            <form class="login-signup-form form-for-signup">
+            <form class="login-signup-form form-for-signup" method="get" onsubmit="signUpForm(event)">
 
                 <div class="sigarrow-left" aria-label="Arrow to navigate back to login" role="img"
                     onclick="navigateToLogin()"></div>
@@ -32,15 +32,15 @@
                 <div class="login-signup-input-field-container">
 
                     <label for="contact-name" class="visually-hidden">Contact Name</label>
-                    <input type="text" id="contact-name" class="login-signup-input input-name" placeholder="Name">
+                    <input type="text" id="contact-name" class="login-signup-input input-name" placeholder="Name" name="lastname">
 
                     <label for="username" class="visually-hidden">Username</label>
-                    <input type="email" id="username" class="login-signup-input input-mail" placeholder="Email">
+                    <input type="email" id="username" class="login-signup-input input-mail" placeholder="Email" name="email">
 
                     <label for="password" class="visually-hidden">Password</label>
                     <div class="login-password-container">
                         <input type="password" id="password" class="login-signup-input login-password"
-                            placeholder="Password">
+                            placeholder="Password" name="password">
 
                         <button type="button" class="login-toggle-password login-password-lock" role="img"
                             aria-labelledby="Password visibility toggle button"
@@ -50,7 +50,7 @@
                     <label for="password-confirm" class="visually-hidden">Password Confirm</label>
                     <div class="login-password-container">
                         <input type="password" id="password-confirm" class="login-signup-input login-password"
-                            placeholder="Confirm Password">
+                            placeholder="Confirm Password" name="confirm-password">
 
                         <button type="button" class="login-toggle-password login-password-lock" role="img"
                             aria-labelledby="Password visibility toggle button"
@@ -59,7 +59,7 @@
                     </div>
 
                     <span class="login-signup-error-text-container">
-                        <p id="login-error-text" role="alert" hidden>
+                        <p id="login-error-text" class="d-none" role="alert">
                             Your passwords dont´t match. Please try again.
                         </p>
                     </span>
@@ -67,7 +67,8 @@
                 </div>
 
                 <div class="signup-confirm-container">
-                    <button type="button" class="signup-confirm-button signup-confirm-default"></button>
+                    <input type="checkbox" id="signup-confirm" class="signup-confirm-button">
+                    <label for="signup-confirm" class="signup-confirm-label"></label>
                     <span>I accept the <a href="./privacy-policy.html?backToLogin=true">Privacy policy</a></span>
                 </div>
 

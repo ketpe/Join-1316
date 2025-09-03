@@ -245,28 +245,28 @@
     color: var(--btn-bg-hover);
 }
 
-.signup-confirm-button{
+.signup-confirm-button {
+    display: none;
+}
+
+.signup-confirm-label {
     width: 16px;
     height: 16px;
-    border: none;
+    display: inline-block;
+    background-image: url("../assets/signup-confirm-default.svg");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
     cursor: pointer;
-    background-color: white;
+    vertical-align: middle;
+    transition: background-image 0.2s;
 }
 
-
-
-.signup-confirm-default{
-    background-image: url("../assets/signup-confirm-default.svg");
-}
-
-.signup-confirm-checked{
+.signup-confirm-label:hover {
     background-image: url("../assets/signup-confirm-checked.svg");
 }
 
-.signup-confirm-button:hover {
+.signup-confirm-button:checked + .signup-confirm-label {
     background-image: url("../assets/signup-confirm-checked.svg");
 }
 
