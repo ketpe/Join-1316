@@ -1,27 +1,27 @@
 
 
-function boardTasksTemplate(tasks) {
-    return `<div class="kanban-task" draggable="true" id="${tasks.id}" ondragstart="startDrag(event, this)" ondragend="endDrag(this)">
+function boardTasksTemplate(task) {
+    return `<div class="kanban-task" draggable="true" id="${task.id}" ondragstart="startDrag(event, this)" ondragend="endDrag(this)">
         <div class="board-task-content">
-            <div class="board-task-head-category ${tasks.categoryData.categoryColor}">
-                <p>${tasks.categoryData.title}</p>
+            <div class="board-task-head-category ${task.categoryData.categoryColor}">
+                <p>${task.categoryData.title}</p>
             </div>
             <div class="board-task-title">
-                <p>${tasks.title}</p>
+                <p>${task.title}</p>
             </div>
             <div class="board-task-description">
-                <p>${tasks.description}</p>
+                <p>${task.description}</p>
             </div>
             <div class="board-task-progress">
                 <label for="sub-task-progress"></label>
-                <progress class="sub-task-progressbar" id="sub-task-progress" value="${tasks.countTrueSubtasks}" max="2"
-                    aria-describedby="progress-value">${tasks.countTrueSubtasks}</progress>
-                <output class="progress-value-Text" id="progress-value">${tasks.countTrueSubtasks}/Subtasks</output>
+                <progress class="sub-task-progressbar" id="sub-task-progress" value="${task.countTrueSubtasks}" max="2"
+                    aria-describedby="progress-value">${task.countTrueSubtasks}</progress>
+                <output class="progress-value-Text" id="progress-value">${task.countTrueSubtasks}/Subtasks</output>
             </div>
             <div class="board-task-assigned-priority">
-                ${renderAssignedContacts(tasks.assignedContacts)}
+                ${renderAssignedContacts(task.assignedContacts)}
                 <div class="board-task-priority">
-                    <div role="img" aria-label="Priority: " class="priority-icon-${tasks.priority}"></div>
+                    <div role="img" aria-label="Priority: " class="priority-icon-${task.priority}"></div>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@ function boardTasksTemplate(tasks) {
 }
 
 function boardTaskEmptyTemplate() {
-    return `<div class="kanban-task-empty" >
+    return `<div class="kanban-task-empty visually-hidden" >
                                     <p>No Task To Do</p>
                                 </div>`
 }

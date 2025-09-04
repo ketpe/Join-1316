@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="./styles/board-desktop.css">
 </head>
 
-<body onload="init(), renderBoardTasks()">
+<body onload="init(), getBoardTasks()">
 
     <div class="main-container">
         <aside class="left-container">
@@ -69,7 +69,7 @@
                         <div class="kanban-column" id="todo"
                             ondragover="event.preventDefault(); this.classList.add('over');"
                             ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
-                            <div class="kanban-tasks">
+                            <div class="kanban-tasks" id="kanban-tasks-todo">
                                 <div class="kanban-task-empty" hidden>
                                     <p>No Task To Do</p>
                                 </div>
@@ -128,7 +128,7 @@
                         <div class="kanban-column" id="inprogress"
                             ondragover="event.preventDefault(); this.classList.add('over');"
                             ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
-                            <div class="kanban-tasks">
+                            <div class="kanban-tasks" id="kanban-tasks-inprogress">
                                 <div class="kanban-task-empty" hidden>
                                     <p>No Task In Progress</p>
                                 </div>
@@ -139,7 +139,7 @@
                         <div class="kanban-column" id="awaiting"
                             ondragover="event.preventDefault(); this.classList.add('over');"
                             ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
-                            <div class="kanban-tasks">
+                            <div class="kanban-tasks" id="kanban-tasks-awaiting">
                                 <div class="kanban-task-empty" hidden>
                                     <p>No Task Awaiting Feedback</p>
                                 </div>
@@ -150,7 +150,7 @@
                         <div class="kanban-column" id="done"
                             ondragover="event.preventDefault(); this.classList.add('over');"
                             ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
-                            <div class="kanban-tasks">
+                            <div class="kanban-tasks" id="kanban-tasks-done">
                                 <div class="kanban-task-empty" hidden>
                                     <p>No Task Done</p>
                                 </div>
@@ -178,14 +178,13 @@
     <script type="module" src="./app.js"></script>
     <script src="./script.js"></script>
     <script src="./scripts/board.js"></script>
-    <script src="./scripts/board-templates.js"></script>
     <script src="./scripts/db-functions.js"></script>
     <script src="./scripts/due-date-validation.js"></script>
     <script src="./scripts/add-task.js"></script>
     <script src="./scripts/add-task-dialog.js"></script>
     <script src="./scripts/navigations.js"></script>
     <script src="./scripts/drag-and-drop.js"></script>
-    <script src="./scripts/task-template.js"></script>
+    <script src="./scripts/board-task-template.js"></script>
 
 </body>
 
