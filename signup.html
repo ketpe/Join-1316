@@ -32,15 +32,15 @@
                 <div class="login-signup-input-field-container">
 
                     <label for="contact-name" class="visually-hidden">Contact Name</label>
-                    <input type="text" id="contact-name" class="login-signup-input input-name" placeholder="Name" name="lastname">
+                    <input type="text" id="contact-name" class="login-signup-input input-name" placeholder="Name" name="fullname" required>
 
                     <label for="username" class="visually-hidden">Username</label>
-                    <input type="email" id="username" class="login-signup-input input-mail" placeholder="Email" name="email">
+                    <input type="email" id="username" class="login-signup-input input-mail" placeholder="Email" name="email" required>
 
                     <label for="password" class="visually-hidden">Password</label>
                     <div class="login-password-container">
                         <input type="password" id="password" class="login-signup-input login-password"
-                            placeholder="Password" name="password">
+                            placeholder="Password" name="password" required>
 
                         <button type="button" class="login-toggle-password login-password-lock" role="img"
                             aria-labelledby="Password visibility toggle button"
@@ -50,7 +50,7 @@
                     <label for="password-confirm" class="visually-hidden">Password Confirm</label>
                     <div class="login-password-container">
                         <input type="password" id="password-confirm" class="login-signup-input login-password"
-                            placeholder="Confirm Password" name="confirm-password">
+                            placeholder="Confirm Password" name="confirm-password" required>
 
                         <button type="button" class="login-toggle-password login-password-lock" role="img"
                             aria-labelledby="Password visibility toggle button"
@@ -67,14 +67,14 @@
                 </div>
 
                 <div class="signup-confirm-container">
-                    <input type="checkbox" id="signup-confirm" class="signup-confirm-button">
+                    <input type="checkbox" id="signup-confirm" class="signup-confirm-button" onclick="toggleDNone('signup-hidden', '');" required>
                     <label for="signup-confirm" class="signup-confirm-label"></label>
                     <span>I accept the <a href="./privacy-policy.html?backToLogin=true">Privacy policy</a></span>
                 </div>
 
-                
-
-
+                <div class="login-form-buttons">
+                        <button id="signup-hidden" type="submit" class="btn btn-fill btn-md d-none">Sign up</button>
+                    </div>
 
             </form>
 
@@ -91,10 +91,10 @@
 
     </main>
 
-    <script src=".script.js"></script>
-    <script src="./scripts/navigations.js"></script>
-    <script src="./scripts/db-functions.js"></script>
-    <script src="./scripts/signup.js"></script>
+    <script defer src="./script.js"></script>
+    <script defer src="./scripts/navigations.js"></script>
+    <script defer src="./scripts/db-functions.js"></script>
+    <script defer src="./scripts/signup.js"></script>
 
 </body>
 
