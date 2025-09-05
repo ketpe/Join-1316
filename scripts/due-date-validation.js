@@ -139,4 +139,5 @@ function dueDateSetError() {
 function dueDateSetOk() {
     showAndLeaveErrorMessage("a-t-due-date-required", false);
     showAndLeaveErrorBorder("due-date-display", false);
+    addTaskCheckRequiredField();
 }

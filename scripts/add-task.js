@@ -43,7 +43,7 @@ function changeAddTaskViewToStandard() {
 async function loadDataForAddTaskViewAndRenderView() {
     await loadContactsAllFomDB();
     await loadCategoriesFromDB();
-   
+    setNewPriority("media");
 }
 
 //NOTE - Lade alle Kontakte aus der DB in das Array
@@ -96,10 +96,13 @@ function taskTitleValidation(titleValue) {
     if (cleanTitleValue.length > 3) {
         showAndLeaveErrorMessage("a-t-title-required", false);
         showAndLeaveErrorBorder("task-title", false);
+        currentTitle = cleanTitleValue;
     } else {
         showAndLeaveErrorMessage("a-t-title-required", true);
         showAndLeaveErrorBorder("task-title", true);
+        currentTitle = "";
     }
+    addTaskCheckRequiredField();
 }
 
 //NOTE - Generische Funktion zum Anzeigen / Ausblenden der Errormeldung
@@ -354,6 +357,8 @@ function addTaskPrioritySelect(button) {
         setNewPriority(buttonName);
     }
 
+    addTaskCheckRequiredField();
+
 }
 
 //NOTE - Alle Prio-buttons werden auf inActiv gesetzt.
@@ -388,6 +393,7 @@ function setNewPriority(priority) {
     });
 
     currentPrioity = priority;
+    
 }
 
 //NOTE - Einen Button auf ACTIV schalten -> dieser ist ausgewählt
@@ -529,6 +535,7 @@ function checkCategoryInputValue() {
        showAndLeaveErrorMessage('a-t-category-required', false);
        showAndLeaveErrorBorder('task-category', false);
     }
+    addTaskCheckRequiredField();
 }
 //!SECTION Ende der Section Categorieauswahl
 
@@ -553,7 +560,6 @@ function adoptCurrentSubEntry() {
 
     clearSubInputField();
     renderSubtasks();
-    
 }
 
 function clearSubInputField() {
@@ -610,7 +616,8 @@ function safeChangesOnCurrentSelectedSubtask(subtaskID) {
     let currentSubTask = currentSubTasks.find(x => x['id'] == subtaskID);
     if(!currentSubTask){return;}
     const inputField = document.getElementById(`subTaskEdit-${subtaskID}`);
-    if(!inputField || inputField.value.length <= 3){return;}
+    const inputValueClean = (inputField.value ?? "").trim();
+    if(inputValueClean <= 3){return;}
     currentSubTask['title'] = inputField.value;
     renderSubtasks();
 }
@@ -629,5 +636,20 @@ function addTaskFormClear() {
 }
 
 //!SECTION - FormEvent Ende
+
+function addTaskCheckRequiredField() {
+    let createButton = document.getElementById('createTaskButton');
+    if(currentDueDate.length > 0 && currentTitle.length > 0 && currentPrioity.length > 0 && currentCategory.hasOwnProperty("title")){
+        createButton.disabled = false;
+        console.log("Alles ausgefüllt.");
+        
+    }else{
+        createButton.disabled = true;
+        console.log("leider nicht.");
+    }
+   
+    
+}
+
 
 //SECTION - CHECK

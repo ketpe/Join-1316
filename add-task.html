@@ -25,12 +25,14 @@
 
                 <div class="date-field">
                     <input class="a-t-input date-input" id="due-date-display" type="text" placeholder="dd/mm/yyyy"
-                        inputmode="numeric" onfocus="dateFieldOnFocus()" onblur="dateFieldOnChange()"
+                        inputmode="numeric" onblur="dateFieldOnChange()"
                         oninput="dateFieldOnChange()">
                     <input type="date" id="due-date-hidden" placeholder="Date" class="date-input-hidden"
                         onchange="datePickerSelectionChange(event)">
                     <button type="button" class="date-trigger" aria-label="Kalender öffnen"
-                        onclick="onDateIconClick()"></button>
+                        onclick="onDateIconClick()">
+                        <div role="img" title="Claendar Icon"></div>
+                    </button>
                 </div>
 
 
@@ -131,21 +133,6 @@
                 </div>
 
                 <ul class="sub-task-list">
-                    <!-- <li class="li-edit" id="">
-                        <div class="subtask-list-input-container">
-                            <input class="sub-task-list-input-edit" type="text" title="subtask list inputfield"
-                                value="Contact Form">
-                            <div class="sub-list-writing-btn-container">
-                                <button type="button" title="delete current entry" onclick="deleteCurrentSelectedSubTask('${subTask['id']}')">
-                                    <div role="img" title="delete icon"></div>
-                                </button>
-                                <div></div>
-                                 <button type="button" title="accept current entry button" onclick="safeChangesOnCurrentSelectedSubtask('${subTask['id']}')">
-                                    <div role="img" title="accept icon"></div>
-                                </button>
-                            </div>
-                        </div>
-                    </li> -->
                 </ul>
 
 
@@ -155,7 +142,7 @@
             <p><span>*</span>This field is required</p>
 
             <div class="add-task-form-buttons">
-                <button id="a-t-clear-btn" class="btn btn-outline btn-clear-cancel" type="button">
+                <button id="a-t-clear-btn" class="btn btn-outline btn-clear-cancel" type="button" onclick="addTaskFormClear()">
                     <div>
                         <p>Clear</p>
                         <div role="img" title="Clear-Icon"></div>
@@ -167,7 +154,7 @@
                         <div role="img" title="Clear-Icon"></div>
                     </div>
                 </button>
-                <button type="submit" class="btn btn-fill btn-create-task" disabled>
+                <button id="createTaskButton" type="submit" class="btn btn-fill btn-create-task" disabled>
                     <div>
                         <p>Create Task</p>
                         <div role="img" title="Check-Icon"></div>
