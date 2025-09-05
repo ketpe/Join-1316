@@ -6,7 +6,7 @@
         </button>
     </header>
 
-    <section class="add-task-fields">
+    <form class="add-task-fields" method="post" onsubmit="addTaskFormSubmit(event)">
         <div class="a-t-f-i-container">
             <div class="a-t-f-i-left">
 
@@ -136,11 +136,11 @@
                             <input class="sub-task-list-input-edit" type="text" title="subtask list inputfield"
                                 value="Contact Form">
                             <div class="sub-list-writing-btn-container">
-                                <button type="button" title="delete current entry">
+                                <button type="button" title="delete current entry" onclick="deleteCurrentSelectedSubTask('${subTask['id']}')">
                                     <div role="img" title="delete icon"></div>
                                 </button>
                                 <div></div>
-                                 <button type="button" title="accept current entry button">
+                                 <button type="button" title="accept current entry button" onclick="safeChangesOnCurrentSelectedSubtask('${subTask['id']}')">
                                     <div role="img" title="accept icon"></div>
                                 </button>
                             </div>
@@ -167,7 +167,7 @@
                         <div role="img" title="Clear-Icon"></div>
                     </div>
                 </button>
-                <button type="button" class="btn btn-fill btn-create-task" disabled>
+                <button type="submit" class="btn btn-fill btn-create-task" disabled>
                     <div>
                         <p>Create Task</p>
                         <div role="img" title="Check-Icon"></div>
@@ -175,7 +175,7 @@
                 </button>
             </div>
         </footer>
-    </section>
+    </form>
 
 
 </form>

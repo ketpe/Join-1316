@@ -43,3 +43,25 @@ function getSubtaskListElementReadOnly(subTask) {
         </li>
     `;
 }
+
+function getSubtaskListElementForChanging(subTask) {
+
+    return `
+        <li class="li-edit">
+            <div class="subtask-list-input-container">
+                <input id="subTaskEdit-${subTask['id']}" class="sub-task-list-input-edit" type="text" title="subtask list inputfield"
+                    value="${subTask['title']}">
+                <div class="sub-list-writing-btn-container">
+                    <button type="button" title="delete current entry" onclick="deleteCurrentSelectedSubTask('${subTask['id']}')">
+                        <div role="img" title="delete icon"></div>
+                    </button>
+                    <div></div>
+                        <button type="button" title="accept current entry button" onclick="safeChangesOnCurrentSelectedSubtask('${subTask['id']}')">
+                        <div role="img" title="accept icon"></div>
+                    </button>
+                </div>
+            </div>
+        </li>
+    `;
+    
+}

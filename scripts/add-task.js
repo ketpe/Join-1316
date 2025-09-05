@@ -568,11 +568,11 @@ function clearSubInputField() {
 function createNewSubtask(subTaskEntry) {
     let newSubTask = {
         'id' : getNewUid(),
-        'title' : subTaskEntry
+        'title' : subTaskEntry,
+        'taskChecked' : false
     };
 
     currentSubTasks.push(newSubTask);
-    console.log(currentSubTasks);
     
 }
 
@@ -585,10 +585,10 @@ function deleteCurrentSelectedSubTask(subtaskID) {
 }
 
 function editCurrentSelectedSubTask(subtaskID) {
-    console.log("SubtaskID -> edit: " + subtaskID);
+    renderSubtasks(subtaskID);
 }
 
-function renderSubtasks() {
+function renderSubtasks(idForEdit="") {
     let subTaskList = document.querySelector('.sub-task-list');
     subTaskList.innerHTML = "";
     if(currentSubTasks.length == 0){return;}
@@ -596,8 +596,38 @@ function renderSubtasks() {
     if(!subTaskList){return;}
     
     for(let i = 0; i < currentSubTasks.length; i++){
+        if(currentSubTasks[i]['id'] == idForEdit){
+            subTaskList.innerHTML += getSubtaskListElementForChanging(currentSubTasks[i]);
+            continue;
+        }
         subTaskList.innerHTML += getSubtaskListElementReadOnly(currentSubTasks[i]);
         counter++;
         if(counter >= 3){break;}
     }
 }
+
+function safeChangesOnCurrentSelectedSubtask(subtaskID) {
+    let currentSubTask = currentSubTasks.find(x => x['id'] == subtaskID);
+    if(!currentSubTask){return;}
+    const inputField = document.getElementById(`subTaskEdit-${subtaskID}`);
+    if(!inputField || inputField.value.length <= 3){return;}
+    currentSubTask['title'] = inputField.value;
+    renderSubtasks();
+}
+
+//!SECTION Substask Auswahl Ende
+
+//SECTION - FormEvent
+
+function addTaskFormSubmit(event) {
+    event.preventDefault();
+    const addTaskForm = new FormData(event.target);
+}
+
+function addTaskFormClear() {
+    location.reload();
+}
+
+//!SECTION - FormEvent Ende
+
+//SECTION - CHECK

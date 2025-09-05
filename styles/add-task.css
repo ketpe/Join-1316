@@ -31,17 +31,26 @@
     display: flex;
     flex-direction: column;
     overflow-y: hidden;
+    font-family: 'Inter';
 }
 
-.add-task-fields label {
+/* .add-task-fields label {
     font-family: 'Inter';
     font-size: 20px;
     font-weight: 400;
     color: var(--bg-default);
     margin-bottom: 8px;
-}
+} */
 
-.add-task-fields span {
+label {
+    font-family: 'Inter';
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--bg-default);
+    margin-bottom: 8px;
+} 
+
+span {
     color: var(--input-error-color);
 }
 
@@ -113,7 +122,7 @@
     border-radius: 10px;
     padding: 12px 21px;
     border: 1px solid var(--input-border-color);
-    font-family: 'inter';
+    font-family: 'Inter';
     font-size: 20px;
 }
 
@@ -137,7 +146,7 @@
     position: relative;
     display: inline-block;
     width: 440px;
-
+    height: 48px;
 }
 
 .date-input {
@@ -206,7 +215,7 @@
 .a-t-error-text-container {
     height: 12px;
     margin-top: 8px;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
 }
 
 .a-t-error-text-container p {
@@ -482,7 +491,7 @@
     margin-top: 8px;
 }
 
-
+.sub-list-writing-btn-container,
 .sub-input-writing-btn-container{
     display: flex;
     justify-content: center;
@@ -502,6 +511,7 @@
     transition: all 0.1s ease-in-out;
 }
 
+.sub-list-writing-btn-container button:hover,
 .sub-input-writing-btn-container button:hover{
     border-radius: 50%;
     background-color: var(--bg-btn-hover-special);
@@ -516,6 +526,7 @@
     background-size: cover;
 }
 
+.sub-list-writing-btn-container div:nth-child(2),
 .sub-list-edit-btn-container div:nth-child(2),
 .sub-input-writing-btn-container div:nth-child(2){
     margin-left: 2px;
@@ -527,6 +538,7 @@
     
 }
 
+.sub-list-writing-btn-container button:nth-child(3)>div,
 .sub-input-writing-btn-container button:nth-child(3)>div{
     height: 11.25px;
     width: 15.49px;
@@ -582,6 +594,7 @@
     background-size: cover;
 }
 
+.sub-list-writing-btn-container button:nth-child(1)>div,
 .sub-list-edit-btn-container button:nth-child(3)>div{
     height: 18px;
     width: 16px;
@@ -606,4 +619,20 @@
     align-items: center;
     position: absolute;
     right: 20px;
+}
+
+.sub-task-list-input-edit{
+    height: 21px;
+    width: calc(440px - 66px);
+    outline: none;
+    border: none;
+    background-color: white;
+    padding-block: 0;
+    padding-inline: 0;
+    padding: 4px 50px 4px 16px;
+    border-bottom: solid 1px var(--btn-bg-hover);
+    font-family: 'Inter';
+    font-size: 16px;
+    font-weight: 400;
+    color: black;
 }

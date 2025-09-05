@@ -19,6 +19,6 @@ async function checkLogin(email, password) {
 };
 
 function loginGuest() {
-        logStatus('0');
+    logStatus('0');
     navigateToSummary();
 };
