@@ -7,7 +7,7 @@
     <title>board-task-template</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="./styles/board-task-template.css">
-    <link rel="stylesheet" href="./styles/task-template.css">
+    <link rel="stylesheet" href="./styles/board-task-template.css">
     <link rel="stylesheet" href="./styles/board-desktop.css">
 </head>
 
@@ -32,21 +32,21 @@
             <div class="board-task-assigned-priority">
                 <div class="board-task-assigned" id="assigned-contact-1">
                     <div class="assigned-contact-board">
-                        <div class="contact-initials-board blue">
+                        <div class="contact-initials-board assigned-contact-pos blue">
                             <p class="board-contact-initials-text">AB</p>
                         </div>
                     </div>
                 </div>
                 <div class="board-task-assigned" id="assigned-contact-2">
                     <div class="assigned-contact-board">
-                        <div class="contact-initials-board red">
+                        <div class="contact-initials-board assigned-contact-pos red">
                             <p class="board-contact-initials-text">PK</p>
                         </div>
                     </div>
                 </div>
                 <div class="board-task-assigned" id="assigned-contact-3">
                     <div class="assigned-contact-board">
-                        <div class="contact-initials-board orange">
+                        <div class="contact-initials-board assigned-contact-pos orange">
                             <p class="board-contact-initials-text">EW</p>
                         </div>
                     </div>
@@ -58,5 +58,14 @@
         </div>
     </div>
 </body>
+<script>
+    function addLeftPositionStyleassignedContacts() {
+        const assignedContacts = document.querySelectorAll('.assigned-contact-pos');
+        assignedContacts.forEach((contact, i) => {
+            contact.style.left = `calc(${i * 25}px)`;
+        });
+    }
+    addLeftPositionStyleassignedContacts();
+</script>
 
 </html>

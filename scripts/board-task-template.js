@@ -37,7 +37,7 @@ function boardTaskEmptyTemplate(category) {
 function getAllAssignedContactsTemplate(assignedContacts) {
     return `<div class="board-task-assigned" id="${assignedContacts.id}">
                     <div class="assigned-contact-board">
-                        <div class="contact-initials-board ${assignedContacts.initialColor}">
+                        <div class="contact-initials-board assigned-contact-pos ${assignedContacts.initialColor}">
                             <p class="board-contact-initials-text">${assignedContacts.initial}</p>
                         </div>
                     </div>

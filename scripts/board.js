@@ -7,6 +7,7 @@ async function getBoardTasks() {
     console.log(tasks);
     console.log(taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
+    addLeftPositionStyleassignedContacts();
 }
 
 function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone) {
@@ -20,6 +21,7 @@ function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback,
     })
     let taskElements = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone]
     console.log(taskElements);
+    addLeftPositionStyleassignedContacts();
     toggleNoTaskVisible(taskElements);
 }
 
@@ -71,22 +73,27 @@ async function getDatabaseTaskContact(tasks) {
     let getAllContacts = await getAllData('contacts');
 
     tasks.forEach(task => {
+        console.log(task);
         let assignedContacts = getAllAssignedContacts.filter(obj => obj.taskID === task.id)
+        let contacts = [];
         assignedContacts.forEach(assContact => {
-            let contact = getAllContacts.filter(obj => obj.id === assContact.contatactId)
-            task.assignedContacts = contact;
+            let contact = getAllContacts.filter(obj => obj.id === assContact.contactId)
+            if (contact) contacts.push(contact);
+
         })
+        task.assignedContacts = contacts;
     })
     return tasks;
 }
 
 function renderAssignedContacts(assignedContacts) {
     let assignedContactsTemplate = '';
-    assignedContacts.forEach(contacts => {
-        let contact = getAllAssignedContactsTemplate(contacts);
-        assignedContactsTemplate += contact;
-    })
-    return assignedContactsTemplate
+    assignedContacts.forEach(contactArr => {
+        contactArr.forEach(contact => {
+            assignedContactsTemplate += getAllAssignedContactsTemplate(contact);
+        });
+    });
+    return assignedContactsTemplate;
 }
 
 function toggleSubtaskCheckbox(element) {
@@ -114,4 +121,11 @@ function getBoardTaskref() {
     taskDone = document.getElementById("kanban-tasks-done");
     TaskContentElements = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
     return TaskContentElements;
+}
+
+function addLeftPositionStyleassignedContacts() {
+    const assignedContacts = document.querySelectorAll('.assigned-contact-pos');
+    assignedContacts.forEach((contact, i) => {
+        contact.style.left = `calc(${i * 25}px)`;
+    });
 }
