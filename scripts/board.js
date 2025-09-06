@@ -10,8 +10,8 @@ async function getBoardTasks() {
 }
 
 function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone) {
-    let renderedContacts = '';
     tasks.forEach(task => {
+        let renderedContacts = '';
         renderedContacts = renderAssignedContacts(task.assignedContacts);
         task.taskStateCategory === 'todo' ? taskToDo.innerHTML += boardTasksTemplate(task, renderedContacts) :
             task.taskStateCategory === 'inprogress' ? taskInProgress.innerHTML += boardTasksTemplate(task, renderedContacts) :
@@ -19,7 +19,6 @@ function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback,
                     task.taskStateCategory === 'done' ? taskDone.innerHTML += boardTasksTemplate(task, renderedContacts) : '';
     })
     let taskElements = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone]
-    addLeftPositionStyleassignedContacts();
     toggleNoTaskVisible(taskElements);
 }
 
@@ -124,8 +123,11 @@ function getBoardTaskref() {
 }
 
 function addLeftPositionStyleassignedContacts() {
-    const assignedContacts = document.querySelectorAll('.assigned-contact-pos');
-    assignedContacts.forEach((contact, i) => {
-        contact.style.left = `calc(${i * 25}px)`;
+    const taskCards = document.querySelectorAll('.board-task-content');
+    taskCards.forEach(card => {
+        const contacts = card.querySelectorAll('.assigned-contact-pos');
+        contacts.forEach((contact, i) => {
+            contact.style.left = `calc(${i * 25}px)`;
+        });
     });
 }

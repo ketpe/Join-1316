@@ -91,7 +91,7 @@
 /*FIXME - Die ids müssen dynamisch generiert werden. #assigned-contact-1 jeweils 25px + */
 .assigned-contact-pos:nth-child(n) {
     position: absolute;
-    left: calc((var(--contact-index, 0)) * 25px);
+    /* left: calc((var(--contact-index, 0)) * 25px); */
 }
 
 .assigned-contact-board {
