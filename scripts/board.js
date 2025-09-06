@@ -5,7 +5,6 @@ async function getBoardTasks() {
     tasks = await getDatabaseTaskSubtasks(tasks);
     tasks = await getDatabaseTaskContact(tasks);
     console.log(tasks);
-    console.log(taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     addLeftPositionStyleassignedContacts();
 }
@@ -20,7 +19,6 @@ function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback,
                     task.taskStateCategory === 'done' ? taskDone.innerHTML += boardTasksTemplate(task, renderedContacts) : '';
     })
     let taskElements = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone]
-    console.log(taskElements);
     addLeftPositionStyleassignedContacts();
     toggleNoTaskVisible(taskElements);
 }
@@ -47,11 +45,13 @@ async function getDatabaseTaskSubtasks(tasks) {
     let getAllTaskSubtasks = await getAllData('taskSubtask');
     let getAllSubtasks = await getAllData('subTasks');
     tasks.forEach(task => {
-        let taskSubTasks = getAllTaskSubtasks.filter(obj => obj.maintaskID === task.id)
+        let taskSubTasks = getAllTaskSubtasks.filter(obj => obj.maintaskID === task.id);
+        let subTasks = [];
         taskSubTasks.forEach(taskSubTask => {
-            let subTasks = getAllSubtasks.filter(obj => obj.id === taskSubTask.subTaskID);
-            task.subTasks = subTasks;
-        })
+            let foundSubTask = getAllSubtasks.find(obj => obj.id === taskSubTask.subTaskID);
+            if (foundSubTask) subTasks.push(foundSubTask);
+        });
+        task.subTasks = subTasks;
     });
     tasks = getSubTaskSumOfTrue(tasks);
     return tasks;
@@ -60,7 +60,7 @@ async function getDatabaseTaskSubtasks(tasks) {
 function getSubTaskSumOfTrue(tasks) {
     tasks.forEach(task => {
         if (Array.isArray(task.subTasks)) {
-            task.countTrueSubtasks = task.subTasks.filter(sT => sT === true).length;
+            task.countTrueSubtasks = task.subTasks.filter(sT => sT.taskChecked === true).length;
         } else {
             task.countTrueSubtasks = 0;
         }

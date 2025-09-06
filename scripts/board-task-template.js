@@ -14,9 +14,9 @@ function boardTasksTemplate(task, rendererdContacts) {
             </div>
             <div class="board-task-progress">
                 <label for="sub-task-progress"></label>
-                <progress class="sub-task-progressbar" id="sub-task-progress" value="${task.countTrueSubtasks}" max="2"
+                <progress class="sub-task-progressbar" id="sub-task-progress" value="${task.countTrueSubtasks}" max="${task.subTasks.length}"
                     aria-describedby="progress-value">${task.countTrueSubtasks}</progress>
-                <output class="progress-value-Text" id="progress-value">${task.countTrueSubtasks}/Subtasks</output>
+                <output class="progress-value-Text" id="progress-value">${task.countTrueSubtasks}/${task.subTasks.length} Subtasks</output>
             </div>
             <div class="board-task-assigned-priority">
                 ${rendererdContacts}
