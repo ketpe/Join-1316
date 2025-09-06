@@ -20,7 +20,6 @@ function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback,
     })
     let taskElements = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone]
     console.log(taskElements);
-
     toggleNoTaskVisible(taskElements);
 }
 
@@ -29,7 +28,7 @@ function getHtmlTasksContent() {
 
     TaskContentElements.forEach(tE => { if (tE) tE.innerHTML = ""; });
     TaskContentElements.forEach(tE => {
-        if (tE) tE.innerHTML = boardTaskEmptyTemplate();
+        if (tE) tE.innerHTML = boardTaskEmptyTemplate(tE.dataset.category);
     })
     return { TaskContentElements };
 }

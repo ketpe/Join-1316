@@ -28,15 +28,13 @@ function boardTasksTemplate(task, rendererdContacts) {
     </div>`
 }
 
-function boardTaskEmptyTemplate() {
+function boardTaskEmptyTemplate(category) {
     return `<div class="kanban-task-empty visually-hidden" >
-                                    <p>No Task To Do</p>
+                                    <p>No Task ${category}</p>
                                 </div>`
 }
 
 function getAllAssignedContactsTemplate(assignedContacts) {
-    console.log(assignedContacts);
-
     return `<div class="board-task-assigned" id="${assignedContacts.id}">
                     <div class="assigned-contact-board">
                         <div class="contact-initials-board ${assignedContacts.initialColor}">
