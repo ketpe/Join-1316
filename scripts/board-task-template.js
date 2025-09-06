@@ -19,9 +19,9 @@ function boardTasksTemplate(task) {
                 <output class="progress-value-Text" id="progress-value">${task.countTrueSubtasks}/Subtasks</output>
             </div>
             <div class="board-task-assigned-priority">
-                ${renderAssignedContacts(task.assignedContacts)}
+
                 <div class="board-task-priority">
-                    <div role="img" aria-label="Priority: " class="priority-icon-${task.priority}"></div>
+                    <div role="img" aria-label="Priority:${task.priority} " class="priority-icon-${task.priority}"></div>
                 </div>
             </div>
         </div>

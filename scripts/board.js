@@ -11,7 +11,6 @@ async function getBoardTasks() {
 
 function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone) {
     tasks.forEach(task => {
-        console.log(task);
         task.taskStateCategory === 'todo' ? taskToDo.innerHTML += boardTasksTemplate(task) :
             task.taskStateCategory === 'inprogress' ? taskInProgress.innerHTML += boardTasksTemplate(task) :
                 task.taskStateCategory === 'awaiting' ? taskAwaitingFeedback.innerHTML += boardTasksTemplate(task) :
