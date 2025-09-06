@@ -10,11 +10,13 @@ async function getBoardTasks() {
 }
 
 function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone) {
+    let renderedContacts = '';
     tasks.forEach(task => {
-        task.taskStateCategory === 'todo' ? taskToDo.innerHTML += boardTasksTemplate(task) :
-            task.taskStateCategory === 'inprogress' ? taskInProgress.innerHTML += boardTasksTemplate(task) :
-                task.taskStateCategory === 'awaiting' ? taskAwaitingFeedback.innerHTML += boardTasksTemplate(task) :
-                    task.taskStateCategory === 'done' ? taskDone.innerHTML += boardTasksTemplate(task) : '';
+        renderedContacts = renderAssignedContacts(task.assignedContacts);
+        task.taskStateCategory === 'todo' ? taskToDo.innerHTML += boardTasksTemplate(task, renderedContacts) :
+            task.taskStateCategory === 'inprogress' ? taskInProgress.innerHTML += boardTasksTemplate(task, renderedContacts) :
+                task.taskStateCategory === 'awaiting' ? taskAwaitingFeedback.innerHTML += boardTasksTemplate(task, renderedContacts) :
+                    task.taskStateCategory === 'done' ? taskDone.innerHTML += boardTasksTemplate(task, renderedContacts) : '';
     })
     let taskElements = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone]
     console.log(taskElements);
