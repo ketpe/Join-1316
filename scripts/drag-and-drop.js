@@ -12,10 +12,13 @@ function endDrag(task) {
     draggedTask = null;
 }
 
-function dropTask(event, column) {
+async function dropTask(event, column) {
     column.classList.remove('over');
     if (draggedTask) {
         column.querySelector('.kanban-tasks').appendChild(draggedTask);
+        const newCategory = column.getAttribute('id');
+        const taskId = draggedTask.getAttribute('id');
+        await updateData(`/tasks/${taskId}`, { taskStateCategory: newCategory });
     }
     toggleNoTaskVisible()
 }
