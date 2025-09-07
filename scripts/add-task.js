@@ -3,11 +3,14 @@ let currentTitle = "";
 let contactAllListFromDB = [];
 let isContactListOpen = false;
 let currentContactAssignList = [];
-let currentPrioity = "";
+let currentPriority = "";
 let categories = [];
 let isCategoryListOpen = false;
 let currentCategory = {};
 let currentSubTasks = [];
+
+//TODO - TestContact
+const contacktIDTest = "b4e73ed4-0562-4ae3-b5aa-f8d91a9659c6";
 
 
 async function onLoadAddTask() {
@@ -44,6 +47,7 @@ async function loadDataForAddTaskViewAndRenderView() {
     await loadContactsAllFomDB();
     await loadCategoriesFromDB();
     setNewPriority("media");
+
 }
 
 //NOTE - Lade alle Kontakte aus der DB in das Array
@@ -155,7 +159,7 @@ function showAndHideContacts(showOrHide = "show") {
 //NOTE - Anzeigen des Pfeil nach unten -> Show
 function renderShowIcon(elementID) {
     const iconDiv = document.getElementById(elementID);
-    if(!iconDiv){return;}
+    if (!iconDiv) { return; }
     iconDiv.classList.remove('icon-hide-list');
     iconDiv.classList.add('icon-show-list');
 }
@@ -163,7 +167,7 @@ function renderShowIcon(elementID) {
 //NOTE - Anzeigen des Pfeils nach oben -> Hide
 function renderHideIcon(elementID) {
     const iconDiv = document.getElementById(elementID);
-    if(!iconDiv){return;}
+    if (!iconDiv) { return; }
     iconDiv.classList.add('icon-hide-list');
     iconDiv.classList.remove('icon-show-list');
 }
@@ -181,7 +185,7 @@ function showContactListForSelect(currentContactList = []) {
     contactListContainer.style.height = heightOfContainer + "px";
     contactList.style.height = (heightOfContainer - 27) + "px";
     isContactListOpen = true;
-    
+
 }
 
 
@@ -198,7 +202,7 @@ function hideContactListForSelect() {
     contactList.innerHTML = "";
     isContactListOpen = false;
     //toggleMarginOfInputContainer('.contact-select-container', true);
-    
+
 }
 
 //NOTE - Render der Kontaktliste. Prüfen, ob der Kontakt bereits zugefügt wurde -> Anzeige entsprechend ändern
@@ -214,7 +218,7 @@ function renderContactOptions(contactList) {
 
 //NOTE - einen Kontakt in der Assigned Liste suchen, sofern vorhanden. Damit das Aussehen angepasst werden kann.
 function findContactInAssignList(contact) {
-    if(currentContactAssignList.length == 0){return false;}
+    if (currentContactAssignList.length == 0) { return false; }
     return getIndexOfObjectOfArray(contact['id'], currentContactAssignList) != -1;
 }
 
@@ -231,7 +235,7 @@ function contactButtonOnListSelect(currentContactBtn) {
     } else {
         checkInContact(currentContactBtn, contactID);
     }
-    
+
 }
 
 //NOTE - Prüfen, ob der Kontakt überhaupt vorhanden ist
@@ -266,16 +270,16 @@ function checkOutContact(currentContact, contactID) {
 //NOTE Den Kontakt mit der ID aus dem gesammten Array filtern und in die Assigned Liste einfügen
 function contactAddToTask(currentContactID) {
     const indexOfContact = getIndexOfObjectOfArray(currentContactID, contactAllListFromDB);
-    if(indexOfContact > -1){
+    if (indexOfContact > -1) {
         currentContactAssignList.push(contactAllListFromDB[indexOfContact]);
     }
-   
+
 }
 
 //NOTE - Den Kontakt mit der ID in der Assigned Liste suchen und dann entfernen
 function contactRemoveFromTask(currentContactID) {
     const indexOfContact = getIndexOfObjectOfArray(currentContactID, currentContactAssignList);
-    if(indexOfContact > -1){
+    if (indexOfContact > -1) {
         currentContactAssignList.splice(indexOfContact, 1);
     }
 }
@@ -283,10 +287,10 @@ function contactRemoveFromTask(currentContactID) {
 //NOTE - Contacte nach der Eingabe filtern und anzeigen
 function filterContactFromInputValue(inputValue) {
     const inputCleanValue = (inputValue ?? "").trim();
-    if(inputCleanValue.length < 2){return;}
+    if (inputCleanValue.length < 2) { return; }
     const filteredContacts = contactAllListFromDB.filter((c) => c['firstname'].toLowerCase().startsWith(inputCleanValue.toLowerCase()));
     showContactListForSelect(filteredContacts);
-} 
+}
 
 
 
@@ -295,11 +299,11 @@ function filterContactFromInputValue(inputValue) {
 // Ausser den hier angegebenen geklickt wird, schliesst sich das Fenster, wie beim Klick auf den Pfeil nach oben.
 function addTaskWindowMouseClick(e) {
 
-    if(!e.target.closest(".contact-select-container") && !e.target.closest(".contact-List-container") && isContactListOpen){
+    if (!e.target.closest(".contact-select-container") && !e.target.closest(".contact-List-container") && isContactListOpen) {
         showAndHideContacts("hide");
     }
 
-    if(!e.target.closest('.category-select-container') && !e.target.closest('.category-list-container') && isCategoryListOpen){
+    if (!e.target.closest('.category-select-container') && !e.target.closest('.category-list-container') && isCategoryListOpen) {
         showAndHideCategories('hide');
     }
 }
@@ -308,18 +312,18 @@ function addTaskWindowMouseClick(e) {
 function getIndexOfObjectOfArray(obejctID, objectArray) {
 
     let objectFind = objectArray.find(x => x['id'] == obejctID);
-    if(objectFind == null) {return -1;}
+    if (objectFind == null) { return -1; }
     return objectArray.indexOf(objectFind);
 }
 
 //NOTE - Contactbadges anzeigen oder nicht
 function showOrHideBadgeContainer(showOrHide = "") {
-    if(showOrHide.length == 0) {return;}
+    if (showOrHide.length == 0) { return; }
     let container = document.getElementById('contact-assigned-badge');
-    if(showOrHide == "show"){
+    if (showOrHide == "show") {
         container.classList.remove('d-none');
         renderAsignedProfilBadge();
-    }else{
+    } else {
         container.classList.add('d-none');
         container.innerHTML = "";
     }
@@ -327,18 +331,18 @@ function showOrHideBadgeContainer(showOrHide = "") {
 
 //NOTE - Die Profilicons der Contactauswahl anzeigen.
 //Es werden nur 4 Badges angezeigt.
-function renderAsignedProfilBadge(){
-    if(currentContactAssignList.length == 0){
+function renderAsignedProfilBadge() {
+    if (currentContactAssignList.length == 0) {
         return;
     }
 
     let badgeContainer = document.getElementById('contact-assigned-badge');
     badgeContainer.innerHTML = "";
     let counter = 0;
-    for (let i = 0; i < currentContactAssignList.length; i++){
+    for (let i = 0; i < currentContactAssignList.length; i++) {
         badgeContainer.innerHTML += getAssignedContactBadge(currentContactAssignList[i]);
         counter++;
-        if(counter == 4){break;}
+        if (counter == 4) { break; }
     }
 }
 
@@ -346,14 +350,14 @@ function renderAsignedProfilBadge(){
 //NOTE - Ein Button wurde in der UI ausgewählt. Jenachdem ob dieser schon aktiv war oder nicht.
 // Werden alle resettet oder dieser wird auf aktiv gesetzt.
 function addTaskPrioritySelect(button) {
-    if(!button){return;}
-    
+    if (!button) { return; }
+
     const buttonName = button.getAttribute('name');
     const isActiv = button.getAttribute('activ') == "true";
 
-    if(currentPrioity == buttonName && isActiv){
+    if (currentPriority == buttonName && isActiv) {
         allPriortyButtonsReset();
-    }else {
+    } else {
         setNewPriority(buttonName);
     }
 
@@ -363,7 +367,7 @@ function addTaskPrioritySelect(button) {
 
 //NOTE - Alle Prio-buttons werden auf inActiv gesetzt.
 function allPriortyButtonsReset() {
-    currentPrioity = "";
+    currentPriority = "";
     const btnContainer = document.getElementById('task-priority-button');
     const buttons = btnContainer.querySelectorAll('.btn');
 
@@ -381,45 +385,45 @@ function setNewPriority(priority) {
 
     buttons.forEach((b) => {
 
-        if(b.getAttribute('name') == priority){
+        if (b.getAttribute('name') == priority) {
             b.setAttribute('activ', 'true');
             setButtonStyleActiv(b);
-            
-        }else{
+
+        } else {
             b.setAttribute('activ', '');
             setButtonSytleNotActiv(b);
         }
-        
+
     });
 
-    currentPrioity = priority;
-    
+    currentPriority = priority;
+
 }
 
 //NOTE - Einen Button auf ACTIV schalten -> dieser ist ausgewählt
-function setButtonStyleActiv(button){
-    if(!button){return;}
+function setButtonStyleActiv(button) {
+    if (!button) { return; }
     button.classList.add(`prio-${button.getAttribute('name')}-selected`);
     togglePrioButtonTextColor(button, "white");
 }
 
 //NOTE - Einen Button auf NICHT-ACTIV schalten -> dieser ist nicht ausgewählt
 function setButtonSytleNotActiv(button) {
-    if(!button){return;}
+    if (!button) { return; }
     button.classList.remove(`prio-${button.getAttribute('name')}-selected`);
     togglePrioButtonTextColor(button, "black");
 }
 
 //NOTE - Die Farbe des Textes in dem Button entsprechend umschalten
 function togglePrioButtonTextColor(button, whiteOrBlack) {
-    if(!button){return;}
+    if (!button) { return; }
     let btnText = button.querySelector('p');
-    if(whiteOrBlack == "white"){
+    if (whiteOrBlack == "white") {
         btnText.classList.add('prio-selected');
-    }else{
+    } else {
         btnText.classList.remove('prio-selected');
     }
-    
+
 }
 //!SECTION Ende der Prio - Auswahl
 
@@ -458,7 +462,7 @@ function showCategoryListForSelect() {
 
 //NOTE - die Auswahlliste wieder einklappen.
 //Den Button ändern und das Icon anpassen
-function hideCategoryListForSelect(){
+function hideCategoryListForSelect() {
     const categoryListContainer = document.getElementById('category-list-container');
     const categoryList = document.getElementById('category-list-for-task');
 
@@ -490,9 +494,9 @@ function renderCategoryOptions(categories) {
 //Den Titel in das Inputfeld schreiben
 //Den Check durchführen
 function categoryButtonOnListSelect(button) {
-    if(!button){showCategoryError();}
+    if (!button) { showCategoryError(); }
     let indexOfCategory = getIndexOfObjectOfArray(button.getAttribute('id'), categories);
-    if(indexOfCategory < 0){showCategoryError();}
+    if (indexOfCategory < 0) { showCategoryError(); }
     currentCategory = categories[indexOfCategory];
     hideCategoryListForSelect();
     setCategoryInputfieldValue(currentCategory['title']);
@@ -501,7 +505,7 @@ function categoryButtonOnListSelect(button) {
 
 
 //NOTE - Den entsprechenden Text in das Categorie Inputfeld schreiben
-function setCategoryInputfieldValue(value){
+function setCategoryInputfieldValue(value) {
     document.getElementById('task-category').value = value;
 }
 
@@ -514,11 +518,11 @@ function setCategoryShowOrHideButton(showOrHide) {
 //NOTE - Auslöser, wenn in das Inputfeld 'Category' geklickt wird. Wenn die Auswahlliste offen ist, wird diese geschlossen, 
 // sonst öffnet sich die Liste.
 function onclickCategoryInput(inputField) {
-    if(isCategoryListOpen){
+    if (isCategoryListOpen) {
         inputField.blur();
         hideCategoryListForSelect();
         checkCategoryInputValue();
-    }else{
+    } else {
         showAndHideCategories('show');
     }
 }
@@ -527,13 +531,13 @@ function onclickCategoryInput(inputField) {
 // Wenn keine Auswahl getroffen wurde, wird der Errortext angezeigt und der Rahmen eingefärbt.
 function checkCategoryInputValue() {
     let categoryInput = document.getElementById('task-category');
-    if(!categoryInput){return;}
-    if(categoryInput.value == "Select task category") {
+    if (!categoryInput) { return; }
+    if (categoryInput.value == "Select task category") {
         showAndLeaveErrorMessage('a-t-category-required', true);
         showAndLeaveErrorBorder('task-category', true);
-    }else{
-       showAndLeaveErrorMessage('a-t-category-required', false);
-       showAndLeaveErrorBorder('task-category', false);
+    } else {
+        showAndLeaveErrorMessage('a-t-category-required', false);
+        showAndLeaveErrorBorder('task-category', false);
     }
     addTaskCheckRequiredField();
 }
@@ -542,7 +546,7 @@ function checkCategoryInputValue() {
 //SECTION - Subtask Auswahl
 
 function onclickSubtaskInput(input) {
-    if(!input){return;}
+    if (!input) { return; }
     toggleSubWritingButtons();
 }
 
@@ -552,9 +556,9 @@ function toggleSubWritingButtons() {
 
 function adoptCurrentSubEntry() {
     let inputfield = document.getElementById('task-sub-task');
-    if(!inputfield){return;}
+    if (!inputfield) { return; }
     const inputValueClean = (inputfield.value ?? "").trim();
-    if(inputValueClean.length > 3){
+    if (inputValueClean.length > 3) {
         createNewSubtask(inputValueClean);
     }
 
@@ -564,7 +568,7 @@ function adoptCurrentSubEntry() {
 
 function clearSubInputField() {
     let inputfield = document.getElementById('task-sub-task');
-    if(!inputfield){return;}
+    if (!inputfield) { return; }
     inputfield.value = "";
     toggleSubWritingButtons();
     inputfield.blur();
@@ -573,19 +577,19 @@ function clearSubInputField() {
 
 function createNewSubtask(subTaskEntry) {
     let newSubTask = {
-        'id' : getNewUid(),
-        'title' : subTaskEntry,
-        'taskChecked' : false
+        'id': getNewUid(),
+        'title': subTaskEntry,
+        'taskChecked': false
     };
 
     currentSubTasks.push(newSubTask);
-    
+
 }
 
 function deleteCurrentSelectedSubTask(subtaskID) {
     console.log("SubtaskID -> delete: " + subtaskID);
     let indexOfSubtask = getIndexOfObjectOfArray(subtaskID, currentSubTasks);
-    if(indexOfSubtask < 0){return;}
+    if (indexOfSubtask < 0) { return; }
     currentSubTasks.splice(indexOfSubtask, 1);
     renderSubtasks();
 }
@@ -594,30 +598,30 @@ function editCurrentSelectedSubTask(subtaskID) {
     renderSubtasks(subtaskID);
 }
 
-function renderSubtasks(idForEdit="") {
+function renderSubtasks(idForEdit = "") {
     let subTaskList = document.querySelector('.sub-task-list');
     subTaskList.innerHTML = "";
-    if(currentSubTasks.length == 0){return;}
+    if (currentSubTasks.length == 0) { return; }
     let counter = 0;
-    if(!subTaskList){return;}
-    
-    for(let i = 0; i < currentSubTasks.length; i++){
-        if(currentSubTasks[i]['id'] == idForEdit){
+    if (!subTaskList) { return; }
+
+    for (let i = 0; i < currentSubTasks.length; i++) {
+        if (currentSubTasks[i]['id'] == idForEdit) {
             subTaskList.innerHTML += getSubtaskListElementForChanging(currentSubTasks[i]);
             continue;
         }
         subTaskList.innerHTML += getSubtaskListElementReadOnly(currentSubTasks[i]);
         counter++;
-        if(counter >= 3){break;}
+        if (counter >= 3) { break; }
     }
 }
 
 function safeChangesOnCurrentSelectedSubtask(subtaskID) {
     let currentSubTask = currentSubTasks.find(x => x['id'] == subtaskID);
-    if(!currentSubTask){return;}
+    if (!currentSubTask) { return; }
     const inputField = document.getElementById(`subTaskEdit-${subtaskID}`);
     const inputValueClean = (inputField.value ?? "").trim();
-    if(inputValueClean <= 3){return;}
+    if (inputValueClean <= 3) { return; }
     currentSubTask['title'] = inputField.value;
     renderSubtasks();
 }
@@ -626,27 +630,141 @@ function safeChangesOnCurrentSelectedSubtask(subtaskID) {
 
 //SECTION - FormEvent
 
-function addTaskFormSubmit(event) {
-    event.preventDefault();
-    const addTaskForm = new FormData(event.target);
+//Daten aus dem Form und den lokalen Daten aufebreiten und neuen Task erstellen
+async function addTaskCreateTask(event) {
+
+    if (event) event.preventDefault();
+
+    const currentTask = new Task(
+        getNewUid(),
+        currentTitle,
+        document.getElementById('task-description').value,
+        currentDueDate,
+        currentPriority,
+        currentCategory['id'],
+        "todo"
+    );
+
+    await addTaskCreateSubtaskArray(currentTask);
+
+}
+
+//Wenn Subtasks vorhanden sind diese hier als Array erstellen
+async function addTaskCreateSubtaskArray(currentTask) {
+    let subTaskArray = [];
+    for (let i = 0; i < currentSubTasks.length; i++) {
+        subTaskArray.push(new Subtask(getNewUid(), currentSubTasks[i]['title'], false));
+    }
+    await addTaskContactAssinged(currentTask, subTaskArray);
+}
+
+//Kontake, auch den eigenen, mit dem Task verbinden
+//TODO - Den aktuellen Kontakt aus der Session auslesen
+async function addTaskContactAssinged(currentTask, subTaskArray) {
+
+    let newContactAssignedArray = [];
+
+    newContactAssignedArray.push(new ContactAssinged(getNewUid(), currentTask.id, contacktIDTest));
+
+    for (let i = 0; i < currentContactAssignList.length; i++) {
+        newContactAssignedArray.push(new ContactAssinged(getNewUid(), currentTask.id, currentContactAssignList[i]['id']));
+    }
+
+    await subtaskToTaskConnection(currentTask, subTaskArray, newContactAssignedArray);
+}
+
+//Die Substasks mit dem Task verbinden
+async function subtaskToTaskConnection(currentTask, subTaskArray, assignedContactArray) {
+    let subtaskToTaskArray = [];
+
+    for (let i = 0; i < subTaskArray.length; i++) {
+        subtaskToTaskArray.push(new SubstaskToTask(getNewUid(), currentTask.id, subTaskArray[i]['id']));
+    }
+
+    await addTaskCreateDBEntries(currentTask, subTaskArray, assignedContactArray, subtaskToTaskArray)
+}
+
+//Alle gesammelten Daten in die DB Schreiben
+async function addTaskCreateDBEntries(currentTask, subTaskArray, assignedContactArray, subtaskToTaskArray) {
+    await putData(`/tasks/${currentTask.id}`, currentTask);
+
+    for(let subIndex = 0; subIndex < subTaskArray.length; subIndex++){
+        await putData(`/subTasks/${subTaskArray[subIndex].id}`, subTaskArray[subIndex]);
+    }
+
+    for(let contactIndex = 0; contactIndex < assignedContactArray.length; contactIndex++){
+        await putData(`/taskContactAssigned/${assignedContactArray[contactIndex].id}`, assignedContactArray[contactIndex]);
+    }
+
+    for(let subToTaskIndex = 0; subToTaskIndex < subtaskToTaskArray.length; subToTaskIndex++){
+        await putData(`/taskSubtask/${subtaskToTaskArray[subToTaskIndex].id}`, subtaskToTaskArray[subToTaskIndex]);
+    }
+
+    addTaskAfterSafe();
+    
+}
+
+function addTaskAfterSafe() {
+    //Dialog einblenden 
+    //Nach Zeit zurück zum Board
 }
 
 function addTaskFormClear() {
     location.reload();
 }
 
+
 //!SECTION - FormEvent Ende
+
+//SECTION - CHECK
 
 function addTaskCheckRequiredField() {
     let createButton = document.getElementById('createTaskButton');
 
-    createButton.disabled = 
-        currentDueDate.length > 0 && 
-        currentTitle.length > 0 && 
-        currentPrioity.length > 0 && 
-        currentCategory.hasOwnProperty("title") ? true : false;
+    createButton.disabled =
+        currentDueDate.length > 0 &&
+            currentTitle.length > 0 &&
+            currentPriority.length > 0 &&
+            currentCategory.hasOwnProperty("title") ? false : true;
 
 }
 
+//!SECTION - Check Ende
 
-//SECTION - CHECK
+
+
+class Task {
+    constructor(id, title, description, dueDate, priority, category, taskStateCategory) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.category = category;
+        this.taskStateCategory = taskStateCategory;
+    }
+}
+
+class Subtask {
+    constructor(id, title, taskChecked) {
+        this.id = id;
+        this.title = title;
+        this.taskChecked = taskChecked;
+    }
+}
+
+class ContactAssinged {
+    constructor(id, taskID, contactId) {
+        this.id = id;
+        this.taskID = taskID;
+        this.contactId = contactId;
+    }
+}
+
+class SubstaskToTask {
+    constructor(id, maintaskID, subTaskID) {
+        this.id = id;
+        this.maintaskID = maintaskID;
+        this.subTaskID = subTaskID;
+    }
+}

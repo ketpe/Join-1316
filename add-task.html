@@ -6,7 +6,7 @@
         </button>
     </header>
 
-    <form class="add-task-fields" method="post" onsubmit="addTaskFormSubmit(event)">
+    <form class="add-task-fields">
         <div class="a-t-f-i-container">
             <div class="a-t-f-i-left">
 
@@ -18,13 +18,13 @@
                 </div>
 
                 <label for="task-sescription">Description</label>
-                <textarea class="a-t-text-area" name="task-sescription" id="task-sescription"
+                <textarea class="a-t-text-area" name="task-description" id="task-description"
                     placeholder="Enter a Description"></textarea>
 
                 <Label for="task-due-date">Due date<span>*</span></Label>
 
                 <div class="date-field">
-                    <input class="a-t-input date-input" id="due-date-display" type="text" placeholder="dd/mm/yyyy"
+                    <input class="a-t-input date-input" id="due-date-display" type="text" placeholder="dd/mm/yyyy" name="dueDate"
                         inputmode="numeric" onblur="dateFieldOnChange()"
                         oninput="dateFieldOnChange()">
                     <input type="date" id="due-date-hidden" placeholder="Date" class="date-input-hidden"
@@ -154,7 +154,7 @@
                         <div role="img" title="Clear-Icon"></div>
                     </div>
                 </button>
-                <button id="createTaskButton" type="submit" class="btn btn-fill btn-create-task" disabled>
+                <button id="createTaskButton" type="submit" class="btn btn-fill btn-create-task" disabled onclick="addTaskCreateTask(event)">
                     <div>
                         <p>Create Task</p>
                         <div role="img" title="Check-Icon"></div>
