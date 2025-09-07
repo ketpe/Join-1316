@@ -17,6 +17,7 @@ async function onLoadAddTask() {
     await renderAddTaskWithNavAndHeader();
     changeAddTaskViewToStandard()
     await loadDataForAddTaskViewAndRenderView();
+
 }
 
 
@@ -46,7 +47,7 @@ function changeAddTaskViewToStandard() {
 async function loadDataForAddTaskViewAndRenderView() {
     await loadContactsAllFomDB();
     await loadCategoriesFromDB();
-    setNewPriority("media");
+    setNewPriority("Medium");
 
 }
 
@@ -94,7 +95,7 @@ function addTaskTitleOnInput() {
 }
 
 //NOTE - Validierung des Titels
-function taskTitleValidation(titleValue) {
+function taskTitleValidation(titleValue = "") {
     const cleanTitleValue = (titleValue ?? "").trim();
 
     if (cleanTitleValue.length > 3) {
@@ -106,7 +107,7 @@ function taskTitleValidation(titleValue) {
         showAndLeaveErrorBorder("task-title", true);
         currentTitle = "";
     }
-    addTaskCheckRequiredField();
+   
 }
 
 //NOTE - Generische Funktion zum Anzeigen / Ausblenden der Errormeldung
@@ -353,7 +354,7 @@ function addTaskPrioritySelect(button) {
     if (!button) { return; }
 
     const buttonName = button.getAttribute('name');
-    const isActiv = button.getAttribute('activ') == "true";
+    const isActiv = button.getAttribute('data-selected') == "true";
 
     if (currentPriority == buttonName && isActiv) {
         allPriortyButtonsReset();
@@ -361,7 +362,7 @@ function addTaskPrioritySelect(button) {
         setNewPriority(buttonName);
     }
 
-    addTaskCheckRequiredField();
+   
 
 }
 
@@ -372,7 +373,7 @@ function allPriortyButtonsReset() {
     const buttons = btnContainer.querySelectorAll('.btn');
 
     buttons.forEach((b) => {
-        b.setAttribute('activ', '');
+        b.setAttribute('data-selected', 'false');
         setButtonSytleNotActiv(b);
     });
 }
@@ -386,11 +387,11 @@ function setNewPriority(priority) {
     buttons.forEach((b) => {
 
         if (b.getAttribute('name') == priority) {
-            b.setAttribute('activ', 'true');
+            b.setAttribute('data-selected', 'true');
             setButtonStyleActiv(b);
 
         } else {
-            b.setAttribute('activ', '');
+            b.setAttribute('data-selected', 'false');
             setButtonSytleNotActiv(b);
         }
 
@@ -403,14 +404,14 @@ function setNewPriority(priority) {
 //NOTE - Einen Button auf ACTIV schalten -> dieser ist ausgewählt
 function setButtonStyleActiv(button) {
     if (!button) { return; }
-    button.classList.add(`prio-${button.getAttribute('name')}-selected`);
+    button.classList.add(`prio-${button.getAttribute('data-name')}-selected`);
     togglePrioButtonTextColor(button, "white");
 }
 
 //NOTE - Einen Button auf NICHT-ACTIV schalten -> dieser ist nicht ausgewählt
 function setButtonSytleNotActiv(button) {
     if (!button) { return; }
-    button.classList.remove(`prio-${button.getAttribute('name')}-selected`);
+    button.classList.remove(`prio-${button.getAttribute('data-name')}-selected`);
     togglePrioButtonTextColor(button, "black");
 }
 
@@ -539,7 +540,7 @@ function checkCategoryInputValue() {
         showAndLeaveErrorMessage('a-t-category-required', false);
         showAndLeaveErrorBorder('task-category', false);
     }
-    addTaskCheckRequiredField();
+   
 }
 //!SECTION Ende der Section Categorieauswahl
 
@@ -634,12 +635,13 @@ function safeChangesOnCurrentSelectedSubtask(subtaskID) {
 async function addTaskCreateTask(event) {
 
     if (event) event.preventDefault();
+    const addTaskFormData = new FormData(event.currentTarget);
 
     const currentTask = new Task(
         getNewUid(),
-        currentTitle,
-        document.getElementById('task-description').value,
-        currentDueDate,
+        addTaskFormData.get('task-title'),
+        addTaskFormData.get('task-description'),
+        addTaskFormData.get('due-date'),
         currentPriority,
         currentCategory['id'],
         "todo"
@@ -688,25 +690,37 @@ async function subtaskToTaskConnection(currentTask, subTaskArray, assignedContac
 async function addTaskCreateDBEntries(currentTask, subTaskArray, assignedContactArray, subtaskToTaskArray) {
     await putData(`/tasks/${currentTask.id}`, currentTask);
 
-    for(let subIndex = 0; subIndex < subTaskArray.length; subIndex++){
+    for (let subIndex = 0; subIndex < subTaskArray.length; subIndex++) {
         await putData(`/subTasks/${subTaskArray[subIndex].id}`, subTaskArray[subIndex]);
     }
 
-    for(let contactIndex = 0; contactIndex < assignedContactArray.length; contactIndex++){
+    for (let contactIndex = 0; contactIndex < assignedContactArray.length; contactIndex++) {
         await putData(`/taskContactAssigned/${assignedContactArray[contactIndex].id}`, assignedContactArray[contactIndex]);
     }
 
-    for(let subToTaskIndex = 0; subToTaskIndex < subtaskToTaskArray.length; subToTaskIndex++){
+    for (let subToTaskIndex = 0; subToTaskIndex < subtaskToTaskArray.length; subToTaskIndex++) {
         await putData(`/taskSubtask/${subtaskToTaskArray[subToTaskIndex].id}`, subtaskToTaskArray[subToTaskIndex]);
     }
 
     addTaskAfterSafe();
-    
+
 }
 
 function addTaskAfterSafe() {
-    //Dialog einblenden 
-    //Nach Zeit zurück zum Board
+    toggleDialogDiaplay();
+    const dialog = document.getElementById('add-task-safe-dialog');
+    dialog.classList.add('safe-dialog-show');
+    dialog.showModal();
+    setTimeout(function () {
+        dialog.close();
+        navigateToBord();
+    }, 1800);
+}
+
+
+
+function toggleDialogDiaplay() {
+    document.getElementById('add-task-safe-dialog').classList.toggle('visually-hidden');
 }
 
 function addTaskFormClear() {
@@ -714,11 +728,19 @@ function addTaskFormClear() {
 }
 
 
+function addTaskSubmitOnMouse() {
+    document.getElementById('task-title').blur();
+    document.getElementById('due-date-display').blur();
+    addTaskCheckRequiredField();
+
+}
+
 //!SECTION - FormEvent Ende
 
 //SECTION - CHECK
 
 function addTaskCheckRequiredField() {
+    
     let createButton = document.getElementById('createTaskButton');
 
     createButton.disabled =
@@ -733,38 +755,3 @@ function addTaskCheckRequiredField() {
 
 
 
-class Task {
-    constructor(id, title, description, dueDate, priority, category, taskStateCategory) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
-        this.category = category;
-        this.taskStateCategory = taskStateCategory;
-    }
-}
-
-class Subtask {
-    constructor(id, title, taskChecked) {
-        this.id = id;
-        this.title = title;
-        this.taskChecked = taskChecked;
-    }
-}
-
-class ContactAssinged {
-    constructor(id, taskID, contactId) {
-        this.id = id;
-        this.taskID = taskID;
-        this.contactId = contactId;
-    }
-}
-
-class SubstaskToTask {
-    constructor(id, maintaskID, subTaskID) {
-        this.id = id;
-        this.maintaskID = maintaskID;
-        this.subTaskID = subTaskID;
-    }
-}

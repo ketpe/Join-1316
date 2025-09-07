@@ -1,4 +1,4 @@
-<form id="add-task-form" class="">
+<form id="add-task-form" class="" action="/post" method="post" onsubmit="return addTaskCreateTask(event)">
     <header class="add-task-head">
         <h1 class="join-h1">Add Task</h1>
         <button id="a-t-dialog-close-btn" class="btn-overlay-close" type="button" onclick="addTaskDialogClose(event)">
@@ -6,13 +6,13 @@
         </button>
     </header>
 
-    <form class="add-task-fields">
+    <section class="add-task-fields">
         <div class="a-t-f-i-container">
             <div class="a-t-f-i-left">
 
                 <label for="task-title">Title<span>*</span></label>
                 <input class="a-t-input" id="task-title" name="task-title" type="text" placeholder="Enter a title"
-                    oninput="addTaskTitleOnInput()" onblur="addTaskTitleOnInput()">
+                    oninput="addTaskTitleOnInput()" onblur="taskTitleValidation(this.value)">
                 <div class="a-t-error-text-container">
                     <p id="a-t-title-required" class="error-text-hidden">This field is required</p>
                 </div>
@@ -24,7 +24,7 @@
                 <Label for="task-due-date">Due date<span>*</span></Label>
 
                 <div class="date-field">
-                    <input class="a-t-input date-input" id="due-date-display" type="text" placeholder="dd/mm/yyyy" name="dueDate"
+                    <input class="a-t-input date-input" id="due-date-display" type="text" placeholder="dd/mm/yyyy" name="due-date"
                         inputmode="numeric" onblur="dateFieldOnChange()"
                         oninput="dateFieldOnChange()">
                     <input type="date" id="due-date-hidden" placeholder="Date" class="date-input-hidden"
@@ -47,21 +47,21 @@
             <div class="a-t-f-i-right">
                 <label for="task-priority-button">Priority</label>
                 <div id="task-priority-button" class="a-t-priority-button-container">
-                    <button id="btn-priority-alta" class="btn btn-priority prio-alta" type="button" name="alta"
+                    <button id="btn-priority-alta" class="btn btn-priority prio-alta" type="button" name="Urgent" data-selected="false" data-name="alta"
                         onclick="addTaskPrioritySelect(this)">
                         <div>
                             <p>Urgent</p>
                             <div role="img" title="Urgent-Icon"></div>
                         </div>
                     </button>
-                    <button id="btn-priority-media" class="btn btn-priority prio-media" type="button" name="media"
+                    <button id="btn-priority-media" class="btn btn-priority prio-media" type="button" name="Medium" data-selected="false" data-name="media"
                         onclick="addTaskPrioritySelect(this)">
                         <div>
                             <p>Medium</p>
                             <div role="img" title="Medium-Icon"></div>
                         </div>
                     </button>
-                    <button id="btn-priority-baja" class="btn btn-priority prio-baja" type="button" name="baja"
+                    <button id="btn-priority-baja" class="btn btn-priority prio-baja" type="button" name="Low" data-selected="false" data-name="baja"
                         onclick="addTaskPrioritySelect(this)">
                         <div>
                             <p>Low</p>
@@ -154,7 +154,7 @@
                         <div role="img" title="Clear-Icon"></div>
                     </div>
                 </button>
-                <button id="createTaskButton" type="submit" class="btn btn-fill btn-create-task" disabled onclick="addTaskCreateTask(event)">
+                <button id="createTaskButton" type="submit" class="btn btn-fill btn-create-task" disabled onmouseover="addTaskSubmitOnMouse(this)">
                     <div>
                         <p>Create Task</p>
                         <div role="img" title="Check-Icon"></div>
@@ -162,7 +162,14 @@
                 </button>
             </div>
         </footer>
-    </form>
+    </section>
+
+    <dialog id="add-task-safe-dialog" class="add-task-safe-dialog visually-hidden">
+        <div>
+            <p>Task added to board</p>
+            <div role="img" title="board icon"></div>
+        </div>
+    </dialog>
 
 
 </form>
