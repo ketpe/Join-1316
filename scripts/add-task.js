@@ -48,7 +48,8 @@ async function loadDataForAddTaskViewAndRenderView() {
     await loadContactsAllFomDB();
     await loadCategoriesFromDB();
     setNewPriority("Medium");
-
+   
+    
 }
 
 //NOTE - Lade alle Kontakte aus der DB in das Array
@@ -647,64 +648,12 @@ async function addTaskCreateTask(event) {
         "todo"
     );
 
-    await addTaskCreateSubtaskArray(currentTask);
-
-}
-
-//Wenn Subtasks vorhanden sind diese hier als Array erstellen
-async function addTaskCreateSubtaskArray(currentTask) {
-    let subTaskArray = [];
-    for (let i = 0; i < currentSubTasks.length; i++) {
-        subTaskArray.push(new Subtask(getNewUid(), currentSubTasks[i]['title'], false));
-    }
-    await addTaskContactAssinged(currentTask, subTaskArray);
-}
-
-//Kontake, auch den eigenen, mit dem Task verbinden
-//TODO - Den aktuellen Kontakt aus der Session auslesen
-async function addTaskContactAssinged(currentTask, subTaskArray) {
-
-    let newContactAssignedArray = [];
-
-    newContactAssignedArray.push(new ContactAssinged(getNewUid(), currentTask.id, contacktIDTest));
-
-    for (let i = 0; i < currentContactAssignList.length; i++) {
-        newContactAssignedArray.push(new ContactAssinged(getNewUid(), currentTask.id, currentContactAssignList[i]['id']));
-    }
-
-    await subtaskToTaskConnection(currentTask, subTaskArray, newContactAssignedArray);
-}
-
-//Die Substasks mit dem Task verbinden
-async function subtaskToTaskConnection(currentTask, subTaskArray, assignedContactArray) {
-    let subtaskToTaskArray = [];
-
-    for (let i = 0; i < subTaskArray.length; i++) {
-        subtaskToTaskArray.push(new SubstaskToTask(getNewUid(), currentTask.id, subTaskArray[i]['id']));
-    }
-
-    await addTaskCreateDBEntries(currentTask, subTaskArray, assignedContactArray, subtaskToTaskArray)
-}
-
-//Alle gesammelten Daten in die DB Schreiben
-async function addTaskCreateDBEntries(currentTask, subTaskArray, assignedContactArray, subtaskToTaskArray) {
-    await putData(`/tasks/${currentTask.id}`, currentTask);
-
-    for (let subIndex = 0; subIndex < subTaskArray.length; subIndex++) {
-        await putData(`/subTasks/${subTaskArray[subIndex].id}`, subTaskArray[subIndex]);
-    }
-
-    for (let contactIndex = 0; contactIndex < assignedContactArray.length; contactIndex++) {
-        await putData(`/taskContactAssigned/${assignedContactArray[contactIndex].id}`, assignedContactArray[contactIndex]);
-    }
-
-    for (let subToTaskIndex = 0; subToTaskIndex < subtaskToTaskArray.length; subToTaskIndex++) {
-        await putData(`/taskSubtask/${subtaskToTaskArray[subToTaskIndex].id}`, subtaskToTaskArray[subToTaskIndex]);
-    }
-
+    const createNewTask = new CreateNewTask(currentTask, currentSubTasks, currentContactAssignList);
+    await createNewTask.start();
     addTaskAfterSafe();
 
 }
+
 
 function addTaskAfterSafe() {
     toggleDialogDiaplay();
@@ -752,6 +701,9 @@ function addTaskCheckRequiredField() {
 }
 
 //!SECTION - Check Ende
+
+// Macht die Hauptfunktion global verfügbar für das HTML
+/* window.onLoadAddTask = onLoadAddTask; */
 
 
 

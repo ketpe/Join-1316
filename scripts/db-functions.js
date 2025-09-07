@@ -197,6 +197,7 @@ class Task {
         this.category = category;
         this.taskStateCategory = taskStateCategory;
     }
+
 }
 
 class Subtask {
