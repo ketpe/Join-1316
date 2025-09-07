@@ -639,16 +639,13 @@ function addTaskFormClear() {
 
 function addTaskCheckRequiredField() {
     let createButton = document.getElementById('createTaskButton');
-    if(currentDueDate.length > 0 && currentTitle.length > 0 && currentPrioity.length > 0 && currentCategory.hasOwnProperty("title")){
-        createButton.disabled = false;
-        console.log("Alles ausgefüllt.");
-        
-    }else{
-        createButton.disabled = true;
-        console.log("leider nicht.");
-    }
-   
-    
+
+    createButton.disabled = 
+        currentDueDate.length > 0 && 
+        currentTitle.length > 0 && 
+        currentPrioity.length > 0 && 
+        currentCategory.hasOwnProperty("title") ? true : false;
+
 }
 
 
