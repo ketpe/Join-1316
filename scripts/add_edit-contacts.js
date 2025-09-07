@@ -7,6 +7,10 @@ async function newContact(event) {
     console.log(contact);
 }
 
+/*TODO - Kontakte selektieren bei Neuerstellung*/
+/*TODO - Btn muss bei Fehler deaktiviert werden*/
+/*TODO - Formular action übernehmen aus addTask*/
+
 function createContactObject(uid) {
     const { firstname, lastname, email, phone } = getContactFormData();
     return {
