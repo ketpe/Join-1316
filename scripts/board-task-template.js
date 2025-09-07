@@ -1,6 +1,6 @@
 
 
-function boardTasksTemplate(task) {
+function boardTasksTemplate(task, rendererdContacts) {
     return `<div class="kanban-task" draggable="true" id="${task.id}" ondragstart="startDrag(event, this)" ondragend="endDrag(this)">
         <div class="board-task-content">
             <div class="board-task-head-category ${task.categoryData.categoryColor}">
@@ -14,31 +14,31 @@ function boardTasksTemplate(task) {
             </div>
             <div class="board-task-progress">
                 <label for="sub-task-progress"></label>
-                <progress class="sub-task-progressbar" id="sub-task-progress" value="${task.countTrueSubtasks}" max="2"
+                <progress class="sub-task-progressbar" id="sub-task-progress" value="${task.countTrueSubtasks}" max="${task.subTasks.length}"
                     aria-describedby="progress-value">${task.countTrueSubtasks}</progress>
-                <output class="progress-value-Text" id="progress-value">${task.countTrueSubtasks}/Subtasks</output>
+                <output class="progress-value-Text" id="progress-value">${task.countTrueSubtasks}/${task.subTasks.length} Subtasks</output>
             </div>
             <div class="board-task-assigned-priority">
-                ${renderAssignedContacts(task.assignedContacts)}
+                ${rendererdContacts}
                 <div class="board-task-priority">
-                    <div role="img" aria-label="Priority: " class="priority-icon-${task.priority}"></div>
+                    <div role="img" aria-label="Priority:${task.priority} " class="priority-icon-${task.priority}"></div>
                 </div>
             </div>
         </div>
     </div>`
 }
 
-function boardTaskEmptyTemplate() {
+function boardTaskEmptyTemplate(category) {
     return `<div class="kanban-task-empty visually-hidden" >
-                                    <p>No Task To Do</p>
+                                    <p>No Task ${category}</p>
                                 </div>`
 }
 
 function getAllAssignedContactsTemplate(assignedContacts) {
     return `<div class="board-task-assigned" id="${assignedContacts.id}">
                     <div class="assigned-contact-board">
-                        <div class="contact-initials-board${assignedContacts.initialColor}">
-                            <p class="board-contact-initials-text">${assignedContacts.initials}</p>
+                        <div class="contact-initials-board assigned-contact-pos ${assignedContacts.initialColor}">
+                            <p class="board-contact-initials-text">${assignedContacts.initial}</p>
                         </div>
                     </div>
                 </div>`

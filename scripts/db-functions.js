@@ -122,36 +122,61 @@ async function updateData(path = "", data = {}) {
 
     return await response.json();
 }
-// Kann Task erzeugen
-// async function createTaskTest() {
-//     let newTask = {
-//         'id': getNewUid(),
-//         'title': 'Kochwelt Page & Recipe Recommender',
-//         'description': 'Build start page with recipe recommendation.',
-//         'dueDate': '10/05/2025',
-//         'priority': 'Medium',
-//         'category': '41f159bf-1703-4ff5-a80d-d397aaf99ec3',
-//         'taskStateCategory': 'inprogress'
-//     }
-//     let subTask = {
-//         'id': getNewUid(),
-//         'title': 'Implement Recipe Recommendation',
-//         'taskChecked': false
-//     }
-//     let taskContactAssinged = {
-//         'id': getNewUid(),
-//         'taskID': newTask['id'],
-//         'contactId': '4571a939-6baa-434c-8d9e-9b96ee8c32b6'
-//     };
-//     let taskSubtask = {
-//         'id': getNewUid(),
-//         'maintaskID': newTask['id'],
-//         'subTaskID': subTask['id']
-//     };
-//     await putData(`/tasks/${newTask.id}`, newTask);
-//     await putData(`/subTasks/${subTask.id}`, subTask);
-//     await putData(`/taskContactAssigned/${taskContactAssinged.id}`, taskContactAssinged);
-//     await putData(`/taskSubtask/${taskSubtask.id}`, taskSubtask);
+/*NOTE - Erzeugt Test Task*/
+async function createTaskTest() {
+    let newTask = {
+        'id': getNewUid(),
+        'title': 'Kochwelt Page & Recipe Recommender',
+        'description': 'Build start page with recipe recommendation.',
+        'dueDate': '10/05/2025',
+        'priority': 'Urgent',
+        'category': '825f2fb0-61c3-4b5c-8b76-dcdaef80c809',
+        'taskStateCategory': 'toDo'
+    }
+    let subTask = {
+        'id': getNewUid(),
+        'title': 'Implement Recipe Recommendation',
+        'taskChecked': false
+    }
+    let taskContactAssinged = {
+        'id': getNewUid(),
+        'taskID': newTask['id'],
+        'contactId': '3ed92f09-67a6-45e0-a3df-7fc34a71c4f1'
+    };
+    let taskSubtask = {
+        'id': getNewUid(),
+        'maintaskID': newTask['id'],
+        'subTaskID': subTask['id']
+    };
+    await putData(`/tasks/${newTask.id}`, newTask);
+    await putData(`/subTasks/${subTask.id}`, subTask);
+    await putData(`/taskContactAssigned/${taskContactAssinged.id}`, taskContactAssinged);
+    await putData(`/taskSubtask/${taskSubtask.id}`, taskSubtask);
 
-// }
+}
+/*NOTE - Erzeugt Test Subtask*/
+async function createSubTaskTest(titeltest, checkstatus, IDfromMaintask) {
 
+    let subTask = {
+        'id': getNewUid(),
+        'title': titeltest,
+        'taskChecked': checkstatus
+    }
+
+    let taskSubtask = {
+        'id': getNewUid(),
+        'maintaskID': IDfromMaintask,
+        'subTaskID': subTask['id']
+    };
+    await putData(`/subTasks/${subTask.id}`, subTask);
+    await putData(`/taskSubtask/${taskSubtask.id}`, taskSubtask);
+}
+/*NOTE - Erzeugt Test Assigned Contact*/
+async function createAssignedContactTest(idForTask, idforContact) {
+    let taskContactAssinged = {
+        'id': getNewUid(),
+        'taskID': idForTask,
+        'contactId': idforContact
+    };
+    await putData(`/taskContactAssigned/${taskContactAssinged.id}`, taskContactAssinged);
+}

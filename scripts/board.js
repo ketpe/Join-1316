@@ -5,21 +5,20 @@ async function getBoardTasks() {
     tasks = await getDatabaseTaskSubtasks(tasks);
     tasks = await getDatabaseTaskContact(tasks);
     console.log(tasks);
-    console.log(taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
+    addLeftPositionStyleassignedContacts();
 }
 
 function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone) {
     tasks.forEach(task => {
-        console.log(task);
-        task.taskStateCategory === 'todo' ? taskToDo.innerHTML += boardTasksTemplate(task) :
-            task.taskStateCategory === 'inprogress' ? taskInProgress.innerHTML += boardTasksTemplate(task) :
-                task.taskStateCategory === 'awaiting' ? taskAwaitingFeedback.innerHTML += boardTasksTemplate(task) :
-                    task.taskStateCategory === 'done' ? taskDone.innerHTML += boardTasksTemplate(task) : '';
+        let renderedContacts = '';
+        renderedContacts = renderAssignedContacts(task.assignedContacts);
+        task.taskStateCategory === 'todo' ? taskToDo.innerHTML += boardTasksTemplate(task, renderedContacts) :
+            task.taskStateCategory === 'inprogress' ? taskInProgress.innerHTML += boardTasksTemplate(task, renderedContacts) :
+                task.taskStateCategory === 'awaiting' ? taskAwaitingFeedback.innerHTML += boardTasksTemplate(task, renderedContacts) :
+                    task.taskStateCategory === 'done' ? taskDone.innerHTML += boardTasksTemplate(task, renderedContacts) : '';
     })
     let taskElements = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone]
-    console.log(taskElements);
-
     toggleNoTaskVisible(taskElements);
 }
 
@@ -28,7 +27,7 @@ function getHtmlTasksContent() {
 
     TaskContentElements.forEach(tE => { if (tE) tE.innerHTML = ""; });
     TaskContentElements.forEach(tE => {
-        if (tE) tE.innerHTML = boardTaskEmptyTemplate();
+        if (tE) tE.innerHTML = boardTaskEmptyTemplate(tE.dataset.category);
     })
     return { TaskContentElements };
 }
@@ -45,11 +44,13 @@ async function getDatabaseTaskSubtasks(tasks) {
     let getAllTaskSubtasks = await getAllData('taskSubtask');
     let getAllSubtasks = await getAllData('subTasks');
     tasks.forEach(task => {
-        let taskSubTasks = getAllTaskSubtasks.filter(obj => obj.maintaskID === task.id)
+        let taskSubTasks = getAllTaskSubtasks.filter(obj => obj.maintaskID === task.id);
+        let subTasks = [];
         taskSubTasks.forEach(taskSubTask => {
-            let subTasks = getAllSubtasks.filter(obj => obj.id === taskSubTask.subTaskID);
-            task.subTasks = subTasks;
-        })
+            let foundSubTask = getAllSubtasks.find(obj => obj.id === taskSubTask.subTaskID);
+            if (foundSubTask) subTasks.push(foundSubTask);
+        });
+        task.subTasks = subTasks;
     });
     tasks = getSubTaskSumOfTrue(tasks);
     return tasks;
@@ -58,7 +59,7 @@ async function getDatabaseTaskSubtasks(tasks) {
 function getSubTaskSumOfTrue(tasks) {
     tasks.forEach(task => {
         if (Array.isArray(task.subTasks)) {
-            task.countTrueSubtasks = task.subTasks.filter(sT => sT === true).length;
+            task.countTrueSubtasks = task.subTasks.filter(sT => sT.taskChecked === true).length;
         } else {
             task.countTrueSubtasks = 0;
         }
@@ -71,22 +72,27 @@ async function getDatabaseTaskContact(tasks) {
     let getAllContacts = await getAllData('contacts');
 
     tasks.forEach(task => {
+        console.log(task);
         let assignedContacts = getAllAssignedContacts.filter(obj => obj.taskID === task.id)
+        let contacts = [];
         assignedContacts.forEach(assContact => {
-            let contact = getAllContacts.filter(obj => obj.id === assContact.contatactId)
-            task.assignedContacts = contact;
+            let contact = getAllContacts.filter(obj => obj.id === assContact.contactId)
+            if (contact) contacts.push(contact);
+
         })
+        task.assignedContacts = contacts;
     })
     return tasks;
 }
 
 function renderAssignedContacts(assignedContacts) {
     let assignedContactsTemplate = '';
-    assignedContacts.forEach(contacts => {
-        let contact = getAllAssignedContactsTemplate(contacts);
-        assignedContactsTemplate += contact;
-    })
-    return assignedContactsTemplate
+    assignedContacts.forEach(contactArr => {
+        contactArr.forEach(contact => {
+            assignedContactsTemplate += getAllAssignedContactsTemplate(contact);
+        });
+    });
+    return assignedContactsTemplate;
 }
 
 function toggleSubtaskCheckbox(element) {
@@ -114,4 +120,14 @@ function getBoardTaskref() {
     taskDone = document.getElementById("kanban-tasks-done");
     TaskContentElements = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
     return TaskContentElements;
+}
+
+function addLeftPositionStyleassignedContacts() {
+    const taskCards = document.querySelectorAll('.board-task-content');
+    taskCards.forEach(card => {
+        const contacts = card.querySelectorAll('.assigned-contact-pos');
+        contacts.forEach((contact, i) => {
+            contact.style.left = `calc(${i * 25}px)`;
+        });
+    });
 }

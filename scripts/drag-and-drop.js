@@ -10,8 +10,6 @@ function startDrag(event, task) {
 function endDrag(task) {
     task.classList.remove('dragging');
     draggedTask = null;
-    console.log(task);
-
 }
 
 function dropTask(event, column) {

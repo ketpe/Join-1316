@@ -29,7 +29,6 @@
     gap: 10px;
 
     p {
-
         font-family: Inter;
         font-weight: 400;
         font-style: Regular;
@@ -96,26 +95,26 @@
     }
 }
 
-.priority-icon-low,
-.priority-icon-medium,
-.priority-icon-urgent {
+.priority-icon-Low,
+.priority-icon-Medium,
+.priority-icon-Urgent {
     width: 17px;
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.priority-icon-urgent {
+.priority-icon-Urgent {
     height: 12px;
     background-image: url('../assets/prio-alta-red.svg');
 
 }
 
-.priority-icon-medium {
+.priority-icon-Medium {
     height: 6.33px;
     background-image: url('../assets/prio-media-default.svg');
 }
 
-.priority-icon-low {
+.priority-icon-Low {
     height: 12px;
     background-image: url('../assets/prio-alta-red.svg');
 }
