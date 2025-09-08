@@ -5,13 +5,24 @@ async function init() {
         includeHtml("navbar", "navbar-desktop.html"),
         includeHtml("header", "header-desktop.html")
     ]);
+    renderUserInitial();
+}
 
+async function renderUserInitial() {
+    let logInStatus = sessionStorage.getItem('logInStatus');
+    let userinitial = "G";
+    if (logInStatus !== "0") {
+        let userinitialRef = await getDataByKey('id', logInStatus, 'contacts');
+        userinitial = userinitialRef.initial;
+    }
+    let renderUserInitialRef = document.getElementById("user-initial-render");
+    renderUserInitialRef.textContent = userinitial;
 }
 
 
 /* function includeHtml(target, file) {
     let element = document.getElementById(target);
-
+ 
     if (file) {
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
@@ -25,7 +36,7 @@ async function init() {
         };
         xhr.open("GET", file, true);
         xhr.send();
-
+ 
        
     }
 } */

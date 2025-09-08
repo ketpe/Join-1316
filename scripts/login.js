@@ -9,16 +9,16 @@ function loginForm(event) {
 async function checkLogin(email, password) {
     let logInUser = await getDataByKey("email", email, "contacts");
     if (logInUser && logInUser.password === password && logInUser.email === email) {
-        logStatus(logInUser.id);
+        setLogStatus(logInUser.id);
         navigateToSummary();
-
     } else {
-        logStatus('0');
+        setLogStatus('0');
         location.reload();
     }
 };
 
 function loginGuest() {
-    logStatus('0');
+    setLogStatus('0');
     navigateToSummary();
 };
+

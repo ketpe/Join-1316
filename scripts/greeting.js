@@ -1,5 +1,5 @@
 function renderGreetings() {
-    let logInStatus = sessionStorage.getItem("logInStatus");
+    let logInStatus = sessionStorage.getItem('logInStatus');
     renderGreetingTime(logInStatus);
     renderGreetingName(logInStatus);
 };

@@ -17,7 +17,7 @@ async function onLoadAddTask() {
     await renderAddTaskWithNavAndHeader();
     changeAddTaskViewToStandard()
     await loadDataForAddTaskViewAndRenderView();
-
+    renderUserInitial();
 }
 
 
@@ -48,8 +48,8 @@ async function loadDataForAddTaskViewAndRenderView() {
     await loadContactsAllFomDB();
     await loadCategoriesFromDB();
     setNewPriority("Medium");
-   
-    
+
+
 }
 
 //NOTE - Lade alle Kontakte aus der DB in das Array
@@ -108,7 +108,7 @@ function taskTitleValidation(titleValue = "") {
         showAndLeaveErrorBorder("task-title", true);
         currentTitle = "";
     }
-   
+
 }
 
 //NOTE - Generische Funktion zum Anzeigen / Ausblenden der Errormeldung
@@ -363,7 +363,7 @@ function addTaskPrioritySelect(button) {
         setNewPriority(buttonName);
     }
 
-   
+
 
 }
 
@@ -541,7 +541,7 @@ function checkCategoryInputValue() {
         showAndLeaveErrorMessage('a-t-category-required', false);
         showAndLeaveErrorBorder('task-category', false);
     }
-   
+
 }
 //!SECTION Ende der Section Categorieauswahl
 
@@ -689,7 +689,7 @@ function addTaskSubmitOnMouse() {
 //SECTION - CHECK
 
 function addTaskCheckRequiredField() {
-    
+
     let createButton = document.getElementById('createTaskButton');
 
     createButton.disabled =
