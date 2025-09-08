@@ -1,7 +1,7 @@
 
 
 function boardTasksTemplate(task, rendererdContacts) {
-    return `<div class="kanban-task" draggable="true" id="${task.id}" ondragstart="startDrag(event, this)" ondragend="endDrag(this)">
+    return `<div class="kanban-task" draggable="true" id="${task.id}" ondragstart="startDrag(event, this)" ondragend="endDrag(this)" onclick="openDialog('detail-view-task-dialog', () => renderDetailViewTemplate('${task.id}'))">
         <div class="board-task-content">
             <div class="board-task-head-category ${task.categoryData.categoryColor}">
                 <p>${task.categoryData.title}</p>

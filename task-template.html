@@ -1,98 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="./styles/task-template.css"> -->
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./styles/task-template.css">
-    <link rel="stylesheet" href="./styles/board-desktop.css">
-    <title>Document</title>
-</head>
-
-<body>
-    <div class="task-section" draggable="true" id="task1" ondragstart="startDrag(event, this)"
-        ondragend="endDrag(this)">
-        <header class="task-header">
-            <div class="left-header blue">
-                <p>User Story</p>
+<div class="task-section" id="task-section">
+    <header class="task-header">
+        <div id="left-header" class="left-header"> <!-- addclass -->
+            <p id="user-story">User Story</p>
+        </div>
+        <button onclick="closeDialog(event)" class="btn-overlay-close" id="btn-overlay-close-contacts" type="button">
+            <div id="btn-overlay-close-div" role="img" title="Close dialog icon"></div>
+        </button>
+    </header>
+    <main class="task-main">
+        <p id="task-title" class="task-title">Kochwelt Page & Recipe Recommender</p>
+        <p id="task-description" class="task-description">Build start page with recipe recommendation.</p>
+        <table class="task-details-table">
+            <thead>
+                <tr class="task-due-date-section">
+                    <td class="task-due-date-label">Due Date:</td>
+                    <td id="due-date" class="task-due-date">10/05/2025</td>
+                </tr>
+                <tr class="task-priority-section">
+                    <td class="task-priority-label">Priority:</td>
+                    <td class="task-priority">
+                        <div class="priority-indicator">
+                            <p id="priority-text">Urgent</p>
+                            <div role="img" class="priority-icon-urgent"></div>
+                        </div>
+                    </td>
+                </tr>
+        </table>
+        <p class="assigned-contact-label">Assigned To:</p>
+        <ul class="assigned-contact" id="contact-list">
+            <li class="assigned-contact-item" id="assigned-contact-items">
+                <!-- add Assigned Contacts here -->
+            </li>
+        </ul>
+        <section class="task-subtask">
+            <p id="subtask-title">Subtasks</p>
+            <div class="subtask-content">
+                <button onclick="toggleSubtaskCheckbox(this)" type="button" id="btn-subtask"
+                    class="checkbox-btn checkbox-btn-default"></button>
+                <span id="subtask-text" class="subtask-text">Implement Recipe Recommendation</span>
             </div>
-            <button onclick="addContactDialogClose(event)" class="btn-overlay-close" id="btn-overlay-close-contacts"
-                type="button">
-                <div id="btn-overlay-close-div" role="img" title="Close dialog icon"></div>
+        </section>
+        <div class="task-detailview-actions">
+            <button onclick="onDeleteContact(event,this)" id="${cd.id}" class="btn-task-action btn-task-delete">
+                <div class="action-icons action-delete-icon"></div>
+                <p>Delete</p>
             </button>
-        </header>
-        <main class="task-main">
-            <p class="task-title">Kochwelt Page & Recipe Recommender</p>
-            <p class="task-description">Build start page with recipe recommendation.</p>
-            <table class="task-details-table">
-                <thead>
-                    <tr class="task-due-date-section">
-                        <td class="task-due-date-label">Due Date:</td>
-                        <td class="task-due-date">10/05/2025</td>
-                    </tr>
-                    <tr class="task-priority-section">
-                        <td class="task-priority-label">Priority:</td>
-                        <td class="task-priority">
-                            <div class="priority-indicator">
-                                <p>Urgent</p>
-                                <div role="img" class="priority-icon-urgent"></div>
-                            </div>
-                        </td>
-                    </tr>
-            </table>
-            <p class="assigned-contact-label">Assigned To:</p>
-            <ul class="assigned-contact" id="contact-list">
-                <li class="assigned-contact-item">
-                    <div class="contact-initials blue">
-                        <p class="contact-initials-text">PK</p>
-                    </div>
-                    <div class="contact-info">
-                        <div class="contact-name">Peter Ketterlinus</div>
+            <div class="vertical-seperator"></div>
+            <button onclick="DialogOpen('${cd.id}')" class="btn-task-action btn-task-edit">
+                <div class="action-icons action-edit-icon"></div>
+                <p>Edit</p>
+            </button>
+        </div>
+    </main>
+</div>
 
-                    </div>
-                </li>
-                <li class="assigned-contact-item">
-                    <div class="contact-initials red">
-                        <p class="contact-initials-text">PK</p>
-                    </div>
-                    <div class="contact-info">
-                        <div class="contact-name">Peter Ketterlinus</div>
-                    </div>
-                </li>
-            </ul>
-            <section class="task-subtask">
-                <p>Subtasks</p>
-                <div class="subtask-content">
-                    <button onclick="toggleSubtaskCheckbox(this)" type="button" id="subtask"
-                        class="checkbox-btn checkbox-btn-default"></button>
-                    <span class="subtask-text">Implement Recipe Recommendation</span>
-                </div>
-            </section>
-            <div class="task-detailview-actions">
-                <button onclick="onDeleteContact(event,this)" id="${cd.id}" class="btn-task-action btn-task-delete">
-                    <div class="action-icons action-delete-icon"></div>
-                    <p>Delete</p>
-                </button>
-                <div class="vertical-seperator"></div>
-                <button onclick="DialogOpen('${cd.id}')" class="btn-task-action btn-task-edit">
-                    <div class="action-icons action-edit-icon"></div>
-                    <p>Edit</p>
-                </button>
-                <button onclick="createTaskTest()" class="btn-task-action btn-task-edit">
-                    <div class="action-icons action-edit-icon"></div>
-                    <p>TEST</p>
-                </button>
-            </div>
-        </main>
-    </div>
-
-</body>
+<!-- </body>
 <script src="app.js"></script>
 <script src="./scripts/task-template.js"></script>
 <script src="./scripts/open-close-dialogs.js"></script>
 <script src="./scripts/db-functions.js"></script>
 <script src="./scripts/drag-and-drop.js"></script>
 
-</html>
+</html> -->
