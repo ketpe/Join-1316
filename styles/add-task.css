@@ -45,7 +45,7 @@
 }
 
 
-label {
+label, legend {
     font-family: 'Inter';
     font-size: 20px;
     font-weight: 400;
@@ -118,6 +118,13 @@ span {
     align-items: center;
     margin-bottom: 24px;
     margin-top: 12px;
+    margin-inline: 0;
+    border-width: 0;
+    border-style: none;
+    border-color: transparent;
+    border-image: initial;
+    padding-block: 0;
+    padding-inline: 0;
 }
 
 
