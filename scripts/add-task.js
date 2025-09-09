@@ -792,7 +792,7 @@ async function addTaskCreateTask(event) {
         "todo"
     );
 
-    const createNewTask = new CreateNewTask(currentTask, currentSubTasks, currentContactAssignList);
+    const createNewTask = new CreateNewTask(currentTask, currentSubTasks, currentContactAssignList, currentUser);
     await createNewTask.start();
     addTaskAfterSafe(event.currentTarget.classList[0] == "add-task-form-dialog");
 }
