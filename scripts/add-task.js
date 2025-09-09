@@ -16,7 +16,7 @@ async function onLoadAddTask() {
     await renderAddTaskWithNavAndHeader();
     changeAddTaskViewToStandard();
     await loadDataForAddTaskViewAndRenderView();
-    
+
 }
 
 async function renderAddTaskWithNavAndHeader() {
@@ -41,11 +41,11 @@ function changeAddTaskViewToStandard() {
 
 
 //NOTE - Startfunktion 1. Kontakte laden
-async function loadDataForAddTaskViewAndRenderView() {
+async function loadDataForAddTaskViewAndRenderView(fromDialog = false) {
     await loadContactsAllFomDB();
     await loadCategoriesFromDB();
     setNewPriority("Medium");
-    renderUserInitial();
+    fromDialog == false ? renderUserInitial() : "";
     currentUser = addTaskUtils.readCurrentUserID();
     isGuest = addTaskUtils.isCurrentUserGuest();
 }
@@ -331,7 +331,7 @@ function contactButtonOnListSelect(currentContactBtn) {
     const contactID = currentContactBtn.getAttribute('id');
     if (!addTaskUtils.checkIfContactAvailable(contactID, contactAllListFromDB)) { return; }
 
-    currentContactBtn.getAttribute('data-active') == "true" ? 
+    currentContactBtn.getAttribute('data-active') == "true" ?
         checkOutContact(currentContactBtn, contactID) : checkInContact(currentContactBtn, contactID);
 
 }
@@ -592,7 +592,6 @@ async function addTaskCreateTask(event) {
 
     if (event) event.preventDefault();
     const addTaskFormData = new FormData(event.currentTarget);
-
     const currentTask = new Task(
         getNewUid(),
         addTaskFormData.get('task-title'),
@@ -605,22 +604,31 @@ async function addTaskCreateTask(event) {
 
     const createNewTask = new CreateNewTask(currentTask, currentSubTasks, currentContactAssignList);
     await createNewTask.start();
-    addTaskAfterSafe();
-
+    addTaskAfterSafe(event.currentTarget.classList[0] == "add-task-form-dialog");
 }
 
 
-function addTaskAfterSafe() {
+function addTaskAfterSafe(fromDialog = false) {
     toggleDialogDisplay();
     const dialog = document.getElementById('add-task-safe-dialog');
     dialog.classList.add('safe-dialog-show');
     dialog.showModal();
     setTimeout(function () {
         dialog.close();
-        navigateToBord();
+        navigateToBoardAfterDialog(fromDialog);
     }, 1800);
 }
 
+function navigateToBoardAfterDialog(fromDialog = false) {
+    if(fromDialog == true){
+        closeDialog('add-task-dialog');
+        setTimeout(function() {
+            navigateToBord();
+        }, 1000)
+    }else{
+        navigateToBord();
+    }
+}
 
 
 function toggleDialogDisplay() {

@@ -12,6 +12,11 @@ body {
     color: black;
 }
 
+.join-h1-dialog {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
 .join-h2 {
     font-family: 'Inter';
     font-size: 27px;
@@ -45,29 +50,39 @@ a {
 }
 
 /**TODO - Am Ende anpassen */
-.dialog-show{
+.dialog-show {
     animation: slide-Dialog-in 1000ms ease-in-out forwards;
 }
 
-.dialog-hide{
+.dialog-hide {
     animation: slide-Dialog-out 1000ms ease-in-out forwards;
 }
 
 
-#dialog-content{
+#dialog-content {
     padding: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
 }
 
 @keyframes slide-Dialog-in {
-  from { transform: translateX(150%); }
-  to   { transform: translateX(0%); }
+    from {
+        transform: translateX(150%);
+    }
+
+    to {
+        transform: translateX(0%);
+    }
 }
 
 @keyframes slide-Dialog-out {
-  from { transform: translateX(0%); }
-  to   { transform: translateX(150%); }
+    from {
+        transform: translateX(0%);
+    }
+
+    to {
+        transform: translateX(150%);
+    }
 }
