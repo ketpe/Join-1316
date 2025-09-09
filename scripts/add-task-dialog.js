@@ -4,7 +4,7 @@ async function onAddTaskDialogOpen() {
     document.getElementById('add-task-dialog').showModal();
     await renderAddTaskIntoDialog();
     changeAddTaskViewToDialog();
-    await loadDataForAddTaskViewAndRenderView(true);
+    await loadDataForAddTask(true);
 }
 
 function addTaskDialogClose(event) {

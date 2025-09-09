@@ -46,6 +46,6 @@ function navigateToAddTask() {
     window.location.href = './add-task-desktop.html';
 }
 
-function navigateToBord() {
+function navigateToBoard() {
     window.location.href = './board-desktop.html';
 }

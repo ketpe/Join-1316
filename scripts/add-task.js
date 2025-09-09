@@ -12,13 +12,18 @@ let currentUser = "";
 let isGuest = false;
 let addTaskUtils = new AddTaskUtils();
 
+/**
+ * Initializes the Add Task view by rendering necessary components and loading data.
+ */
 async function onLoadAddTask() {
     await renderAddTaskWithNavAndHeader();
     changeAddTaskViewToStandard();
-    await loadDataForAddTaskViewAndRenderView();
-
+    await loadDataForAddTask();
 }
 
+/**
+ * Render the Add Task view along with the navigation bar and header.
+ */
 async function renderAddTaskWithNavAndHeader() {
 
     await Promise.all([
@@ -29,6 +34,9 @@ async function renderAddTaskWithNavAndHeader() {
 
 }
 
+/**
+ * Changes the Add Task view to standard (non-dialog) mode by adjusting classes and attributes.
+ */
 function changeAddTaskViewToStandard() {
     document.getElementById('a-t-dialog-close-btn').classList.add('display-hidden');
     document.getElementById('a-t-cancel-btn').classList.add('display-hidden');
@@ -40,9 +48,12 @@ function changeAddTaskViewToStandard() {
 }
 
 
-//NOTE - Startfunktion 1. Kontakte laden
-async function loadDataForAddTaskViewAndRenderView(fromDialog = false) {
-    await loadContactsAllFomDB();
+/**
+ * Loads necessary data for the Add Task view, including contacts and categories.
+ * @param {boolean} fromDialog - Indicates if the view is loaded from a dialog.
+ */
+async function loadDataForAddTask(fromDialog = false) {
+    await loadContactsAllFromDB();
     await loadCategoriesFromDB();
     setNewPriority("Medium");
     fromDialog == false ? renderUserInitial() : "";
@@ -50,21 +61,32 @@ async function loadDataForAddTaskViewAndRenderView(fromDialog = false) {
     isGuest = addTaskUtils.isCurrentUserGuest();
 }
 
-//NOTE - Lade alle Kontakte aus der DB in das Array
-async function loadContactsAllFomDB() {
+/**
+ * Loads all contacts from the database and sorts them.
+ * Utilizes the getSortedContact function from db-functions.js.
+ */
+async function loadContactsAllFromDB() {
     contactAllListFromDB = await getSortedContact()
 }
 
-
+/**
+ * Loads categories from the database.
+ * Utilizes the getAllData function from db-functions.js.
+ */
 async function loadCategoriesFromDB() {
     categories = await getAllData("categories");
 }
 
-//NOTE - Generische Funktion zum Anzeigen / Ausblenden der Errormeldung
-function showAndLeaveErrorMessage(messageTarget, visibilty = true) {
+/**
+ * Shows and leaves an error message for the specified target.
+ * @param {string} messageTarget - The ID of the message target element.
+ * @param {boolean} visibility - Indicates whether to show or hide the error message.
+ * @returns {void}
+ */
+function showAndLeaveErrorMessage(messageTarget, visibility = true) {
     let errorField = document.getElementById(messageTarget);
     if (errorField == null) { return; }
-    if (visibilty) {
+    if (visibility) {
         errorField.classList.remove("error-text-hidden");
         errorField.classList.add('error-text-show');
     } else {
@@ -73,19 +95,26 @@ function showAndLeaveErrorMessage(messageTarget, visibilty = true) {
     }
 }
 
-//NOTE - Generische Funktion zum Anzeigen / Ausblenden des Fehlerrahmens
-function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
+/**
+ * Shows and leaves an error border for the specified input field.
+ * @param {string} inputTarget - The ID of the input field.
+ * @param {boolean} visibility - Indicates whether to show or hide the error border.
+ * @returns {void}
+ */
+function showAndLeaveErrorBorder(inputTarget, visibility = true) {
     let inputField = document.getElementById(inputTarget);
     if (inputField == null) { return; }
-    if (visibilty) {
+    if (visibility) {
         inputField.classList.add('input-has-error');
     } else {
         inputField.classList.remove('input-has-error');
     }
 }
 
-//NOTE - Diese Funktion wurde dem Body inzugefügt, um die Mausklicks abzufangen. Wenn die Liste offen ist und ein anders Elemet
-// Ausser den hier angegebenen geklickt wird, schliesst sich das Fenster, wie beim Klick auf den Pfeil nach oben.
+ /**
+ * Handles mouse click events within the Add Task window.
+ * @param {MouseEvent} e - The mouse event object.
+ */
 function addTaskWindowMouseClick(e) {
 
     if (!e.target.closest(".contact-select-container") && !e.target.closest(".contact-List-container") && isContactListOpen) {
@@ -97,6 +126,9 @@ function addTaskWindowMouseClick(e) {
     }
 }
 
+/**
+ * Checks if all required fields are filled and enables/disables the create button accordingly.
+ */
 function addTaskCheckRequiredField() {
 
     let createButton = document.getElementById('createTaskButton');
@@ -109,6 +141,9 @@ function addTaskCheckRequiredField() {
 
 }
 
+/**
+ * Handles the mouse click event on the Add Task form to validate required fields.
+ */
 function addTaskSubmitOnMouse() {
     document.getElementById('task-title').blur();
     document.getElementById('due-date-display').blur();
@@ -116,8 +151,9 @@ function addTaskSubmitOnMouse() {
 
 }
 
-
-//NOTE - Inputfeld -> Titel -> es wurde eine Inputänderung erkannt
+/**
+ * Handles input event on the task title field to validate the title.
+ */
 function addTaskTitleOnInput() {
     let titleValue = document.getElementById('task-title');
 
@@ -129,7 +165,10 @@ function addTaskTitleOnInput() {
     }
 }
 
-//NOTE - Validierung des Titels
+/**
+ * Validates the task title.
+ * @param {string} titleValue - The value of the task title.
+ */
 function taskTitleValidation(titleValue = "") {
     const cleanTitleValue = (titleValue ?? "").trim();
 
@@ -145,18 +184,26 @@ function taskTitleValidation(titleValue = "") {
 
 }
 
-//NOTE - Hier hat sich das Datumsfeld geändert
+/**
+ * Validates the due date field.
+ * Utilizes the startDueDateValidation function from due-date-validation.js.
+ */
 function dateFieldOnChange() {
     startDueDateValidation();
 }
 
-//NOTE - Der "Datepicker" wurde geklickt
+/**
+ * Handles the click event on the date icon to show the date picker.
+ */
 function onDateIconClick() {
     let datePicker = document.getElementById('due-date-hidden');
     datePicker.showPicker();
 }
 
-//NOTE - Das Datum aus dem Picker hat sich geändert
+/**
+ * Handles the change event on the date picker.
+ * @param {Event} e - The change event object.
+ */
 function datePickerSelectionChange(e) {
     let newDateArr = String(e.target.value).split('-');
     let newDateString = `${newDateArr[2]}/${newDateArr[1]}/${newDateArr[0]}`;
@@ -164,10 +211,11 @@ function datePickerSelectionChange(e) {
     dateFieldOnChange();
 }
 
-
-//SECTION - Auswahl Prio
-//NOTE - Ein Button wurde in der UI ausgewählt. Jenachdem ob dieser schon aktiv war oder nicht.
-// Werden alle resettet oder dieser wird auf aktiv gesetzt.
+/**
+ * Handles the selection of a priority button in the Add Task form.
+ * @param {HTMLElement} button - The priority button element.
+ * @returns {void}
+ */
 function addTaskPrioritySelect(button) {
     if (!button) { return; }
 
@@ -182,7 +230,9 @@ function addTaskPrioritySelect(button) {
 
 }
 
-//NOTE - Alle Prio-buttons werden auf inActiv gesetzt.
+/**
+ * Resets all priority buttons to their default state (not selected).
+ */
 function allPriortyButtonsReset() {
     currentPriority = "";
     const btnContainer = document.getElementById('task-priority-button');
@@ -194,8 +244,10 @@ function allPriortyButtonsReset() {
     });
 }
 
-//NOTE - Eine andere Prioität wurde gewählt.
-// Dieser Button wird aktiv geschaltet und entsprechend gestylt. Alle anderen werden inaktiv gesetzt.
+/**
+ * Sets a new priority for the task.
+ * @param {string} priority - The name of the priority to set.
+ */
 function setNewPriority(priority) {
     const btnContainer = document.getElementById('task-priority-button');
     const buttons = btnContainer.querySelectorAll('.btn');
@@ -208,7 +260,7 @@ function setNewPriority(priority) {
 
         } else {
             b.setAttribute('data-selected', 'false');
-            setButtonSytleNotActiv(b);
+            setButtonStyleNotActiv(b);
         }
 
     });
@@ -217,21 +269,34 @@ function setNewPriority(priority) {
 
 }
 
-//NOTE - Einen Button auf ACTIV schalten -> dieser ist ausgewählt
+/**
+ * Sets the button to the active state (selected).
+ * @param {HTMLElement} button - The button element to activate.
+ * @returns {void}
+ */
 function setButtonStyleActiv(button) {
     if (!button) { return; }
     button.classList.add(`prio-${button.getAttribute('data-name')}-selected`);
     togglePrioButtonTextColor(button, "white");
 }
 
-//NOTE - Einen Button auf NICHT-ACTIV schalten -> dieser ist nicht ausgewählt
-function setButtonSytleNotActiv(button) {
+/**
+ * Sets the button to the inactive state (not selected).
+ * @param {HTMLElement} button - The button element to deactivate.
+ * @returns {void}
+ */
+function setButtonStyleNotActiv(button) {
     if (!button) { return; }
     button.classList.remove(`prio-${button.getAttribute('data-name')}-selected`);
     togglePrioButtonTextColor(button, "black");
 }
 
-//NOTE - Die Farbe des Textes in dem Button entsprechend umschalten
+/**
+ * Toggles the text color of the priority button.
+ * @param {HTMLElement} button - The button element to modify.
+ * @param {string} whiteOrBlack - The color to set the text to ("white" or "black").
+ * @returns {void}
+ */
 function togglePrioButtonTextColor(button, whiteOrBlack) {
     if (!button) { return; }
     let btnText = button.querySelector('p');
@@ -242,12 +307,11 @@ function togglePrioButtonTextColor(button, whiteOrBlack) {
     }
 
 }
-//!SECTION Ende der Prio - Auswahl
 
-
-
-//NOTE - Diese Funktion wird duch einen Button in der UI im Inputfeld der Kontaktauswahl aufgerufen
-//  Bei der Übergabe des Parameters wird entschieden was zu tun ist
+/**
+ * Shows or hides the contact selection input field.
+ * @param {string} showOrHide - Determines whether to show or hide the contact list.
+ */
 function showAndHideContacts(showOrHide = "show") {
     const buttonShowOhrHide = document.getElementById('show-and-hide-contacts');
     buttonShowOhrHide.setAttribute('onclick', (showOrHide == "show" ? 'showAndHideContacts("hide")' : 'showAndHideContacts("show")'));
@@ -266,8 +330,11 @@ function showAndHideContacts(showOrHide = "show") {
     }
 }
 
-
-//NOTE - Anzeigen des Pfeil nach unten -> Show
+/**
+ * Renders the show icon for the contact selection.
+ * @param {string} elementID - The ID of the element to modify.
+ * @returns {void}
+ */
 function renderShowIcon(elementID) {
     const iconDiv = document.getElementById(elementID);
     if (!iconDiv) { return; }
@@ -275,7 +342,11 @@ function renderShowIcon(elementID) {
     iconDiv.classList.add('icon-show-list');
 }
 
-//NOTE - Anzeigen des Pfeils nach oben -> Hide
+/**
+ * Renders the hide icon for the contact selection.
+ * @param {string} elementID - The ID of the element to modify.
+ * @returns {void}
+ */
 function renderHideIcon(elementID) {
     const iconDiv = document.getElementById(elementID);
     if (!iconDiv) { return; }
@@ -283,7 +354,13 @@ function renderHideIcon(elementID) {
     iconDiv.classList.remove('icon-show-list');
 }
 
-//NOTE - Kontaktlist zum rendern erstellen.
+/**
+ * Shows the contact list for selection. 
+ * If a current contact list is provided, it uses that; otherwise, it uses the full contact list from the database.
+ * Additionally, it adjusts the height of the contact list container based on the number of contacts.
+ * @param {Array} currentContactList 
+ * @returns {void}
+ */
 function showContactListForSelect(currentContactList = []) {
 
     const contactListArray = currentContactList.length !== 0 ? currentContactList : contactAllListFromDB;
@@ -299,8 +376,17 @@ function showContactListForSelect(currentContactList = []) {
 
 }
 
-
-//NOTE - Das Kontaktauswahlfenster schliessen -> Sonderfunktion erkären!
+/**
+ * Hides the contact list dropdown for task selection.
+ * 
+ * This function collapses the contact list container and the contact list itself by setting their heights to zero
+ * using `requestAnimationFrame` for smooth UI updates. It also clears the contact list's contents and updates
+ * the `isContactListOpen` flag to indicate that the contact list is closed.
+ *
+ * Side Effects:
+ * - Modifies the DOM elements with IDs 'contact-List-container' and 'contact-List-for-task'.
+ * - Sets the global variable `isContactListOpen` to `false`.
+ */
 function hideContactListForSelect() {
     const contactListContainer = document.getElementById('contact-List-container');
     const contactList = document.getElementById('contact-List-for-task');
@@ -314,7 +400,11 @@ function hideContactListForSelect() {
     isContactListOpen = false;
 }
 
-//NOTE - Render der Kontaktliste. Prüfen, ob der Kontakt bereits zugefügt wurde -> Anzeige entsprechend ändern
+/**
+ * Renders the contact options for selection.
+ * Using TaskUtils to check if the contact is already assigned to the task.
+ * @param {Array} contactList 
+ */
 function renderContactOptions(contactList) {
     let contactSelectElement = document.getElementById('contact-List-for-task');
     contactSelectElement.innerHTML = "";
@@ -325,7 +415,12 @@ function renderContactOptions(contactList) {
     }
 }
 
-//NOTE - Hinzufügen oder löschen aus der Assigned Liste, jenachdem ob das Attibut "active" true oder nicht gesetzt ist.
+/**
+ * Handles the selection of a contact button in the list.
+ * Uses TaskUtils to check if the contact is available and toggles its selection state.
+ * @param {HTMLElement} currentContactBtn - The button element representing the selected contact.
+ * @returns {void}
+ */
 function contactButtonOnListSelect(currentContactBtn) {
 
     const contactID = currentContactBtn.getAttribute('id');
@@ -336,7 +431,13 @@ function contactButtonOnListSelect(currentContactBtn) {
 
 }
 
-//NOTE - Den Kontakt der Liste zuführen und Styling anpassen.
+/**
+ * Adds the selected contact to the task and updates the UI accordingly.
+ * Uses TaskUtils to manage the contact assignment list.
+ * Changes the styling of the selected contact to indicate its selection.
+ * @param {*} currentContact 
+ * @param {string} contactID 
+ */
 function checkInContact(currentContact, contactID) {
     currentContactAssignList = addTaskUtils.contactAddToTask(contactID, contactAllListFromDB, currentContactAssignList);
     currentContact.classList.add('contact-selected');
@@ -348,7 +449,13 @@ function checkInContact(currentContact, contactID) {
     currentContact.setAttribute('data-active', 'true');
 }
 
-//NOTE - Den Kontakt aus der Liste entfernen und Styling anpassen.
+/**
+ * Removes the selected contact from the task and updates the UI accordingly.
+ * Uses TaskUtils to manage the contact assignment list.
+ * Changes the styling of the selected contact to indicate its removal.
+ * @param {*} currentContact 
+ * @param {string} contactID 
+ */
 function checkOutContact(currentContact, contactID) {
     currentContactAssignList = addTaskUtils.contactRemoveFromTask(contactID, currentContactAssignList);
     currentContact.classList.remove('contact-selected');
@@ -360,14 +467,20 @@ function checkOutContact(currentContact, contactID) {
     currentContact.setAttribute('data-active', 'false');
 }
 
-
-//NOTE - Contacte nach der Eingabe filtern und anzeigen
+/**
+ * Filters the contact list based on the input value.
+ * Uses TaskUtils to filter contacts from the full contact list.
+ * @param {string} inputValue 
+ */
 function filterContactFromInputValue(inputValue) {
     showContactListForSelect(addTaskUtils.filterContacts(inputValue, contactAllListFromDB));
 }
 
-
-//NOTE - Contactbadges anzeigen oder nicht
+/**
+ * Shows or hides the badge container for assigned contacts.
+ * @param {string} showOrHide 
+ * @returns {void}
+ */
 function showOrHideBadgeContainer(showOrHide = "") {
     if (showOrHide.length == 0) { return; }
     let container = document.getElementById('contact-assigned-badge');
@@ -380,8 +493,12 @@ function showOrHideBadgeContainer(showOrHide = "") {
     }
 }
 
-//NOTE - Die Profilicons der Contactauswahl anzeigen.
-//Es werden nur 4 Badges angezeigt.
+/**
+ * Renders the assigned profile badges for the selected contacts.
+ * If no contacts are assigned, the function returns early.
+ * Show only up to 4 badges for better UI.
+ * @returns {void}
+ */
 function renderAsignedProfilBadge() {
     if (currentContactAssignList.length == 0) {
         return;
@@ -397,10 +514,10 @@ function renderAsignedProfilBadge() {
     }
 }
 
-
-
-//SECTION Categie Auswahl
-//NOTE - Funktionsaufruf vom Button in Inputfeld
+/**
+ * Shows or hides the category list for selection.
+ * @param {string} showOrHide 
+ */
 function showAndHideCategories(showOrHide = "show") {
     if (showOrHide == "show") {
         showCategoryListForSelect();
@@ -412,12 +529,12 @@ function showAndHideCategories(showOrHide = "show") {
     }
 }
 
-//NOTE - die Auswahlliste der Categirien anzeigen
-//Die Categorien rendern lassen
-//Die Höhe eines Elementes berechnen
-//Daraus die resultierende Höhe den Container und der Liste zuweisen
-//Inputfeld -> Text ändern
-//Aktuelle Categorie leeren
+/**
+ * Shows the category list for selection.
+ * If no categories are available, the function returns early.
+ * Renders the category options and adjusts the height of the category list container based on the number of categories.
+ * @returns {void}
+ */
 function showCategoryListForSelect() {
     if (categories == null || categories.length == 0) { return; }
     renderCategoryOptions(categories);
@@ -432,8 +549,11 @@ function showCategoryListForSelect() {
     isCategoryListOpen = true;
 }
 
-//NOTE - die Auswahlliste wieder einklappen.
-//Den Button ändern und das Icon anpassen
+/**
+ * Hides the category list for selection.
+ * Uses `requestAnimationFrame` to smoothly collapse the category list container and the category list itself by setting their heights to zero.
+ * @returns {void}
+ */
 function hideCategoryListForSelect() {
     const categoryListContainer = document.getElementById('category-list-container');
     const categoryList = document.getElementById('category-list-for-task');
@@ -449,7 +569,11 @@ function hideCategoryListForSelect() {
     isCategoryListOpen = false;
 }
 
-//NOTE - Die Categorien in der Liste anueigen
+/**
+ * Renders the category options for selection.
+ * If no categories are available, the function returns early.
+ * @param {Array} categories 
+ */
 function renderCategoryOptions(categories) {
     let categorySelectElement = document.getElementById('category-list-for-task');
     categorySelectElement.innerHTML = "";
@@ -459,12 +583,15 @@ function renderCategoryOptions(categories) {
     }
 }
 
-//NOTE - Eine Categorie wurde gewählt.
-//Den Index der Categorie bestimmen
-//Die Aktuelle Categorie setzen
-//Die Auswahlliste schiessen
-//Den Titel in das Inputfeld schreiben
-//Den Check durchführen
+/**
+ * Handles the selection of a category from the list.
+ * If no button is provided, an error is shown.
+ * If the selected category is not found in the categories array, an error is shown.
+ * Sets the current category and updates the input field value.
+ * Hides the category list after selection and checks the category input value for validation.
+ * Uses TaskUtils to find the index of the selected category in the categories array.
+ * @param {HTMLElement} button - The button element representing the selected category.
+ */
 function categoryButtonOnListSelect(button) {
     if (!button) { showCategoryError(); }
     let indexOfCategory = addTaskUtils.getIndexOfObjectOfArray(button.getAttribute('id'), categories);
@@ -475,20 +602,29 @@ function categoryButtonOnListSelect(button) {
     checkCategoryInputValue();
 }
 
-
-//NOTE - Den entsprechenden Text in das Categorie Inputfeld schreiben
+/**
+ * Sets the value of the category input field.
+ * @param {string} value - The value to set in the category input field.
+ */
 function setCategoryInputfieldValue(value) {
     document.getElementById('task-category').value = value;
 }
 
-//NOTE - Hier bekommt der Kleine Buttun im Inputfeld die passende Funktion show oder hide
+/**
+ * Sets the onclick attribute for the show/hide button.
+ * @param {string} showOrHide 
+ */
 function setCategoryShowOrHideButton(showOrHide) {
-    const buttonShowOhrHide = document.getElementById('show-and-hide-categories');
-    buttonShowOhrHide.setAttribute('onclick', (showOrHide == "show" ? 'showAndHideCategories("hide")' : 'showAndHideCategories("show")'));
+    const buttonShowOrHide = document.getElementById('show-and-hide-categories');
+    buttonShowOrHide.setAttribute('onclick', (showOrHide == "show" ? 'showAndHideCategories("hide")' : 'showAndHideCategories("show")'));
 }
 
-//NOTE - Auslöser, wenn in das Inputfeld 'Category' geklickt wird. Wenn die Auswahlliste offen ist, wird diese geschlossen, 
-// sonst öffnet sich die Liste.
+/**
+ * Handles the click event on the category input field.
+ * If the category list is open, it blurs the input field, hides the category list, and checks the input value.
+ * If the category list is closed, it shows the category list.
+ * @param {HTMLElement} inputField - The input field element for the category.
+ */
 function onclickCategoryInput(inputField) {
     if (isCategoryListOpen) {
         inputField.blur();
@@ -499,8 +635,12 @@ function onclickCategoryInput(inputField) {
     }
 }
 
-//NOTE - Categorie Inputfeld abfragen und prüfen, ob dies eine Auswahl besitzt oder nicht.
-// Wenn keine Auswahl getroffen wurde, wird der Errortext angezeigt und der Rahmen eingefärbt.
+/**
+ * Checks the value of the category input field for validity.
+ * If the input field is empty or has the default placeholder value, it shows an error message and border.
+ * If a valid category is selected, it hides the error message and border.
+ * @returns void
+ */
 function checkCategoryInputValue() {
     let categoryInput = document.getElementById('task-category');
     if (!categoryInput) { return; }
@@ -513,30 +653,50 @@ function checkCategoryInputValue() {
     }
 
 }
-//!SECTION Ende der Section Categorieauswahl
 
-//SECTION - Subtask Auswahl
-
+/**
+ * Handles the click event on the subtask input field.
+ * If the subtask writing buttons are not visible, it shows them.
+ * If they are visible, it hides them.
+ * @param {HTMLElement} input - The input field element for the subtask.
+ * @returns void
+ */
 function onclickSubtaskInput(input) {
     if (!input) { return; }
     toggleSubWritingButtons();
 }
 
+/**
+ * Toggles the visibility of the subtask writing buttons.
+ */
 function toggleSubWritingButtons() {
     document.getElementById('sub-writing-buttons').classList.toggle('d-none');
 }
 
+/**
+ * Adopts the current subtask entry.
+ * If the input field is empty or has less than 3 characters, it does nothing.
+ * Otherwise, it adds the subtask to the current subtask list, clears the input field, and renders the subtasks.
+ * Uses TaskUtils to manage the subtask list.
+ * @returns void
+ */
 function adoptCurrentSubEntry() {
     let inputfield = document.getElementById('task-sub-task');
     if (!inputfield) { return; }
     const inputValueClean = (inputfield.value ?? "").trim();
-    if (inputValueClean.length > 3) {
+    if (inputValueClean.length >= 3) {
         currentSubTasks = addTaskUtils.addSubtaskToArray(inputValueClean, currentSubTasks);
     }
     clearSubInputField();
     renderSubtasks();
 }
 
+/**
+ * Clears the subtask input field.
+ * If the input field is not found, it does nothing.
+ * Otherwise, it clears the input field, toggles the visibility of the subtask writing buttons, and removes focus from the input field.
+ * @returns void
+ */
 function clearSubInputField() {
     let inputfield = document.getElementById('task-sub-task');
     if (!inputfield) { return; }
@@ -546,15 +706,35 @@ function clearSubInputField() {
 
 }
 
+/**
+ * Deletes the currently selected subtask.
+ * Uses TaskUtils to remove the subtask from the current subtask list.
+ * Renders the updated list of subtasks.
+ * @param {string} subtaskID - The ID of the subtask to delete.
+ * @returns void
+ */
 function deleteCurrentSelectedSubTask(subtaskID) {
     currentSubTasks = addTaskUtils.removeSubtaskFromArray(subtaskID, currentSubTasks);
     renderSubtasks();
 }
 
+/**
+ * Edits the currently selected subtask.
+ * @param {string} subtaskID - The ID of the subtask to edit.
+ * @returns void    
+ */
 function editCurrentSelectedSubTask(subtaskID) {
     renderSubtasks(subtaskID);
 }
 
+/**
+ * Renders the list of subtasks.
+ * If there are no subtasks, it returns early.
+ * If an ID for editing is provided, it renders that subtask in edit mode.
+ * Otherwise, it renders all subtasks in read-only mode, showing only up to 3 subtasks for better UI.
+ * @param {string} idForEdit - The ID of the subtask to edit.
+ * @returns void
+ */
 function renderSubtasks(idForEdit = "") {
     let subTaskList = document.querySelector('.sub-task-list');
     subTaskList.innerHTML = "";
@@ -573,6 +753,14 @@ function renderSubtasks(idForEdit = "") {
     }
 }
 
+/**
+ * Safely applies changes to the currently selected subtask.
+ * If the subtask is not found, it does nothing.
+ * If the input value is less than or equal to 3 characters, it does nothing.
+ * Otherwise, it updates the subtask title and re-renders the subtasks.
+ * @param {string} subtaskID - The ID of the subtask to edit.
+ * @returns void
+ */
 function safeChangesOnCurrentSelectedSubtask(subtaskID) {
     let currentSubTask = currentSubTasks.find(x => x['id'] == subtaskID);
     if (!currentSubTask) { return; }
@@ -583,11 +771,13 @@ function safeChangesOnCurrentSelectedSubtask(subtaskID) {
     renderSubtasks();
 }
 
-//!SECTION Substask Auswahl Ende
-
-//SECTION - FormEvent
-
-//Daten aus dem Form und den lokalen Daten aufebreiten und neuen Task erstellen
+/**
+ * Handles the creation of a new task.
+ * Prepares the data from the form and the local data to create a new task.
+ * Uses the CreateNewTask class to handle the task creation process.
+ * After the task is created, it shows a confirmation dialog and navigates to the board view.
+ * @param {Event} event - The event object from the form submission.
+ */
 async function addTaskCreateTask(event) {
 
     if (event) event.preventDefault();
@@ -607,7 +797,12 @@ async function addTaskCreateTask(event) {
     addTaskAfterSafe(event.currentTarget.classList[0] == "add-task-form-dialog");
 }
 
-
+/**
+ * Shows a confirmation dialog after a task is successfully added.
+ * Closes the Add Task dialog if it was opened from a dialog view.
+ * Navigates to the board view after the confirmation dialog is closed.
+ * @param {boolean} fromDialog - Indicates if the call is from a dialog.
+ */
 function addTaskAfterSafe(fromDialog = false) {
     toggleDialogDisplay();
     const dialog = document.getElementById('add-task-safe-dialog');
@@ -619,31 +814,36 @@ function addTaskAfterSafe(fromDialog = false) {
     }, 1800);
 }
 
+/**
+ * Navigates to the board view after the confirmation dialog.
+ * If the call is from a dialog, it closes the Add Task dialog first and then navigates to the board after a delay.
+ * @param {boolean} fromDialog - Indicates if the call is from a dialog.
+ */
 function navigateToBoardAfterDialog(fromDialog = false) {
     if(fromDialog == true){
         closeDialog('add-task-dialog');
         setTimeout(function() {
-            navigateToBord();
+            navigateToBoard();
         }, 1000)
     }else{
-        navigateToBord();
+        navigateToBoard();
     }
 }
 
-
+/**
+ * Toggles the display of the Add Task confirmation dialog.
+ */
 function toggleDialogDisplay() {
     document.getElementById('add-task-safe-dialog').classList.toggle('visually-hidden');
 }
 
+/**
+ * Clears the Add Task form by reloading the page.
+ * This effectively resets all form fields and local data.
+ */
 function addTaskFormClear() {
     location.reload();
 }
-
-
-
-
-//!SECTION - FormEvent Ende
-
 
 
 
