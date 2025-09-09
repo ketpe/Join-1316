@@ -295,7 +295,7 @@ span {
 }
 
 .category-list-container {
-    transform: translateY(-70px);
+    transform: translateY(-54px);
 }
 
 .category-list-for-task,
@@ -416,6 +416,8 @@ span {
     font-family: 'Inter';
     font-size: 20px;
     font-weight: 400;
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
 
 .category-list-btn:hover, 

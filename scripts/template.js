@@ -1,6 +1,6 @@
 function getContactListElement(contact, isAssinged){
     return `
-        <button id="${contact['id']}" type="button" class="contact-list-btn ${(isAssinged ? 'contact-selected' : '')}" active="${(isAssinged ? 'true' : '')}" onclick="contactButtonOnListSelect(this)">
+        <button id="${contact['id']}" type="button" class="contact-list-btn ${(isAssinged ? 'contact-selected' : '')}" data-active="${(isAssinged ? 'true' : 'false')}" onclick="contactButtonOnListSelect(this)">
             <div class="contact-profil-container">
                 <div class="contact-ellipse ${contact['initialColor']}"><span>${contact['initial']}</span></div>
                 <p class="${(isAssinged ? 'white' : '')}" >${contact['firstname']} ${contact['lastname']}</p>

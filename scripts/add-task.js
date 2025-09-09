@@ -8,18 +8,16 @@ let categories = [];
 let isCategoryListOpen = false;
 let currentCategory = {};
 let currentSubTasks = [];
-
-//TODO - TestContact
-const contacktIDTest = "b4e73ed4-0562-4ae3-b5aa-f8d91a9659c6";
-
+let currentUser = "";
+let isGuest = false;
+let addTaskUtils = new AddTaskUtils();
 
 async function onLoadAddTask() {
     await renderAddTaskWithNavAndHeader();
-    changeAddTaskViewToStandard()
+    changeAddTaskViewToStandard();
     await loadDataForAddTaskViewAndRenderView();
-    renderUserInitial();
+    
 }
-
 
 async function renderAddTaskWithNavAndHeader() {
 
@@ -30,7 +28,6 @@ async function renderAddTaskWithNavAndHeader() {
     ]);
 
 }
-
 
 function changeAddTaskViewToStandard() {
     document.getElementById('a-t-dialog-close-btn').classList.add('display-hidden');
@@ -48,8 +45,9 @@ async function loadDataForAddTaskViewAndRenderView() {
     await loadContactsAllFomDB();
     await loadCategoriesFromDB();
     setNewPriority("Medium");
-
-
+    renderUserInitial();
+    currentUser = addTaskUtils.readCurrentUserID();
+    isGuest = addTaskUtils.isCurrentUserGuest();
 }
 
 //NOTE - Lade alle Kontakte aus der DB in das Array
@@ -62,26 +60,62 @@ async function loadCategoriesFromDB() {
     categories = await getAllData("categories");
 }
 
-
-//NOTE - Hier hat sich das Datumsfeld geändert
-function dateFieldOnChange() {
-    startDueDateValidation();
+//NOTE - Generische Funktion zum Anzeigen / Ausblenden der Errormeldung
+function showAndLeaveErrorMessage(messageTarget, visibilty = true) {
+    let errorField = document.getElementById(messageTarget);
+    if (errorField == null) { return; }
+    if (visibilty) {
+        errorField.classList.remove("error-text-hidden");
+        errorField.classList.add('error-text-show');
+    } else {
+        errorField.classList.add("error-text-hidden");
+        errorField.classList.remove('error-text-show');
+    }
 }
 
-//NOTE - Der "Datepicker" wurde geklickt
-function onDateIconClick() {
-    let datePicker = document.getElementById('due-date-hidden');
-    datePicker.showPicker();
+//NOTE - Generische Funktion zum Anzeigen / Ausblenden des Fehlerrahmens
+function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
+    let inputField = document.getElementById(inputTarget);
+    if (inputField == null) { return; }
+    if (visibilty) {
+        inputField.classList.add('input-has-error');
+    } else {
+        inputField.classList.remove('input-has-error');
+    }
 }
 
-//NOTE - Das Datum aus dem Picker hat sich geändert
-function datePickerSelectionChange(e) {
-    let newDateArr = String(e.target.value).split('-');
-    let newDateString = `${newDateArr[2]}/${newDateArr[1]}/${newDateArr[0]}`;
-    document.getElementById('due-date-display').value = newDateString;
-    dateFieldOnChange();
+//NOTE - Diese Funktion wurde dem Body inzugefügt, um die Mausklicks abzufangen. Wenn die Liste offen ist und ein anders Elemet
+// Ausser den hier angegebenen geklickt wird, schliesst sich das Fenster, wie beim Klick auf den Pfeil nach oben.
+function addTaskWindowMouseClick(e) {
+
+    if (!e.target.closest(".contact-select-container") && !e.target.closest(".contact-List-container") && isContactListOpen) {
+        showAndHideContacts("hide");
+    }
+
+    if (!e.target.closest('.category-select-container') && !e.target.closest('.category-list-container') && isCategoryListOpen) {
+        showAndHideCategories('hide');
+    }
+}
+
+function addTaskCheckRequiredField() {
+
+    let createButton = document.getElementById('createTaskButton');
+
+    createButton.disabled =
+        currentDueDate.length > 0 &&
+            currentTitle.length > 0 &&
+            currentPriority.length > 0 &&
+            currentCategory.hasOwnProperty("title") ? false : true;
 
 }
+
+function addTaskSubmitOnMouse() {
+    document.getElementById('task-title').blur();
+    document.getElementById('due-date-display').blur();
+    addTaskCheckRequiredField();
+
+}
+
 
 //NOTE - Inputfeld -> Titel -> es wurde eine Inputänderung erkannt
 function addTaskTitleOnInput() {
@@ -111,242 +145,25 @@ function taskTitleValidation(titleValue = "") {
 
 }
 
-//NOTE - Generische Funktion zum Anzeigen / Ausblenden der Errormeldung
-function showAndLeaveErrorMessage(messageTarget, visibilty = true) {
-    let errorField = document.getElementById(messageTarget);
-    if (errorField == null) { return; }
-    if (visibilty) {
-        errorField.classList.remove("error-text-hidden");
-        errorField.classList.add('error-text-show');
-    } else {
-        errorField.classList.add("error-text-hidden");
-        errorField.classList.remove('error-text-show');
-    }
+//NOTE - Hier hat sich das Datumsfeld geändert
+function dateFieldOnChange() {
+    startDueDateValidation();
 }
 
-//NOTE - Generische Funktion zum Anzeigen / Ausblenden des Fehlerrahmens
-function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
-    let inputField = document.getElementById(inputTarget);
-    if (inputField == null) { return; }
-    if (visibilty) {
-        inputField.classList.add('input-has-error');
-    } else {
-        inputField.classList.remove('input-has-error');
-    }
+//NOTE - Der "Datepicker" wurde geklickt
+function onDateIconClick() {
+    let datePicker = document.getElementById('due-date-hidden');
+    datePicker.showPicker();
 }
 
-
-//NOTE - Diese Funktion wird duch einen Button in der UI im Inputfeld der Kontaktauswahl aufgerufen
-//  Bei der Übergabe des Parameters wird entschieden was zu tun ist
-function showAndHideContacts(showOrHide = "show") {
-    const buttonShowOhrHide = document.getElementById('show-and-hide-contacts');
-    buttonShowOhrHide.setAttribute('onclick', (showOrHide == "show" ? 'showAndHideContacts("hide")' : 'showAndHideContacts("show")'));
-    const inputField = document.getElementById('task-assign-to');
-    if (showOrHide == "show") {
-        inputField.value = "";
-        inputField.focus();
-        showContactListForSelect();
-        renderHideIcon('show-hide-icon-contacts');
-        showOrHideBadgeContainer("hide");
-    } else {
-        inputField.value = "Select contacts to assign";
-        hideContactListForSelect();
-        renderShowIcon('show-hide-icon-contacts');
-        showOrHideBadgeContainer("show");
-    }
+//NOTE - Das Datum aus dem Picker hat sich geändert
+function datePickerSelectionChange(e) {
+    let newDateArr = String(e.target.value).split('-');
+    let newDateString = `${newDateArr[2]}/${newDateArr[1]}/${newDateArr[0]}`;
+    document.getElementById('due-date-display').value = newDateString;
+    dateFieldOnChange();
 }
 
-//TODO - Zusammenfassen, in eine Funktion -> show oder hide übergeben
-
-//NOTE - Anzeigen des Pfeil nach unten -> Show
-function renderShowIcon(elementID) {
-    const iconDiv = document.getElementById(elementID);
-    if (!iconDiv) { return; }
-    iconDiv.classList.remove('icon-hide-list');
-    iconDiv.classList.add('icon-show-list');
-}
-
-//NOTE - Anzeigen des Pfeils nach oben -> Hide
-function renderHideIcon(elementID) {
-    const iconDiv = document.getElementById(elementID);
-    if (!iconDiv) { return; }
-    iconDiv.classList.add('icon-hide-list');
-    iconDiv.classList.remove('icon-show-list');
-}
-
-//NOTE - Kontaktlist zum rendern erstellen. Vorbereitung für die Suche.
-function showContactListForSelect(currentContactList = []) {
-
-    const contactListArray = currentContactList.length !== 0 ? currentContactList : contactAllListFromDB;
-    if (contactListArray == null || contactListArray.length == 0) { return; }
-    renderContactOptions(contactListArray);
-    const contactListContainer = document.getElementById('contact-List-container');
-    const contactList = document.getElementById('contact-List-for-task');
-    const heightOfOneContact = document.getElementById(contactListArray[0]['id']).offsetHeight;
-    let heightOfContainer = (contactListArray.length <= 5 ? heightOfOneContact * contactListArray.length : heightOfOneContact * 5) + 40;
-    contactListContainer.style.height = heightOfContainer + "px";
-    contactList.style.height = (heightOfContainer - 27) + "px";
-    isContactListOpen = true;
-
-}
-
-
-//NOTE - Das Kontaktauswahlfenster schliessen -> Sonderfunktion erkären!
-function hideContactListForSelect() {
-    const contactListContainer = document.getElementById('contact-List-container');
-    const contactList = document.getElementById('contact-List-for-task');
-
-    requestAnimationFrame(() => {
-        contactListContainer.style.height = "0";
-        contactList.style.height = "0";
-    });
-
-    contactList.innerHTML = "";
-    isContactListOpen = false;
-    //toggleMarginOfInputContainer('.contact-select-container', true);
-
-}
-
-//NOTE - Render der Kontaktliste. Prüfen, ob der Kontakt bereits zugefügt wurde -> Anzeige entsprechend ändern
-function renderContactOptions(contactList) {
-    let contactSelectElement = document.getElementById('contact-List-for-task');
-    contactSelectElement.innerHTML = "";
-
-    for (let i = 0; i < contactList.length; i++) {
-        const currentContactAssigned = findContactInAssignList(contactList[i]);
-        contactSelectElement.innerHTML += getContactListElement(contactList[i], currentContactAssigned);
-    }
-}
-
-//NOTE - einen Kontakt in der Assigned Liste suchen, sofern vorhanden. Damit das Aussehen angepasst werden kann.
-function findContactInAssignList(contact) {
-    if (currentContactAssignList.length == 0) { return false; }
-    return getIndexOfObjectOfArray(contact['id'], currentContactAssignList) != -1;
-}
-
-//NOTE - Hinzufügen oder löschen aus der Assigned Liste, jenachdem ob das Attibut "active" true oder nicht gesetzt ist.
-//TODO - Vieleicht eine bessere Möglichkeit finden
-function contactButtonOnListSelect(currentContactBtn) {
-
-    const contactID = currentContactBtn.getAttribute('id');
-    if (!checkIfContactAvailable(contactID)) { return; }
-    const contactState = currentContactBtn.getAttribute('active');
-
-    if (contactState == "true") {
-        checkOutContact(currentContactBtn, contactID);
-    } else {
-        checkInContact(currentContactBtn, contactID);
-    }
-
-}
-
-//NOTE - Prüfen, ob der Kontakt überhaupt vorhanden ist
-function checkIfContactAvailable(currentContactID) {
-    return getIndexOfObjectOfArray(currentContactID, contactAllListFromDB) != -1;
-}
-
-//NOTE - Den Kontakt der Liste zuführen und Styling anpassen.
-function checkInContact(currentContact, contactID) {
-    contactAddToTask(contactID);
-    currentContact.classList.add('contact-selected');
-    const elementName = currentContact.querySelector(`.contact-profil-container p`);
-    elementName.classList.add('white');
-    const elementCheck = currentContact.querySelector(`.contact-check-icon`);
-    elementCheck.classList.remove('contact-unchecked');
-    elementCheck.classList.add('contact-checked');
-    currentContact.setAttribute('active', 'true');
-}
-
-//NOTE - Den Kontakt aus der Liste entfernen und Styling anpassen.
-function checkOutContact(currentContact, contactID) {
-    contactRemoveFromTask(contactID);
-    currentContact.classList.remove('contact-selected');
-    const elementName = currentContact.querySelector(`.contact-profil-container p`);
-    elementName.classList.remove('white');
-    const elementCheck = currentContact.querySelector(`.contact-check-icon`);
-    elementCheck.classList.add('contact-unchecked');
-    elementCheck.classList.remove('contact-checked');
-    currentContact.setAttribute('active', 'false');
-}
-
-//NOTE Den Kontakt mit der ID aus dem gesammten Array filtern und in die Assigned Liste einfügen
-function contactAddToTask(currentContactID) {
-    const indexOfContact = getIndexOfObjectOfArray(currentContactID, contactAllListFromDB);
-    if (indexOfContact > -1) {
-        currentContactAssignList.push(contactAllListFromDB[indexOfContact]);
-    }
-
-}
-
-//NOTE - Den Kontakt mit der ID in der Assigned Liste suchen und dann entfernen
-function contactRemoveFromTask(currentContactID) {
-    const indexOfContact = getIndexOfObjectOfArray(currentContactID, currentContactAssignList);
-    if (indexOfContact > -1) {
-        currentContactAssignList.splice(indexOfContact, 1);
-    }
-}
-
-//NOTE - Contacte nach der Eingabe filtern und anzeigen
-function filterContactFromInputValue(inputValue) {
-    const inputCleanValue = (inputValue ?? "").trim();
-    if (inputCleanValue.length < 2) { return; }
-    const filteredContacts = contactAllListFromDB.filter((c) => c['firstname'].toLowerCase().startsWith(inputCleanValue.toLowerCase()));
-    showContactListForSelect(filteredContacts);
-}
-
-
-
-
-//NOTE - Diese Funktion wurde dem Body inzugefügt, um die Mausklicks abzufangen. Wenn die Liste offen ist und ein anders Elemet
-// Ausser den hier angegebenen geklickt wird, schliesst sich das Fenster, wie beim Klick auf den Pfeil nach oben.
-function addTaskWindowMouseClick(e) {
-
-    if (!e.target.closest(".contact-select-container") && !e.target.closest(".contact-List-container") && isContactListOpen) {
-        showAndHideContacts("hide");
-    }
-
-    if (!e.target.closest('.category-select-container') && !e.target.closest('.category-list-container') && isCategoryListOpen) {
-        showAndHideCategories('hide');
-    }
-}
-
-//NOTE -  den Index eines Arrays aus der ID finden
-function getIndexOfObjectOfArray(obejctID, objectArray) {
-
-    let objectFind = objectArray.find(x => x['id'] == obejctID);
-    if (objectFind == null) { return -1; }
-    return objectArray.indexOf(objectFind);
-}
-
-//NOTE - Contactbadges anzeigen oder nicht
-function showOrHideBadgeContainer(showOrHide = "") {
-    if (showOrHide.length == 0) { return; }
-    let container = document.getElementById('contact-assigned-badge');
-    if (showOrHide == "show") {
-        container.classList.remove('d-none');
-        renderAsignedProfilBadge();
-    } else {
-        container.classList.add('d-none');
-        container.innerHTML = "";
-    }
-}
-
-//NOTE - Die Profilicons der Contactauswahl anzeigen.
-//Es werden nur 4 Badges angezeigt.
-function renderAsignedProfilBadge() {
-    if (currentContactAssignList.length == 0) {
-        return;
-    }
-
-    let badgeContainer = document.getElementById('contact-assigned-badge');
-    badgeContainer.innerHTML = "";
-    let counter = 0;
-    for (let i = 0; i < currentContactAssignList.length; i++) {
-        badgeContainer.innerHTML += getAssignedContactBadge(currentContactAssignList[i]);
-        counter++;
-        if (counter == 4) { break; }
-    }
-}
 
 //SECTION - Auswahl Prio
 //NOTE - Ein Button wurde in der UI ausgewählt. Jenachdem ob dieser schon aktiv war oder nicht.
@@ -362,8 +179,6 @@ function addTaskPrioritySelect(button) {
     } else {
         setNewPriority(buttonName);
     }
-
-
 
 }
 
@@ -428,6 +243,161 @@ function togglePrioButtonTextColor(button, whiteOrBlack) {
 
 }
 //!SECTION Ende der Prio - Auswahl
+
+
+
+//NOTE - Diese Funktion wird duch einen Button in der UI im Inputfeld der Kontaktauswahl aufgerufen
+//  Bei der Übergabe des Parameters wird entschieden was zu tun ist
+function showAndHideContacts(showOrHide = "show") {
+    const buttonShowOhrHide = document.getElementById('show-and-hide-contacts');
+    buttonShowOhrHide.setAttribute('onclick', (showOrHide == "show" ? 'showAndHideContacts("hide")' : 'showAndHideContacts("show")'));
+    const inputField = document.getElementById('task-assign-to');
+    if (showOrHide == "show") {
+        inputField.value = "";
+        inputField.focus();
+        showContactListForSelect();
+        renderHideIcon('show-hide-icon-contacts');
+        showOrHideBadgeContainer("hide");
+    } else {
+        inputField.value = "Select contacts to assign";
+        hideContactListForSelect();
+        renderShowIcon('show-hide-icon-contacts');
+        showOrHideBadgeContainer("show");
+    }
+}
+
+
+//NOTE - Anzeigen des Pfeil nach unten -> Show
+function renderShowIcon(elementID) {
+    const iconDiv = document.getElementById(elementID);
+    if (!iconDiv) { return; }
+    iconDiv.classList.remove('icon-hide-list');
+    iconDiv.classList.add('icon-show-list');
+}
+
+//NOTE - Anzeigen des Pfeils nach oben -> Hide
+function renderHideIcon(elementID) {
+    const iconDiv = document.getElementById(elementID);
+    if (!iconDiv) { return; }
+    iconDiv.classList.add('icon-hide-list');
+    iconDiv.classList.remove('icon-show-list');
+}
+
+//NOTE - Kontaktlist zum rendern erstellen.
+function showContactListForSelect(currentContactList = []) {
+
+    const contactListArray = currentContactList.length !== 0 ? currentContactList : contactAllListFromDB;
+    if (contactListArray == null || contactListArray.length == 0) { return; }
+    renderContactOptions(contactListArray);
+    const contactListContainer = document.getElementById('contact-List-container');
+    const contactList = document.getElementById('contact-List-for-task');
+    const heightOfOneContact = document.getElementById(contactListArray[0]['id']).offsetHeight;
+    let heightOfContainer = (contactListArray.length <= 5 ? heightOfOneContact * contactListArray.length : heightOfOneContact * 5) + 40;
+    contactListContainer.style.height = heightOfContainer + "px";
+    contactList.style.height = (heightOfContainer - 27) + "px";
+    isContactListOpen = true;
+
+}
+
+
+//NOTE - Das Kontaktauswahlfenster schliessen -> Sonderfunktion erkären!
+function hideContactListForSelect() {
+    const contactListContainer = document.getElementById('contact-List-container');
+    const contactList = document.getElementById('contact-List-for-task');
+
+    requestAnimationFrame(() => {
+        contactListContainer.style.height = "0";
+        contactList.style.height = "0";
+    });
+
+    contactList.innerHTML = "";
+    isContactListOpen = false;
+}
+
+//NOTE - Render der Kontaktliste. Prüfen, ob der Kontakt bereits zugefügt wurde -> Anzeige entsprechend ändern
+function renderContactOptions(contactList) {
+    let contactSelectElement = document.getElementById('contact-List-for-task');
+    contactSelectElement.innerHTML = "";
+
+    for (let i = 0; i < contactList.length; i++) {
+        const currentContactAssigned = addTaskUtils.findContactInAssignList(contactList[i], currentContactAssignList);
+        contactSelectElement.innerHTML += getContactListElement(contactList[i], currentContactAssigned);
+    }
+}
+
+//NOTE - Hinzufügen oder löschen aus der Assigned Liste, jenachdem ob das Attibut "active" true oder nicht gesetzt ist.
+function contactButtonOnListSelect(currentContactBtn) {
+
+    const contactID = currentContactBtn.getAttribute('id');
+    if (!addTaskUtils.checkIfContactAvailable(contactID, contactAllListFromDB)) { return; }
+
+    currentContactBtn.getAttribute('data-active') == "true" ? 
+        checkOutContact(currentContactBtn, contactID) : checkInContact(currentContactBtn, contactID);
+
+}
+
+//NOTE - Den Kontakt der Liste zuführen und Styling anpassen.
+function checkInContact(currentContact, contactID) {
+    currentContactAssignList = addTaskUtils.contactAddToTask(contactID, contactAllListFromDB, currentContactAssignList);
+    currentContact.classList.add('contact-selected');
+    const elementName = currentContact.querySelector(`.contact-profil-container p`);
+    elementName.classList.add('white');
+    const elementCheck = currentContact.querySelector(`.contact-check-icon`);
+    elementCheck.classList.remove('contact-unchecked');
+    elementCheck.classList.add('contact-checked');
+    currentContact.setAttribute('data-active', 'true');
+}
+
+//NOTE - Den Kontakt aus der Liste entfernen und Styling anpassen.
+function checkOutContact(currentContact, contactID) {
+    currentContactAssignList = addTaskUtils.contactRemoveFromTask(contactID, currentContactAssignList);
+    currentContact.classList.remove('contact-selected');
+    const elementName = currentContact.querySelector(`.contact-profil-container p`);
+    elementName.classList.remove('white');
+    const elementCheck = currentContact.querySelector(`.contact-check-icon`);
+    elementCheck.classList.add('contact-unchecked');
+    elementCheck.classList.remove('contact-checked');
+    currentContact.setAttribute('data-active', 'false');
+}
+
+
+//NOTE - Contacte nach der Eingabe filtern und anzeigen
+function filterContactFromInputValue(inputValue) {
+    showContactListForSelect(addTaskUtils.filterContacts(inputValue, contactAllListFromDB));
+}
+
+
+//NOTE - Contactbadges anzeigen oder nicht
+function showOrHideBadgeContainer(showOrHide = "") {
+    if (showOrHide.length == 0) { return; }
+    let container = document.getElementById('contact-assigned-badge');
+    if (showOrHide == "show") {
+        container.classList.remove('d-none');
+        renderAsignedProfilBadge();
+    } else {
+        container.classList.add('d-none');
+        container.innerHTML = "";
+    }
+}
+
+//NOTE - Die Profilicons der Contactauswahl anzeigen.
+//Es werden nur 4 Badges angezeigt.
+function renderAsignedProfilBadge() {
+    if (currentContactAssignList.length == 0) {
+        return;
+    }
+
+    let badgeContainer = document.getElementById('contact-assigned-badge');
+    badgeContainer.innerHTML = "";
+    let counter = 0;
+    for (let i = 0; i < currentContactAssignList.length; i++) {
+        badgeContainer.innerHTML += getAssignedContactBadge(currentContactAssignList[i]);
+        counter++;
+        if (counter == 4) { break; }
+    }
+}
+
+
 
 //SECTION Categie Auswahl
 //NOTE - Funktionsaufruf vom Button in Inputfeld
@@ -497,7 +467,7 @@ function renderCategoryOptions(categories) {
 //Den Check durchführen
 function categoryButtonOnListSelect(button) {
     if (!button) { showCategoryError(); }
-    let indexOfCategory = getIndexOfObjectOfArray(button.getAttribute('id'), categories);
+    let indexOfCategory = addTaskUtils.getIndexOfObjectOfArray(button.getAttribute('id'), categories);
     if (indexOfCategory < 0) { showCategoryError(); }
     currentCategory = categories[indexOfCategory];
     hideCategoryListForSelect();
@@ -561,9 +531,8 @@ function adoptCurrentSubEntry() {
     if (!inputfield) { return; }
     const inputValueClean = (inputfield.value ?? "").trim();
     if (inputValueClean.length > 3) {
-        createNewSubtask(inputValueClean);
+        currentSubTasks = addTaskUtils.addSubtaskToArray(inputValueClean, currentSubTasks);
     }
-
     clearSubInputField();
     renderSubtasks();
 }
@@ -577,22 +546,8 @@ function clearSubInputField() {
 
 }
 
-function createNewSubtask(subTaskEntry) {
-    let newSubTask = {
-        'id': getNewUid(),
-        'title': subTaskEntry,
-        'taskChecked': false
-    };
-
-    currentSubTasks.push(newSubTask);
-
-}
-
 function deleteCurrentSelectedSubTask(subtaskID) {
-    console.log("SubtaskID -> delete: " + subtaskID);
-    let indexOfSubtask = getIndexOfObjectOfArray(subtaskID, currentSubTasks);
-    if (indexOfSubtask < 0) { return; }
-    currentSubTasks.splice(indexOfSubtask, 1);
+    currentSubTasks = addTaskUtils.removeSubtaskFromArray(subtaskID, currentSubTasks);
     renderSubtasks();
 }
 
@@ -656,7 +611,7 @@ async function addTaskCreateTask(event) {
 
 
 function addTaskAfterSafe() {
-    toggleDialogDiaplay();
+    toggleDialogDisplay();
     const dialog = document.getElementById('add-task-safe-dialog');
     dialog.classList.add('safe-dialog-show');
     dialog.showModal();
@@ -668,7 +623,7 @@ function addTaskAfterSafe() {
 
 
 
-function toggleDialogDiaplay() {
+function toggleDialogDisplay() {
     document.getElementById('add-task-safe-dialog').classList.toggle('visually-hidden');
 }
 
@@ -677,33 +632,11 @@ function addTaskFormClear() {
 }
 
 
-function addTaskSubmitOnMouse() {
-    document.getElementById('task-title').blur();
-    document.getElementById('due-date-display').blur();
-    addTaskCheckRequiredField();
 
-}
 
 //!SECTION - FormEvent Ende
 
-//SECTION - CHECK
 
-function addTaskCheckRequiredField() {
-
-    let createButton = document.getElementById('createTaskButton');
-
-    createButton.disabled =
-        currentDueDate.length > 0 &&
-            currentTitle.length > 0 &&
-            currentPriority.length > 0 &&
-            currentCategory.hasOwnProperty("title") ? false : true;
-
-}
-
-//!SECTION - Check Ende
-
-// Macht die Hauptfunktion global verfügbar für das HTML
-/* window.onLoadAddTask = onLoadAddTask; */
 
 
 
