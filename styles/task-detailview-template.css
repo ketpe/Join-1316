@@ -1,3 +1,7 @@
+.detail-view-task-dialog {
+    border: none;
+}
+
 .task-section {
     max-width: 525px;
     max-height: 931px;

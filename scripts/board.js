@@ -15,6 +15,8 @@ async function getDetailViewTask(taskId) {
     task = await getDatabaseTaskCategory([task]);
     task = await getDatabaseTaskSubtasks(task);
     task = await getDatabaseTaskContact(task);
+    console.log(task);
+
     let renderedContacts = renderAssignedContacts(task.assignedContacts);
     console.log(task);
     task = task[0];

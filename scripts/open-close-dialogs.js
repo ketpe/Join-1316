@@ -79,6 +79,6 @@ function renderAddContactIntoDialog() {
     includeHtml("dialog-content-contacts", "add-contact.html");
 }
 async function renderDetailViewTemplate(taskId) {
-    await includeHtml("dialog-content", "task-template.html");
-    getDetailViewTask(taskId);
+    await includeHtml("dialog-content-detail-view-task", "task-template.html");
+    // getDetailViewTask(taskId);
 }
