@@ -1,5 +1,6 @@
 /**
  * Utility class for managing tasks, contacts, and subtasks.
+ * Provides methods for handling user IDs, contact assignments, and subtask management.
  */
 class AddTaskUtils {
 
