@@ -1,13 +1,17 @@
 .board-header {
+    position: fixed;
+    top: var(--header-height);
+    z-index: 100;
     height: 232px;
     width: 100%;
     display: flex;
     flex-direction: column;
-
+    background: var(--bg-default-sites);
 }
 
 .board-headline {
     height: 73px;
+    max-width: 1056px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -56,7 +60,6 @@
 .board-headline-bottom {
     display: flex;
     align-items: center;
-    /* justify-content: space-between; */
     gap: 24px;
     width: 100%;
     height: 24px;
@@ -140,13 +143,11 @@
     display: flex;
     width: 100%;
     gap: 24px;
-    padding: 8px 64px 0 64px;
+    padding: 240px 64px 0 64px;
 }
 
 .kanban-column {
-
-    width: 244px;
-    /* Eigentlich 246px */
+    width: 246px;
     min-height: 200px;
     display: flex;
     flex-direction: column;
