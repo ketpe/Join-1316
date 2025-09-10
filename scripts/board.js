@@ -8,13 +8,15 @@ async function getBoardTasks() {
     renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     addLeftPositionStyleassignedContacts();
 }
-
+/*NOTE - DetailView*/
 async function getDetailViewTask(taskId) {
     let task = await getDataByKey("id", taskId, "tasks");
     console.log(task);
     task = await getDatabaseTaskCategory([task]);
     task = await getDatabaseTaskSubtasks(task);
     task = await getDatabaseTaskContact(task);
+    console.log(task);
+
     let renderedContacts = renderAssignedContacts(task.assignedContacts);
     console.log(task);
     task = task[0];
@@ -143,14 +145,6 @@ function addLeftPositionStyleassignedContacts() {
         });
     });
 }
-
-// async function renderDetailViewTemplate(taskId) {
-//     includeHtml("dialog-content", "task-template.html");
-//     let taskData = await getDataByKey("id", taskId, "tasks");
-//     console.log(taskData);
-
-//     ;
-// };
 
 async function renderTaskDetailView(taskId) {
     await includeHtml("dialog-content", "task-template.html");

@@ -18,7 +18,7 @@ async function dropTask(event, column) {
         column.querySelector('.kanban-tasks').appendChild(draggedTask);
         const newCategory = column.getAttribute('id');
         const taskId = draggedTask.getAttribute('id');
-        await updateData(`/tasks/${taskId}`, { taskStateCategory: newCategory });
+        await updateData(`tasks/${taskId}`, { taskStateCategory: newCategory });
     }
     toggleNoTaskVisible()
 }
