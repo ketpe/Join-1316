@@ -106,9 +106,10 @@ async function updateData(path = "", data = {}) {
 
     try {
         response = await fetch(BASE_URL + path + ".json", {
-            method: "PATCH",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                'X-HTTP-Method-Override': 'PATCH'
             },
             body: JSON.stringify(data),
         });

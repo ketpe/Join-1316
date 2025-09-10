@@ -26,11 +26,11 @@ async function onAddTaskDialogOpen() {
  * @param {Event} event - The event that triggered the close action.
  */
 function addTaskDialogClose(event) {
-
+    //Das Div noch selectieren!
     const dialog = document.getElementById('add-task-dialog');
     const closeDiv = document.getElementById('a-t-dialog-close-div');
     const cancelButton = document.getElementById('a-t-cancel-btn');
-    if(event.target == dialog || event.target == closeDiv || event.target == cancelButton){
+    if(event.target == dialog || event.target == closeDiv || event.target == cancelButton || event.target.closest('.btn-overlay-close')){
         addDialogHideClass('add-task-dialog');
         setTimeout(function() {
             dialog.close();
