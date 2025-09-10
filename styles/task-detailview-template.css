@@ -5,10 +5,13 @@
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.16);
 }
 
+.detail-view-content{
+    max-height: 829px;
+}
+
 .task-section {
     max-width: 525px;
-    max-height: 931px;
-    /* border-radius: 30px; */
+    max-height: 747px;
     padding-top: 48px;
     padding-right: 40px;
     padding-bottom: 48px;
@@ -16,7 +19,6 @@
     gap: 24px;
     display: flex;
     flex-direction: column;
-    /* border: 1px solid var(--input-border-color); */
 }
 
 .task-header {
@@ -47,6 +49,7 @@
 .task-main {
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
 }
 
 

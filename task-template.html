@@ -40,16 +40,17 @@
             </div>
 
         </section>
-        <div class="task-detailview-actions">
-            <button onclick="onDeleteContact(event,this)" id="${cd.id}" class="btn-task-action btn-task-delete">
-                <div class="action-icons action-delete-icon"></div>
-                <p>Delete</p>
-            </button>
-            <div class="vertical-seperator"></div>
-            <button onclick="DialogOpen('${cd.id}')" class="btn-task-action btn-task-edit">
-                <div class="action-icons action-edit-icon"></div>
-                <p>Edit</p>
-            </button>
-        </div>
     </main>
+    <footer class="task-detailview-actions">
+        <button type="button" onclick="onDeleteContact(event,this)" id="${cd.id}"
+            class="btn-task-action btn-task-delete">
+            <div class="action-icons action-delete-icon"></div>
+            <p>Delete</p>
+        </button>
+        <div class="vertical-seperator"></div>
+        <button type="button" onclick="DialogOpen('${cd.id}')" class="btn-task-action btn-task-edit">
+            <div class="action-icons action-edit-icon"></div>
+            <p>Edit</p>
+        </button>
+    </footer>
 </div>
