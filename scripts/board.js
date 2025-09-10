@@ -4,25 +4,11 @@ async function getBoardTasks() {
     tasks = await getDatabaseTaskCategory(tasks);
     tasks = await getDatabaseTaskSubtasks(tasks);
     tasks = await getDatabaseTaskContact(tasks);
-    console.log(tasks);
+    //console.log(tasks);
     renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     addLeftPositionStyleassignedContacts();
 }
-/*NOTE - DetailView*/
-async function getDetailViewTask(taskId) {
-    let task = await getDataByKey("id", taskId, "tasks");
-    console.log(task);
-    task = await getDatabaseTaskCategory([task]);
-    task = await getDatabaseTaskSubtasks(task);
-    task = await getDatabaseTaskContact(task);
-    console.log(task);
 
-    let renderedContacts = renderAssignedContacts(task.assignedContacts);
-    console.log(task);
-    task = task[0];
-    console.log();
-
-}
 
 function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone) {
     tasks.forEach(task => {
@@ -149,4 +135,24 @@ function addLeftPositionStyleassignedContacts() {
 async function renderTaskDetailView(taskId) {
     await includeHtml("dialog-content", "task-template.html");
     getDetailViewTask(taskId); // Hier solltest du die Task-Daten ins Template schreiben!
+}
+
+/*NOTE - DetailView*/
+async function getDetailViewTask(taskId) {
+    let tasks = await getDataByKey("id", taskId, "tasks");
+    tasks = await getDatabaseTaskCategory([tasks]);
+    tasks = await getDatabaseTaskSubtasks(tasks);
+    tasks = await getDatabaseTaskContact(tasks);
+
+    const boardUtils = new BoardTaskDetailViewUtils(taskId, tasks);
+    boardUtils.startRenderTaskDetails();
+
+
+    //console.log(task);
+
+    /* let renderedContacts = renderAssignedContacts(task.assignedContacts);
+    console.log(task);
+    task = task[0];
+    console.log(); */
+
 }

@@ -1,11 +1,14 @@
 .detail-view-task-dialog {
-    border: none;
+    border: none !important;
+    border-radius: 30px;
+    outline: none !important;
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.16);
 }
 
 .task-section {
     max-width: 525px;
     max-height: 931px;
-    border-radius: 30px;
+    /* border-radius: 30px; */
     padding-top: 48px;
     padding-right: 40px;
     padding-bottom: 48px;
@@ -13,7 +16,7 @@
     gap: 24px;
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--input-border-color);
+    /* border: 1px solid var(--input-border-color); */
 }
 
 .task-header {
@@ -28,7 +31,6 @@
     justify-content: center;
     width: 164px;
     height: 36px;
-    /* background-color: #0038FF; platzhalter da per classname zugewiesen*/
     border-radius: 8px;
     gap: 10px;
 
@@ -47,13 +49,6 @@
     flex-direction: column;
 }
 
-.task-title {
-    font-family: Inter;
-    font-weight: 700;
-    font-style: Bold;
-    font-size: 61px;
-    margin: 0;
-}
 
 .task-description {
     font-family: Inter;

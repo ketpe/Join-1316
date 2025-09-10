@@ -8,7 +8,7 @@ function openDialog(dialogId, renderSpecificFunction) {
     toggleScrollOnBody();
     addDialogShowClass(dialogId);
     document.getElementById(dialogId).showModal();
-    if (renderSpecificFunction) renderSpecificFunction();
+    //if (renderSpecificFunction) renderSpecificFunction();
 }
 /** * Closes a dialog based on an event
  * @param {Event} event - The event that triggered the close
@@ -51,6 +51,7 @@ function toggleScrollOnBody() {
  */
 function addDialogShowClass(dialogId) {
     let dialog = document.getElementById(dialogId);
+    if(!dialog){return;}
     dialog.classList.remove('dialog-hide');
     dialog.classList.add('dialog-show');
 }
@@ -80,5 +81,5 @@ function renderAddContactIntoDialog() {
 }
 async function renderDetailViewTemplate(taskId) {
     await includeHtml("dialog-content-detail-view-task", "task-template.html");
-    // getDetailViewTask(taskId);
+    getDetailViewTask(taskId);
 }
