@@ -146,13 +146,13 @@ async function getDetailViewTask(taskId) {
 
     const boardUtils = new BoardTaskDetailViewUtils(taskId, tasks);
     boardUtils.startRenderTaskDetails();
+}
 
-
-    //console.log(task);
-
-    /* let renderedContacts = renderAssignedContacts(task.assignedContacts);
-    console.log(task);
-    task = task[0];
-    console.log(); */
-
+async function detailViewChangeSubtaskChecked(button) {
+    button.classList.toggle('checkbox-btn-default');
+    button.classList.toggle('checkbox-btn-default-hover');
+    const subTaskID = button.getAttribute('data-id');
+    const isActiv = button.getAttribute('data-checked');
+    await updateData(`subTasks/${subTaskID}`, { taskChecked: isActiv == "true" ? false : true });
+    
 }

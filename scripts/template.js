@@ -1,11 +1,11 @@
-function getContactListElement(contact, isAssinged){
+function getContactListElement(contact, isAssinged, isdetailView = false){
     return `
         <button id="${contact['id']}" type="button" class="contact-list-btn ${(isAssinged ? 'contact-selected' : '')}" data-active="${(isAssinged ? 'true' : 'false')}" onclick="contactButtonOnListSelect(this)">
             <div class="contact-profil-container">
                 <div class="contact-ellipse ${contact['initialColor']}"><span>${contact['initial']}</span></div>
                 <p class="${(isAssinged ? 'white' : '')}" >${contact['firstname']} ${contact['lastname']}</p>
             </div>
-            <div class="contact-check-icon  ${(isAssinged ? 'contact-checked' : 'contact-unchecked')}" role="img" title="Check or uncheck Icon"></div>
+            <div class="contact-check-icon ${(isAssinged ? 'contact-checked' : 'contact-unchecked')} ${isdetailView ? "d-none" : ""} " role="img" title="Check or uncheck Icon"></div>
         </button>
     `;
 }
@@ -64,4 +64,14 @@ function getSubtaskListElementForChanging(subTask) {
         </li>
     `;
     
+}
+
+function getSubtaskForDetailView(currentSubtask) {
+    return `
+        <div class="subtask-content">
+            <button onclick="detailViewChangeSubtaskChecked(this)" type="button" data-id="${currentSubtask['id']}" data-checked="${currentSubtask['taskChecked']}"
+                title="Check if the subtask is finished" class="checkbox-btn ${currentSubtask['taskChecked'] ? 'checkbox-btn-default-hover' : 'checkbox-btn-default'}"></button>
+            <span id="subtask-text" class="subtask-text">${currentSubtask['title']}</span>
+        </div>
+    `;
 }

@@ -10,35 +10,35 @@
     <main class="task-main">
         <h1 id="task-title" class="join-h1 join-h1-dialog">Kochwelt Page & Recipe Recommender</h1>
         <p id="task-description" class="task-description">Build start page with recipe recommendation.</p>
-        <table class="task-details-table">
-            <thead>
-                <tr class="task-due-date-section">
-                    <td class="task-due-date-label">Due Date:</td>
-                    <td id="due-date" class="task-due-date">10/05/2025</td>
-                </tr>
-                <tr class="task-priority-section">
-                    <td class="task-priority-label">Priority:</td>
-                    <td class="task-priority">
-                        <div class="priority-indicator">
-                            <p id="priority-text">Urgent</p>
-                            <div role="img" class="priority-icon-urgent"></div>
-                        </div>
-                    </td>
-                </tr>
-        </table>
-        <p class="assigned-contact-label">Assigned To:</p>
-        <ul class="assigned-contact" id="contact-list">
-            <li class="assigned-contact-item" id="assigned-contact-items">
-                <!-- add Assigned Contacts here -->
-            </li>
-        </ul>
-        <section class="task-subtask">
-            <p id="subtask-title">Subtasks</p>
-            <div class="subtask-content">
-                <button onclick="toggleSubtaskCheckbox(this)" type="button" id="btn-subtask"
-                    class="checkbox-btn checkbox-btn-default"></button>
-                <span id="subtask-text" class="subtask-text">Implement Recipe Recommendation</span>
+        <section class="task-data-row">
+            <legend>Due Date:</legend>
+            <p id="task-due-date">10/05/2025</p>
+        </section>
+        <section class="task-data-row">
+            <legend>Priority:</legend>
+            <div class="priority-indicator">
+                <p id="priority-text">Urgent</p>
+                <div role="img" class="" title="priotity icon"></div>
             </div>
+        </section>
+        <legend class="assigned-contact-label">Assigned To:</legend>
+        <div id="contact-List-for-task" class="task-detail-view-contact-list">
+        </div>
+        <!-- <ul class="assigned-contact" id="contact-list">
+            <li class="assigned-contact-item" id="assigned-contact-items">
+                
+            </li>
+        </ul> -->
+        <section class="task-subtask">
+            <legend id="subtask-title">Subtasks</legend>
+            <div id="detail-view-subtask-container">
+                <!-- <div class="subtask-content">
+                    <button onclick="toggleSubtaskCheckbox(this)" type="button" id="btn-subtask"
+                        title="Check if the subtask is finished" class="checkbox-btn checkbox-btn-default"></button>
+                    <span id="subtask-text" class="subtask-text">Implement Recipe Recommendation</span>
+                </div> -->
+            </div>
+
         </section>
         <div class="task-detailview-actions">
             <button onclick="onDeleteContact(event,this)" id="${cd.id}" class="btn-task-action btn-task-delete">

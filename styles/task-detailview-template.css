@@ -29,7 +29,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 164px;
     height: 36px;
     border-radius: 8px;
     gap: 10px;
@@ -37,10 +36,11 @@
     p {
         font-family: Inter;
         font-weight: 400;
-        font-style: Regular;
         font-size: 23px;
         color: white;
         margin: 0;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 }
 
@@ -53,18 +53,44 @@
 .task-description {
     font-family: Inter;
     font-weight: 400;
-    font-style: Regular;
     font-size: 20px;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-top: 16px;
+    margin-bottom: 25px;
 }
 
-.task-details-table {
+.task-data-row{
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.task-data-row>legend{
+    font-size: 20px;
+    font-family: 'Inter';
+    font-weight: 400;
+    color: var(--bg-default);
+    width: 117px;
+    margin: 0;
+}
+
+.task-data-row p{
+    font-family: 'Inter';
+    font-size: 20px;
+    font-weight: 400;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+/* .task-details-table {
     display: flex;
     flex-direction: row;
 
     td {
         padding: 0 25px 25px 0;
     }
-}
+} */
 
 .task-due-date-section,
 .task-priority-section {
@@ -98,6 +124,7 @@
 .priority-icon-Medium,
 .priority-icon-Urgent {
     width: 17px;
+    height: 17px;
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -120,15 +147,22 @@
 
 /*NOTE - Listenelemente*/
 
+.task-detail-view-contact-list{
+    width: 100%;
+    height: 0;
+    background-color: transparent;
+}
+
+.subtask-title,
 .assigned-contact-label {
     font-family: Inter;
     font-weight: 400;
-    font-style: Regular;
     font-size: 20px;
     color: var(--bg-default);
     margin: 0;
-    padding-bottom: 24px;
+    margin-bottom: 8px;
 }
+
 
 .assigned-contact {
     list-style: none;
@@ -202,9 +236,9 @@
 .task-subtask {
     font-family: Inter;
     font-weight: 400;
-    font-style: Regular;
     font-size: 20px;
     color: var(--bg-default);
+    margin-top: 16px;
 }
 
 .subtask-content {
