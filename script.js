@@ -50,4 +50,11 @@ document.addEventListener('click', function (event) {
 });
 
 
+function showErrorMessage(message) {
+    let errorText = document.getElementById("login-error-text");
+    errorText.textContent = message;
+    errorText.classList.remove("d-none");
+    setTimeout(() => errorText.classList.add("d-none"), 3000);
+    location.reload();
+}
 
