@@ -21,7 +21,7 @@ async function getAllData(tableName = "") {
 
 function getRandomColor() {
     const colorClasses = [
-        'orange', 'vilolet', 'coral', 'gold', 'lemon', 'red', 'blue',
+        'orange', 'violet', 'coral', 'gold', 'lemon', 'red', 'blue',
         'peach', 'cyan', 'pink', 'indigo', 'mint', 'magenta', 'lime', 'amber'
     ];
     const randomIndex = Math.floor(Math.random() * colorClasses.length);
