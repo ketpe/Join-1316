@@ -19,6 +19,15 @@ async function getAllData(tableName = "") {
     return dataArray;
 }
 
+function getRandomColor() {
+    const colorClasses = [
+        'orange', 'vilolet', 'coral', 'gold', 'lemon', 'red', 'blue',
+        'peach', 'cyan', 'pink', 'indigo', 'mint', 'magenta', 'lime', 'amber'
+    ];
+    const randomIndex = Math.floor(Math.random() * colorClasses.length);
+    return colorClasses[randomIndex];
+}
+
 /**
  * Get data by searchkey and value of database by tablename.
  * @param {string} key
