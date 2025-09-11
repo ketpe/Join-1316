@@ -278,7 +278,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
+  border: none !important;
   border-radius: 56px;
   background-color: transparent;
   cursor: pointer;

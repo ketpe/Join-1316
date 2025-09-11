@@ -4,25 +4,11 @@ async function getBoardTasks() {
     tasks = await getDatabaseTaskCategory(tasks);
     tasks = await getDatabaseTaskSubtasks(tasks);
     tasks = await getDatabaseTaskContact(tasks);
-    console.log(tasks);
+    //console.log(tasks);
     renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     addLeftPositionStyleassignedContacts();
 }
-/*NOTE - DetailView*/
-async function getDetailViewTask(taskId) {
-    let task = await getDataByKey("id", taskId, "tasks");
-    console.log(task);
-    task = await getDatabaseTaskCategory([task]);
-    task = await getDatabaseTaskSubtasks(task);
-    task = await getDatabaseTaskContact(task);
-    console.log(task);
 
-    let renderedContacts = renderAssignedContacts(task.assignedContacts);
-    console.log(task);
-    task = task[0];
-    console.log();
-
-}
 
 function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone) {
     tasks.forEach(task => {
@@ -149,4 +135,31 @@ function addLeftPositionStyleassignedContacts() {
 async function renderTaskDetailView(taskId) {
     await includeHtml("dialog-content", "task-template.html");
     getDetailViewTask(taskId); // Hier solltest du die Task-Daten ins Template schreiben!
+}
+
+/*NOTE - DetailView*/
+async function getDetailViewTask(taskId) {
+    let tasks = await getDataByKey("id", taskId, "tasks");
+    tasks = await getDatabaseTaskCategory([tasks]);
+    tasks = await getDatabaseTaskSubtasks(tasks);
+    tasks = await getDatabaseTaskContact(tasks);
+
+    await includeHtml("dialog-content-detail-view-task", "task-template.html");
+
+    const boardUtils = new BoardTaskDetailViewUtils(taskId, tasks);
+
+    openDialog('detail-view-task-dialog');
+    boardUtils.startRenderTaskDetails();
+    const currentMainHeight = boardUtils.getCurrentHeight();
+    boardUtils.setDialogHeight(currentMainHeight);
+
+}
+
+async function detailViewChangeSubtaskChecked(button) {
+    button.classList.toggle('checkbox-btn-default');
+    button.classList.toggle('checkbox-btn-default-hover');
+    const subTaskID = button.getAttribute('data-id');
+    const isActiv = button.getAttribute('data-checked');
+    await updateData(`subTasks/${subTaskID}`, { taskChecked: isActiv == "true" ? false : true });
+    
 }

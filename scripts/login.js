@@ -13,6 +13,7 @@ async function checkLogin(email, password) {
         navigateToSummary();
     } else {
         setLogStatus('0');
+        showErrorMessage('Check your email and password. Please try again.')
         location.reload();
     }
 };
@@ -22,3 +23,12 @@ function loginGuest() {
     navigateToSummary();
 };
 
+function togglePasswordVisibility() {
+    let passwordInput = document.getElementById("password");
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+    } else {
+        passwordInput.type = "password";
+    }
+};

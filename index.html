@@ -26,26 +26,29 @@
             </header>
 
             <section aria-label="form section" class="login-signup-container" aria-labelledby="login-form-title">
-                <form class="login-signup-form form-for-login" aria-describedby="login-error-text" method="get"
+                <form class="login-signup-form form-for-login" aria-describedby="login-error-text" method="post"
                     onsubmit="loginForm(event)">
                     <h1>Log in</h1>
                     <div class="login-signup-h1-line" aria-hidden="true"></div>
 
                     <div class="login-signup-input-field-container">
-                        <label for="username" class="visually-hidden">Email</label>
-                        <input type="email" id="username" name="email" class="login-signup-input input-mail"
+                        <label for="email" class="visually-hidden">Email</label>
+                        <input type="text" id="email" name="email" class="login-signup-input input-mail"
                             placeholder="Email" autocomplete="email">
                         <label for="password" class="visually-hidden">Password</label>
 
                         <div class="login-password-container">
                             <input type="password" id="password" name="password"
                                 class="login-signup-input login-password" placeholder="Password"
-                                autocomplete="current-password">
+                                autocomplete="off" spellcheck="false" autocapitalize="none">
 
                             <button type="button" title="password icon"
                                 class="login-toggle-password login-password-lock" role="img"
                                 aria-labelledby="Password visibility toggle button"
-                                alt="Toggle password visibility"></button>
+                                alt="Toggle password visibility" onclick="togglePasswordVisibility()">
+                                <span class="visually-hidden">Toggle password visibility</span>
+                            </button>
+                        </div>
 
                         </div>
 
@@ -53,7 +56,7 @@
 
 
                         <span class="login-signup-error-text-container">
-                            <p id="login-error-text" role="alert" hidden>
+                            <p id="login-error-text" role="alert" class="d-none">
                                 Check your email and password. Please try again.
                             </p>
                         </span>
