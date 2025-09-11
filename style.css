@@ -43,9 +43,3 @@
     width: 100%;
     background-color: var(--bg-default-sites);
 }
-
-.header-section {
-    position: sticky;
-    top: 0;
-    z-index: 200;
-}

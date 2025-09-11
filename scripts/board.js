@@ -20,7 +20,13 @@ function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback,
                     task.taskStateCategory === 'done' ? taskDone.innerHTML += boardTasksTemplate(task, renderedContacts) : '';
     })
     let taskElements = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone]
+    taskElements = addDropZones(taskElements);
     toggleNoTaskVisible(taskElements);
+}
+
+function addDropZones(taskElements) {
+    taskElements.forEach(tE => { if (tE) tE.innerHTML += boardTaskEmptyDropTemplate() });
+    return taskElements
 }
 
 function getHtmlTasksContent() {
@@ -29,6 +35,7 @@ function getHtmlTasksContent() {
     TaskContentElements.forEach(tE => { if (tE) tE.innerHTML = ""; });
     TaskContentElements.forEach(tE => {
         if (tE) tE.innerHTML = boardTaskEmptyTemplate(tE.dataset.category);
+
     })
     return { TaskContentElements };
 }
@@ -161,5 +168,5 @@ async function detailViewChangeSubtaskChecked(button) {
     const subTaskID = button.getAttribute('data-id');
     const isActiv = button.getAttribute('data-checked');
     await updateData(`subTasks/${subTaskID}`, { taskChecked: isActiv == "true" ? false : true });
-    
+
 }

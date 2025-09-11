@@ -4,6 +4,8 @@ function startDrag(event, task) {
     draggedTask = task;
     setTimeout(() => {
         task.classList.add('dragging');
+        console.log(task);
+
     }, 0);
 }
 
