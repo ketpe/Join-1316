@@ -10,9 +10,6 @@ class BoardTaskDetailViewUtils {
     startRenderTaskDetails() {
         this.getCurrentTask();
         if (this.currentTask == null) { return; }
-
-        console.log(this.currentTask);
-
         this.viewCategory();
         this.viewTextInDialog('user-story', this.currentTask.categoryData.title);
         this.viewTextInDialog('task-title', this.currentTask['title']);
@@ -75,5 +72,20 @@ class BoardTaskDetailViewUtils {
 
         subTaskContainer.style.height = (this.currentTask.subTasks.length * 28) + "px";
     }
+
+    getCurrentHeight(){
+        return document.querySelector(".task-main").offsetHeight;
+    }
+
+    setDialogHeight(currentMainHeight){
+        let taskMain = document.querySelector(".task-main");
+        if(currentMainHeight <= 615){
+            taskMain.style.height = currentMainHeight + "px";
+        }else{
+            taskMain.style.height = "615px";
+            taskMain.classList.add('task-main-scroll');
+        }
+    }
+
 
 }

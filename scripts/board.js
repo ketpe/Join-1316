@@ -144,8 +144,15 @@ async function getDetailViewTask(taskId) {
     tasks = await getDatabaseTaskSubtasks(tasks);
     tasks = await getDatabaseTaskContact(tasks);
 
+    await includeHtml("dialog-content-detail-view-task", "task-template.html");
+
     const boardUtils = new BoardTaskDetailViewUtils(taskId, tasks);
+
+    openDialog('detail-view-task-dialog');
     boardUtils.startRenderTaskDetails();
+    const currentMainHeight = boardUtils.getCurrentHeight();
+    boardUtils.setDialogHeight(currentMainHeight);
+
 }
 
 async function detailViewChangeSubtaskChecked(button) {

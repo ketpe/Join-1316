@@ -49,9 +49,11 @@
 .task-main {
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
 }
 
+.task-main-scroll{
+    overflow-y: scroll;
+}
 
 .task-description {
     font-family: Inter;
