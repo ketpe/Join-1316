@@ -34,7 +34,7 @@ class TaskElements{
 
     getDueDateComponents(isrequired = true, dueDateValue = ""){
         return `
-            <Label for="task-due-date">Due date ${isrequired ? '<span>*</span>' : ''}</Label>
+            <Label for="due-date">Due date ${isrequired ? '<span>*</span>' : ''}</Label>
             <div class="date-field">
                 <input class="a-t-input date-input" id="due-date-display" type="text" placeholder="dd/mm/yyyy" name="due-date" aria-required="true" aria-describedby="a-t-due-date-error"
                     inputmode="numeric" onblur="dateFieldOnChange()"
