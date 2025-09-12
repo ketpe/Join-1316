@@ -19,6 +19,7 @@ class BoardTaskDetailViewUtils {
         this.viewPriority();
         this.viewAssignedContacts();
         this.viewSubTasks();
+        this.setTaskIDIntoButtons();
     }
 
     getCurrentTask() {
@@ -87,5 +88,9 @@ class BoardTaskDetailViewUtils {
         }
     }
 
+    setTaskIDIntoButtons(){
+        document.getElementById('detail-view-delete-btn').setAttribute('data-id', `${this.currentTaskID}`);
+        document.getElementById('detail-view-edit-btn').setAttribute('data-id', `${this.currentTaskID}`);
+    }
 
 }
