@@ -1,7 +1,7 @@
 
 
 /* function boardTasksTemplate(task, rendererdContacts) {
-    return `<div class="kanban-task" draggable="true" id="${task.id}" ondragstart="startDrag(event, this)" ondragend="endDrag(this)" 
+    return `<div class="kanban-task" draggable="true" id="${task.id}" ondragstart="startDrag(event, this)" ondragend="endDrag(this)"
                 onclick="openDialog('detail-view-task-dialog',renderDetailViewTemplate('${task.id}'))">
         <div class="board-task-content">
             <div class="board-task-head-category ${task.categoryData.categoryColor}">
@@ -30,7 +30,7 @@
 } */
 
 function boardTasksTemplate(task, rendererdContacts) {
-    return `<div class="kanban-task" draggable="true" id="${task.id}" ondragstart="startDrag(event, this)" ondragend="endDrag(this)" 
+    return `<div class="kanban-task" draggable="true" id="${task.id}" ondragstart="startDrag(event, this)" ondragend="endDrag(this)"
                 onclick="getDetailViewTask('${task.id}')">
         <div class="board-task-content">
             <div class="board-task-head-category ${task.categoryData.categoryColor}">
@@ -59,9 +59,15 @@ function boardTasksTemplate(task, rendererdContacts) {
 }
 
 function boardTaskEmptyTemplate(category) {
-    return `<div class="kanban-task-empty visually-hidden" >
-                                    <p>No Task ${category}</p>
-                                </div>`
+    return `<div class="kanban-task-empty visually-hidden">
+    <p>No Task ${category}</p>
+</div>`
+}
+
+function boardTaskEmptyDropTemplate() {
+    return `<div class="kanban-dropzone" >
+    <p>No</p>
+</div>`
 }
 
 function getAllAssignedContactsTemplate(assignedContacts) {
