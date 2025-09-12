@@ -112,7 +112,7 @@ function toggleNoTaskVisible() {
     let taskElements = getBoardTaskref();
     taskElements.forEach(element => {
         let noTask = element.querySelector('.kanban-task-empty');
-        if (element.children.length === 1) {
+        if (element.children.length === 2) {
             noTask.classList.remove('visually-hidden');
         } else {
             noTask.classList.add('visually-hidden');
