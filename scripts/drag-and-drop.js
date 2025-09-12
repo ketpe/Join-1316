@@ -4,20 +4,56 @@ function startDrag(event, task) {
     draggedTask = task;
     setTimeout(() => {
         task.classList.add('dragging');
-        console.log(task);
-
+        const currentColumnId = getCurrentColumnId(task);
+        hideAllDropzones();
+        showAllowedDropzones(getAllowedColumns(currentColumnId));
     }, 0);
+}
+
+function getCurrentColumnId(task) {
+    const currentColumn = task.closest('.kanban-column');
+    return currentColumn ? currentColumn.id : '';
+}
+
+function hideAllDropzones() {
+    document.querySelectorAll('.kanban-dropzone').forEach(dropzone => {
+        dropzone.classList.remove('show-dropzone');
+    });
+}
+
+function getAllowedColumns(currentColumnId) {
+    const allowed = {
+        todo: ['inprogress'],
+        inprogress: ['todo', 'awaiting'],
+        awaiting: ['inprogress', 'done'],
+        done: ['awaiting', 'inprogress']
+    };
+    return allowed[currentColumnId] ? allowed[currentColumnId] : [];
+}
+
+function showAllowedDropzones(allowedColumns) {
+    allowedColumns.forEach(colId => {
+        const col = document.getElementById(colId);
+        if (col) {
+            const dropzone = col.querySelector('.kanban-dropzone');
+            if (dropzone) dropzone.style.opacity = '1';
+        }
+    });
 }
 
 function endDrag(task) {
     task.classList.remove('dragging');
     draggedTask = null;
+    document.querySelectorAll('.kanban-dropzone').forEach(dropzone => {
+        dropzone.style.opacity = '0';
+    });
 }
 
 async function dropTask(event, column) {
     column.classList.remove('over');
     if (draggedTask) {
-        column.querySelector('.kanban-tasks').appendChild(draggedTask);
+        let dropzone = column.querySelector('.kanban-dropzone');
+        column.querySelector('.kanban-tasks').insertBefore(draggedTask, dropzone);
         const newCategory = column.getAttribute('id');
         const taskId = draggedTask.getAttribute('id');
         await updateData(`tasks/${taskId}`, { taskStateCategory: newCategory });

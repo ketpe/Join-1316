@@ -65,9 +65,8 @@ function boardTaskEmptyTemplate(category) {
 }
 
 function boardTaskEmptyDropTemplate() {
-    return `<div class="kanban-dropzone" >
-    <p>No</p>
-</div>`
+    return `<div id="kanban-dropzone" class="kanban-dropzone" >
+    </div>`
 }
 
 function getAllAssignedContactsTemplate(assignedContacts) {

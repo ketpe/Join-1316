@@ -137,6 +137,7 @@
     display: flex;
     flex-direction: column;
     height: calc(100vh - var(--header-height));
+    padding-top: 232px;
 
 }
 
@@ -144,7 +145,7 @@
     display: flex;
     width: 100%;
     gap: 24px;
-    padding: 240px 64px 0 64px;
+    padding: 8px 64px 0 64px;
     position: sticky;
     top: 0;
     overflow-y: auto;
@@ -158,7 +159,11 @@
     flex-direction: column;
 }
 
-.kanban-column.over .kanban-dropzone {
+/* .kanban-column.over .kanban-dropzone {
+    opacity: 1;
+} */
+
+.kanban-dropzone-show {
     opacity: 1;
 }
 
@@ -172,18 +177,9 @@
     margin-top: auto;
     border: 1px dashed var(--btn-compliance-links-font-color);
     background: transparent;
-    /* transition: border 0.2s, background-color 0.2s; */
 
 }
 
-/* .kanban-dropzone.over {
-    display: block;
-    background-color: #f0f8ff;
-} */
-
-/* .kanban-tasks.drag-active .kanban-dropzone {
-    display: block;
-} */
 
 .kanban-tasks {
     width: 246px;
