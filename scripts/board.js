@@ -167,16 +167,17 @@ function deleteCurrentTask(button) {
 }
 
 async function editCurrentTask(button) {
-    console.log(button);
     const currentTaskID = button.getAttribute('data-id');
     const task = await getTaskByTaskID(currentTaskID);
-    //console.log(tasks[0]);
     const boardEditUtil = new BoardTaskDetailEditUtils(currentTaskID, task);
-    boardEditUtil.startRenderTaskEdit();
-
-    //aus dem 'dialog-content-detail-view-task' innerhtml entfernen
-    //await includeHtml("dialog-content-detail-view-task", "task-edit-template.html");
-
+    await boardEditUtil.startRenderTaskEdit();
+    await loadContactsAllFromDB();
+    await loadCategoriesFromDB();
+    setNewPriority(task[0]['priority']);
+    currentContactAssignList = boardEditUtil.getCurrentAssignList();
+    showOrHideBadgeContainer('show');
+    currentSubTasks = task[0]['subTasks'];
+    renderSubtasks();
 }
 
 async function getTaskByTaskID(taskId) {
@@ -185,4 +186,8 @@ async function getTaskByTaskID(taskId) {
     tasks = await getDatabaseTaskSubtasks(tasks);
     tasks = await getDatabaseTaskContact(tasks);
     return tasks;
+}
+
+function editCurrentTaskSubmit(event) {
+    
 }

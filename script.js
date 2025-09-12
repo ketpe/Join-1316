@@ -5,6 +5,7 @@ async function init() {
         includeHtml("navbar", "navbar-desktop.html"),
         includeHtml("header", "header-desktop.html")
     ]);
+
     renderUserInitial();
 }
 

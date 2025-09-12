@@ -1,56 +1,19 @@
-<div class="task-section" id="task-section">
-    <header class="task-header">
-        <div id="left-header" class="left-header">
-            <p id="user-story">User Story</p>
-        </div>
+<form class="task-section" id="task-section" action="/post" method="post" onsubmit="return editCurrentTaskSubmit(event)">
+    <header class="task-header-edit">
         <button onclick="closeDialog(event)" class="btn-overlay-close" id="btn-overlay-close-contacts" type="button">
             <div id="btn-overlay-close-div" role="img" title="Close dialog icon"></div>
         </button>
     </header>
-    <main class="task-main">
-        <h1 id="task-title" class="join-h1 join-h1-dialog">Kochwelt Page & Recipe Recommender</h1>
-        <p id="task-description" class="task-description">Build start page with recipe recommendation.</p>
-        <section class="task-data-row">
-            <legend>Due Date:</legend>
-            <p id="task-due-date">10/05/2025</p>
-        </section>
-        <section class="task-data-row">
-            <legend>Priority:</legend>
-            <div class="priority-indicator">
-                <p id="priority-text">Urgent</p>
-                <div role="img" class="" title="priotity icon"></div>
-            </div>
-        </section>
-        <legend class="assigned-contact-label">Assigned To:</legend>
-        <div id="contact-List-for-task" class="task-detail-view-contact-list">
-        </div>
-        <!-- <ul class="assigned-contact" id="contact-list">
-            <li class="assigned-contact-item" id="assigned-contact-items">
-                
-            </li>
-        </ul> -->
-        <section class="task-subtask">
-            <legend id="subtask-title">Subtasks</legend>
-            <div id="detail-view-subtask-container">
-                <!-- <div class="subtask-content">
-                    <button onclick="toggleSubtaskCheckbox(this)" type="button" id="btn-subtask"
-                        title="Check if the subtask is finished" class="checkbox-btn checkbox-btn-default"></button>
-                    <span id="subtask-text" class="subtask-text">Implement Recipe Recommendation</span>
-                </div> -->
-            </div>
-
-        </section>
+    <main class="task-main-edit task-main-scroll">
+        <div class="task-edit-fields"></div>
+        <div></div>
     </main>
     <footer class="task-detailview-actions">
-        <button type="button" onclick="deleteCurrentTask(this)" id="detail-view-delete-btn"
-            class="btn-task-action btn-task-delete">
-            <div class="action-icons action-delete-icon"></div>
-            <p>Delete</p>
-        </button>
-        <div class="vertical-seperator"></div>
-        <button type="button" onclick="editCurrentTask(this)" class="btn-task-action btn-task-edit" id="detail-view-edit-btn">
-            <div class="action-icons action-edit-icon"></div>
-            <p>Edit</p>
+        <button type="submit" id="detail-edit-ok-btn" data-id="" class="btn btn-fill btn-create-task btn-small">
+            <div>
+                <p>Ok</p>
+                <div role="img" title="Check-Icon" aria-hidden="true"></div>
+            </div>
         </button>
     </footer>
-</div>
+</form>

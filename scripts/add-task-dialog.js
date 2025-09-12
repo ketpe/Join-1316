@@ -59,6 +59,9 @@ async function renderAddTaskIntoDialog() {
     await Promise.all([
         includeHtml("dialog-content", "add-task.html")
     ]);
+    const taskElements = new TaskElements();
+    taskElements.fillLeftContainerOnAddTask();
+    taskElements.fillRightContainerOnAddTask();
 }
 
 /** Changes the view of the Add Task form to be suitable for dialog presentation.
