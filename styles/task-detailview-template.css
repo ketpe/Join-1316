@@ -27,6 +27,12 @@
     align-items: center;
 }
 
+.task-header-edit{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
 .left-header {
     display: flex;
     align-items: center;
@@ -53,6 +59,17 @@
 
 .task-main-scroll{
     overflow-y: scroll;
+}
+
+.task-main-edit{
+    display: flex;
+    width: 476px;
+}
+
+.task-edit-fields{
+    display: flex;
+    flex-direction: column;
+    width: 440px;
 }
 
 .task-description {

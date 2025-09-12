@@ -275,6 +275,10 @@ span {
     font-size: 20px;
 }
 
+.a-t-text-area-task-edit{
+    min-height: 120px;
+}
+
 .a-t-text-area:focus {
     outline: none;
     border-color: var(--btn-bg-hover);
@@ -310,6 +314,10 @@ span {
     overflow: hidden;
     transition: height 0.3s ease;
 
+}
+
+.any-list-scroll{
+    overflow: unset !important;
 }
 
 .category-list-container {

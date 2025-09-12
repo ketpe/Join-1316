@@ -24,31 +24,21 @@
         <legend class="assigned-contact-label">Assigned To:</legend>
         <div id="contact-List-for-task" class="task-detail-view-contact-list">
         </div>
-        <!-- <ul class="assigned-contact" id="contact-list">
-            <li class="assigned-contact-item" id="assigned-contact-items">
-                
-            </li>
-        </ul> -->
         <section class="task-subtask">
             <legend id="subtask-title">Subtasks</legend>
             <div id="detail-view-subtask-container">
-                <!-- <div class="subtask-content">
-                    <button onclick="toggleSubtaskCheckbox(this)" type="button" id="btn-subtask"
-                        title="Check if the subtask is finished" class="checkbox-btn checkbox-btn-default"></button>
-                    <span id="subtask-text" class="subtask-text">Implement Recipe Recommendation</span>
-                </div> -->
             </div>
 
         </section>
     </main>
     <footer class="task-detailview-actions">
-        <button type="button" onclick="onDeleteContact(event,this)" id="${cd.id}"
+        <button type="button" onclick="deleteCurrentTask(this)" id="detail-view-delete-btn"
             class="btn-task-action btn-task-delete">
             <div class="action-icons action-delete-icon"></div>
             <p>Delete</p>
         </button>
         <div class="vertical-seperator"></div>
-        <button type="button" onclick="DialogOpen('${cd.id}')" class="btn-task-action btn-task-edit">
+        <button type="button" onclick="editCurrentTask(this)" class="btn-task-action btn-task-edit" id="detail-view-edit-btn">
             <div class="action-icons action-edit-icon"></div>
             <p>Edit</p>
         </button>

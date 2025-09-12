@@ -1,0 +1,197 @@
+class TaskElements{
+    constructor(){
+
+    }
+
+    getTitleComonents(isrequired = true, title = ""){
+        return `
+            <label for="task-title">Title ${isrequired ? '<span aria-hidden="true">*</span>' : ''} </label>
+            <input 
+                class="a-t-input" 
+                id="task-title" 
+                name="task-title" 
+                type="text" 
+                placeholder="Enter a title"
+                aria-required="true"
+                aria-describedby="a-t-title-error"
+                oninput="addTaskTitleOnInput()" 
+                onblur="taskTitleValidation(this.value)"
+                value="${title}"
+                >
+            <div class="a-t-error-text-container">
+                <p id="a-t-title-required" class="error-text-hidden" role="alert">This field is required</p>
+            </div>
+        `;
+    }
+
+    getDescriptionComponents(description = "", isTaskEdit = false){
+        return `
+            <label for="task-description">Description</label>
+            <textarea class="a-t-text-area ${isTaskEdit ? 'a-t-text-area-task-edit' : ''}" name="task-description" id="task-description"
+                placeholder="Enter a Description">${description}</textarea>
+        `;
+    }
+
+    getDueDateComponents(isrequired = true, dueDateValue = ""){
+        return `
+            <Label for="task-due-date">Due date ${isrequired ? '<span>*</span>' : ''}</Label>
+            <div class="date-field">
+                <input class="a-t-input date-input" id="due-date-display" type="text" placeholder="dd/mm/yyyy" name="due-date" aria-required="true" aria-describedby="a-t-due-date-error"
+                    inputmode="numeric" onblur="dateFieldOnChange()"
+                    oninput="dateFieldOnChange()"
+                    value="${dueDateValue}"
+                    >
+                <input type="date" id="due-date-hidden" placeholder="Date" class="date-input-hidden"
+                    onchange="datePickerSelectionChange(event)">
+                <button type="button" class="date-trigger" aria-label="Kalender öffnen"
+                    onclick="onDateIconClick()">
+                    <div role="img" title="Claendar Icon"></div>
+                </button>
+            </div>
+
+            <div class="a-t-error-text-container">
+                <p id="a-t-due-date-required" class="error-text-hidden" role="alert">This field is required</p>
+            </div>
+        
+        `;
+    }
+
+
+    fillLeftContainerOnAddTask(){
+        let leftContainer = document.querySelector(".a-t-f-i-left");
+        if(!leftContainer){return;}
+        leftContainer.innerHTML += this.getTitleComonents();
+        leftContainer.innerHTML += this.getDescriptionComponents();
+        leftContainer.innerHTML += this.getDueDateComponents();
+    }
+
+    getPrioButtonComponents(){
+        return `
+            <legend for="task-priority-button">Priority</legend>
+            <fieldset id="task-priority-button" class="a-t-priority-button-container">
+                <button id="btn-priority-alta" class="btn btn-priority prio-alta" type="button" name="Urgent" data-selected="false" data-name="alta"
+                    onclick="addTaskPrioritySelect(this)">
+                    <div>
+                        <p>Urgent</p>
+                        <div role="img" title="Urgent-Icon" aria-hidden="true"></div>
+                    </div>
+                </button>
+                <button id="btn-priority-media" class="btn btn-priority prio-media" type="button" name="Medium" data-selected="false" data-name="media"
+                    onclick="addTaskPrioritySelect(this)">
+                    <div>
+                        <p>Medium</p>
+                        <div role="img" title="Medium-Icon" aria-hidden="true"></div>
+                    </div>
+                </button>
+                <button id="btn-priority-baja" class="btn btn-priority prio-baja" type="button" name="Low" data-selected="false" data-name="baja"
+                    onclick="addTaskPrioritySelect(this)">
+                    <div>
+                        <p>Low</p>
+                        <div role="img" title="Low-Icon" aria-hidden="true"></div>
+                    </div>
+                </button>
+            </fieldset>
+        `;
+    }
+
+    getContactComponents(){
+        return `
+            <label for="task-assign-to">Assigned to</label>
+            <div class="contact-select-container show-front">
+                <input class="a-t-input show-front a-t-contact-input" type="text" name="task-assign-to"
+                    id="task-assign-to" value="Select contacts to assign" onclick="showAndHideContacts('show')"
+                    oninput="filterContactFromInputValue(this.value)">
+
+                <button id="show-and-hide-contacts" class="btn-show-hide-contact-list" type="button"
+                    title="show and hide button for contactlist" onclick="showAndHideContacts('show')">
+                    <div id="show-hide-icon-contacts" class="icon-show-list" role="img" title="show or hide icon">
+                    </div>
+                </button>
+            </div>
+
+            <div id="contact-List-container" class="contact-List-container">
+                <div id="contact-List-for-task" class="contact-List-for-task">
+                </div>
+            </div>
+        
+        `;
+    }
+
+    getAssignedBadges(){
+        return `
+            <div id="contact-assigned-badge" class="contact-assigned-badge">
+            </div>
+        `;
+    }
+
+    getCategoryComponents(){
+        return `
+            <label for="task-category">Category<span>*</span></label>
+
+            <div class="category-select-container show-front ">
+                <input class="a-t-input a-t-category-input" type="text" name="task-category" id="task-category"
+                    value="Select task category" placeholder="Select task category" readonly aria-required="true"
+                    onclick="onclickCategoryInput(this)">
+
+                <button id="show-and-hide-categories" class="btn-show-hide-category-list" type="button"
+                    title="show and hide button for categories" onclick="showAndHideCategories('show')">
+                    <div id="show-hide-icon-category" class="icon-show-list" role="img" title="show or hide icon">
+                    </div>
+                </button>
+
+            </div>
+
+            <div class="a-t-error-text-container">
+                <p id="a-t-category-required" class="error-text-hidden" role="alert">This field is required</p>
+            </div>
+        
+        `;
+    }
+
+    getCategoryListContainer(){
+        return `
+            <div id="category-list-container" class="category-list-container">
+                <div id="category-list-for-task" class="category-list-for-task">
+                </div>
+            </div>
+        `;
+    }
+
+    getSubTaskComponents(){
+        return `
+            <label for="task-sub-task">Subtasks</label>
+            <div class="sub-input-container">
+                <input class="a-t-input a-t-sub-input" type="text" name="task-sub-task" id="task-sub-task"
+                    onclick="onclickSubtaskInput(this)" placeholder="Add new subtask">
+                <div id="sub-writing-buttons" class="sub-input-writing-btn-container d-none">
+                    <button type="button" title="delete current entry button" aria-label="Delete current entry" onclick="clearSubInputField()">
+                        <div role="img" title="delete icon" aria-hidden="true"></div>
+                    </button>
+                    <div></div>
+                    <button type="button" title="adopt current entry" aria-label="Adopt current entry" onclick="adoptCurrentSubEntry()">
+                        <div role="img" title="check icon" aria-hidden="true"></div>
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    getSubtaskListContainer(){
+        return `
+            <ul class="sub-task-list" aria-live="polite" aria-relevant="additions removals">
+            </ul>
+        `;
+    }
+
+    fillRightContainerOnAddTask(){
+        let rightContainer = document.querySelector('.a-t-f-i-right');
+        rightContainer.innerHTML += this.getPrioButtonComponents();
+        rightContainer.innerHTML += this.getContactComponents();
+        rightContainer.innerHTML += this.getAssignedBadges();
+        rightContainer.innerHTML += this.getCategoryComponents();
+        rightContainer.innerHTML += this.getCategoryListContainer();
+        rightContainer.innerHTML += this.getSubTaskComponents();
+        rightContainer.innerHTML += this.getSubtaskListContainer();
+    }
+
+}

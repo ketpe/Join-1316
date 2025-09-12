@@ -1,3 +1,4 @@
+
 /**
  * Get all Data from Firebase database by tablename.
  * @param {string} tableName

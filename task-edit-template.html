@@ -1,0 +1,19 @@
+<form class="task-section" id="task-section" action="/post" method="post" onsubmit="return editCurrentTaskSubmit(event)">
+    <header class="task-header-edit">
+        <button onclick="closeDialog(event)" class="btn-overlay-close" id="btn-overlay-close-contacts" type="button">
+            <div id="btn-overlay-close-div" role="img" title="Close dialog icon"></div>
+        </button>
+    </header>
+    <main class="task-main-edit task-main-scroll">
+        <div class="task-edit-fields"></div>
+        <div></div>
+    </main>
+    <footer class="task-detailview-actions">
+        <button type="submit" id="detail-edit-ok-btn" data-id="" class="btn btn-fill btn-create-task btn-small">
+            <div>
+                <p>Ok</p>
+                <div role="img" title="Check-Icon" aria-hidden="true"></div>
+            </div>
+        </button>
+    </footer>
+</form>

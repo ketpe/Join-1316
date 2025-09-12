@@ -31,8 +31,11 @@ async function renderAddTaskWithNavAndHeader() {
         includeHtml("header", "header-desktop.html"),
         includeHtml("add-task-content", "add-task.html")
     ]);
-
+    const taskElements = new TaskElements();
+    taskElements.fillLeftContainerOnAddTask();
+    taskElements.fillRightContainerOnAddTask();
 }
+
 
 /**
  * Changes the Add Task view to standard (non-dialog) mode by adjusting classes and attributes.
@@ -373,7 +376,7 @@ function showContactListForSelect(currentContactList = []) {
     contactListContainer.style.height = heightOfContainer + "px";
     contactList.style.height = (heightOfContainer - 27) + "px";
     isContactListOpen = true;
-
+    contactListContainer.classList.add("any-list-scroll");
 }
 
 /**

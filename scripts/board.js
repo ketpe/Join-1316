@@ -146,10 +146,7 @@ async function renderTaskDetailView(taskId) {
 
 /*NOTE - DetailView*/
 async function getDetailViewTask(taskId) {
-    let tasks = await getDataByKey("id", taskId, "tasks");
-    tasks = await getDatabaseTaskCategory([tasks]);
-    tasks = await getDatabaseTaskSubtasks(tasks);
-    tasks = await getDatabaseTaskContact(tasks);
+    let tasks = await getTaskByTaskID(taskId);
 
     await includeHtml("dialog-content-detail-view-task", "task-template.html");
 
@@ -168,5 +165,36 @@ async function detailViewChangeSubtaskChecked(button) {
     const subTaskID = button.getAttribute('data-id');
     const isActiv = button.getAttribute('data-checked');
     await updateData(`subTasks/${subTaskID}`, { taskChecked: isActiv == "true" ? false : true });
+
+}
+
+function deleteCurrentTask(button) {
+    console.log(button);
+
+}
+
+async function editCurrentTask(button) {
+    const currentTaskID = button.getAttribute('data-id');
+    const task = await getTaskByTaskID(currentTaskID);
+    const boardEditUtil = new BoardTaskDetailEditUtils(currentTaskID, task);
+    await boardEditUtil.startRenderTaskEdit();
+    await loadContactsAllFromDB();
+    await loadCategoriesFromDB();
+    setNewPriority(task[0]['priority']);
+    currentContactAssignList = boardEditUtil.getCurrentAssignList();
+    showOrHideBadgeContainer('show');
+    currentSubTasks = task[0]['subTasks'];
+    renderSubtasks();
+}
+
+async function getTaskByTaskID(taskId) {
+    let tasks = await getDataByKey("id", taskId, "tasks");
+    tasks = await getDatabaseTaskCategory([tasks]);
+    tasks = await getDatabaseTaskSubtasks(tasks);
+    tasks = await getDatabaseTaskContact(tasks);
+    return tasks;
+}
+
+function editCurrentTaskSubmit(event) {
 
 }
