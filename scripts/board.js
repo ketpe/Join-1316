@@ -178,6 +178,7 @@ async function editCurrentTask(button) {
     showOrHideBadgeContainer('show');
     currentSubTasks = task[0]['subTasks'];
     renderSubtasks();
+    document.getElementById('detail-edit-ok-btn').setAttribute('data-id', currentTaskID);
 }
 
 async function getTaskByTaskID(taskId) {
@@ -188,6 +189,24 @@ async function getTaskByTaskID(taskId) {
     return tasks;
 }
 
-function editCurrentTaskSubmit(event) {
-    
+async function editCurrentTaskSubmit(event) {
+    if (event) event.preventDefault();
+    const currentID = event.submitter.getAttribute('data-id');
+    const editTaskFormData = new FormData(event.currentTarget);
+    const currentTitle = editTaskFormData.get('task-title');
+    const currentDescription = editTaskFormData.get('task-description');
+    const currentDate = editTaskFormData.get('due-date');
+    const prio = currentPriority;
+    const cList = currentContactAssignList;
+    const subList = currentSubTasks;
+    const cTask = (await getTaskByTaskID(currentID))[0];
+
+    console.log(currentID);
+    console.log(currentTitle);
+    console.log(currentDescription);
+    console.log(currentDate);
+    console.log(prio);
+    console.log(cList);
+    console.log(subList);
+    console.log(cTask);
 }
