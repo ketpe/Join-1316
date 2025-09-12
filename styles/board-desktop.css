@@ -176,7 +176,7 @@
     margin-bottom: 8px;
     margin-top: auto;
     border: 1px dashed var(--btn-compliance-links-font-color);
-    background: transparent;
+    background-color: var(--bg-light-gray);
 
 }
 
