@@ -7,7 +7,8 @@ function loginForm(event) {
 };
 
 async function checkLogin(email, password) {
-    let logInUser = await getDataByKey("email", email, "contacts");
+    const fb = new FirebaseDatabase();
+    const logInUser = await fb.getFirebaseLogin(() => fb.getDataByKey("email", email, "contacts"));
     if (logInUser && logInUser.password === password && logInUser.email === email) {
         setLogStatus(logInUser.id);
         navigateToSummary();

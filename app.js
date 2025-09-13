@@ -1,4 +1,7 @@
 
+import { auth, db, onAuthStateChanged } from "./scripts/firebase.js";
+import { ref, push, set, onValue, get, getDatabase, child, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
 async function includeHtml(targetId, file) {
 
   try {
@@ -21,3 +24,13 @@ async function includeHtml(targetId, file) {
 
 
 window.includeHtml = includeHtml;
+window.firebaseAuth = auth;
+window.firebaseDb = db;
+window.firebaseOnAutheChanged = onAuthStateChanged;
+window.firebaseGetDatabase = getDatabase;
+window.firebaseGet = get;
+window.firebaseRef = ref;
+window.firebaseChild = child;
+window.firebaseSet = set;
+window.firebaseUpdate = update;
+window.firebaseRemove = remove;

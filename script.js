@@ -1,4 +1,4 @@
-const BASE_URL = "https://join-1316-default-rtdb.europe-west1.firebasedatabase.app/";
+/* const BASE_URL = "https://join-1316-default-rtdb.europe-west1.firebasedatabase.app/"; */
 
 async function init() {
     await Promise.all([
@@ -13,7 +13,8 @@ async function renderUserInitial() {
     let logInStatus = sessionStorage.getItem('logInStatus');
     let userinitial = "G";
     if (logInStatus !== "0") {
-        let userinitialRef = await getDataByKey('id', logInStatus, 'contacts');
+        const fb = new FirebaseDatabase();
+        const userinitialRef = await fb.getFirebaseLogin(() => fb.getDataByKey('id', logInStatus, 'contacts'));
         userinitial = userinitialRef.initial;
     }
     let renderUserInitialRef = document.getElementById("user-initial-render");
