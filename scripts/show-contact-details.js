@@ -1,7 +1,9 @@
 async function openContactDetail(element) {
     const listContactElement = element;
     toggleActiveContactClass(listContactElement);
-    let detailContact = await getDataByKey(key = "id", values = listContactElement.id, tableName = "contacts");
+    const fb = new FirebaseDatabase();
+    const detailContact = await fb.getFirebaseLogin(() => fb.getDataByKey(key = "id", values = listContactElement.id, tableName = "contacts"));
+
     let renderDetailContact = document.getElementById('contact-detail-content');
     renderDetailContact.innerHTML = "";
     renderDetailContact.classList.remove('slide-Details-in');

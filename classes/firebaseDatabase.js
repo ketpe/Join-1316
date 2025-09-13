@@ -59,7 +59,7 @@ class FirebaseDatabase {
     }
 
     async updateData(path, data) {
-        
+
         try {
             const database = firebaseGetDatabase();
             const databaseRef = firebaseRef(database, path);
@@ -70,7 +70,7 @@ class FirebaseDatabase {
         }
     }
 
-    async putData(path, data){
+    async putData(path, data) {
         try {
             const database = firebaseGetDatabase();
             const databaseRef = firebaseRef(database, path);
@@ -82,7 +82,7 @@ class FirebaseDatabase {
     }
 
 
-    async deleteData(path){
+    async deleteData(path) {
         try {
             const database = firebaseGetDatabase();
             const databaseRef = firebaseRef(database, path);

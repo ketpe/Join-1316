@@ -56,7 +56,9 @@ async function dropTask(event, column) {
         column.querySelector('.kanban-tasks').insertBefore(draggedTask, dropzone);
         const newCategory = column.getAttribute('id');
         const taskId = draggedTask.getAttribute('id');
-        await updateData(`tasks/${taskId}`, { taskStateCategory: newCategory });
+        const fb = new FirebaseDatabase();
+        await fb.getFirebaseLogin(() => fb.updateData(`tasks/${taskId}`, { taskStateCategory: newCategory }));
+
     }
     toggleNoTaskVisible()
 }

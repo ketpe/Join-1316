@@ -23,8 +23,8 @@ async function renderUserInitial() {
 
 
 /**
- * 
- * @param {*} id 
+ *
+ * @param {*} id
  */
 function toggleDNone(id, event) {
     if (event) event.stopPropagation();
@@ -32,8 +32,8 @@ function toggleDNone(id, event) {
 };
 
 /**
- * 
- * @param {*} event 
+ *
+ * @param {*} event
  */
 
 function noBubbling(event) {
@@ -58,5 +58,18 @@ function showErrorMessage(message) {
     errorText.classList.remove("d-none");
     setTimeout(() => errorText.classList.add("d-none"), 3000);
     location.reload();
+}
+
+function getRandomColor() {
+    const colorClasses = [
+        'orange', 'violet', 'coral', 'gold', 'lemon', 'red', 'blue',
+        'peach', 'cyan', 'pink', 'indigo', 'mint', 'magenta', 'lime', 'amber'
+    ];
+    const randomIndex = Math.floor(Math.random() * colorClasses.length);
+    return colorClasses[randomIndex];
+}
+
+function getNewUid() {
+    return crypto.randomUUID();
 }
 

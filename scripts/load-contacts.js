@@ -5,7 +5,9 @@
 async function renderContacts() {
     const contactList = document.getElementById("contact-list");
     contactList.innerHTML = "";
-    let sortedContacts = await getSortedContact();
+    const fb = new FirebaseDatabase();
+    const sortedContacts = await fb.getFirebaseLogin(() => fb.getSortedContact());
+
     let currentLetter = null;
     createContactList(currentLetter, sortedContacts, contactList)
 }

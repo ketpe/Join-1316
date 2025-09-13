@@ -26,7 +26,8 @@ async function renderGreetingName(logInStatus) {
     let renderGreetingNameResultRef = document.getElementById("greetingName");
     renderGreetingNameResultRef.innerHTML = "";
     if (logInStatus !== "0") {
-        let logInUser = await getDataByKey("id", logInStatus, "contacts");
+        const fb = new FirebaseDatabase();
+        let logInUser = await fb.getFirebaseLogin(() => fb.getDataByKey("id", logInStatus, "contacts"));
         if (logInUser) {
             let firstname = logInUser.firstname;
             let lastname = logInUser.lastname;

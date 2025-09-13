@@ -56,6 +56,8 @@ async function safeDataToDB(firstname, lastname, email, password, initials) {
         'password': password,
         'initial': initials
     };
-    await putData(contacts, data);
+    const fb = new FirebaseDatabase();
+    await fb.getFirebaseLogin(() => fb.fb.putData(contacts, data));
+
 }
 

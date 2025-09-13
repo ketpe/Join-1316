@@ -42,7 +42,9 @@ function getInitials(firstname, lastname) {
 async function editContact(event, button) {
     if (event) event.preventDefault();
     const contact = createUpdateContactObject();
-    await updateData(`/contacts/${button.id}`, contact);
+    const fb = new FirebaseDatabase();
+    const data = await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${button.id}`, contact));
+    console.log(data);
     closeDialogByEvent(event, 'add-contact-dialog');
     clearActiveContactClass();
     renderContacts();
@@ -63,7 +65,9 @@ function createUpdateContactObject() {
 async function onDeleteContact(event, element) {
     if (event) event.preventDefault();
     if (element.id !== "") {
-        await deleteData(`/contacts/${element.id}`);
+        const fb = new FirebaseDatabase();
+        const data = await fb.getFirebaseLogin(() => fb.deleteData(`/contacts/${element.id}`));
+        console.log(data);
         clearActiveContactClass();
         addContactDialogClose(event);
         console.log(event);

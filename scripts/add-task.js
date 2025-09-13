@@ -69,7 +69,8 @@ async function loadDataForAddTask(fromDialog = false) {
  * Utilizes the getSortedContact function from db-functions.js.
  */
 async function loadContactsAllFromDB() {
-    contactAllListFromDB = await getSortedContact()
+    const fb = new FirebaseDatabase();
+    contactAllListFromDB = await fb.getFirebaseLogin(() => fb.getSortedContact());
 }
 
 /**
@@ -77,7 +78,8 @@ async function loadContactsAllFromDB() {
  * Utilizes the getAllData function from db-functions.js.
  */
 async function loadCategoriesFromDB() {
-    categories = await getAllData("categories");
+    const fb = new FirebaseDatabase();
+    categories = await fb.getFirebaseLogin(() => fb.getAllData("categories"));
 }
 
 /**
@@ -114,10 +116,10 @@ function showAndLeaveErrorBorder(inputTarget, visibility = true) {
     }
 }
 
- /**
- * Handles mouse click events within the Add Task window.
- * @param {MouseEvent} e - The mouse event object.
- */
+/**
+* Handles mouse click events within the Add Task window.
+* @param {MouseEvent} e - The mouse event object.
+*/
 function addTaskWindowMouseClick(e) {
 
     if (!e.target.closest(".contact-select-container") && !e.target.closest(".contact-List-container") && isContactListOpen) {
@@ -358,10 +360,10 @@ function renderHideIcon(elementID) {
 }
 
 /**
- * Shows the contact list for selection. 
+ * Shows the contact list for selection.
  * If a current contact list is provided, it uses that; otherwise, it uses the full contact list from the database.
  * Additionally, it adjusts the height of the contact list container based on the number of contacts.
- * @param {Array} currentContactList 
+ * @param {Array} currentContactList
  * @returns {void}
  */
 function showContactListForSelect(currentContactList = []) {
@@ -381,7 +383,7 @@ function showContactListForSelect(currentContactList = []) {
 
 /**
  * Hides the contact list dropdown for task selection.
- * 
+ *
  * This function collapses the contact list container and the contact list itself by setting their heights to zero
  * using `requestAnimationFrame` for smooth UI updates. It also clears the contact list's contents and updates
  * the `isContactListOpen` flag to indicate that the contact list is closed.
@@ -406,7 +408,7 @@ function hideContactListForSelect() {
 /**
  * Renders the contact options for selection.
  * Using TaskUtils to check if the contact is already assigned to the task.
- * @param {Array} contactList 
+ * @param {Array} contactList
  */
 function renderContactOptions(contactList) {
     let contactSelectElement = document.getElementById('contact-List-for-task');
@@ -438,8 +440,8 @@ function contactButtonOnListSelect(currentContactBtn) {
  * Adds the selected contact to the task and updates the UI accordingly.
  * Uses TaskUtils to manage the contact assignment list.
  * Changes the styling of the selected contact to indicate its selection.
- * @param {*} currentContact 
- * @param {string} contactID 
+ * @param {*} currentContact
+ * @param {string} contactID
  */
 function checkInContact(currentContact, contactID) {
     currentContactAssignList = addTaskUtils.contactAddToTask(contactID, contactAllListFromDB, currentContactAssignList);
@@ -456,8 +458,8 @@ function checkInContact(currentContact, contactID) {
  * Removes the selected contact from the task and updates the UI accordingly.
  * Uses TaskUtils to manage the contact assignment list.
  * Changes the styling of the selected contact to indicate its removal.
- * @param {*} currentContact 
- * @param {string} contactID 
+ * @param {*} currentContact
+ * @param {string} contactID
  */
 function checkOutContact(currentContact, contactID) {
     currentContactAssignList = addTaskUtils.contactRemoveFromTask(contactID, currentContactAssignList);
@@ -473,7 +475,7 @@ function checkOutContact(currentContact, contactID) {
 /**
  * Filters the contact list based on the input value.
  * Uses TaskUtils to filter contacts from the full contact list.
- * @param {string} inputValue 
+ * @param {string} inputValue
  */
 function filterContactFromInputValue(inputValue) {
     showContactListForSelect(addTaskUtils.filterContacts(inputValue, contactAllListFromDB));
@@ -481,7 +483,7 @@ function filterContactFromInputValue(inputValue) {
 
 /**
  * Shows or hides the badge container for assigned contacts.
- * @param {string} showOrHide 
+ * @param {string} showOrHide
  * @returns {void}
  */
 function showOrHideBadgeContainer(showOrHide = "") {
@@ -519,7 +521,7 @@ function renderAsignedProfilBadge() {
 
 /**
  * Shows or hides the category list for selection.
- * @param {string} showOrHide 
+ * @param {string} showOrHide
  */
 function showAndHideCategories(showOrHide = "show") {
     if (showOrHide == "show") {
@@ -575,7 +577,7 @@ function hideCategoryListForSelect() {
 /**
  * Renders the category options for selection.
  * If no categories are available, the function returns early.
- * @param {Array} categories 
+ * @param {Array} categories
  */
 function renderCategoryOptions(categories) {
     let categorySelectElement = document.getElementById('category-list-for-task');
@@ -615,7 +617,7 @@ function setCategoryInputfieldValue(value) {
 
 /**
  * Sets the onclick attribute for the show/hide button.
- * @param {string} showOrHide 
+ * @param {string} showOrHide
  */
 function setCategoryShowOrHideButton(showOrHide) {
     const buttonShowOrHide = document.getElementById('show-and-hide-categories');
@@ -724,7 +726,7 @@ function deleteCurrentSelectedSubTask(subtaskID) {
 /**
  * Edits the currently selected subtask.
  * @param {string} subtaskID - The ID of the subtask to edit.
- * @returns void    
+ * @returns void
  */
 function editCurrentSelectedSubTask(subtaskID) {
     renderSubtasks(subtaskID);
@@ -823,12 +825,12 @@ function addTaskAfterSafe(fromDialog = false) {
  * @param {boolean} fromDialog - Indicates if the call is from a dialog.
  */
 function navigateToBoardAfterDialog(fromDialog = false) {
-    if(fromDialog == true){
+    if (fromDialog == true) {
         closeDialog('add-task-dialog');
-        setTimeout(function() {
+        setTimeout(function () {
             navigateToBoard();
         }, 1000)
-    }else{
+    } else {
         navigateToBoard();
     }
 }

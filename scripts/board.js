@@ -1,6 +1,7 @@
 async function getBoardTasks() {
     const { TaskContentelements } = getHtmlTasksContent();
-    let tasks = await getAllData("tasks");
+    const fb = new FirebaseDatabase();
+    let tasks = await fb.getFirebaseLogin(() => fb.getAllData("tasks"));
     tasks = await getDatabaseTaskCategory(tasks);
     tasks = await getDatabaseTaskSubtasks(tasks);
     tasks = await getDatabaseTaskContact(tasks);
@@ -42,15 +43,17 @@ function getHtmlTasksContent() {
 
 async function getDatabaseTaskCategory(tasks) {
     for (let task of tasks) {
-        const categoryData = await getDataByKey("id", task['category'], "categories");
+        const fb = new FirebaseDatabase();
+        const categoryData = await fb.getFirebaseLogin(() => fb.getDataByKey("id", task['category'], "categories"));
         task.categoryData = categoryData;
     }
     return tasks;
 }
 
 async function getDatabaseTaskSubtasks(tasks) {
-    let getAllTaskSubtasks = await getAllData('taskSubtask');
-    let getAllSubtasks = await getAllData('subTasks');
+    const fb = new FirebaseDatabase();
+    let getAllTaskSubtasks = await fb.getFirebaseLogin(() => fb.getAllData('taskSubtask'));
+    let getAllSubtasks = await fb.getFirebaseLogin(() => fb.getAllData('subTasks'));
     tasks.forEach(task => {
         let taskSubTasks = getAllTaskSubtasks.filter(obj => obj.maintaskID === task.id);
         let subTasks = [];
@@ -76,8 +79,9 @@ function getSubTaskSumOfTrue(tasks) {
 }
 
 async function getDatabaseTaskContact(tasks) {
-    let getAllAssignedContacts = await getAllData('taskContactAssigned');
-    let getAllContacts = await getAllData('contacts');
+    const fb = new FirebaseDatabase();
+    let getAllAssignedContacts = await fb.getFirebaseLogin(() => fb.getAllData('taskContactAssigned'));
+    let getAllContacts = await fb.getFirebaseLogin(() => fb.getAllData('contacts'));
 
     tasks.forEach(task => {
         let assignedContacts = getAllAssignedContacts.filter(obj => obj.taskID === task.id)
@@ -164,8 +168,8 @@ async function detailViewChangeSubtaskChecked(button) {
     button.classList.toggle('checkbox-btn-default-hover');
     const subTaskID = button.getAttribute('data-id');
     const isActiv = button.getAttribute('data-checked');
-    await updateData(`subTasks/${subTaskID}`, { taskChecked: isActiv == "true" ? false : true });
-
+    const fb = new FirebaseDatabase();
+    await fb.getFirebaseLogin(() => fb.updateData(`subTasks/${subTaskID}`, { taskChecked: isActiv == "true" ? false : true }));
 }
 
 function deleteCurrentTask(button) {
@@ -189,7 +193,8 @@ async function editCurrentTask(button) {
 }
 
 async function getTaskByTaskID(taskId) {
-    let tasks = await getDataByKey("id", taskId, "tasks");
+    const fb = new FirebaseDatabase();
+    let tasks = await fb.getFirebaseLogin(() => fb.getDataByKey("id", taskId, "tasks"));
     tasks = await getDatabaseTaskCategory([tasks]);
     tasks = await getDatabaseTaskSubtasks(tasks);
     tasks = await getDatabaseTaskContact(tasks);

@@ -1,26 +1,26 @@
 /**
  * addTaskCreateTask.js
- * 
+ *
  * This module handles the creation of a new task, including its subtasks and assigned contacts.
  * It utilizes helper classes to structure the data and interacts with the database to store the information.
  * The main class, CreateNewTask, orchestrates the process of creating a task, adding subtasks,
  * and associating contacts.
- * 
+ *
  * The module also includes utility functions for generating unique IDs and managing database operations.
  * It is designed to be used in conjunction with a user interface that collects task details from the user.
  * The module ensures that all necessary data is properly formatted and stored in the database.
- * 
+ *
  * Dependencies:
  * - db-functions.js: For database operations such as PUT and DELETE.
  * - addTaskUtils.js: For utility functions related to task management.
- * 
+ *
  * Usage:
  * const newTask = new CreateNewTask(taskData, subtaskData, contactData);
  * await newTask.start();
- * 
+ *
  * The above example creates a new task with the provided data and stores it in the database.
  * The taskData, subtaskData, and contactData should be structured according to the expected formats.
- * 
+ *
  * Note: This module does not handle user interface elements or event listeners.
  * It focuses solely on the logic and data management for task creation.
  * It is assumed that the necessary data validation and user input handling are performed elsewhere in the application.
@@ -52,7 +52,7 @@ class CreateNewTask {
      * This method iterates over the provided subtasks, creating a new Subtask object for each one.
      * It then calls the method to associate contacts with the task, passing along the current task and the array of subtasks.
      * @returns {Promise<void>} A promise that resolves when the subtasks have been created and associated with contacts.
-     * @param {*} currentTask 
+     * @param {*} currentTask
      */
     async addTaskCreateSubtaskArray(currentTask) {
         let subTaskArray = [];
@@ -66,7 +66,7 @@ class CreateNewTask {
     /**
      * Associates contacts with the current task.
      * This method creates an array of ContactAssigned objects, including the current user and any additional contacts.
-     * @param {Task} currentTask 
+     * @param {Task} currentTask
      * @param {Array} subTaskArray  Array of subtasks to be associated with the task.
      * @returns {Promise<void>} A promise that resolves when the contacts have been associated with the task.
      */
@@ -88,9 +88,9 @@ class CreateNewTask {
      * This method creates an array of SubstaskToTask objects to establish the relationship between the main task and its subtasks.
      * It then calls the method to write all collected data to the database.
      * @returns {Promise<void>} A promise that resolves when the subtasks have been connected to the task and all data has been written to the database.
-     * @param {Task} currentTask 
-     * @param {Array} subTaskArray 
-     * @param {Array} assignedContactArray 
+     * @param {Task} currentTask
+     * @param {Array} subTaskArray
+     * @param {Array} assignedContactArray
      */
     async subtaskToTaskConnection(currentTask, subTaskArray, assignedContactArray) {
         let subtaskToTaskArray = [];
@@ -112,18 +112,19 @@ class CreateNewTask {
      * @returns {Promise<void>} A promise that resolves when all data has been written to the database.
      */
     async addTaskCreateDBEntries(currentTask, subTaskArray, assignedContactArray, subtaskToTaskArray) {
-        await putData(`/tasks/${currentTask.id}`, currentTask);
+        const fb = new FirebaseDatabase();
+        await fb.getFirebaseLogin(() => fb.putData(`/tasks/${currentTask.id}`, currentTask));
 
         for (let subIndex = 0; subIndex < subTaskArray.length; subIndex++) {
-            await putData(`/subTasks/${subTaskArray[subIndex].id}`, subTaskArray[subIndex]);
+            await fb.getFirebaseLogin(() => fb.putData(`/subTasks/${subTaskArray[subIndex].id}`, subTaskArray[subIndex]));
         }
 
         for (let contactIndex = 0; contactIndex < assignedContactArray.length; contactIndex++) {
-            await putData(`/taskContactAssigned/${assignedContactArray[contactIndex].id}`, assignedContactArray[contactIndex]);
+            await fb.getFirebaseLogin(() => fb.putData(`/taskContactAssigned/${assignedContactArray[contactIndex].id}`, assignedContactArray[contactIndex]));
         }
 
         for (let subToTaskIndex = 0; subToTaskIndex < subtaskToTaskArray.length; subToTaskIndex++) {
-            await putData(`/taskSubtask/${subtaskToTaskArray[subToTaskIndex].id}`, subtaskToTaskArray[subToTaskIndex]);
+            await fb.getFirebaseLogin(() => fb.putData(`/taskSubtask/${subtaskToTaskArray[subToTaskIndex].id}`, subtaskToTaskArray[subToTaskIndex]));
         }
 
     }
