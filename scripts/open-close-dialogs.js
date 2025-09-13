@@ -8,7 +8,7 @@ function openDialog(dialogId, renderSpecificFunction) {
     toggleScrollOnBody();
     addDialogShowClass(dialogId);
     document.getElementById(dialogId).showModal();
-    //if (renderSpecificFunction) renderSpecificFunction();
+    if (renderSpecificFunction) renderSpecificFunction();
 }
 /** * Closes a dialog based on an event
  * @param {Event} event - The event that triggered the close
@@ -51,7 +51,8 @@ function toggleScrollOnBody() {
  */
 function addDialogShowClass(dialogId) {
     let dialog = document.getElementById(dialogId);
-    if(!dialog){return;}
+    console.log(dialogId);
+    if (!dialog) { return; }
     dialog.classList.remove('dialog-hide');
     dialog.classList.add('dialog-show');
 }
@@ -65,9 +66,12 @@ function addDialogShowClass(dialogId) {
  */
 
 function addDialogHideClass(dialogId) {
+    console.log(dialogId);
     let dialog = document.getElementById(dialogId);
-    dialog.classList.remove('dialog-show');
+
+
     dialog.classList.add('dialog-hide');
+    dialog.classList.remove('dialog-show');
 }
 
 

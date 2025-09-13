@@ -145,8 +145,9 @@ function contactPhoneValidation(phoneValue) {
 }
 //NOTE -  Funktion zum Rendern der Kontaktdaten im Edit-Dialog
 function renderEditContactIntoDialog(id) {
+    const fb = new FirebaseDatabase();
     includeHtml("dialog-content-contacts", "edit-contact.html").then(() => {
-        getDataByKey("id", id, "contacts").then(contact => {
+        fb.getDataByKey("id", id, "contacts").then(contact => {
             document.getElementById('contact-name').value = `${contact.firstname} ${contact.lastname}`;
             document.getElementById('contact-email').value = contact.email;
             document.getElementById('contact-phone').value = contact.phone;
