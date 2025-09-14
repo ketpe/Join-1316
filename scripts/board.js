@@ -1,3 +1,5 @@
+let currentSelectedTask = null;
+
 async function getBoardTasks() {
     const { TaskContentelements } = getHtmlTasksContent();
     const fb = new FirebaseDatabase();
@@ -179,15 +181,15 @@ function deleteCurrentTask(button) {
 
 async function editCurrentTask(button) {
     const currentTaskID = button.getAttribute('data-id');
-    const task = await getTaskByTaskID(currentTaskID);
-    const boardEditUtil = new BoardTaskDetailEditUtils(currentTaskID, task);
+    currentSelectedTask = await getTaskByTaskID(currentTaskID);
+    const boardEditUtil = new BoardTaskDetailEditUtils(currentTaskID, currentSelectedTask);
     await boardEditUtil.startRenderTaskEdit();
     await loadContactsAllFromDB();
     await loadCategoriesFromDB();
-    setNewPriority(task[0]['priority']);
+    setNewPriority(currentSelectedTask[0]['priority']);
     currentContactAssignList = boardEditUtil.getCurrentAssignList();
     showOrHideBadgeContainer('show');
-    currentSubTasks = task[0]['subTasks'];
+    currentSubTasks = currentSelectedTask[0]['subTasks'];
     renderSubtasks();
     document.getElementById('detail-edit-ok-btn').setAttribute('data-id', currentTaskID);
 }
@@ -211,14 +213,20 @@ async function editCurrentTaskSubmit(event) {
     const prio = currentPriority;
     const cList = currentContactAssignList;
     const subList = currentSubTasks;
-    const cTask = (await getTaskByTaskID(currentID))[0];
+    const editTaskUtil = new EditTaskSafeUtil(currentSelectedTask[0], currentTitle, currentDescription, currentDate, prio, cList, subList);
+    const resultUpdate = await editTaskUtil.startUpdate();
+    if(resultUpdate){
+        await afterUpdateTask(currentID);
+    }
+}
 
-    console.log(currentID);
-    console.log(currentTitle);
-    console.log(currentDescription);
-    console.log(currentDate);
-    console.log(prio);
-    console.log(cList);
-    console.log(subList);
-    console.log(cTask);
+async function afterUpdateTask(taskId) {
+    let tasks = await getTaskByTaskID(taskId);
+
+    await includeHtml("dialog-content-detail-view-task", "task-template.html");
+
+    const boardUtils = new BoardTaskDetailViewUtils(taskId, tasks);
+    boardUtils.startRenderTaskDetails();
+    const currentMainHeight = boardUtils.getCurrentHeight();
+    boardUtils.setDialogHeight(currentMainHeight);
 }

@@ -51,7 +51,6 @@ function toggleScrollOnBody() {
  */
 function addDialogShowClass(dialogId) {
     let dialog = document.getElementById(dialogId);
-    console.log(dialogId);
     if (!dialog) { return; }
     dialog.classList.remove('dialog-hide');
     dialog.classList.add('dialog-show');
@@ -66,10 +65,7 @@ function addDialogShowClass(dialogId) {
  */
 
 function addDialogHideClass(dialogId) {
-    console.log(dialogId);
     let dialog = document.getElementById(dialogId);
-
-
     dialog.classList.add('dialog-hide');
     dialog.classList.remove('dialog-show');
 }

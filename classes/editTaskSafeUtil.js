@@ -1,6 +1,22 @@
+/**
+ * Class to handle the safe editing of a task
+ * Ensures that contacts and subtasks are properly managed during the update process
+ * Handles the addition and removal of contacts and subtasks associated with the task
+ * Updates the task details while maintaining data integrity
+ * @class EditTaskSafeUtil
+ * @constructor
+ * @param {Object} task - The original task object to be edited
+ * @param {string} currentTitle - The updated title for the task
+ * @param {string} currentDescription - The updated description for the task
+ * @param {string} currentDueDate - The updated due date for the task
+ * @param {string} currentPrio - The updated priority for the task
+ * @param {Array} currentContactList - The list of contacts currently assigned to the task
+ * @param {Array} currentSubtasks - The list of subtasks currently associated with the task
+ * @returns {boolean} true if the update was successful, otherwise false
+ */
+
 class EditTaskSafeUtil{
 
-    editTask;
 
     constructor(task, currentTitle, currentDescription, currentDueDate, currentPrio, currentContactList, currentSubtasks){
         this.task = task;
@@ -12,12 +28,46 @@ class EditTaskSafeUtil{
         this.currentSubtasks = currentSubtasks;
     }
 
-    startUpdate(){
-        this.createUpdateTask();
+    /**
+     * Start the update process for the task
+     * Read the currently stored contacts for the task from the database
+     * Read the currently stored subtasks for the task from the database
+     * Determine the contacts that are no longer needed
+     * Determine the new / additional contacts
+     * Determine the subtasks that are no longer needed -> also delete the subtasks at the end
+     * Determine the new / additional subtasks -> also create these
+     * Update the task
+     * Remove the old contacts
+     * Integrate the new contacts
+     * Remove the old subtasks
+     * Integrate the new subtasks
+     * Update the current subtasks
+     * @returns {boolean} true if everything was successful, otherwise false
+     */
+    async startUpdate(){
+        const editTask = this.createUpdateTask();
+        const taskContactDBList = await this.getTaskContactAssignedList();
+        let taskToSubtaskDBList = await this.getTaskSubtaskList();
+        const removeContactsFromTask = this.findNoLongerAssociatedContacts();
+        const newContactsToTask = this.findNewAssociatedContacts();
+        const removeSubtasksFromTask = this.findNoLongerAssociatedSubtasks();
+        const newSubtasksToTask = this.findNewAssociatedSubtasks();
+
+        if(!await this.updateTask(editTask)){return false;}
+        if(!await this.removeContactsTaskAssociation(removeContactsFromTask, taskContactDBList)){return false;}
+        if(!await this.addContactsTaskAssociation(newContactsToTask)){return false;}
+        if(!await this.removeSubtasksFromTask(removeSubtasksFromTask, taskToSubtaskDBList)){return false;}
+        if(!await this.addNewSubtasksToTask(newSubtasksToTask)){return false;}
+        if(!await this.updateCurrentSubtasks()){return false;}
+        return true;
     }
 
+    /**
+     * Create a new Task object with the updated details
+     * @returns {Task} - Returns a Task object with the updated details
+     */
     createUpdateTask(){ 
-        this.editTask = new Task(
+        return new Task(
             this.task['id'], 
             this.currentTitle, 
             this.currentDescription, 
@@ -26,9 +76,12 @@ class EditTaskSafeUtil{
             this.task['categoryData']['id'], 
             this.task['taskStateCategory']
         );
-
     }
 
+    /**
+     * Get a clean list of currently assigned contacts
+     * @returns {Array} - Returns a clean list of currently assigned contacts (without additional metadata)
+     */
     getCleanContactAssignList(){
         let contacts = [];
 
@@ -39,6 +92,10 @@ class EditTaskSafeUtil{
         return contacts;
     }
 
+    /**
+     * Get a list of contacts that are no longer associated with the task
+     * @returns {Array} - Returns a list of contacts that are no longer associated with the task
+     */
     findNoLongerAssociatedContacts(){
 
         let contactForRemove = [];
@@ -54,6 +111,10 @@ class EditTaskSafeUtil{
         return contactForRemove;
     }
 
+    /**
+     * Get a list of contacts that are newly associated with the task
+     * @returns {Array} - Returns a list of contacts that are newly associated with the task
+     */
     findNewAssociatedContacts(){
         let newContacts = [];
         const cleanContactList = this.getCleanContactAssignList();
@@ -63,9 +124,13 @@ class EditTaskSafeUtil{
                 newContacts.push(this.currentContactList[i]);
             }
         }
-        return newContacts();
+        return newContacts;
     }
 
+    /**
+     * Get a list of subtasks that are no longer associated with the task
+     * @returns {Array} - Returns a list of subtasks that are no longer associated with the task
+     */
     findNoLongerAssociatedSubtasks(){
         let subtasksForRemove = [];
         for(let i = 0; i < this.task.subTasks.length; i++){
@@ -80,6 +145,10 @@ class EditTaskSafeUtil{
 
     }
 
+    /**
+     * Get a list of subtasks that are newly associated with the task
+     * @returns {Array} - Returns a list of subtasks that are newly associated with the task
+     */
     findNewAssociatedSubtasks(){
         let newSubtasks = [];
         for(let i = 0; i < this.currentSubtasks.length; i++){
@@ -92,6 +161,12 @@ class EditTaskSafeUtil{
         return newSubtasks;
     }
 
+    /**
+     * Get the index of an object in an array by its ID
+     * @param {string} objectID - The ID of the object to find
+     * @param {Array} objectArray - The array to search
+     * @returns {number} - The index of the object in the array, or -1 if not found
+     */
     getIndexOfObjectOfArray(objectID, objectArray) {
 
         let objectFind = objectArray.find(x => x['id'] == objectID);
@@ -99,13 +174,11 @@ class EditTaskSafeUtil{
         return objectArray.indexOf(objectFind);
     }
 
-    async removeContactTaskConnection(contactListForRemove){
-        const fb = new FirebaseDatabase();
-        for(let i = 0; i < contactListForRemove.length; i++){
-            //const result = await fb.getFirebaseLogin(() => fb.getAllData('contacts'));
-        }
-    }
 
+    /**
+     * Get a list of taskContactAssigned objects associated with the current task
+     * @returns {Array} - Returns a list of taskContactAssigned objects associated with the current task
+     */
     async getTaskContactAssignedList(){
         const fb = new FirebaseDatabase();
         const dataArray = await fb.getFirebaseLogin(() => fb.getAllData('taskContactAssigned'));
@@ -113,11 +186,113 @@ class EditTaskSafeUtil{
         return taskContactList;
     }
 
+    /**
+     * Get a list of taskSubtask objects associated with the current task
+     * @returns {Array} - Returns a list of taskSubtask objects associated with the current task
+     */
     async getTaskSubtaskList(){
         const fb = new FirebaseDatabase();
         const dataArray = await fb.getFirebaseLogin(() => fb.getAllData('taskSubtask'));
         const taskToSubtaskList = dataArray.filter(x => x['maintaskID'] == this.task['id']);
-        return dataArray;
+        return taskToSubtaskList;
+    }
+
+    /**
+     * Remove contacts from the task's contact list
+     * @param {Array} contactListForRemove - The list of contacts to remove
+     * @param {Array} taskContaktAssignedList - The list of taskContactAssigned objects
+     * @returns {Promise<boolean>} - Returns true if the operation was successful, false otherwise
+     */
+    async removeContactsTaskAssociation(contactListForRemove, taskContaktAssignedList){
+        const fb = new FirebaseDatabase();
+        for(let i = 0; i < contactListForRemove.length; i++){
+            const taskToContact = taskContaktAssignedList.find(x => x['contactId'] == contactListForRemove[i]['id']);
+            if(!taskToContact){continue;}
+            const result = await fb.getFirebaseLogin(() => fb.deleteData(`taskContactAssigned/${taskToContact['id']}`));
+            if(!result){return false;}
+        }
+
+        return true;
+    }
+
+    /**
+     * Get a list of contacts to add to the task
+     * @param {Array} contactListForAdd - The list of contacts to add
+     * @returns {Promise<boolean>} - Returns true if the operation was successful, false otherwise
+     */
+    async addContactsTaskAssociation(contactListForAdd){
+        const fb = new FirebaseDatabase();
+        for(let i = 0; i < contactListForAdd.length; i++){
+            const caID = getNewUid();
+            const ca = new ContactAssinged(caID, this.task['id'], contactListForAdd[i]['id']);
+            const result = await fb.getFirebaseLogin(() => fb.putData(`taskContactAssigned/${caID}`, ca));
+            if(!result){return false;}
+        }
+
+        return true;
+    }
+
+    /**
+     * Remove subtasks from the task's subtask list
+     * Remove the subtasks themselves from the database
+     * @param {Array} subtasksForRemove - The list of subtasks to remove
+     * @param {Array} taskToSubtasksList - The list of taskSubtask objects
+     * @returns {Promise<boolean>} - Returns true if the operation was successful, false otherwise
+     */
+    async removeSubtasksFromTask(subtasksForRemove, taskToSubtasksList){
+        const fb = new FirebaseDatabase();
+        for(let i = 0; i < subtasksForRemove.length; i++){
+            const taskToSubtask = taskToSubtasksList.find(x => x['subTaskID'] == subtasksForRemove[i]['id']);
+            if(!taskToSubtask){continue;}
+            const resultRemoveAssociation = await fb.getFirebaseLogin(() => fb.deleteData(`taskSubtask/${taskToSubtask['id']}`));
+            if(!resultRemoveAssociation){return false;}
+            const resultRemoveSubtask = await fb.getFirebaseLogin(() => fb.deleteData(`subTasks/${subtasksForRemove[i]['id']}`));
+            if(!resultRemoveSubtask){return false;}
+        }
+        return true;
+    }
+
+    /**
+     * Get a list of new subtasks to add to the task
+     * Adds the subtasks themselves to the database
+     * @param {Array} newSubtasks - The list of new subtasks to add
+     * @returns {Promise<boolean>} - Returns true if the operation was successful, false otherwise
+     */
+    async addNewSubtasksToTask(newSubtasks){
+        const fb = new FirebaseDatabase();
+        for(let i = 0; i < newSubtasks.length; i++){
+            const subTask = new Subtask(newSubtasks[i]['id'], newSubtasks[i]['title'], false);
+            const subTaskToTask = new SubstaskToTask(getNewUid(), this.task['id'], subTask.id);
+            const resultSubtask = await fb.getFirebaseLogin(() => fb.putData(`subTasks/${subTask.id}`, subTask));
+            if(!resultSubtask){return false;}
+            const resultTaskToSubstask = await fb.getFirebaseLogin(() => fb.putData(`taskSubtask/${subTaskToTask.id}`, subTaskToTask));
+            if(!resultTaskToSubstask){return false};
+        }
+        return true;
+    }
+
+    /**
+     * Update the task with the given data
+     * @param {Object} editTask - The task data to update
+     * @returns {Promise<boolean>} - Returns true if the operation was successful, false otherwise
+     */
+    async updateTask(editTask){
+        const fb = new FirebaseDatabase();
+        const resultUpdate = await fb.getFirebaseLogin(() => fb.putData(`tasks/${editTask.id}`, editTask));
+        return resultUpdate;
+    }
+
+    /**
+     * Update the current subtasks in the database
+     * @returns {Promise<boolean>} - Returns true if the operation was successful, false otherwise
+     */
+    async updateCurrentSubtasks(){
+        const fb = new FirebaseDatabase();
+        for(let i = 0; i < this.currentSubtasks.length; i++){
+            const resultUpdate = await fb.getFirebaseLogin(() => fb.updateData(`subTasks/${this.currentSubtasks[i]['id']}`, {'title' : `${this.currentSubtasks[i]['title']}`}));
+            if(!resultUpdate){return false;}
+        }
+        return true;
     }
 
 }
