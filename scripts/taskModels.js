@@ -12,10 +12,11 @@ class Task {
 }
 
 class Subtask {
-    constructor(id, title, taskChecked) {
+    constructor(id, title, taskChecked, position) {
         this.id = id;
         this.title = title;
         this.taskChecked = taskChecked;
+        this.position = position;
     }
 }
 
