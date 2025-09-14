@@ -11,7 +11,7 @@
 </head>
 
 
-<body onload="init()">
+<body onload="init(), loadTasksforSummary()">
 
     <div class="main-container">
         <div class="left-container">
@@ -33,14 +33,14 @@
                                 <button class="btn-task">
                                     <div class="todo-icon"></div>
                                     <div class="quantity-container">
-                                        <p class="quantity-task">1</p>
+                                        <p id="summary-todo" class="quantity-task">1</p>
                                         <p class="quantity-label-task">To-do</p>
                                     </div>
                                 </button>
                                 <button class="btn-task">
                                     <div class="done-icon"></div>
                                     <div class="quantity-container">
-                                        <p class="quantity-task">1</p>
+                                        <p id="summary-done" class="quantity-task">1</p>
                                         <p class="quantity-label-task">Done</p>
                                     </div>
                                 </button>
@@ -49,7 +49,7 @@
                                 <section class="urgent-display">
                                     <div class="urgent-icon"></div>
                                     <div class="quantity-container">
-                                        <p class="quantity-task">1</p>
+                                        <p id="summary-urgent" class="quantity-task">1</p>
                                         <p class="quantity-label-task">Urgent</p>
                                     </div>
                                 </section>
@@ -61,15 +61,15 @@
                             </button>
                             <section class="summary-tasks">
                                 <button class="btn-summary-tasks">
-                                    <p class="number-of-Tasks">5</p>
+                                    <p class="number-of-Tasks" id="summary-board">5</p>
                                     <p class="description-of-task">Tasks in Board</p>
                                 </button>
                                 <button class="btn-summary-tasks">
-                                    <p class="number-of-Tasks">2</p>
+                                    <p class="number-of-Tasks" id="summary-inprogress">2</p>
                                     <p class="description-of-task">Tasks in Progress</p>
                                 </button>
                                 <button class="btn-summary-tasks">
-                                    <p class="number-of-Tasks">2</p>
+                                    <p class="number-of-Tasks" id="summary-awaiting">2</p>
                                     <p class="description-of-task">Awaiting Feedback</p>
                                 </button>
                             </section>
@@ -94,6 +94,7 @@
 <script defer src="./script.js"></script>
 <script defer src="./scripts/navigations.js"></script>
 <script defer src="./scripts/sessionstorage.js"></script>
+<script defer src="./scripts/summary.js"></script>
 <script defer src="./scripts/greeting.js"></script>
 
 </html>
