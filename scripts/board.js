@@ -99,12 +99,20 @@ async function getDatabaseTaskContact(tasks) {
 }
 
 function renderAssignedContacts(assignedContacts) {
+    let breakExecption = {};
     let assignedContactsTemplate = '';
-    assignedContacts.forEach(contactArr => {
-        contactArr.forEach(contact => {
-            assignedContactsTemplate += getAllAssignedContactsTemplate(contact);
+    let counter = 0;
+    try {
+        assignedContacts.forEach(contactArr => {
+            if (counter >= 6) throw breakExecption;
+            contactArr.forEach(contact => {
+                assignedContactsTemplate += getAllAssignedContactsTemplate(contact);
+            });
+            counter++;
         });
-    });
+    } catch (error) {
+        return assignedContactsTemplate;
+    }
     return assignedContactsTemplate;
 }
 
