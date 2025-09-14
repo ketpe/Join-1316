@@ -103,14 +103,34 @@ class AddTaskUtils {
      */
     addSubtaskToArray(subTaskEntry, currentSubTasks) {
 
+        const position = currentSubTasks.length != 0 ? this.getMaxPositionOfSubtasks(currentSubTasks) + 1 : 0;        
+
         const newSubTask = {
             'id': getNewUid(),
             'title': subTaskEntry,
-            'taskChecked': false
+            'taskChecked': false,
+            'position' : position
         };
 
         currentSubTasks.push(newSubTask);
         return currentSubTasks;
+    }
+
+    /**
+     * Gets the maximum position of subtasks.
+     * @param {Array} currentSubTasks - The list of current subtasks.
+     * @returns {number} The maximum position of the subtasks.
+     */
+    getMaxPositionOfSubtasks(currentSubTasks){
+        if(currentSubTasks.length === 0){
+            return 0;
+        }else{
+            const firstSubstak = currentSubTasks[0];
+            if(!firstSubstak.hasOwnProperty('position')){return 0;}
+        }
+        const positions = currentSubTasks.map(s => s['position']);
+        const maxPosition = Math.max(...positions);
+        return maxPosition;
     }
 
     /**

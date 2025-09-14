@@ -1,5 +1,3 @@
-let currentSelectedTask = null;
-
 async function getBoardTasks() {
     const { TaskContentelements } = getHtmlTasksContent();
     const fb = new FirebaseDatabase();
@@ -63,6 +61,7 @@ async function getDatabaseTaskSubtasks(tasks) {
             let foundSubTask = getAllSubtasks.find(obj => obj.id === taskSubTask.subTaskID);
             if (foundSubTask) subTasks.push(foundSubTask);
         });
+        //Hier noch sortieren nach position
         task.subTasks = subTasks;
     });
     tasks = getSubTaskSumOfTrue(tasks);
@@ -189,15 +188,15 @@ function deleteCurrentTask(button) {
 
 async function editCurrentTask(button) {
     const currentTaskID = button.getAttribute('data-id');
-    currentSelectedTask = await getTaskByTaskID(currentTaskID);
-    const boardEditUtil = new BoardTaskDetailEditUtils(currentTaskID, currentSelectedTask);
+    const task = await getTaskByTaskID(currentTaskID);
+    const boardEditUtil = new BoardTaskDetailEditUtils(currentTaskID, task);
     await boardEditUtil.startRenderTaskEdit();
     await loadContactsAllFromDB();
     await loadCategoriesFromDB();
-    setNewPriority(currentSelectedTask[0]['priority']);
+    setNewPriority(task[0]['priority']);
     currentContactAssignList = boardEditUtil.getCurrentAssignList();
     showOrHideBadgeContainer('show');
-    currentSubTasks = currentSelectedTask[0]['subTasks'];
+    currentSubTasks = task[0]['subTasks'];
     renderSubtasks();
     document.getElementById('detail-edit-ok-btn').setAttribute('data-id', currentTaskID);
 }
@@ -218,10 +217,11 @@ async function editCurrentTaskSubmit(event) {
     const currentTitle = editTaskFormData.get('task-title');
     const currentDescription = editTaskFormData.get('task-description');
     const currentDate = editTaskFormData.get('due-date');
+    const tasks = await getTaskByTaskID(currentID);
     const prio = currentPriority;
     const cList = currentContactAssignList;
     const subList = currentSubTasks;
-    const editTaskUtil = new EditTaskSafeUtil(currentSelectedTask[0], currentTitle, currentDescription, currentDate, prio, cList, subList);
+    const editTaskUtil = new EditTaskSafeUtil(tasks, currentTitle, currentDescription, currentDate, prio, cList, subList);
     const resultUpdate = await editTaskUtil.startUpdate();
     if (resultUpdate) {
         await afterUpdateTask(currentID);

@@ -57,7 +57,7 @@ class CreateNewTask {
     async addTaskCreateSubtaskArray(currentTask) {
         let subTaskArray = [];
         for (let i = 0; i < this.subtasks.length; i++) {
-            subTaskArray.push(new Subtask(getNewUid(), this.subtasks[i]['title'], false));
+            subTaskArray.push(new Subtask(getNewUid(), this.subtasks[i]['title'], false, this.subtasks[i]['position']));
         }
 
         await this.addTaskContactAssinged(currentTask, subTaskArray);
