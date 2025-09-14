@@ -215,7 +215,7 @@ async function editCurrentTaskSubmit(event) {
     const subList = currentSubTasks;
     const editTaskUtil = new EditTaskSafeUtil(currentSelectedTask[0], currentTitle, currentDescription, currentDate, prio, cList, subList);
     const resultUpdate = await editTaskUtil.startUpdate();
-    if(resultUpdate){
+    if (resultUpdate) {
         await afterUpdateTask(currentID);
     }
 }
@@ -229,4 +229,46 @@ async function afterUpdateTask(taskId) {
     boardUtils.startRenderTaskDetails();
     const currentMainHeight = boardUtils.getCurrentHeight();
     boardUtils.setDialogHeight(currentMainHeight);
+}
+
+function searchTaskInBoard() {
+    const { searchInput, taskTitles, taskDescriptions } = getRefsForSearch();
+    let visibleCount = 0;
+    taskTitles.forEach((titleP, i) => {
+        const descP = taskDescriptions[i];
+        const match = [titleP, descP].some(
+            el => el && el.textContent.toLowerCase().includes(searchInput)
+        );
+        const card = titleP.parentElement.parentElement.parentElement;
+        card.classList.toggle('visually-hidden', !match && searchInput);
+        if (!card.classList.contains('visually-hidden')) visibleCount++;
+    });
+    toggleNoSearchResultHint(visibleCount, searchInput);
+}
+
+function toggleNoSearchResultHint(visibleCount, searchInput) {
+    const noResultHint = document.getElementById('empty-Search-Result-info');
+    if (noResultHint) {
+        if (visibleCount === 0 && searchInput) {
+            noResultHint.style.display = 'block';
+        } else {
+            noResultHint.style.display = 'none';
+        }
+    }
+}
+
+function emptySearchBar(searchInput, taskTitles) {
+    if (!searchInput) {
+        taskTitles.forEach(p => {
+            p.parentElement.parentElement.parentElement.classList.remove('visually-hidden');
+        });
+        return;
+    }
+}
+
+function getRefsForSearch() {
+    let searchInput = document.getElementById('board-searchbar').value.toLowerCase();
+    let taskTitles = document.querySelectorAll('.board-task-title p');
+    let taskDescriptions = document.querySelectorAll('.board-task-description p');
+    return { searchInput, taskTitles, taskDescriptions };
 }
