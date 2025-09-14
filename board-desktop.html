@@ -31,8 +31,9 @@
                                 <form action="">
                                     <label for="board-searchbar" class="visually-hidden"></label>
                                     <div class="board-search-wrapper">
-                                        <input type="text" id="board-searchbar" class="board-input-search"
-                                            placeholder="Find Task" aria-label="Searchbar for tasks">
+                                        <input oninput="searchTaskInBoard()" type="text" id="board-searchbar"
+                                            class="board-input-search" placeholder="Find Task"
+                                            aria-label="Searchbar for tasks">
                                         <button type="submit" class="board-search-btn">
                                             <div class="search-seperator"></div>
                                             <img src="./assets/search-icon.svg" alt="Suchen">
@@ -66,6 +67,9 @@
                         </div>
                     </header>
                     <article class="board-kanban" id="board-kanban">
+                        <div id="empty-Search-Result-info" class="empty-Search-Result-info">
+                            <p>No tasks found. Please try again.</p>
+                        </div>
                         <div class="kanban-column" id="todo"
                             ondragover="event.preventDefault(); this.classList.add('over');"
                             ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">

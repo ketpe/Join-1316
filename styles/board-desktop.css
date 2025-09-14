@@ -152,6 +152,26 @@
 
 }
 
+.empty-Search-Result-info {
+    display: none;
+    position: absolute;
+    left: 40%;
+    top: 10%;
+    transform: translate(-50%);
+    background-color: var(--bg-light-gray);
+    padding: 5px;
+    border-radius: 24px;
+    color: var(--menu-font-color-board);
+
+    p {
+        font-family: Inter;
+        font-weight: 700;
+        font-style: Bold;
+        font-size: 20px;
+        color: var(--menu-font-color-board);
+    }
+}
+
 .kanban-column {
     width: 246px;
     min-height: 200px;
