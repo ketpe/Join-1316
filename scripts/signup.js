@@ -1,18 +1,22 @@
 function signUpForm(event) {
     event.preventDefault();
     let signUp = new FormData(event.target);
-    splitName(signUp)
-    checkPassword(signUp);
+    if (!checkName(signUp)) {
+        return;
+    }
+    let { firstname, lastname, initials } = splitName(signUp);
+    let password = checkPassword(signUp);
+    if (!password) {
+        return;
+    }
     let email = signUp.get("email");
     let acceptPolicy = document.getElementById("signup-confirm").checked;
-
-    // Prüfe, ob alle Felder ausgefüllt sind
-    if (!fullname || !email || !password || !confirmPassword || !acceptPolicy) {
+    if (!firstname || !lastname || !email || !password || !confirmPassword || !acceptPolicy) {
         showErrorMessage("Please fill correct data in all fields.");
-    }
-
-    let { firstname, lastname } = splitName(fullname);
-    checkPassword(password, confirmPassword, acceptPolicy, firstname, lastname, email);
+        return;
+    };
+    let initialColor = getRandomColor();
+    safeDataToDB(firstname, lastname, email, password, initials, initialColor)
 }
 
 
@@ -46,7 +50,7 @@ function splitName(signUp) {
     };
 }
 
-async function safeDataToDB(firstname, lastname, email, password, initials) {
+async function safeDataToDB(firstname, lastname, email, password, initials, initialColor) {
     let uid = getNewUid();
     let data = {
         'id': uid,
@@ -54,7 +58,8 @@ async function safeDataToDB(firstname, lastname, email, password, initials) {
         'lastname': lastname,
         'email': email,
         'password': password,
-        'initial': initials
+        'initial': initials,
+        'initialColor': initialColor
     };
     const fb = new FirebaseDatabase();
     await fb.getFirebaseLogin(() => fb.putData(contacts, data));
