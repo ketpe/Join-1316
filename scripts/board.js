@@ -243,7 +243,10 @@ function searchTaskInBoard() {
         card.classList.toggle('visually-hidden', !match && searchInput);
         if (!card.classList.contains('visually-hidden')) visibleCount++;
     });
+    toggleNoSearchResultHint(visibleCount, searchInput);
+}
 
+function toggleNoSearchResultHint(visibleCount, searchInput) {
     const noResultHint = document.getElementById('empty-Search-Result-info');
     if (noResultHint) {
         if (visibleCount === 0 && searchInput) {
