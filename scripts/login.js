@@ -15,8 +15,7 @@ async function checkLogin(email, password) {
     } else {
         setLogStatus('0');
         showErrorMessage('Check your email and password. Please try again.')
-        location.reload();
-    }
+     }
 };
 
 function loginGuest() {
