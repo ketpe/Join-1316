@@ -3,7 +3,8 @@
         <div id="left-header" class="left-header">
             <p id="user-story">User Story</p>
         </div>
-        <button onclick="closeDialog(event)" class="btn-overlay-close" id="btn-overlay-close-contacts" type="button">
+        <button onclick="closeDialogByEvent(event, 'detail-view-task-dialog')" class="btn-overlay-close"
+            id="btn-overlay-close-contacts" type="button">
             <div id="btn-overlay-close-div" role="img" title="Close dialog icon"></div>
         </button>
     </header>
@@ -38,7 +39,8 @@
             <p>Delete</p>
         </button>
         <div class="vertical-seperator"></div>
-        <button type="button" onclick="editCurrentTask(this)" class="btn-task-action btn-task-edit" id="detail-view-edit-btn">
+        <button type="button" onclick="editCurrentTask(this)" class="btn-task-action btn-task-edit"
+            id="detail-view-edit-btn">
             <div class="action-icons action-edit-icon"></div>
             <p>Edit</p>
         </button>
