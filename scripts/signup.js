@@ -15,7 +15,7 @@ function signUpForm(event) {
         showErrorMessage("Please fill correct data in all fields.");
         return;
     };
-    let initialColor = setRandomInitialColor();
+    let initialColor = getRandomColor();
     safeDataToDB(firstname, lastname, email, password, initials, initialColor)
 }
 
