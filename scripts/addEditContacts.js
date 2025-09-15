@@ -1,14 +1,15 @@
+let valdidateName = false;
+let valdidateEmail = false;
+let valdidatePhone = false;
+
 async function newContact(event) {
-    if (event) event.preventDefault(); // verhindert das Neuladen der Seite
+    if (event) event.preventDefault();
     const uid = getNewUid();
     const contact = createContactObject(uid);
     var t = await putData(`/contacts/${uid}`, contact);
-    console.log(uid);
-    console.log(contact);
 }
 
 /*TODO - Kontakte selektieren bei Neuerstellung*/
-/*TODO - Btn muss bei Fehler deaktiviert werden*/
 /*TODO - Formular action übernehmen aus addTask*/
 
 function createContactObject(uid) {
@@ -106,14 +107,17 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
 function contactNameValidation(nameValue) {
     const cleanNameValue = (nameValue ?? "").trim();
     const namePattern = /\w{3,10}\s\w{3,10}/;
-
     if (cleanNameValue.length > 0 && namePattern.test(cleanNameValue)) {
         showAndLeaveErrorMessage("contact-name-required", false);
         showAndLeaveErrorBorder("contact-name", false);
+        valdidateName = true;
     } else {
         showAndLeaveErrorMessage("contact-name-required", true);
         showAndLeaveErrorBorder("contact-name", true);
+        valdidateName = false;
     }
+
+    toggleBtnCreateContact();
 }
 
 //NOTE - Validierung des Emailfeldes
@@ -124,10 +128,14 @@ function contactEmailValidation(emailValue) {
     if (cleanEmailValue.length > 0 && emailPattern.test(cleanEmailValue)) {
         showAndLeaveErrorMessage("contact-email-required", false);
         showAndLeaveErrorBorder("contact-email", false);
+        valdidateEmail = true;
     } else {
         showAndLeaveErrorMessage("contact-email-required", true);
         showAndLeaveErrorBorder("contact-email", true);
+        valdidateEmail = false;
     }
+
+    toggleBtnCreateContact();
 }
 
 //NOTE - Validierung des Telefonfeldes
@@ -138,11 +146,24 @@ function contactPhoneValidation(phoneValue) {
     if (cleanPhoneValue.length > 0 && phonePattern.test(cleanPhoneValue)) {
         showAndLeaveErrorMessage("contact-phone-required", false);
         showAndLeaveErrorBorder("contact-phone", false);
+        valdidatePhone = true;
     } else {
         showAndLeaveErrorMessage("contact-phone-required", true);
         showAndLeaveErrorBorder("contact-phone", true);
+        valdidatePhone = false;
+    }
+    toggleBtnCreateContact();
+}
+
+function toggleBtnCreateContact() {
+    const btn = document.getElementById('btn-create-contact');
+    if (valdidateName && valdidateEmail && valdidatePhone) {
+        btn.disabled = false;
+    } else {
+        btn.disabled = true;
     }
 }
+
 //NOTE -  Funktion zum Rendern der Kontaktdaten im Edit-Dialog
 function renderEditContactIntoDialog(id) {
     const fb = new FirebaseDatabase();

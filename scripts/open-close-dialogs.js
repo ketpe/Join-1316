@@ -77,7 +77,7 @@ function addDialogHideClass(dialogId) {
  * Renders the add contact form into the dialog
  */
 function renderAddContactIntoDialog() {
-    includeHtml("dialog-content-contacts", "add-contact.html");
+    includeHtml("dialog-content-contacts", "addContact.html");
 }
 async function renderDetailViewTemplate(taskId) {
     await includeHtml("dialog-content-detail-view-task", "task-template.html");
