@@ -197,6 +197,7 @@
     font-family: Inter;
     font-weight: 700;
     font-size: 21px;
+    white-space: nowrap;
 }
 
 .btn-urgent:hover .urgent-time {
