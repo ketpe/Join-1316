@@ -15,7 +15,7 @@ async function checkLogin(email, password) {
     } else {
         setLogStatus('0');
         showErrorMessage('Check your email and password. Please try again.')
-     }
+    }
 };
 
 function loginGuest() {
@@ -23,12 +23,19 @@ function loginGuest() {
     navigateToSummary();
 };
 
-function togglePasswordVisibility() {
-    let passwordInput = document.getElementById("password");
+function togglePasswordVisibility(toggleCounter) {
+  let passwordInput = document.getElementById("password");
+  let toggleIcon = document.getElementById("loginTogglePassword");
+  let togglePasswordVisibilityArray = {
+    1: ["login-password-lock", "login-password-visible-off", 2, "password"],
+    2: ["login-password-visible-off", "login-password-visible-on", 3, "text"],
+    3: ["login-password-visible-on", "login-password-lock", 1, "password"],
+  };
+  if (togglePasswordVisibilityArray[toggleCounter]) {
+    let [from, to, next, type] = togglePasswordVisibilityArray[toggleCounter];
+    toggleIcon.classList.replace(from, to);
+    passwordInput.type = type;
+    toggleIcon.onclick = () => togglePasswordVisibility(next);
+  };
+}
 
-    if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-    } else {
-        passwordInput.type = "password";
-    }
-};

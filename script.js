@@ -56,7 +56,6 @@ function showErrorMessage(message) {
     errorText.textContent = message;
     errorText.classList.remove("d-none");
     setTimeout(() => errorText.classList.add("d-none"), 3000);
-    location.reload();
 }
 
 function getRandomColor() {
