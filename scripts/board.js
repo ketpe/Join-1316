@@ -1,3 +1,4 @@
+
 async function getBoardTasks() {
     const { TaskContentelements } = getHtmlTasksContent();
     const fb = new FirebaseDatabase();
@@ -181,8 +182,13 @@ async function detailViewChangeSubtaskChecked(button) {
     await fb.getFirebaseLogin(() => fb.updateData(`subTasks/${subTaskID}`, { taskChecked: isActiv == "true" ? false : true }));
 }
 
-function deleteCurrentTask(button) {
-    console.log(button);
+async function deleteCurrentTask(button) {
+    const currentTaskID = button.getAttribute('data-id');
+    const taskDelete = new BoardTaskDetailDeleteUtil(currentTaskID);
+    if(await taskDelete.startDelete()){
+        closeDialog('detail-view-task-dialog');
+        getBoardTasks();
+    }
 
 }
 
@@ -221,7 +227,7 @@ async function editCurrentTaskSubmit(event) {
     const prio = currentPriority;
     const cList = currentContactAssignList;
     const subList = currentSubTasks;
-    const editTaskUtil = new EditTaskSafeUtil(tasks, currentTitle, currentDescription, currentDate, prio, cList, subList);
+    const editTaskUtil = new EditTaskSafeUtil(tasks[0], currentTitle, currentDescription, currentDate, prio, cList, subList);
     const resultUpdate = await editTaskUtil.startUpdate();
     if (resultUpdate) {
         await afterUpdateTask(currentID);

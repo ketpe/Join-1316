@@ -19,7 +19,7 @@ class EditTaskSafeUtil{
 
 
     constructor(task, currentTitle, currentDescription, currentDueDate, currentPrio, currentContactList, currentSubtasks){
-        this.task = task[0];
+        this.task = task;
         this.currentTitle = currentTitle;
         this.currentDescription = currentDescription;
         this.currentDueDate = currentDueDate;
@@ -48,10 +48,6 @@ class EditTaskSafeUtil{
         const editTask = this.createUpdateTask();
         const [contactsDbList, taskContactDBList] = await this.getTaskContactAssignedList();
         const [subtaskDbList, taskToSubtaskDBList, maxPos] = await this.getTaskSubtaskList();
-        console.log(subtaskDbList);
-        console.log(taskToSubtaskDBList);
-        console.log(maxPos);
-        
         const removeContactsFromTask = this.findNoLongerAssociatedContacts(contactsDbList);
         const newContactsToTask = this.findNewAssociatedContacts(contactsDbList);
         const removeSubtasksFromTask = this.findNoLongerAssociatedSubtasks(subtaskDbList);
