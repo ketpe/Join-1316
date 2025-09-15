@@ -668,14 +668,28 @@ function checkCategoryInputValue() {
  */
 function onclickSubtaskInput(input) {
     if (!input) { return; }
-    toggleSubWritingButtons();
+    toggleSubWritingButtons(true);
 }
 
 /**
  * Toggles the visibility of the subtask writing buttons.
  */
-function toggleSubWritingButtons() {
-    document.getElementById('sub-writing-buttons').classList.toggle('d-none');
+function toggleSubWritingButtons(visibility) {
+    let fieldButtons = document.getElementById('sub-writing-buttons');
+    visibility ? fieldButtons.classList.remove('d-none') : fieldButtons.classList.add('d-none');
+}
+
+/**
+ * Handles the pressing of the Enter key in the subtask input field.
+ * @param {KeyboardEvent} event - The keyboard event.
+ * @param {HTMLElement} inputField - The subtask input field element.
+ */
+function subtaskInputfieldPressEnter(event, inputField){
+    if(event.code  == "Enter" || event.code == "NumpadEnter"){
+        toggleSubWritingButtons(false);
+        inputField.blur();
+        adoptCurrentSubEntry();
+    }
 }
 
 /**
@@ -689,9 +703,8 @@ function adoptCurrentSubEntry() {
     let inputfield = document.getElementById('task-sub-task');
     if (!inputfield) { return; }
     const inputValueClean = (inputfield.value ?? "").trim();
-    if (inputValueClean.length >= 3) {
-        currentSubTasks = addTaskUtils.addSubtaskToArray(inputValueClean, currentSubTasks);
-    }
+    if(inputValueClean.length < 3){return;}
+    currentSubTasks = addTaskUtils.addSubtaskToArray(inputValueClean, currentSubTasks);
     clearSubInputField();
     renderSubtasks();
 }
@@ -706,7 +719,7 @@ function clearSubInputField() {
     let inputfield = document.getElementById('task-sub-task');
     if (!inputfield) { return; }
     inputfield.value = "";
-    toggleSubWritingButtons();
+    toggleSubWritingButtons(false);
     inputfield.blur();
 
 }

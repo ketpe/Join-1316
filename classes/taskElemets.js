@@ -162,7 +162,7 @@ class TaskElements{
             <label for="task-sub-task">Subtasks</label>
             <div class="sub-input-container">
                 <input class="a-t-input a-t-sub-input" type="text" name="task-sub-task" id="task-sub-task"
-                    onclick="onclickSubtaskInput(this)" placeholder="Add new subtask">
+                    onclick="onclickSubtaskInput(this)" placeholder="Add new subtask" onkeydown="subtaskInputfieldPressEnter(event, this)">
                 <div id="sub-writing-buttons" class="sub-input-writing-btn-container d-none">
                     <button type="button" title="delete current entry button" aria-label="Delete current entry" onclick="clearSubInputField()">
                         <div role="img" title="delete icon" aria-hidden="true"></div>

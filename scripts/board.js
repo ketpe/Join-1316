@@ -9,6 +9,7 @@ async function getBoardTasks() {
     //console.log(tasks);
     renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     addLeftPositionStyleassignedContacts();
+    document.getElementsByTagName('body')[0].setAttribute("onmouseup", "addTaskWindowMouseClick(event)");
 }
 
 
@@ -155,24 +156,27 @@ function addLeftPositionStyleassignedContacts() {
 
 async function renderTaskDetailView(taskId) {
     await includeHtml("dialog-content", "task-template.html");
-    getDetailViewTask(taskId); // Hier solltest du die Task-Daten ins Template schreiben!
+    getDetailViewTask(taskId);
 }
 
-/*NOTE - DetailView*/
+/**
+ * Fetches task details and renders them in the detail view dialog
+ * @param {string} taskId 
+ */
 async function getDetailViewTask(taskId) {
     let tasks = await getTaskByTaskID(taskId);
-
     await includeHtml("dialog-content-detail-view-task", "task-template.html");
-
     const boardUtils = new BoardTaskDetailViewUtils(taskId, tasks);
-
     openDialog('detail-view-task-dialog');
     boardUtils.startRenderTaskDetails();
     const currentMainHeight = boardUtils.getCurrentHeight();
     boardUtils.setDialogHeight(currentMainHeight);
-
 }
 
+/**
+ * Toggles the checked state of a subtask in the detail view
+ * @param {HTMLElement} button - The button element that was clicked
+ */
 async function detailViewChangeSubtaskChecked(button) {
     button.classList.toggle('checkbox-btn-default');
     button.classList.toggle('checkbox-btn-default-hover');
@@ -182,6 +186,10 @@ async function detailViewChangeSubtaskChecked(button) {
     await fb.getFirebaseLogin(() => fb.updateData(`subTasks/${subTaskID}`, { taskChecked: isActiv == "true" ? false : true }));
 }
 
+/**
+ * Deletes the current task
+ * @param {HTMLElement} button - The button element that was clicked
+ */
 async function deleteCurrentTask(button) {
     const currentTaskID = button.getAttribute('data-id');
     const taskDelete = new BoardTaskDetailDeleteUtil(currentTaskID);
@@ -192,6 +200,10 @@ async function deleteCurrentTask(button) {
 
 }
 
+/**
+ * Renders the edit view for the current task in the detail view dialog
+ * @param {HTMLElement} button - The button element that was clicked
+ */
 async function editCurrentTask(button) {
     const currentTaskID = button.getAttribute('data-id');
     const task = await getTaskByTaskID(currentTaskID);
@@ -207,6 +219,11 @@ async function editCurrentTask(button) {
     document.getElementById('detail-edit-ok-btn').setAttribute('data-id', currentTaskID);
 }
 
+/**
+ * Fetches a task by its ID
+ * @param {string} taskId - The ID of the task to fetch
+ * @returns {Promise<Array>} - A promise that resolves to an array of task objects
+ */
 async function getTaskByTaskID(taskId) {
     const fb = new FirebaseDatabase();
     let tasks = await fb.getFirebaseLogin(() => fb.getDataByKey("id", taskId, "tasks"));
@@ -216,6 +233,10 @@ async function getTaskByTaskID(taskId) {
     return tasks;
 }
 
+/**
+ * Handles the submission of the edit task form
+ * @param {Event} event - The submit event
+ */
 async function editCurrentTaskSubmit(event) {
     if (event) event.preventDefault();
     const currentID = event.submitter.getAttribute('data-id');
@@ -234,11 +255,13 @@ async function editCurrentTaskSubmit(event) {
     }
 }
 
+/**
+ * Show the updated task details after editing
+ * @param {string} taskId - The ID of the task to update
+ */
 async function afterUpdateTask(taskId) {
     let tasks = await getTaskByTaskID(taskId);
-
     await includeHtml("dialog-content-detail-view-task", "task-template.html");
-
     const boardUtils = new BoardTaskDetailViewUtils(taskId, tasks);
     boardUtils.startRenderTaskDetails();
     const currentMainHeight = boardUtils.getCurrentHeight();

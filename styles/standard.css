@@ -69,7 +69,7 @@ a {
 
 @keyframes slide-Dialog-in {
     from {
-        transform: translateX(150%);
+        transform: translateX(500%);
     }
 
     to {
@@ -83,6 +83,6 @@ a {
     }
 
     to {
-        transform: translateX(150%);
+        transform: translateX(500%);
     }
 }

@@ -26,8 +26,6 @@
  * It is assumed that the necessary data validation and user input handling are performed elsewhere in the application.
  */
 
-
-
 class CreateNewTask {
     constructor(task, subtasks, contactAssignArray, currentUserId) {
         this.task = task;
@@ -65,7 +63,7 @@ class CreateNewTask {
 
     /**
      * Associates contacts with the current task.
-     * This method creates an array of ContactAssigned objects, including the current user and any additional contacts.
+     * This method creates an array of ContactAssigned objects, including any additional contacts.
      * @param {Task} currentTask
      * @param {Array} subTaskArray  Array of subtasks to be associated with the task.
      * @returns {Promise<void>} A promise that resolves when the contacts have been associated with the task.
@@ -74,7 +72,7 @@ class CreateNewTask {
 
         let newContactAssignedArray = [];
 
-        newContactAssignedArray.push(new ContactAssinged(getNewUid(), currentTask.id, this.currentUserId));
+        // newContactAssignedArray.push(new ContactAssinged(getNewUid(), currentTask.id, this.currentUserId));
 
         for (let i = 0; i < this.contactAssignArray.length; i++) {
             newContactAssignedArray.push(new ContactAssinged(getNewUid(), currentTask.id, this.contactAssignArray[i]['id']));
