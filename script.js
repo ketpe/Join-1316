@@ -71,3 +71,18 @@ function getNewUid() {
     return crypto.randomUUID();
 }
 
+function togglePasswordVisibility(toggleCounter, passwortInputID, toggleIconID) {
+    let passwordInput = document.getElementById(passwortInputID);
+    let toggleIcon = document.getElementById(toggleIconID);
+    let togglePasswordVisibilityArray = {
+        1: ["login-password-lock", "login-password-visible-off", 2, "password"],
+        2: ["login-password-visible-off", "login-password-visible-on", 3, "text"],
+        3: ["login-password-visible-on", "login-password-lock", 1, "password"],
+    };
+    if (togglePasswordVisibilityArray[toggleCounter]) {
+        let [from, to, next, type] = togglePasswordVisibilityArray[toggleCounter];
+        toggleIcon.classList.replace(from, to);
+        passwordInput.type = type;
+        toggleIcon.onclick = () => togglePasswordVisibility(next, passwortInputID, toggleIconID);
+    };
+}

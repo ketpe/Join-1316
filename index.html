@@ -40,12 +40,12 @@
                         <div class="login-password-container">
                             <input type="password" id="password" name="password"
                                 class="login-signup-input login-password" placeholder="Password" autocomplete="off"
-                                spellcheck="false" autocapitalize="none">
+                                spellcheck="false" autocapitalize="none" onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')">
 
                             <button type="button" title="password icon"
                                 class="login-toggle-password login-password-lock" id="loginTogglePassword" role="img"
                                 aria-labelledby="Password visibility toggle button" alt="Toggle password visibility"
-                                onclick="togglePasswordVisibility(1)">
+                                onclick="togglePasswordVisibility(2, 'password', 'loginTogglePassword')">
                                 <span class="visually-hidden">Toggle password visibility</span>
                             </button>
                         </div>
