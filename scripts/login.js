@@ -24,18 +24,6 @@ function loginGuest() {
     navigateToSummary();
 };
 
-function toggleBorderColorByError() {
-    let loginInputBorders = document.querySelectorAll(".login-signup-input, .loginErrorBorder");
-
-    loginInputBorders.forEach(dataArray => {
-        dataArray.classList.replace("login-signup-input", "loginErrorBorder");
-    });
-    setTimeout(() => {
-        loginInputBorders.forEach(dataArray => {
-            dataArray.classList.replace("loginErrorBorder", "login-signup-input");
-        });
-    }, 3000);
-}
 
 
 
