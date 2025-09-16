@@ -64,7 +64,8 @@ async function checkEmailTwice(signUp) {
     let email = checkEmailWithFormValidation(signUp);
     if (!email) return null;
     console.log(email);
-    return await checkEmailInDatabase(signUp, email);
+    email = await checkEmailInDatabase(signUp, email);
+    return true;
 }
 
 function checkEmailWithFormValidation(signUp) {
