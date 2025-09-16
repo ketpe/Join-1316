@@ -6,7 +6,8 @@ async function newContact(event) {
     if (event) event.preventDefault();
     const uid = getNewUid();
     const contact = createContactObject(uid);
-    var t = await putData(`/contacts/${uid}`, contact);
+    const fb = new FirebaseDatabase();
+    const data = await fb.getFirebaseLogin(() => fb.putData(`/contacts/${uid}`, contact));
 }
 
 /*TODO - Kontakte selektieren bei Neuerstellung*/

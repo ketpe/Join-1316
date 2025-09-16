@@ -13,6 +13,7 @@ function openDialog(dialogId, renderSpecificFunction) {
 /** * Closes a dialog based on an event
  * @param {Event} event - The event that triggered the close
  * @param {string} dialogId - The ID of the dialog to close
+ * @description Closes the dialog if the event target is the dialog background, close button, cancel button, or create button
  */
 function closeDialogByEvent(event, dialogId) {
     const dialog = document.getElementById(dialogId);
