@@ -82,9 +82,7 @@
 }
 
 .nav-desktop-btn:hover {
-    background-color: var(--btn-menu-bg-hover);
-    color: white;
-
+    background-color: var(--btn-submenu-bg-hover);
 }
 
 .nav-desktop-menu {
@@ -114,7 +112,7 @@
     font-weight: 700;
 }
 
-.resp-menu-box {
+.subMenuBox {
     position: absolute;
     top: var(--header-height);
     right: max(calc((100vw - var(--max-width)) / 2), 0px);

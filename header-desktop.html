@@ -4,11 +4,11 @@
         <div class="help-profile-actions">
             <button id="help-button" type="button" class="help-btn" onclick="navigateToHelp()"
                 title="Help Button"></button>
-            <button type="button" class="profil-btn" onclick="toggleDNone('resp-menu', event)">
+            <button type="button" class="profil-btn" onclick="toggleDNone('subMenu', event)">
                 <p class="user-initial" id="user-initial-render">G</p>
             </button>
             <section id="section"> <!-- Slide-Out-Menu -->
-                <div id="resp-menu" class="resp-menu-box d-none" onclick="noBubbling(event)">
+                <div id="subMenu" class="subMenuBox d-none" onclick="noBubbling(event)">
                     <button class="nav-desktop-btn" onclick='navigateToLegalNotice("login")'>Legal Notice</button>
                     <button class="nav-desktop-btn" onclick='navigateToPrivacy("login")'>Privacy Policy</button>
                     <button class="nav-desktop-btn" onclick='navigateToLogin()'>Log out</button>

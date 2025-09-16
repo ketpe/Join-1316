@@ -40,13 +40,13 @@ function noBubbling(event) {
 };
 
 document.addEventListener('click', function (event) {
-    const respMenu = document.getElementById('resp-menu');
+    let subMenu = document.getElementById('subMenu');
     if (
-        respMenu &&
-        !respMenu.classList.contains('d-none') &&
-        !respMenu.contains(event.target)
+        subMenu &&
+        !subMenu.classList.contains('d-none') &&
+        !subMenu.contains(event.target)
     ) {
-        respMenu.classList.add('d-none');
+        subMenu.classList.add('d-none');
     }
 });
 
