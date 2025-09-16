@@ -97,11 +97,8 @@ function showAndLeaveErrorMessage(messageTarget, visibilty = true) {
 function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
     let inputField = document.getElementById(inputTarget);
     if (inputField == null) { return; }
-    if (visibilty) {
-        inputField.classList.add('input-has-error');
-    } else {
-        inputField.classList.remove('input-has-error');
-    }
+    //NOTE - Ternary Operator
+    visibilty ? inputField.classList.add('input-has-error') : inputField.classList.remove('input-has-error');
 }
 //NOTE - Validierung des Namensfeldes
 function contactNameValidation(nameValue) {
@@ -154,7 +151,7 @@ function contactPhoneValidation(phoneValue) {
     }
     toggleBtnCreateContact();
 }
-
+//FIXME - Validierung mit on Mouse over auslösen
 function toggleBtnCreateContact() {
     const btn = document.getElementById('btn-create-contact');
     if (valdidateName && valdidateEmail && valdidatePhone) {
