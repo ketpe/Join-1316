@@ -86,3 +86,22 @@ function togglePasswordVisibility(toggleCounter, passwortInputID, toggleIconID) 
         toggleIcon.onclick = () => togglePasswordVisibility(next, passwortInputID, toggleIconID);
     };
 }
+
+function toggleBorderColorByError(elementId = null) {
+    let elementsRef;
+    if (elementId) {
+        let elementRef = document.getElementById(elementId);
+        if (!elementRef) return;
+        elementsRef = [elementRef];
+    } else {
+        elementsRef = document.querySelectorAll(".login-signup-input, .loginErrorBorder");
+    }
+    elementsRef.forEach(elementRef => {
+        elementRef.classList.replace("login-signup-input", "loginErrorBorder");
+    });
+    setTimeout(() => {
+        elementsRef.forEach(elementRef => {
+            elementRef.classList.replace("loginErrorBorder", "login-signup-input");
+        });
+    }, 3000);
+}

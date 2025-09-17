@@ -15,13 +15,13 @@
         <div class="login-signup-logo" aria-label="Join Application Logo" role="img"></div>
 
         <header class="login-sigup-header">
-            <button type="button" class="btn btn-fill btn-sm d-none" aria-label="Sign up success">You Signed Up
+            <button type="button" class="btn btn-fill btn-sm d-none" aria-label="Sign up success" id="successfullySignUp">You Signed Up
                 successfully</button>
         </header>
 
         <section aria-label="form section" class="login-signup-container" aria-labelledby="signup-form-title">
 
-            <form class="login-signup-form form-for-signup" method="get" onsubmit="signUpForm(event)">
+            <form class="login-signup-form form-for-signup" method="post" onsubmit="signUpForm(event)">
 
                 <div class="arrow-left" aria-label="Arrow to navigate back to login" role="img"
                     onclick="navigateToLogin()"></div>
@@ -31,32 +31,32 @@
 
                 <div class="login-signup-input-field-container">
 
-                    <label for="contact-name" class="visually-hidden">Contact Name</label>
-                    <input type="text" id="contact-name" class="login-signup-input input-name" placeholder="Name"
-                        name="contact-name" required>
+                    <label for="fullname" class="visually-hidden">Contact Name</label>
+                    <input type="text" id="fullname" class="login-signup-input input-name" placeholder="Name"
+                        name="fullname" required>
 
-                    <label for="username" class="visually-hidden">Username</label>
-                    <input type="email" id="username" class="login-signup-input input-mail" placeholder="Email"
+                    <label for="email" class="visually-hidden">Username</label>
+                    <input type="text" id="email" class="login-signup-input input-mail" placeholder="Email"
                         name="email" required>
 
                     <label for="password" class="visually-hidden">Password</label>
                     <div class="login-password-container">
                         <input type="password" id="password" class="login-signup-input login-password"
-                            placeholder="Password" name="password" required>
+                            placeholder="Password" name="password" required onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')">
 
                         <button type="button" class="login-toggle-password login-password-lock" role="img"
-                            aria-labelledby="Password visibility toggle button"
-                            alt="Toggle password visibility"></button>
+                            aria-labelledby="Password visibility toggle button" id="loginTogglePassword"
+                            alt="Toggle password visibility" onclick="togglePasswordVisibility(2, 'password', 'loginTogglePassword')"></button>
                     </div>
 
                     <label for="password-confirm" class="visually-hidden">Password Confirm</label>
                     <div class="login-password-container">
                         <input type="password" id="password-confirm" class="login-signup-input login-password"
-                            placeholder="Confirm Password" name="password-confirm" required>
+                            placeholder="Confirm Password" name="password-confirm" required onclick="togglePasswordVisibility(1, 'password-confirm', 'loginTogglePasswordConfirm')">
 
                         <button type="button" class="login-toggle-password login-password-lock" role="img"
-                            aria-labelledby="Password visibility toggle button"
-                            alt="Toggle password visibility"></button>
+                            aria-labelledby="Password visibility toggle button" id="loginTogglePasswordConfirm"
+                            alt="Toggle password visibility" onclick="togglePasswordVisibility(2, 'password-confirm', 'loginTogglePasswordConfirm')"></button>
 
                     </div>
 
@@ -97,7 +97,7 @@
     <script defer src="./script.js"></script>
     <script defer src="./scripts/navigations.js"></script>
     <script defer src="./scripts/signup.js"></script>
-
+    <script defer src="./scripts/sessionstorage.js"></script>
 </body>
 
 </html>

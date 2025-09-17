@@ -42,7 +42,7 @@ function getContactDetailView(cd) {
                 <div class="action-icons action-edit-icon"></div>
                 <p>Edit</p>
             </button>
-            <button onclick="closeDialogByEvent(event,'add-contact-dialog')" id="${cd.id}" class="btn-contact-action btn-contact-delete">
+            <button onclick="onDeleteContact(event,this)" id="${cd.id}" class="btn-contact-action btn-contact-delete">
                 <div class="action-icons action-delete-icon"></div>
                 <p>Delete</p>
             </button>
