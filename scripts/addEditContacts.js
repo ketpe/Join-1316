@@ -17,6 +17,7 @@ async function newContact(event) {
 function selectNewContact(uid) {
     const newContactItem = document.getElementById(uid);
     openContactDetail(newContactItem);
+    newContactItem.scrollIntoView();
 }
 
 function createContactObject(uid) {
