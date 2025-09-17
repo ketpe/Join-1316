@@ -8,10 +8,16 @@ async function newContact(event) {
     const contact = createContactObject(uid);
     const fb = new FirebaseDatabase();
     const data = await fb.getFirebaseLogin(() => fb.putData(`/contacts/${uid}`, contact));
+    await renderContacts();
+    selectNewContact(uid);
 }
 
-/*TODO - Kontakte selektieren bei Neuerstellung*/
 /*TODO - Formular action übernehmen aus addTask*/
+
+function selectNewContact(uid) {
+    const newContactItem = document.getElementById(uid);
+    openContactDetail(newContactItem);
+}
 
 function createContactObject(uid) {
     const { firstname, lastname, email, phone } = getContactFormData();
@@ -46,7 +52,6 @@ async function editContact(event, button) {
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
     const data = await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${button.id}`, contact));
-    console.log(data);
     closeDialogByEvent(event, 'add-contact-dialog');
     clearActiveContactClass();
     renderContacts();
@@ -69,10 +74,8 @@ async function onDeleteContact(event, element) {
     if (element.id !== "") {
         const fb = new FirebaseDatabase();
         const data = await fb.getFirebaseLogin(() => fb.deleteData(`/contacts/${element.id}`));
-        console.log(data);
         clearActiveContactClass();
         addContactDialogClose(event);
-        console.log(event);
         renderContacts();
     } else {
         console.warn("Keine gültige ID übergeben!");
