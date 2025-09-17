@@ -128,7 +128,8 @@ class AddTaskUtils {
             const firstSubstak = currentSubTasks[0];
             if(!firstSubstak.hasOwnProperty('position')){return 0;}
         }
-        const positions = currentSubTasks.map(s => s['position']);
+        const positions = currentSubTasks.map(s => s['position']).filter(p => typeof p === 'number' && !isNaN(p));
+        if(positions.length === 0){return 0;}
         const maxPosition = Math.max(...positions);
         return maxPosition;
     }

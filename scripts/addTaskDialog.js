@@ -4,6 +4,10 @@
  * Also includes utility functions for creating test data and defining data models.
  */
 
+let currentUser = "";
+let isGuest = false;
+let addTaskUtils = new AddTaskUtils();
+let taskComponents = null;
 
 /**
  * Opens the Add Task dialog, renders the content, and adjusts the view for dialog presentation.
@@ -11,12 +15,16 @@
  * @returns {Promise<void>} A promise that resolves when the dialog is fully opened and rendered.
  */
 async function onAddTaskDialogOpen() {
-    toggleScrollOnBody();
+    addTaskDialogtoggleScrollOnBody(true);
     addDialogShowClass('add-task-dialog');
     document.getElementById('add-task-dialog').showModal();
     await renderAddTaskIntoDialog();
     changeAddTaskViewToDialog();
-    await loadDataForAddTask(true);
+    currentUser = addTaskUtils.readCurrentUserID();
+    isGuest = addTaskUtils.isCurrentUserGuest();
+    taskComponents = new TaskComponents(currentUser);
+    taskComponents.run();
+    document.getElementsByTagName('body')[0].setAttribute("onmouseup", "taskComponents.addTaskWindowMouseClick(event)");
 }
 
 /**
@@ -26,15 +34,22 @@ async function onAddTaskDialogOpen() {
  * @param {Event} event - The event that triggered the close action.
  */
 function addTaskDialogClose(event) {
-    //Das Div noch selectieren!
     const dialog = document.getElementById('add-task-dialog');
     const closeDiv = document.getElementById('a-t-dialog-close-div');
-    const cancelButton = document.getElementById('a-t-cancel-btn');
-    if(event.target == dialog || event.target == closeDiv || event.target == cancelButton || event.target.closest('.btn-overlay-close')){
+    const addTaskForm = document.getElementById('add-task-form');
+
+    if(event.target == dialog || 
+        event.target == closeDiv || 
+        event.target.closest('.btn-clear-cancel') || 
+        event.target.closest('.btn-create') ||
+        event.target == addTaskForm
+    ){
         addDialogHideClass('add-task-dialog');
         setTimeout(function() {
             dialog.close();
-            toggleScrollOnBody();
+            document.getElementsByTagName('body')[0].removeAttribute("onmouseup");
+            addTaskDialogtoggleScrollOnBody(false);
+            getBoardTasks();
         }, 1000);
   
     }
@@ -45,8 +60,9 @@ function addTaskDialogClose(event) {
  * This function adds or removes the 'dialog-open' class on the body element,
  * which controls the scrolling behavior when a dialog is open.
  */
-function toggleScrollOnBody() {
-    document.getElementsByTagName('body')[0].classList.toggle('dialog-open');
+function addTaskDialogtoggleScrollOnBody(addClass) {
+    let bodyElement = document.getElementsByTagName('body')[0];
+    addClass ? bodyElement.classList.add('dialog-open') : bodyElement.removeAttribute('class');
 }
 
 /**

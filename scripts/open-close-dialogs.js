@@ -15,6 +15,8 @@ function openDialog(dialogId, renderSpecificFunction) {
  * @param {string} dialogId - The ID of the dialog to close
  */
 function closeDialogByEvent(event, dialogId) {
+    //resetAddTaskVariables();
+    
     const dialog = document.getElementById(dialogId);
     const closeDiv = document.getElementById('btn-overlay-close-div');
     if (

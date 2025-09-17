@@ -9,6 +9,7 @@ class BoardTaskDetailEditUtils{
         this.cleanDialog();
         await this.loadEditHtmlIntoDialog();
         this.renderEditComponents();
+
     }
 
     cleanDialog(){
@@ -41,6 +42,4 @@ class BoardTaskDetailEditUtils{
 
         return contacts;
     }
-
-
 }

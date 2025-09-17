@@ -1,6 +1,6 @@
 
 async function getBoardTasks() {
-    const { TaskContentelements } = getHtmlTasksContent();
+    const { taskContentelements } = getHtmlTasksContent();
     const fb = new FirebaseDatabase();
     let tasks = await fb.getFirebaseLogin(() => fb.getAllData("tasks"));
     tasks = await getDatabaseTaskCategory(tasks);
@@ -9,7 +9,7 @@ async function getBoardTasks() {
     //console.log(tasks);
     renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     addLeftPositionStyleassignedContacts();
-    document.getElementsByTagName('body')[0].setAttribute("onmouseup", "addTaskWindowMouseClick(event)");
+    
 }
 
 
@@ -33,14 +33,14 @@ function addDropZones(taskElements) {
 }
 
 function getHtmlTasksContent() {
-    let TaskContentElements = getBoardTaskref();
+    let taskContentElements = getBoardTaskref();
 
-    TaskContentElements.forEach(tE => { if (tE) tE.innerHTML = ""; });
-    TaskContentElements.forEach(tE => {
+    taskContentElements.forEach(tE => { if (tE) tE.innerHTML = ""; });
+    taskContentElements.forEach(tE => {
         if (tE) tE.innerHTML = boardTaskEmptyTemplate(tE.dataset.category);
 
     })
-    return { TaskContentElements };
+    return { taskContentElements };
 }
 
 async function getDatabaseTaskCategory(tasks) {
@@ -140,8 +140,8 @@ function getBoardTaskref() {
     taskInProgress = document.getElementById("kanban-tasks-inprogress");
     taskAwaitingFeedback = document.getElementById("kanban-tasks-awaiting");
     taskDone = document.getElementById("kanban-tasks-done");
-    TaskContentElements = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
-    return TaskContentElements;
+    taskContentElements = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
+    return taskContentElements;
 }
 
 function addLeftPositionStyleassignedContacts() {
@@ -159,11 +159,14 @@ async function renderTaskDetailView(taskId) {
     getDetailViewTask(taskId);
 }
 
+//FIXME - Variablen leeren
+
 /**
  * Fetches task details and renders them in the detail view dialog
  * @param {string} taskId 
  */
 async function getDetailViewTask(taskId) {
+    //resetAddTaskVariables();
     let tasks = await getTaskByTaskID(taskId);
     await includeHtml("dialog-content-detail-view-task", "task-template.html");
     const boardUtils = new BoardTaskDetailViewUtils(taskId, tasks);
@@ -205,6 +208,7 @@ async function deleteCurrentTask(button) {
  * @param {HTMLElement} button - The button element that was clicked
  */
 async function editCurrentTask(button) {
+    //resetAddTaskVariables();
     const currentTaskID = button.getAttribute('data-id');
     const task = await getTaskByTaskID(currentTaskID);
     const boardEditUtil = new BoardTaskDetailEditUtils(currentTaskID, task);
