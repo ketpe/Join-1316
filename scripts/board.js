@@ -166,14 +166,13 @@ async function renderTaskDetailView(taskId) {
  * @param {string} taskId 
  */
 async function getDetailViewTask(taskId) {
-    //resetAddTaskVariables();
     let tasks = await getTaskByTaskID(taskId);
     await includeHtml("dialog-content-detail-view-task", "task-template.html");
-    const boardUtils = new BoardTaskDetailViewUtils(taskId, tasks);
-    openDialog('detail-view-task-dialog');
-    boardUtils.startRenderTaskDetails();
-    const currentMainHeight = boardUtils.getCurrentHeight();
-    boardUtils.setDialogHeight(currentMainHeight);
+    const taskUtils = new AddTaskUtils();
+    const currentUser = taskUtils.readCurrentUserID();
+    const isGuest = taskUtils.isCurrentUserGuest();
+    const taskComponents = new TaskComponents(currentUser);
+    taskComponents.runWithDataAsView(tasks[0]);
 }
 
 /**
@@ -208,19 +207,13 @@ async function deleteCurrentTask(button) {
  * @param {HTMLElement} button - The button element that was clicked
  */
 async function editCurrentTask(button) {
-    //resetAddTaskVariables();
     const currentTaskID = button.getAttribute('data-id');
     const task = await getTaskByTaskID(currentTaskID);
-    const boardEditUtil = new BoardTaskDetailEditUtils(currentTaskID, task);
-    await boardEditUtil.startRenderTaskEdit();
-    await loadContactsAllFromDB();
-    await loadCategoriesFromDB();
-    setNewPriority(task[0]['priority']);
-    currentContactAssignList = boardEditUtil.getCurrentAssignList();
-    showOrHideBadgeContainer('show');
-    currentSubTasks = task[0]['subTasks'];
-    renderSubtasks();
-    document.getElementById('detail-edit-ok-btn').setAttribute('data-id', currentTaskID);
+    const taskUtils = new AddTaskUtils();
+    const currentUser = taskUtils.readCurrentUserID();
+    const isGuest = taskUtils.isCurrentUserGuest();
+    const taskComponents = new TaskComponents(currentUser);
+    await taskComponents.runWithDataAsEdit(task[0]);
 }
 
 /**

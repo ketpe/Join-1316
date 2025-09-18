@@ -2,13 +2,14 @@ class BoardTaskDetailViewUtils {
 
     currentTask;
 
-    constructor(currentTaskID, tasksArray) {
-        this.tasksArray = tasksArray;
+    constructor(currentTaskID, currentTask) {
+        //this.tasksArray = tasksArray;
         this.currentTaskID = currentTaskID;
+        this.currentTask = currentTask;
     }
 
     startRenderTaskDetails() {
-        this.getCurrentTask();
+        //this.getCurrentTask();
         if (this.currentTask == null) { return; }
         this.viewCategory();
         this.viewTextInDialog('user-story', this.currentTask.categoryData.title);
@@ -53,7 +54,7 @@ class BoardTaskDetailViewUtils {
         let counter = 0;
         let contactSelectElement = document.getElementById('contact-List-for-task');
         for (let i = 0; i < this.currentTask.assignedContacts.length; i++) {
-
+            if(this.currentTask.assignedContacts[i].length == 0){continue;}
             contactSelectElement.innerHTML += getContactListElement(this.currentTask.assignedContacts[i][0], false, true);
             counter++;
             if (counter >= 3) { break; }

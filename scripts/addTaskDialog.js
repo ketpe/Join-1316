@@ -49,6 +49,7 @@ function addTaskDialogClose(event) {
             dialog.close();
             document.getElementsByTagName('body')[0].removeAttribute("onmouseup");
             addTaskDialogtoggleScrollOnBody(false);
+            taskComponents = null;
             getBoardTasks();
         }, 1000);
   

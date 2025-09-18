@@ -4,6 +4,8 @@
  */
 class AddTaskUtils {
 
+    constructor(){}
+
     /**
      * Retrieves the current user ID from session storage.
      * @returns {string} Current User ID from session storage

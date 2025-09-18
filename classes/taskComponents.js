@@ -11,6 +11,8 @@ class TaskComponents {
     currentCategory = {};
     currentSubTasks = [];
     addTaskUtils = new AddTaskUtils();
+    currentTask = null;
+    currentTaskId = "";
 
     constructor(currentUser) {
         this.currentUser = currentUser;
@@ -20,6 +22,37 @@ class TaskComponents {
         await this.loadContactsAllFromDB();
         await this.loadCategoriesFromDB();
         this.setNewPriority("Medium");
+    }
+
+
+    async runWithDataAsView(currentTask) {
+        this.currentTask = currentTask;
+        this.currentTaskId = this.currentTask['id'];
+        const boardUtils = new BoardTaskDetailViewUtils(this.currentTaskId, this.currentTask);
+        openDialog('detail-view-task-dialog');
+        boardUtils.startRenderTaskDetails();
+        const currentMainHeight = boardUtils.getCurrentHeight();
+        boardUtils.setDialogHeight(currentMainHeight);
+        this.setNewPriority(this.currentTask['priority']);
+        this.currentContactAssignList = boardUtils.getCurrentAssignList();
+        this.showOrHideBadgeContainer('show');
+        this.currentSubTasks = currentTask['subTasks'];
+        this.renderSubtasks();
+    }
+
+    async runWithDataAsEdit(currentTask) {
+        this.currentTask = currentTask;
+        this.currentTaskId = this.currentTask['id'];
+        const boardEditUtil = new BoardTaskDetailEditUtils(this.currentTaskId, this.currentTask);
+        await boardEditUtil.startRenderTaskEdit();
+        await loadContactsAllFromDB();
+        await loadCategoriesFromDB();
+        this.setNewPriority(this.currentTask['priority']);
+        this.currentContactAssignList = boardEditUtil.getCurrentAssignList();
+        this.showOrHideBadgeContainer('show');
+        this.currentSubTasks = currentTask['subTasks'];
+        this.renderSubtasks();
+        document.getElementById('detail-edit-ok-btn').setAttribute('data-id', this.currentTaskId);
     }
 
     addTaskTitleOnInput() {
