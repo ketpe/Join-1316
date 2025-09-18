@@ -3,47 +3,30 @@ async function signUpForm(event) {
     let signUp = new FormData(event.target);
     if (!checkName(signUp)) return;
     let { firstname, lastname, initials } = splitName(signUp);
-    let { password, confirmPassword } = checkPassword(signUp) || {};
-    if (!password || !confirmPassword) return;
     let email = await checkEmailTwice(signUp);
-    let acceptPolicy = document.getElementById("signup-confirm").checked;
-    if (!firstname || !lastname || !email || !password || !confirmPassword || !acceptPolicy) {
-        showErrorMessage("Please fill correct data in all fields.");
+    if (!email) return;
+    let password = checkPassword(signUp);
+    if (!password) return;
+    if (!document.getElementById("signupConfirm").checked) {
+        showErrorMessage("Please accept the privacy policy.");
         return;
     }
-    toggleDNone('successfullySignUp');
     await safeDataToDB(firstname, lastname, email, password, initials, getRandomColor());
+    toggleDNone('successfullySignUp');
 }
 
 function checkName(signUp) {
     let fullname = signUp.get("fullname")?.trim();
-    let namePattern = /^[A-Za-zÄÖÜäöüß]+(?:[ '-][A-Za-zÄÖÜäöüß]+)*$/;
-    if (!namePattern.test(fullname)) {
-        showErrorMessage("Please enter a valid name.");
-        document.getElementById("fullname").value = '';
+    let pattern = /^[A-Za-zÄÖÜäöüß]+(?:[ '-][A-Za-zÄÖÜäöüß]+)*$/;
+    if (!fullname || !pattern.test(fullname)) {
+        errorHandling("fullname", "Please enter a valid name.");
         return null;
     }
-    let parts = fullname.split(/\s+/);
-    if (parts.length < 2) {
-        showErrorMessage("Please enter both first name and last name.");
-        document.getElementById("fullname").value = '';
+    if (fullname.split(/\s+/).length < 2) {
+        errorHandling("fullname", "Please enter both - first and last name.");
         return null;
     }
     return true;
-}
-
-function checkPassword(signUp) {
-    let password = signUp.get("password");
-    let confirmPassword = signUp.get("password-confirm");
-    if (password === confirmPassword) {
-        console.log(password, confirmPassword)
-        return { password, confirmPassword };
-    }
-    showErrorMessage("Your passwords don't match. Please try again.");
-    toggleBorderColorByError('loginTogglePasswordConfirm');
-    document.getElementById("fullname").value = signUp.get("fullname");
-    document.getElementById("email").value = signUp.get("email");
-    return null;
 }
 
 function splitName(signUp) {
@@ -51,43 +34,54 @@ function splitName(signUp) {
     let parts = fullName.split(/\s+/);
     let lastname = parts.pop();
     let firstname = parts.join(" ");
-    let capitalize = (str) =>
-        str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-    firstname = firstname.split(" ").map(capitalize).join(" ");
-    lastname = capitalize(lastname);
+    let cap = s => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+    firstname = firstname.split(" ").map(cap).join(" ");
+    lastname = cap(lastname);
     let initials = firstname.charAt(0).toUpperCase() + lastname.charAt(0).toUpperCase();
-    console.log(firstname, lastname, initials);
     return { firstname, lastname, initials };
+}
+
+function checkPassword(signUp) {
+    let pw = signUp.get("password");
+    let pwc = signUp.get("password-confirm");
+    if (pw === pwc) return { password: pw };
+    errorHandling('loginTogglePasswordConfirm', "Your passwords don't match. Please try again.");
+    document.getElementById("fullname").value = signUp.get("fullname");
+    document.getElementById('email').value = signUp.get("email");
+    return null;
 }
 
 async function checkEmailTwice(signUp) {
     let email = checkEmailWithFormValidation(signUp);
     if (!email) return null;
-    console.log(email);
-    email = await checkEmailInDatabase(signUp, email);
-    return true;
+    return await checkEmailInDatabase(email);
 }
 
 function checkEmailWithFormValidation(signUp) {
     let email = signUp.get("email");
-    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (emailPattern.test(email)) return email;
-    showErrorMessage("Please enter a valid email address.");
-    document.getElementById("email").value = '';
+    let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (pattern.test(email)) return email;
+    errorHandling('email', "Please enter a valid email address.");
     return null;
 }
 
-async function checkEmailInDatabase(signUp, email) {
-    let emailInDB = await getDataByKey("email", email, "contacts");
-    if (!emailInDB) return email;
-    showErrorMessage("This email address is already registered. Please use another email.");
-    document.getElementById("email").value = '';
+async function checkEmailInDatabase(email) {
+    let found = await getDataByKey("email", email, "contacts");
+    if (!found) return email;
+    errorHandling('email', "This email is already registered. Please use another one.");
     return null;
 }
 
 async function safeDataToDB(firstname, lastname, email, password, initials, initialColor) {
     let uid = getNewUid();
     let data = { id: uid, firstname, lastname, email, password, initial: initials, initialColor };
-    const fb = new FirebaseDatabase();
+    let fb = new FirebaseDatabase();
     await fb.getFirebaseLogin(() => fb.putData("contacts", data));
+}
+
+function errorHandling(elementID = null, errorMessage) {
+    showErrorMessage(errorMessage);
+    toggleBorderColorByError(elementID);
+    if (!elementID) document.getElementById(elementID).value = '';
+    return;
 }
