@@ -1,6 +1,6 @@
-let valdidateName = false;
-let valdidateEmail = false;
-let valdidatePhone = false;
+let validateName = false;
+let validateEmail = false;
+let validatePhone = false;
 
 async function newContact(event) {
     if (event) event.preventDefault();
@@ -10,6 +10,7 @@ async function newContact(event) {
     const data = await fb.getFirebaseLogin(() => fb.putData(`/contacts/${uid}`, contact));
     await renderContacts();
     selectNewContact(uid);
+    validateName, validateEmail, validatePhone = false;
 }
 
 /*TODO - Formular action übernehmen aus addTask*/
@@ -106,60 +107,72 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
     visibilty ? inputField.classList.add('input-has-error') : inputField.classList.remove('input-has-error');
 }
 //NOTE - Validierung des Namensfeldes
-function contactNameValidation(nameValue) {
+function contactNameValidation() {
+    let nameValue = document.getElementById('contact-name').value;
     const cleanNameValue = (nameValue ?? "").trim();
     const namePattern = /\w{3,10}\s\w{3,10}/;
     if (cleanNameValue.length > 0 && namePattern.test(cleanNameValue)) {
         showAndLeaveErrorMessage("contact-name-required", false);
         showAndLeaveErrorBorder("contact-name", false);
-        valdidateName = true;
+        validateName = true;
     } else {
         showAndLeaveErrorMessage("contact-name-required", true);
         showAndLeaveErrorBorder("contact-name", true);
-        valdidateName = false;
+        validateName = false;
     }
-
-    toggleBtnCreateContact();
 }
 
 //NOTE - Validierung des Emailfeldes
-function contactEmailValidation(emailValue) {
+function contactEmailValidation() {
+    let emailValue = document.getElementById('contact-email').value;
     const cleanEmailValue = (emailValue ?? "").trim();
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
     if (cleanEmailValue.length > 0 && emailPattern.test(cleanEmailValue)) {
         showAndLeaveErrorMessage("contact-email-required", false);
         showAndLeaveErrorBorder("contact-email", false);
-        valdidateEmail = true;
+        validateEmail = true;
     } else {
         showAndLeaveErrorMessage("contact-email-required", true);
         showAndLeaveErrorBorder("contact-email", true);
-        valdidateEmail = false;
+        validateEmail = false;
     }
-
-    toggleBtnCreateContact();
 }
 
 //NOTE - Validierung des Telefonfeldes
-function contactPhoneValidation(phoneValue) {
+function contactPhoneValidation() {
+    let phoneValue = document.getElementById('contact-phone').value;
     const cleanPhoneValue = (phoneValue ?? "").trim();
     const phonePattern = /^[\d\s\-+]{5,}$/;
-
     if (cleanPhoneValue.length > 0 && phonePattern.test(cleanPhoneValue)) {
         showAndLeaveErrorMessage("contact-phone-required", false);
         showAndLeaveErrorBorder("contact-phone", false);
-        valdidatePhone = true;
+        validatePhone = true;
     } else {
         showAndLeaveErrorMessage("contact-phone-required", true);
         showAndLeaveErrorBorder("contact-phone", true);
-        valdidatePhone = false;
+        validatePhone = false;
     }
-    toggleBtnCreateContact();
+
 }
-//FIXME - Validierung mit on Mouse over auslösen
+
 function toggleBtnCreateContact() {
+    contactNameValidation();
+    contactEmailValidation();
+    contactPhoneValidation();
     const btn = document.getElementById('btn-create-contact');
-    if (valdidateName && valdidateEmail && valdidatePhone) {
+    if (validateName && validateEmail && validatePhone) {
+        btn.disabled = false;
+    } else {
+        btn.disabled = true;
+    }
+}
+
+function toggleBtnEditContact(element) {
+    let btn = element;
+    contactNameValidation();
+    contactEmailValidation();
+    contactPhoneValidation();
+    if (validateName && validateEmail && validatePhone) {
         btn.disabled = false;
     } else {
         btn.disabled = true;
@@ -180,4 +193,7 @@ function renderEditContactIntoDialog(id) {
             document.querySelector('.btn-clear-cancel').id = contact.id;
         });
     });
+}
+function cancelAddContact(event) {
+    validateName, validateEmail, validatePhone = false;
 }
