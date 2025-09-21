@@ -10,12 +10,13 @@
     <link rel="stylesheet" href="./styles/login-signup.css">
 </head>
 
-<body class="login-signup-page">
+<body class="login-signup-page" onload="signupinit()">
     <main class="login-signup-main">
         <div class="login-signup-logo" aria-label="Join Application Logo" role="img"></div>
 
         <header class="login-sigup-header">
-            <button type="button" class="btn btn-fill btn-sm d-none" aria-label="Sign up success" id="successfullySignUp">You Signed Up
+            <button type="button" class="btn btn-fill btn-sm d-none" aria-label="Sign up success"
+                id="successfullySignUp">You Signed Up
                 successfully</button>
         </header>
 
@@ -36,27 +37,31 @@
                         name="fullname" required>
 
                     <label for="email" class="visually-hidden">Username</label>
-                    <input type="text" id="email" class="login-signup-input input-mail" placeholder="Email"
-                        name="email" required>
+                    <input type="text" id="email" class="login-signup-input input-mail" placeholder="Email" name="email"
+                        required>
 
                     <label for="password" class="visually-hidden">Password</label>
                     <div class="login-password-container">
                         <input type="password" id="password" class="login-signup-input login-password"
-                            placeholder="Password" name="password" required onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')">
+                            placeholder="Password" name="password" required
+                            onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')">
 
                         <button type="button" class="login-toggle-password login-password-lock" role="img"
                             aria-labelledby="Password visibility toggle button" id="loginTogglePassword"
-                            alt="Toggle password visibility" onclick="togglePasswordVisibility(2, 'password', 'loginTogglePassword')"></button>
+                            alt="Toggle password visibility"
+                            onclick="togglePasswordVisibility(2, 'password', 'loginTogglePassword')"></button>
                     </div>
 
                     <label for="password-confirm" class="visually-hidden">Password Confirm</label>
                     <div class="login-password-container">
                         <input type="password" id="password-confirm" class="login-signup-input login-password"
-                            placeholder="Confirm Password" name="password-confirm" required onclick="togglePasswordVisibility(1, 'password-confirm', 'loginTogglePasswordConfirm')">
+                            placeholder="Confirm Password" name="password-confirm" required
+                            onclick="togglePasswordVisibility(1, 'password-confirm', 'loginTogglePasswordConfirm')">
 
                         <button type="button" class="login-toggle-password login-password-lock" role="img"
                             aria-labelledby="Password visibility toggle button" id="loginTogglePasswordConfirm"
-                            alt="Toggle password visibility" onclick="togglePasswordVisibility(2, 'password-confirm', 'loginTogglePasswordConfirm')"></button>
+                            alt="Toggle password visibility"
+                            onclick="togglePasswordVisibility(2, 'password-confirm', 'loginTogglePasswordConfirm')"></button>
 
                     </div>
 
@@ -94,6 +99,8 @@
 
     </main>
 
+    <script type="module" src="./app.js"></script>
+    <script src="./classes/firebaseDatabase.js"></script>
     <script defer src="./script.js"></script>
     <script defer src="./scripts/navigations.js"></script>
     <script defer src="./scripts/signup.js"></script>

@@ -1,3 +1,11 @@
+async function signupinit() {
+  let fb = new FirebaseDatabase();
+  let data = await fb.getFirebaseLogin(() => fb.getAllData('contacts'));
+  console.log("Daten empfangen:", data);
+}
+
+
+
 async function signUpForm(event) {
     event.preventDefault();
     let signUp = new FormData(event.target);
@@ -66,7 +74,8 @@ function checkEmailWithFormValidation(signUp) {
 }
 
 async function checkEmailInDatabase(email) {
-    let found = await getDataByKey("email", email, "contacts");
+    let fb = new FirebaseDatabase();
+    let found = await fb.getFirebaseLogin(() => fb.getDataByKey("email", email, "contacts"));
     if (!found) return email;
     errorHandling('email', "This email is already registered. Please use another one.");
     return null;
@@ -77,6 +86,7 @@ async function safeDataToDB(firstname, lastname, email, password, initials, init
     let data = { id: uid, firstname, lastname, email, password, initial: initials, initialColor };
     let fb = new FirebaseDatabase();
     await fb.getFirebaseLogin(() => fb.putData("contacts", data));
+    signupinit()
 }
 
 function errorHandling(elementID = null, errorMessage) {
