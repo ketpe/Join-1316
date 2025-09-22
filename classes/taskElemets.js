@@ -1,6 +1,6 @@
 class TaskElements{
-    constructor(){
-
+    constructor(currentInstance){
+        this.currentInstance = currentInstance;
     }
 
     getTitleComonents(isrequired = true, title = ""){
@@ -14,8 +14,8 @@ class TaskElements{
                 placeholder="Enter a title"
                 aria-required="true"
                 aria-describedby="a-t-title-error"
-                oninput="taskComponents.addTaskTitleOnInput()" 
-                onblur="taskComponents.taskTitleValidation(this.value)"
+                oninput="${this.currentInstance}.addTaskTitleOnInput()" 
+                onblur="${this.currentInstance}.taskTitleValidation(this.value)"
                 value="${title}"
                 >
             <div class="a-t-error-text-container">
@@ -37,14 +37,14 @@ class TaskElements{
             <Label for="due-date">Due date ${isrequired ? '<span>*</span>' : ''}</Label>
             <div class="date-field">
                 <input class="a-t-input date-input" id="due-date-display" type="text" placeholder="dd/mm/yyyy" name="due-date" aria-required="true" aria-describedby="a-t-due-date-error"
-                    inputmode="numeric" onblur="taskComponents.dateFieldOnChange()"
-                    oninput="taskComponents.dateFieldOnChange()"
+                    inputmode="numeric" onblur="${this.currentInstance}.dateFieldOnChange()"
+                    oninput="${this.currentInstance}.dateFieldOnChange()"
                     value="${dueDateValue}"
                     >
                 <input type="date" id="due-date-hidden" placeholder="Date" class="date-input-hidden"
-                    onchange="taskComponents.datePickerSelectionChange(event)">
+                    onchange="${this.currentInstance}.datePickerSelectionChange(event)">
                 <button type="button" class="date-trigger" aria-label="Kalender öffnen"
-                    onclick="taskComponents.onDateIconClick()">
+                    onclick="${this.currentInstance}.onDateIconClick()">
                     <div role="img" title="Claendar Icon"></div>
                 </button>
             </div>
@@ -70,21 +70,21 @@ class TaskElements{
             <legend for="task-priority-button">Priority</legend>
             <fieldset id="task-priority-button" class="a-t-priority-button-container">
                 <button id="btn-priority-alta" class="btn btn-priority prio-alta" type="button" name="Urgent" data-selected="false" data-name="alta"
-                    onclick="taskComponents.addTaskPrioritySelect(this)">
+                    onclick="${this.currentInstance}.addTaskPrioritySelect(this)">
                     <div>
                         <p>Urgent</p>
                         <div role="img" title="Urgent-Icon" aria-hidden="true"></div>
                     </div>
                 </button>
                 <button id="btn-priority-media" class="btn btn-priority prio-media" type="button" name="Medium" data-selected="false" data-name="media"
-                    onclick="taskComponents.addTaskPrioritySelect(this)">
+                    onclick="${this.currentInstance}.addTaskPrioritySelect(this)">
                     <div>
                         <p>Medium</p>
                         <div role="img" title="Medium-Icon" aria-hidden="true"></div>
                     </div>
                 </button>
                 <button id="btn-priority-baja" class="btn btn-priority prio-baja" type="button" name="Low" data-selected="false" data-name="baja"
-                    onclick="taskComponents.addTaskPrioritySelect(this)">
+                    onclick="${this.currentInstance}.addTaskPrioritySelect(this)">
                     <div>
                         <p>Low</p>
                         <div role="img" title="Low-Icon" aria-hidden="true"></div>
@@ -99,11 +99,11 @@ class TaskElements{
             <label for="task-assign-to">Assigned to</label>
             <div class="contact-select-container show-front">
                 <input class="a-t-input show-front a-t-contact-input" type="text" name="task-assign-to"
-                    id="task-assign-to" value="Select contacts to assign" onclick="taskComponents.showAndHideContacts('show')"
-                    oninput="taskComponents.filterContactFromInputValue(this.value)">
+                    id="task-assign-to" value="Select contacts to assign" onclick="${this.currentInstance}.showAndHideContacts('show')"
+                    oninput="${this.currentInstance}.filterContactFromInputValue(this.value)">
 
                 <button id="show-and-hide-contacts" class="btn-show-hide-contact-list" type="button"
-                    title="show and hide button for contactlist" onclick="taskComponents.showAndHideContacts('show')">
+                    title="show and hide button for contactlist" onclick="${this.currentInstance}.showAndHideContacts('show')">
                     <div id="show-hide-icon-contacts" class="icon-show-list" role="img" title="show or hide icon">
                     </div>
                 </button>
@@ -131,10 +131,10 @@ class TaskElements{
             <div class="category-select-container show-front ">
                 <input class="a-t-input a-t-category-input" type="text" name="task-category" id="task-category"
                     value="Select task category" placeholder="Select task category" readonly aria-required="true"
-                    onclick="taskComponents.onclickCategoryInput(this)">
+                    onclick="${this.currentInstance}.onclickCategoryInput(this)">
 
                 <button id="show-and-hide-categories" class="btn-show-hide-category-list" type="button"
-                    title="show and hide button for categories" onclick="taskComponents.showAndHideCategories('show')">
+                    title="show and hide button for categories" onclick="${this.currentInstance}.showAndHideCategories('show')">
                     <div id="show-hide-icon-category" class="icon-show-list" role="img" title="show or hide icon">
                     </div>
                 </button>
@@ -162,13 +162,13 @@ class TaskElements{
             <label for="task-sub-task">Subtasks</label>
             <div class="sub-input-container">
                 <input class="a-t-input a-t-sub-input" type="text" name="task-sub-task" id="task-sub-task"
-                    onclick="taskComponents.onclickSubtaskInput(this)" placeholder="Add new subtask" onkeydown="taskComponents.subtaskInputfieldPressEnter(event, this)">
+                    onclick="${this.currentInstance}.onclickSubtaskInput(this)" placeholder="Add new subtask" onkeydown="${this.currentInstance}.subtaskInputfieldPressEnter(event, this)">
                 <div id="sub-writing-buttons" class="sub-input-writing-btn-container d-none">
-                    <button type="button" title="delete current entry button" aria-label="Delete current entry" onclick="taskComponents.clearSubInputField()">
+                    <button type="button" title="delete current entry button" aria-label="Delete current entry" onclick="${this.currentInstance}.clearSubInputField()">
                         <div role="img" title="delete icon" aria-hidden="true"></div>
                     </button>
                     <div></div>
-                    <button type="button" title="adopt current entry" aria-label="Adopt current entry" onclick="taskComponents.adoptCurrentSubEntry()">
+                    <button type="button" title="adopt current entry" aria-label="Adopt current entry" onclick="${this.currentInstance}.adoptCurrentSubEntry()">
                         <div role="img" title="check icon" aria-hidden="true"></div>
                     </button>
                 </div>

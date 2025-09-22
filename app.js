@@ -1,12 +1,13 @@
 
 import { auth, db, onAuthStateChanged } from "./scripts/firebase.js";
-import { ref, push, set, onValue, get, getDatabase, child, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { ref, set, get, getDatabase, child, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 async function includeHtml(targetId, file) {
 
   try {
     const element = document.getElementById(targetId);
     if (!element) throw new Error(`Target #${targetId} not found`);
+    element.innerHTML = "";
 
     const res = await fetch(file, { cache: "no-cache" });
     if (!res.ok) throw new Error(`Error loading: ${file} (${res.status})`);

@@ -295,6 +295,10 @@
   }
 }
 
+.btn-overlay-close:focus{
+  outline: none;
+}
+
 .btn-overlay-close:hover:enabled {
   background-color: var(--bg-btn-hover-special);
 }

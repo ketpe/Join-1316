@@ -3,13 +3,11 @@ class BoardTaskDetailViewUtils {
     currentTask;
 
     constructor(currentTaskID, currentTask) {
-        //this.tasksArray = tasksArray;
         this.currentTaskID = currentTaskID;
         this.currentTask = currentTask;
     }
 
     startRenderTaskDetails() {
-        //this.getCurrentTask();
         if (this.currentTask == null) { return; }
         this.viewCategory();
         this.viewTextInDialog('user-story', this.currentTask.categoryData.title);

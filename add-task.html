@@ -1,4 +1,4 @@
-<form id="add-task-form" class="" action="/post" method="post" aria-labelledby="add-task-title" novalidate onsubmit="return taskComponents.addTaskCreateTask(event)">
+<form id="add-task-form" class="" action="/post" method="post" aria-labelledby="add-task-title" novalidate>
     <header class="add-task-head">
         <h1 class="join-h1">Add Task</h1>
         <button id="a-t-dialog-close-btn" class="btn-overlay-close" type="button" aria-label="Close dialog" onclick="addTaskDialogClose(event)">
@@ -32,7 +32,7 @@
                         <div role="img" title="Clear-Icon" aria-hidden="true"></div>
                     </div>
                 </button>
-                <button id="createTaskButton" type="submit" class="btn btn-fill btn-create-task" disabled onmouseover="taskComponents.addTaskSubmitOnMouse(this)">
+                <button id="createTaskButton" type="submit" class="btn btn-fill btn-create-task" disabled>
                     <div>
                         <p>Create Task</p>
                         <div role="img" title="Check-Icon" aria-hidden="true"></div>

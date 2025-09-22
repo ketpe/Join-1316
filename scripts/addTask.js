@@ -2,7 +2,7 @@
 let currentUser = "";
 let isGuest = false;
 let addTaskUtils = new AddTaskUtils();
-let taskComponents = null;
+let addTasktaskComponents = null;
 
 
 /**
@@ -24,10 +24,25 @@ async function renderAddTaskWithNavAndHeader() {
         includeHtml("header", "header-desktop.html"),
         includeHtml("add-task-content", "add-task.html")
     ]);
-    const taskElements = new TaskElements();
+    const taskElements = new TaskElements("addTasktaskComponents");
     taskElements.fillLeftContainerOnAddTask();
     taskElements.fillRightContainerOnAddTask();
+    setAddTaskFormSubmitFunction();
+    setAddTaskCreateBtnMouseFunction();
 }
+
+function setAddTaskFormSubmitFunction(){
+    const form = document.getElementById('add-task-form');
+    if(!form){return;}
+    form.setAttribute('onsubmit', "return addTasktaskComponents.addTaskCreateTask(event)");
+}
+
+function setAddTaskCreateBtnMouseFunction(){
+    const btn = document.getElementById('createTaskButton');
+    if(!btn){return;}
+    btn.setAttribute('onmouseover', `addTasktaskComponents.addTaskSubmitOnMouse(this)`);
+}
+
 
 
 /**
@@ -51,8 +66,8 @@ async function loadDataForAddTask() {
     renderUserInitial();
     currentUser = addTaskUtils.readCurrentUserID();
     isGuest = addTaskUtils.isCurrentUserGuest();
-    taskComponents = new TaskComponents(currentUser);
-    taskComponents.run();
+    addTasktaskComponents = new TaskComponents(currentUser, "addTasktaskComponents");
+    addTasktaskComponents.run();
 }
 
 

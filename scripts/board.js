@@ -1,3 +1,5 @@
+let boardTaskComponents = null;
+
 
 async function getBoardTasks() {
     const { taskContentelements } = getHtmlTasksContent();
@@ -154,25 +156,19 @@ function addLeftPositionStyleassignedContacts() {
     });
 }
 
-async function renderTaskDetailView(taskId) {
-    await includeHtml("dialog-content", "task-template.html");
-    getDetailViewTask(taskId);
-}
-
-//FIXME - Variablen leeren
-
 /**
  * Fetches task details and renders them in the detail view dialog
  * @param {string} taskId 
  */
 async function getDetailViewTask(taskId) {
+    boardTaskComponents = null;
     let tasks = await getTaskByTaskID(taskId);
     await includeHtml("dialog-content-detail-view-task", "task-template.html");
     const taskUtils = new AddTaskUtils();
     const currentUser = taskUtils.readCurrentUserID();
     const isGuest = taskUtils.isCurrentUserGuest();
-    const taskComponents = new TaskComponents(currentUser);
-    taskComponents.runWithDataAsView(tasks[0]);
+    boardTaskComponents = new TaskComponents(currentUser, "boardTaskComponents");
+    boardTaskComponents.runWithDataAsView(tasks[0]);
 }
 
 /**
@@ -207,13 +203,14 @@ async function deleteCurrentTask(button) {
  * @param {HTMLElement} button - The button element that was clicked
  */
 async function editCurrentTask(button) {
+    boardTaskComponents = null;
     const currentTaskID = button.getAttribute('data-id');
     const task = await getTaskByTaskID(currentTaskID);
     const taskUtils = new AddTaskUtils();
     const currentUser = taskUtils.readCurrentUserID();
     const isGuest = taskUtils.isCurrentUserGuest();
-    const taskComponents = new TaskComponents(currentUser);
-    await taskComponents.runWithDataAsEdit(task[0]);
+    boardTaskComponents = new TaskComponents(currentUser, "boardTaskComponents");
+    await boardTaskComponents.runWithDataAsEdit(task[0]);
 }
 
 /**
@@ -242,27 +239,13 @@ async function editCurrentTaskSubmit(event) {
     const currentDescription = editTaskFormData.get('task-description');
     const currentDate = editTaskFormData.get('due-date');
     const tasks = await getTaskByTaskID(currentID);
-    const prio = currentPriority;
-    const cList = currentContactAssignList;
-    const subList = currentSubTasks;
-    const editTaskUtil = new EditTaskSafeUtil(tasks[0], currentTitle, currentDescription, currentDate, prio, cList, subList);
+    const [prio, category, subtaskArray, contactAssignedArray] = boardTaskComponents.getData();
+    const editTaskUtil = new EditTaskSafeUtil(tasks[0], currentTitle, currentDescription, currentDate, prio, contactAssignedArray, subtaskArray);
     const resultUpdate = await editTaskUtil.startUpdate();
     if (resultUpdate) {
-        await afterUpdateTask(currentID);
+        document.getElementById('dialog-content-detail-view-task').innerHTML = "";
+        await getDetailViewTask(currentID);
     }
-}
-
-/**
- * Show the updated task details after editing
- * @param {string} taskId - The ID of the task to update
- */
-async function afterUpdateTask(taskId) {
-    let tasks = await getTaskByTaskID(taskId);
-    await includeHtml("dialog-content-detail-view-task", "task-template.html");
-    const boardUtils = new BoardTaskDetailViewUtils(taskId, tasks);
-    boardUtils.startRenderTaskDetails();
-    const currentMainHeight = boardUtils.getCurrentHeight();
-    boardUtils.setDialogHeight(currentMainHeight);
 }
 
 function searchTaskInBoard() {
