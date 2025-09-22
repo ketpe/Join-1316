@@ -14,8 +14,9 @@ class TaskComponents {
     currentTask = null;
     currentTaskId = "";
 
-    constructor(currentUser) {
+    constructor(currentUser, currentInstance) {
         this.currentUser = currentUser;
+        this.currentInstance = currentInstance;
     }
 
     async run() {
@@ -33,26 +34,23 @@ class TaskComponents {
         boardUtils.startRenderTaskDetails();
         const currentMainHeight = boardUtils.getCurrentHeight();
         boardUtils.setDialogHeight(currentMainHeight);
-        this.setNewPriority(this.currentTask['priority']);
-        this.currentContactAssignList = boardUtils.getCurrentAssignList();
-        this.showOrHideBadgeContainer('show');
         this.currentSubTasks = currentTask['subTasks'];
-        this.renderSubtasks();
     }
 
     async runWithDataAsEdit(currentTask) {
         this.currentTask = currentTask;
         this.currentTaskId = this.currentTask['id'];
-        const boardEditUtil = new BoardTaskDetailEditUtils(this.currentTaskId, this.currentTask);
+        const boardEditUtil = new BoardTaskDetailEditUtils(this.currentTaskId, this.currentTask, this.currentInstance);
         await boardEditUtil.startRenderTaskEdit();
-        await loadContactsAllFromDB();
-        await loadCategoriesFromDB();
+        await this.loadContactsAllFromDB();
+        await this.loadCategoriesFromDB();
         this.setNewPriority(this.currentTask['priority']);
         this.currentContactAssignList = boardEditUtil.getCurrentAssignList();
         this.showOrHideBadgeContainer('show');
         this.currentSubTasks = currentTask['subTasks'];
         this.renderSubtasks();
         document.getElementById('detail-edit-ok-btn').setAttribute('data-id', this.currentTaskId);
+        document.getElementsByTagName('body')[0].setAttribute("onmouseup", `${this.currentInstance}.addTaskWindowMouseClick(event)`);
     }
 
     addTaskTitleOnInput() {
@@ -319,7 +317,7 @@ class TaskComponents {
      */
     showAndHideContacts(showOrHide = "show") {
         const buttonShowOhrHide = document.getElementById('show-and-hide-contacts');
-        buttonShowOhrHide.setAttribute('onclick', (showOrHide == "show" ? 'showAndHideContacts("hide")' : 'showAndHideContacts("show")'));
+        buttonShowOhrHide.setAttribute('onclick', (showOrHide == "show" ? `${this.currentInstance}.showAndHideContacts("hide")` : `${this.currentInstance}.showAndHideContacts("show")`));
         const inputField = document.getElementById('task-assign-to');
         if (showOrHide == "show") {
             inputField.value = "";

@@ -1,8 +1,9 @@
 class BoardTaskDetailEditUtils{
 
-    constructor(currentTaskID, currentTask){
-        this.currentTask = currentTask[0];
+    constructor(currentTaskID, currentTask, currentInstance){
+        this.currentTask = currentTask;
         this.currentTaskID = currentTaskID;
+        this.currentInstance = currentInstance;
     }
 
     async startRenderTaskEdit(){
@@ -22,7 +23,7 @@ class BoardTaskDetailEditUtils{
 
     renderEditComponents(){
         let mainConatiner = document.querySelector('.task-edit-fields');
-        let taskComponents = new TaskElements();
+        let taskComponents = new TaskElements(this.currentInstance);
         mainConatiner.innerHTML += taskComponents.getTitleComonents(false, this.currentTask['title']);
         mainConatiner.innerHTML += taskComponents.getDescriptionComponents(this.currentTask['description'], true);
         mainConatiner.innerHTML += taskComponents.getDueDateComponents(false, this.currentTask['dueDate']);

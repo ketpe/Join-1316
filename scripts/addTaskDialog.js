@@ -7,7 +7,7 @@
 let currentUser = "";
 let isGuest = false;
 let addTaskUtils = new AddTaskUtils();
-let taskComponents = null;
+let addTaskDialogTaskComponents = null;
 
 /**
  * Opens the Add Task dialog, renders the content, and adjusts the view for dialog presentation.
@@ -22,9 +22,9 @@ async function onAddTaskDialogOpen() {
     changeAddTaskViewToDialog();
     currentUser = addTaskUtils.readCurrentUserID();
     isGuest = addTaskUtils.isCurrentUserGuest();
-    taskComponents = new TaskComponents(currentUser);
-    taskComponents.run();
-    document.getElementsByTagName('body')[0].setAttribute("onmouseup", "taskComponents.addTaskWindowMouseClick(event)");
+    addTaskDialogTaskComponents = new TaskComponents(currentUser, "addTaskDialogTaskComponents");
+    addTaskDialogTaskComponents.run();
+    document.getElementsByTagName('body')[0].setAttribute("onmouseup", "addTaskDialogTaskComponents.addTaskWindowMouseClick(event)");
 }
 
 /**
@@ -76,7 +76,7 @@ async function renderAddTaskIntoDialog() {
     await Promise.all([
         includeHtml("dialog-content", "add-task.html")
     ]);
-    const taskElements = new TaskElements();
+    const taskElements = new TaskElements("addTaskDialogTaskComponents");
     taskElements.fillLeftContainerOnAddTask();
     taskElements.fillRightContainerOnAddTask();
 }
