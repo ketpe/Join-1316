@@ -1,7 +1,7 @@
 async function signupinit() {
-  let fb = new FirebaseDatabase();
-  let data = await fb.getFirebaseLogin(() => fb.getAllData('contacts'));
-  console.log("Daten empfangen:", data);
+    let fb = new FirebaseDatabase();
+    let data = await fb.getFirebaseLogin(() => fb.getAllData('contacts'));
+    console.log("Daten empfangen:", data);
 }
 
 
@@ -85,7 +85,7 @@ async function safeDataToDB(firstname, lastname, email, password, initials, init
     let uid = getNewUid();
     let data = { id: uid, firstname, lastname, email, password, initial: initials, initialColor };
     let fb = new FirebaseDatabase();
-    await fb.getFirebaseLogin(() => fb.putData("contacts", data));
+    await fb.getFirebaseLogin(() => fb.putData(`/contacts/${uid}`, data));
     signupinit()
 }
 

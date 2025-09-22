@@ -11,7 +11,7 @@ async function getBoardTasks() {
     //console.log(tasks);
     renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     addLeftPositionStyleassignedContacts();
-    
+
 }
 
 
@@ -24,14 +24,14 @@ function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback,
                 task.taskStateCategory === 'awaiting' ? taskAwaitingFeedback.innerHTML += boardTasksTemplate(task, renderedContacts) :
                     task.taskStateCategory === 'done' ? taskDone.innerHTML += boardTasksTemplate(task, renderedContacts) : '';
     })
-    let taskElements = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone]
-    taskElements = addDropZones(taskElements);
-    toggleNoTaskVisible(taskElements);
+    let taskItems = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone]
+    taskItems = addDropZones(taskItems);
+    toggleNoTaskVisible(taskItems);
 }
 
-function addDropZones(taskElements) {
-    taskElements.forEach(tE => { if (tE) tE.innerHTML += boardTaskEmptyDropTemplate() });
-    return taskElements
+function addDropZones(taskItems) {
+    taskItems.forEach(tE => { if (tE) tE.innerHTML += boardTaskEmptyDropTemplate() });
+    return taskItems
 }
 
 function getHtmlTasksContent() {
@@ -126,8 +126,8 @@ function toggleSubtaskCheckbox(element) {
 }
 
 function toggleNoTaskVisible() {
-    let taskElements = getBoardTaskref();
-    taskElements.forEach(element => {
+    let taskItems = getBoardTaskref();
+    taskItems.forEach(element => {
         let noTask = element.querySelector('.kanban-task-empty');
         if (element.children.length === 2) {
             noTask.classList.remove('visually-hidden');
@@ -158,7 +158,7 @@ function addLeftPositionStyleassignedContacts() {
 
 /**
  * Fetches task details and renders them in the detail view dialog
- * @param {string} taskId 
+ * @param {string} taskId
  */
 async function getDetailViewTask(taskId) {
     boardTaskComponents = null;
@@ -191,7 +191,7 @@ async function detailViewChangeSubtaskChecked(button) {
 async function deleteCurrentTask(button) {
     const currentTaskID = button.getAttribute('data-id');
     const taskDelete = new BoardTaskDetailDeleteUtil(currentTaskID);
-    if(await taskDelete.startDelete()){
+    if (await taskDelete.startDelete()) {
         closeDialog('detail-view-task-dialog');
         getBoardTasks();
     }
