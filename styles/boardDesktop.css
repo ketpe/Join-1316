@@ -1,3 +1,7 @@
+body {
+    overflow: hidden;
+}
+
 .board-header {
     position: fixed;
     top: var(--header-height);
@@ -144,7 +148,7 @@
     width: 100%;
     height: 688px;
     gap: 24px;
-    padding: 8px 64px 0 64px;
+    padding: 0px 64px 0 64px;
     position: sticky;
     top: 0;
     overflow-y: auto;
