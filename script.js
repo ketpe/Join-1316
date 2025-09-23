@@ -9,7 +9,7 @@ async function init() {
 }
 
 async function renderUserInitial() {
-    let logInStatus = sessionStorage.getItem('logInStatus');
+    let logInStatus = getLogStatus();
     let userinitial = "G";
     if (logInStatus !== "0") {
         const fb = new FirebaseDatabase();
