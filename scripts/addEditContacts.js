@@ -49,11 +49,12 @@ function getInitials(firstname, lastname) {
 
 
 
-async function editContact(event, button) {
+async function editContact(event) {
     if (event) event.preventDefault();
+    const buttonID = event.submitter.id;
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
-    const data = await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${button.id}`, contact));
+    const data = await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${buttonID}`, contact));
     closeDialogByEvent(event, 'add-contact-dialog');
     clearActiveContactClass();
     renderContacts();
