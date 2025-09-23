@@ -5,14 +5,14 @@ async function privacyOrLegalLoad() {
     if (backToLoginPage !== null && backToLoginPage.startsWith("true")) {
 
         await Promise.all([
-            includeHtml("navbar", "navbar-desktop-spezial.html"),
-            includeHtml("header", "header-desktop.html")
+            includeHtml("navbar", "navbarDesktopSpezial.html"),
+            includeHtml("header", "headerDesktop.html")
         ]);
 
     } else {
         await Promise.all([
-            includeHtml("navbar", "navbar-desktop.html"),
-            includeHtml("header", "header-desktop.html")
+            includeHtml("navbar", "navbarDesktop.html"),
+            includeHtml("header", "headerDesktop.html")
         ]);
     }
 

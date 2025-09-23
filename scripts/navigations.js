@@ -3,28 +3,28 @@ function navigateToSignUp() {
 }
 
 function navigateToSummary() {
-    window.location.href = './summary-desktop.html';
+    window.location.href = './summaryDesktop.html';
 }
 
 function navigateToContact() {
-    window.location.href = './contacts-desktop.html';
+    window.location.href = './contactsDesktop.html';
 }
 
 function navigateToPrivacy(source = "") {
 
     if (source == "login") {
-        window.location.href = './privacy-policy.html?backToLogin=true';
+        window.location.href = './privacyPolicy.html?backToLogin=true';
     } else {
-        window.location.href = './privacy-policy.html';
+        window.location.href = './privacyPolicy.html';
     }
 
 }
 
 function navigateToLegalNotice(source) {
     if (source == "login" || source == "signin") {
-        window.location.href = "./legal-notice.html?backToLogin=true";
+        window.location.href = "./legalNotice.html?backToLogin=true";
     } else {
-        window.location.href = "./legal-notice.html";
+        window.location.href = "./legalNotice.html";
     }
 }
 
@@ -43,9 +43,9 @@ function navigateToHelp() {
 }
 
 function navigateToAddTask() {
-    window.location.href = './add-task-desktop.html';
+    window.location.href = './addTaskDesktop.html';
 }
 
 function navigateToBoard() {
-    window.location.href = './board-desktop.html';
+    window.location.href = './boardDesktop.html';
 }

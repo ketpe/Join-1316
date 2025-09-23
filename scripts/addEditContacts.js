@@ -182,7 +182,7 @@ function toggleBtnEditContact(element) {
 //NOTE -  Funktion zum Rendern der Kontaktdaten im Edit-Dialog
 function renderEditContactIntoDialog(id) {
     const fb = new FirebaseDatabase();
-    includeHtml("dialog-content-contacts", "edit-contact.html").then(() => {
+    includeHtml("dialog-content-contacts", "editContact.html").then(() => {
         fb.getDataByKey("id", id, "contacts").then(contact => {
             document.getElementById('contact-name').value = `${contact.firstname} ${contact.lastname}`;
             document.getElementById('contact-email').value = contact.email;

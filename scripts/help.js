@@ -3,8 +3,8 @@ let currentSource = "";
 async function onHelpLoad() {
     getCurrentSource();
     await Promise.all([
-        includeHtml("navbar", "navbar-desktop.html"),
-        includeHtml("header", "header-desktop.html")
+        includeHtml("navbar", "navbarDesktop.html"),
+        includeHtml("header", "headerDesktop.html")
     ]);
     hideHelpButton();
 }

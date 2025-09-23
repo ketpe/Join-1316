@@ -163,7 +163,7 @@ function addLeftPositionStyleassignedContacts() {
 async function getDetailViewTask(taskId) {
     boardTaskComponents = null;
     let tasks = await getTaskByTaskID(taskId);
-    await includeHtml("dialog-content-detail-view-task", "task-template.html");
+    await includeHtml("dialog-content-detail-view-task", "taskTemplate.html");
     const taskUtils = new AddTaskUtils();
     const currentUser = taskUtils.readCurrentUserID();
     const isGuest = taskUtils.isCurrentUserGuest();
@@ -239,7 +239,7 @@ async function editCurrentTaskSubmit(event) {
     const currentDescription = editTaskFormData.get('task-description');
     const currentDate = editTaskFormData.get('due-date');
     const tasks = await getTaskByTaskID(currentID);
-    const [prio, category, subtaskArray, contactAssignedArray] = boardTaskComponents.getData();
+    const [prio, category, subtaskArray, contactAssignedArray] = boardTaskComponents.getTaskDetails;
     const editTaskUtil = new EditTaskSafeUtil(tasks[0], currentTitle, currentDescription, currentDate, prio, contactAssignedArray, subtaskArray);
     const resultUpdate = await editTaskUtil.startUpdate();
     if (resultUpdate) {

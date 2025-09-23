@@ -1,4 +1,4 @@
-class TaskComponents {
+class TaskComponents{
 
     contactAllListFromDB = [];
     categories = [];
@@ -63,7 +63,7 @@ class TaskComponents {
         }
     }
 
-    getData() {
+    get getTaskDetails() {
         return [this.currentPriority, this.currentCategory['id'], this.currentSubTasks, this.currentContactAssignList];
     }
 
@@ -180,7 +180,6 @@ class TaskComponents {
 
     /**
     * Validates the due date field.
-    * Utilizes the startDueDateValidation function from due-date-validation.js.
     */
     dateFieldOnChange() {
         let dateField = document.getElementById('due-date-display');
@@ -808,7 +807,6 @@ class TaskComponents {
 
         if (event) event.preventDefault();
         const addTaskFormData = new FormData(event.currentTarget);
-        /* const [currentPriority, currentCategoryId, currentSubTasks, currentContactAssignList] = taskComponents.getData(); */
         const currentTask = new Task(
             getNewUid(),
             addTaskFormData.get('task-title'),

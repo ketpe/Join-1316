@@ -18,7 +18,7 @@ class BoardTaskDetailEditUtils{
     }
 
     async loadEditHtmlIntoDialog(){
-        await includeHtml("dialog-content-detail-view-task", "task-edit-template.html");
+        await includeHtml("dialog-content-detail-view-task", "taskEditTemplate.html");
     }
 
     renderEditComponents(){

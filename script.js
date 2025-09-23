@@ -1,8 +1,8 @@
 
 async function init() {
     await Promise.all([
-        includeHtml("navbar", "navbar-desktop.html"),
-        includeHtml("header", "header-desktop.html")
+        includeHtml("navbar", "navbarDesktop.html"),
+        includeHtml("header", "headerDesktop.html")
     ]);
 
     renderUserInitial();

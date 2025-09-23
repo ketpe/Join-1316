@@ -69,12 +69,12 @@ function addTaskDialogtoggleScrollOnBody(addClass) {
 /**
  * Renders the Add Task content into the dialog.
  * This function is asynchronous to accommodate the loading of HTML content.
- * It uses the includeHtml function to load the 'add-task.html' file into the dialog's content area.
+ * It uses the includeHtml function to load the 'addTask.html' file into the dialog's content area.
  * @returns {Promise<void>} A promise that resolves when the content is fully rendered.
  */
 async function renderAddTaskIntoDialog() {
     await Promise.all([
-        includeHtml("dialog-content", "add-task.html")
+        includeHtml("dialog-content", "addTask.html")
     ]);
     const taskElements = new TaskElements("addTaskDialogTaskComponents");
     taskElements.fillLeftContainerOnAddTask();

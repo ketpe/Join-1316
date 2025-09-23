@@ -20,9 +20,9 @@ async function onLoadAddTask() {
 async function renderAddTaskWithNavAndHeader() {
 
     await Promise.all([
-        includeHtml("navbar", "navbar-desktop.html"),
-        includeHtml("header", "header-desktop.html"),
-        includeHtml("add-task-content", "add-task.html")
+        includeHtml("navbar", "navbarDesktop.html"),
+        includeHtml("header", "headerDesktop.html"),
+        includeHtml("add-task-content", "addTask.html")
     ]);
     const taskElements = new TaskElements("addTasktaskComponents");
     taskElements.fillLeftContainerOnAddTask();

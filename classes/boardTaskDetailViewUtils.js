@@ -1,3 +1,10 @@
+/**
+ * This file contains the BoardTaskDetailViewUtils class which provides utility functions to render and manage task details in a board view.
+ * It includes methods to display task information, handle assigned contacts, and manage subtasks.
+ * It also includes helper functions to generate HTML elements for contacts, categories, and subtasks.
+ * The class is designed to work with a task management application, facilitating the display and interaction with task details in a user-friendly manner.
+ */
+
 class BoardTaskDetailViewUtils {
 
     currentTask;
@@ -8,6 +15,10 @@ class BoardTaskDetailViewUtils {
         this.currentInstance = currentInstance;
     }
 
+    /**
+     * Starts the rendering of task details in the dialog.
+     * @returns {void}
+     */
     startRenderTaskDetails() {
         if (this.currentTask == null) { return; }
         this.viewCategory();
@@ -22,6 +33,10 @@ class BoardTaskDetailViewUtils {
         this.setTaskIDIntoButtons();
     }
 
+    /**
+     * Retrieves the current task object.
+     * @returns {Object|null} The current task object or null if not found.
+     */
     getCurrentTask() {
         const taskFilter = this.tasksArray.filter(x => x['id'] == this.currentTaskID);
         if (taskFilter.length > 0) {
@@ -29,18 +44,32 @@ class BoardTaskDetailViewUtils {
         }
     }
 
+    /**
+     * Renders the category information in the dialog.
+     * @returns {void}
+     */
     viewCategory() {
         let catElement = document.getElementById('left-header');
         if (!catElement) { return; }
         catElement.classList.add(this.currentTask.categoryData.categoryColor);
     }
 
+    /**
+     * Updates the text content of a specified element in the dialog.
+     * @param {string} elementID - The ID of the element to update.
+     * @param {string} textValue - The new text value to set.
+     * @returns {void}
+     */
     viewTextInDialog(elementID, textValue) {
         let element = document.getElementById(elementID);
         if (!element) { return; }
         element.innerHTML = textValue;
     }
 
+    /**
+     * Renders the priority information in the dialog.
+     * @returns {void}
+     */
     viewPriority() {
         let prioIconElement = document.querySelector('.priority-indicator div');
         if (!prioIconElement) { return; }
@@ -49,6 +78,11 @@ class BoardTaskDetailViewUtils {
         prioIconElement.classList.add(cuurentIconClass);
     }
 
+    /**
+     * Renders the assigned contacts in the dialog.
+     * Limits the display to a maximum of three contacts and adjusts the container height accordingly.
+     * @returns {void}
+     */
     viewAssignedContacts() {
         let counter = 0;
         let contactSelectElement = document.getElementById('contact-List-for-task');
@@ -65,6 +99,10 @@ class BoardTaskDetailViewUtils {
         contactSelectElement.style.height = (heightOfContainer) + "px";
     }
 
+    /**
+     * Renders the subtask information in the dialog.
+     * @returns {void}
+     */
     viewSubTasks(){
         let subTaskContainer = document.getElementById('detail-view-subtask-container');
         for(let i = 0; i < this.currentTask.subTasks.length; i++){
@@ -74,10 +112,19 @@ class BoardTaskDetailViewUtils {
         subTaskContainer.style.height = (this.currentTask.subTasks.length * 28) + "px";
     }
 
+    /**
+     * Retrieves the current height of the task main container.
+     * @returns {number} The current height of the task main container.
+     */
     getCurrentHeight(){
         return document.querySelector(".task-main").offsetHeight;
     }
 
+    /**
+     * Sets the dialog height based on the current main container height.
+     * @param {number} currentMainHeight - The current height of the main container.
+     * @returns {void}
+     */
     setDialogHeight(currentMainHeight){
         let taskMain = document.querySelector(".task-main");
         if(currentMainHeight <= 615){
@@ -88,6 +135,10 @@ class BoardTaskDetailViewUtils {
         }
     }
 
+    /**
+     * Sets the current task ID into the edit and delete buttons for reference.
+     * @returns {void}
+     */
     setTaskIDIntoButtons(){
         document.getElementById('detail-view-delete-btn').setAttribute('data-id', `${this.currentTaskID}`);
         document.getElementById('detail-view-edit-btn').setAttribute('data-id', `${this.currentTaskID}`);

@@ -23,6 +23,15 @@ async function includeHtml(targetId, file) {
 
 }
 
+function setLogStatus(setLogStatus) {
+  sessionStorage.setItem('logInStatus', setLogStatus);
+};
+
+function getLogStatus() {
+  let logInStatus = sessionStorage.getItem('logInStatus');
+  return logInStatus;
+};
+
 
 window.includeHtml = includeHtml;
 window.firebaseAuth = auth;
@@ -35,3 +44,5 @@ window.firebaseChild = child;
 window.firebaseSet = set;
 window.firebaseUpdate = update;
 window.firebaseRemove = remove;
+window.setLogStatus = setLogStatus;
+window.getLogStatus = getLogStatus;
