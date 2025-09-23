@@ -5,7 +5,7 @@
  */
 //NOTE - Allgemeine Dialogfunktion.
 function openDialog(dialogId, renderSpecificFunction) {
-    toggleScrollOnBody();
+    toggleScrollOnBody(true);
     addDialogShowClass(dialogId);
     document.getElementById(dialogId).showModal();
     if (renderSpecificFunction) renderSpecificFunction();
@@ -38,14 +38,15 @@ function closeDialog(dialogId) {
     addDialogHideClass(dialogId);
     setTimeout(function () {
         document.getElementById(dialogId).close();
-        toggleScrollOnBody();
+        toggleScrollOnBody(false);
     }, 1000);
 }
 /**
  * Toggles the scroll on the body element
  */
-function toggleScrollOnBody() {
-    document.getElementsByTagName('body')[0].classList.toggle('dialog-open');
+function toggleScrollOnBody(open) {
+    const bodyElement = document.getElementsByTagName('body')[0];
+    open ? bodyElement.classList.add('dialog-open') : bodyElement.classList.remove('dialog-open');
 }
 
 /**

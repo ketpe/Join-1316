@@ -29,7 +29,7 @@ function clearActiveContactClass() {
 }
 
 function onEditContactDialogOpen(id) {
-    toggleScrollOnBody();
+    toggleScrollOnBody(true);
     addDialogShowClass();
     document.getElementById('add-contact-dialog').showModal();
     renderEditContactIntoDialog(id);

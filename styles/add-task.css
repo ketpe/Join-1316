@@ -621,6 +621,10 @@ span {
     cursor: pointer;
 }
 
+.sub-task-list-input-readonly:focus{
+    outline: none;
+}
+
 .sub-list-edit-btn-container button:nth-child(1)>div {
     height: 18.25px;
     width: 18.25px;

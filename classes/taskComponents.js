@@ -29,7 +29,7 @@ class TaskComponents {
     async runWithDataAsView(currentTask) {
         this.currentTask = currentTask;
         this.currentTaskId = this.currentTask['id'];
-        const boardUtils = new BoardTaskDetailViewUtils(this.currentTaskId, this.currentTask);
+        const boardUtils = new BoardTaskDetailViewUtils(this.currentTaskId, this.currentTask, this.currentInstance);
         openDialog('detail-view-task-dialog');
         boardUtils.startRenderTaskDetails();
         const currentMainHeight = boardUtils.getCurrentHeight();
@@ -371,8 +371,9 @@ class TaskComponents {
         this.renderContactOptions(contactListArray);
         const contactListContainer = document.getElementById('contact-List-container');
         const contactList = document.getElementById('contact-List-for-task');
-        const heightOfOneContact = document.getElementById(contactListArray[0]['id']).offsetHeight;
-        let heightOfContainer = (contactListArray.length <= 5 ? heightOfOneContact * contactListArray.length : heightOfOneContact * 5) + 40;
+        //const heightOfOneContact = document.getElementById(contactListArray[0]['id']).offsetHeight;
+        const heightOfOneContact = 56;
+        let heightOfContainer = (contactListArray.length <= 5 ? heightOfOneContact * contactListArray.length : heightOfOneContact * 5) + 25;
         contactListContainer.style.height = heightOfContainer + "px";
         contactList.style.height = (heightOfContainer - 27) + "px";
         this.isContactListOpen = true;
@@ -414,7 +415,7 @@ class TaskComponents {
 
         for (let i = 0; i < contactList.length; i++) {
             const currentContactAssigned = this.addTaskUtils.findContactInAssignList(contactList[i], this.currentContactAssignList);
-            contactSelectElement.innerHTML += getContactListElement(contactList[i], currentContactAssigned);
+            contactSelectElement.innerHTML += getContactListElement(contactList[i], currentContactAssigned, false, this.currentInstance);
         }
     }
 
@@ -582,7 +583,7 @@ class TaskComponents {
         categorySelectElement.innerHTML = "";
 
         for (let i = 0; i < categories.length; i++) {
-            categorySelectElement.innerHTML += getCategoryListElement(categories[i]);
+            categorySelectElement.innerHTML += getCategoryListElement(categories[i], this.currentInstance);
         }
     }
 
@@ -619,7 +620,7 @@ class TaskComponents {
      */
     setCategoryShowOrHideButton(showOrHide) {
         const buttonShowOrHide = document.getElementById('show-and-hide-categories');
-        buttonShowOrHide.setAttribute('onclick', (showOrHide == "show" ? 'taskComponents.showAndHideCategories("hide")' : 'taskComponents.showAndHideCategories("show")'));
+        buttonShowOrHide.setAttribute('onclick', (showOrHide == "show" ? `${this.currentInstance}.showAndHideCategories("hide")` : `${this.currentInstance}.showAndHideCategories("show")`));
     }
 
     /**
@@ -760,10 +761,10 @@ class TaskComponents {
 
         for (let i = 0; i < this.currentSubTasks.length; i++) {
             if (this.currentSubTasks[i]['id'] == idForEdit) {
-                subTaskList.innerHTML += getSubtaskListElementForChanging(this.currentSubTasks[i]);
+                subTaskList.innerHTML += getSubtaskListElementForChanging(this.currentSubTasks[i], this.currentInstance);
                 continue;
             }
-            subTaskList.innerHTML += getSubtaskListElementReadOnly(this.currentSubTasks[i]);
+            subTaskList.innerHTML += getSubtaskListElementReadOnly(this.currentSubTasks[i], this.currentInstance);
             counter++;
             if (counter >= 3) { break; }
         }

@@ -2,9 +2,10 @@ class BoardTaskDetailViewUtils {
 
     currentTask;
 
-    constructor(currentTaskID, currentTask) {
+    constructor(currentTaskID, currentTask, currentInstance) {
         this.currentTaskID = currentTaskID;
         this.currentTask = currentTask;
+        this.currentInstance = currentInstance;
     }
 
     startRenderTaskDetails() {
@@ -53,7 +54,7 @@ class BoardTaskDetailViewUtils {
         let contactSelectElement = document.getElementById('contact-List-for-task');
         for (let i = 0; i < this.currentTask.assignedContacts.length; i++) {
             if(this.currentTask.assignedContacts[i].length == 0){continue;}
-            contactSelectElement.innerHTML += getContactListElement(this.currentTask.assignedContacts[i][0], false, true);
+            contactSelectElement.innerHTML += getContactListElement(this.currentTask.assignedContacts[i][0], false, true, this.currentInstance);
             counter++;
             if (counter >= 3) { break; }
         }

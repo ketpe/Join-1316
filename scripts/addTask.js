@@ -55,7 +55,7 @@ function changeAddTaskViewToStandard() {
     document.getElementById('add-task-form').classList.add('add-task-form-desktop');
     document.getElementById('add-task-form').classList.remove('add-task-form-dialog');
     document.getElementById('a-t-middle-container').classList.remove('a-t-f-i-midle-dialog');
-    document.getElementsByTagName('body')[0].setAttribute("onmouseup", "taskComponents.addTaskWindowMouseClick(event)");
+    document.getElementsByTagName('body')[0].setAttribute("onmouseup", "addTasktaskComponents.addTaskWindowMouseClick(event)");
 }
 
 
