@@ -18,7 +18,8 @@
                 <div class="initial-avatar" id="initial-avatar">
                     <p class="detail-view-initials"></p>
                 </div>
-                <form class="add-contact-form form-for-add-contact">
+                <form class="add-contact-form form-for-add-contact" action="/post" method="dialog"
+                    onsubmit="return editContact(event)">
 
                     <div class="add-contact-input-field-container">
 
@@ -50,9 +51,8 @@
                                 <p class="">Cancel</p>
                                 <div aria-label="Close dialog" role="img" class="btn-cancel-icon"></div>
                             </button>
-                            <button type="button" onmouseover="toggleBtnEditContact(this)"
-                                onclick="editContact(event,this)" class="btn-create btn btn-fill btn-md"
-                                id="btn-create-contact" disabled="true">
+                            <button type="submit" onmouseover="toggleBtnEditContact(this)"
+                                class="btn-create btn btn-fill btn-md" id="btn-create-contact" disabled="true">
                                 <p class="">Save</p>
                                 <div aria-label="Save contact" role="img" class="btn-create-icon"></div>
                             </button>

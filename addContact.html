@@ -19,7 +19,8 @@
             </div>
             <section class="add-contact-form-and-picture">
                 <div role="img" class="add-contact-profil-picture" title="profil-avatar"></div>
-                <form class="add-contact-form form-for-add-contact">
+                <form class="add-contact-form form-for-add-contact" action="/post" method="dialog"
+                    onsubmit="return newContact(event)">
 
                     <div class="add-contact-input-field-container">
 
@@ -52,7 +53,7 @@
                                 <div aria-label="Close dialog" role="img" class="btn-cancel-icon"></div>
                             </button>
                             <button type="submit" id="btn-create-contact" onmouseover="toggleBtnCreateContact()"
-                                onclick="newContact(event)" class="btn-create btn btn-fill btn-md" disabled="true">
+                                class="btn-create btn btn-fill btn-md" disabled="true">
                                 <p class="">Create contact</p>
                                 <div aria-label="Create contact" role="img" class="btn-create-icon"></div>
                             </button>
