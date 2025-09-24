@@ -1,0 +1,91 @@
+/*FIXME - HTML und Body raus nehmen, wenn fertig*/
+html {
+    width: 428px;
+    height: 926px;
+}
+
+body {
+    overflow: hidden;
+}
+
+.nav-mobile {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 80px;
+    width: 100%;
+    max-width: 428px;
+    background-color: var(--bg-default);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    z-index: 300;
+}
+
+.nav-mobile-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    height: 76px;
+    width: 76px;
+    background-color: transparent;
+    color: var(--btn-menu-text-color);
+    gap: 4px;
+}
+
+.nav-mobile-btn div {
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.nav-mobile-btn:active {
+    border-radius: 8px;
+    background-color: var(--btn-bg-active)
+}
+
+.summary-img {
+    background-image: url("../assets/summary-icon.svg");
+}
+
+
+.add-task-img {
+    background-image: url("../assets/add-task-icon.svg");
+}
+
+
+.board-img {
+    background-image: url("../assets/board-icon.svg");
+}
+
+
+.contact-img {
+    background-image: url("../assets/contacts-icon.svg");
+}
+
+
+.login-img {
+    background-image: url("../assets/login-icon.svg");
+}
+
+.nav-mobile-btn p {
+    font-family: 'Open Sans';
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0;
+}
+
+.nav-mobile-menu {
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
