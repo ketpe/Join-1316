@@ -13,8 +13,6 @@ async function newContact(event) {
     validateName, validateEmail, validatePhone = false;
 }
 
-/*TODO - Formular action übernehmen aus addTask*/
-
 function selectNewContact(uid) {
     const newContactItem = document.getElementById(uid);
     openContactDetail(newContactItem);
@@ -46,8 +44,6 @@ function getContactFormData() {
 function getInitials(firstname, lastname) {
     return firstname.charAt(0).toUpperCase() + lastname.charAt(0).toUpperCase();
 }
-
-
 
 async function editContact(event) {
     if (event) event.preventDefault();
