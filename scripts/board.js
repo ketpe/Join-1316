@@ -26,7 +26,6 @@ function kanbanUpdateSize() {
 
     const kanbanHeight = windowsHeight - (headerHeight + boardHeaderHeight + 20);
     document.getElementById('board-kanban').style.height = kanbanHeight + "px";
-
 }
 
 
