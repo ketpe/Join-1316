@@ -5,22 +5,24 @@ class TaskElements{
 
     getTitleComonents(isrequired = true, title = ""){
         return `
-            <label for="task-title">Title ${isrequired ? '<span aria-hidden="true">*</span>' : ''} </label>
-            <input 
-                class="a-t-input" 
-                id="task-title" 
-                name="task-title" 
-                type="text" 
-                placeholder="Enter a title"
-                aria-required="true"
-                aria-describedby="a-t-title-error"
-                oninput="${this.currentInstance}.addTaskTitleOnInput()" 
-                onblur="${this.currentInstance}.taskTitleValidation(this.value)"
-                value="${title}"
-                >
-            <div class="a-t-error-text-container">
-                <p id="a-t-title-required" class="error-text-hidden" role="alert">This field is required</p>
-            </div>
+           <aside>
+                <label for="task-title">Title ${isrequired ? '<span aria-hidden="true">*</span>' : ''} </label>
+                <input 
+                    class="a-t-input" 
+                    id="task-title" 
+                    name="task-title" 
+                    type="text" 
+                    placeholder="Enter a title"
+                    aria-required="true"
+                    aria-describedby="a-t-title-error"
+                    oninput="${this.currentInstance}.addTaskTitleOnInput()" 
+                    onblur="${this.currentInstance}.taskTitleValidation(this.value)"
+                    value="${title}"
+                    >
+                <div class="a-t-error-text-container">
+                    <p id="a-t-title-required" class="error-text-hidden" role="alert">This field is required</p>
+                </div>
+            </aside>
         `;
     }
 
