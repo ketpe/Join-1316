@@ -156,7 +156,6 @@ class TaskComponents{
         document.getElementById('task-title').blur();
         document.getElementById('due-date-display').blur();
         this.addTaskCheckRequiredField();
-
     }
 
     /**

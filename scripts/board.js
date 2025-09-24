@@ -18,7 +18,7 @@ async function getBoardTasks() {
 // ermitteln der Fenstergröße
 // berechnen des noch zur Verfügung stehenden Platzes
 // Die ermittelte Höhe dem Kanbanboard zuweisen
-// Ein Event 'inresize' ruft diese Funktion auf, wenn sich die Göße des Bodys ändert.
+// Ein Event 'onresize' ruft diese Funktion auf, wenn sich die Göße des Bodys ändert.
 function kanbanUpdateSize() {
     const headerHeight = document.getElementById('header').offsetHeight;
     const boardHeaderHeight = document.querySelector('.board-header').offsetHeight;
@@ -39,7 +39,7 @@ function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback,
                 task.taskStateCategory === 'awaiting' ? taskAwaitingFeedback.innerHTML += boardTasksTemplate(task, renderedContacts) :
                     task.taskStateCategory === 'done' ? taskDone.innerHTML += boardTasksTemplate(task, renderedContacts) : '';
     })
-    let taskItems = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone]
+    let taskItems = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
     taskItems = addDropZones(taskItems);
     toggleNoTaskVisible(taskItems);
 }
