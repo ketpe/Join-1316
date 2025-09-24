@@ -5,7 +5,7 @@ class TaskElements{
 
     getTitleComonents(isrequired = true, title = ""){
         return `
-           <aside>
+           <aside class="field-frame">
                 <label for="task-title">Title ${isrequired ? '<span aria-hidden="true">*</span>' : ''} </label>
                 <input 
                     class="a-t-input" 
@@ -28,33 +28,62 @@ class TaskElements{
 
     getDescriptionComponents(description = "", isTaskEdit = false){
         return `
-            <label for="task-description">Description</label>
-            <textarea class="a-t-text-area ${isTaskEdit ? 'a-t-text-area-task-edit' : ''}" name="task-description" id="task-description"
-                placeholder="Enter a Description">${description}</textarea>
+            <aside class="field-frame">
+                <label for="task-description">Description</label>
+                <textarea class="a-t-text-area ${isTaskEdit ? 'a-t-text-area-task-edit' : ''}" name="task-description" id="task-description"
+                    placeholder="Enter a Description">${description}</textarea>
+            </aside>
         `;
     }
 
+    /* getDueDateComponents(isrequired = true, dueDateValue = ""){
+        return `
+            <aside class="field-frame">
+                <label for="due-date">Due date ${isrequired ? '<span>*</span>' : ''}</label>
+                <div class="date-field">
+                    <input class="a-t-input date-input" id="due-date-display" type="text" placeholder="dd/mm/yyyy" name="due-date" aria-required="true" aria-describedby="a-t-due-date-error"
+                        inputmode="numeric" onblur="${this.currentInstance}.dateFieldOnChange()"
+                        oninput="${this.currentInstance}.dateFieldOnChange()"
+                        value="${dueDateValue}"
+                        >
+                    <input type="date" id="due-date-hidden" placeholder="Date" class="date-input-hidden"
+                        onchange="${this.currentInstance}.datePickerSelectionChange(event)">
+                    <button type="button" class="date-trigger" aria-label="Kalender öffnen"
+                        onclick="${this.currentInstance}.onDateIconClick()">
+                        <div role="img" title="Claendar Icon"></div>
+                    </button>
+                </div>
+
+                <div class="a-t-error-text-container">
+                    <p id="a-t-due-date-required" class="error-text-hidden" role="alert">This field is required</p>
+                </div>
+            </aside>
+        `;
+    } */
+
     getDueDateComponents(isrequired = true, dueDateValue = ""){
         return `
-            <Label for="due-date">Due date ${isrequired ? '<span>*</span>' : ''}</Label>
-            <div class="date-field">
-                <input class="a-t-input date-input" id="due-date-display" type="text" placeholder="dd/mm/yyyy" name="due-date" aria-required="true" aria-describedby="a-t-due-date-error"
-                    inputmode="numeric" onblur="${this.currentInstance}.dateFieldOnChange()"
-                    oninput="${this.currentInstance}.dateFieldOnChange()"
-                    value="${dueDateValue}"
-                    >
-                <input type="date" id="due-date-hidden" placeholder="Date" class="date-input-hidden"
-                    onchange="${this.currentInstance}.datePickerSelectionChange(event)">
-                <button type="button" class="date-trigger" aria-label="Kalender öffnen"
-                    onclick="${this.currentInstance}.onDateIconClick()">
-                    <div role="img" title="Claendar Icon"></div>
-                </button>
-            </div>
+            <aside class="field-frame field-frame-due-date">
+                <label for="due-date">Due date ${isrequired ? '<span>*</span>' : ''}</label>
+                <div class="date-field">
+                    <input class="a-t-input date-input" id="due-date-display" type="text" maxlength="10" placeholder="dd/mm/yyyy" name="due-date" aria-required="true" aria-describedby="a-t-due-date-error"
+                        inputmode="numeric" onblur="${this.currentInstance}.dateFieldOnChange()"
+                        oninput="${this.currentInstance}.dateFieldOnChange()"
+                        value="${dueDateValue}"
+                        >
 
-            <div class="a-t-error-text-container">
-                <p id="a-t-due-date-required" class="error-text-hidden" role="alert">This field is required</p>
-            </div>
-        
+                    <input type="date" id="due-date-hidden" placeholder="Date" class="date-input-hidden"
+                        onchange="${this.currentInstance}.datePickerSelectionChange(event)">
+                    <button type="button" class="date-trigger" aria-label="Kalender öffnen"
+                        onclick="${this.currentInstance}.onDateIconClick()">
+                        <div role="img" title="Claendar Icon"></div>
+                    </button>
+                </div>
+
+                <div class="a-t-error-text-container">
+                    <p id="a-t-due-date-required" class="error-text-hidden" role="alert">This field is required</p>
+                </div>
+            </aside>
         `;
     }
 
