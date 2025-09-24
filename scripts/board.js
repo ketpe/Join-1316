@@ -8,9 +8,24 @@ async function getBoardTasks() {
     tasks = await getDatabaseTaskCategory(tasks);
     tasks = await getDatabaseTaskSubtasks(tasks);
     tasks = await getDatabaseTaskContact(tasks);
+    kanbanUpdateSize();
     //console.log(tasks);
     renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     addLeftPositionStyleassignedContacts();
+}
+
+//NOTE - Ermitteln der Header und der Boradheader Höhe.
+// ermitteln der Fenstergröße
+// berechnen des noch zur Verfügung stehenden Platzes
+// Die ermittelte Höhe dem Kanbanboard zuweisen
+// Ein Event 'inresize' ruft diese Funktion auf, wenn sich die Göße des Bodys ändert.
+function kanbanUpdateSize() {
+    const headerHeight = document.getElementById('header').offsetHeight;
+    const boardHeaderHeight = document.querySelector('.board-header').offsetHeight;
+    const windowsHeight = window.innerHeight;
+
+    const kanbanHeight = windowsHeight - (headerHeight + boardHeaderHeight + 20);
+    document.getElementById('board-kanban').style.height = kanbanHeight + "px";
 
 }
 
