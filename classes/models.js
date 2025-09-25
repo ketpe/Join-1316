@@ -36,4 +36,17 @@ class SubstaskToTask {
     }
 }
 
+class Contact{
+    constructor(id, firstname, lastname, password, email, phone, initial, initialColor) {
+        this.id = id || getNewUid();
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password = password;
+        this.email = email;
+        this.phone = phone || '';
+        this.initial = initial;
+        this.initialColor = initialColor || getRandomColor();
+    }
+}
+
 

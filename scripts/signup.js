@@ -19,8 +19,19 @@ async function signUpForm(event) {
         showErrorMessage("Please accept the privacy policy.");
         return;
     }
-    await SafeDataToDB.safeDataToFirebaseDB(null, firstname, lastname, password, email, null, initial, null);
+
+    //Eine Instance von einem Contact erstellen -> speichern aufrufen
+    const contact = new Contact(null, firstname, lastname, password.password, email, null, initial, null);
+    if(!createNewSignedUser(contact)){return;}
+
+    //await SafeDataToDB.safeDataToFirebaseDB(null, firstname, lastname, password, email, null, initial, null);
     toggleDNone('successfullySignUp');
+}
+
+//Die eigentliche Speicherfunktion
+async function createNewSignedUser(contact) {
+    const fb = new FirebaseDatabase();
+    return await fb.getFirebaseLogin(() => fb.putData(`/contacts/${contact.id}`, contact));
 }
 
 function checkName(signUp) {

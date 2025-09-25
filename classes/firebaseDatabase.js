@@ -97,7 +97,7 @@ class FirebaseDatabase {
 }
 
 
-class SafeDataToDB {
+/* class SafeDataToDB {
     constructor(id, firstname, lastname, password, email, phone, initial, initialColor) {
         this.id = id || getNewUid();
         this.firstname = firstname;
@@ -124,5 +124,5 @@ class SafeDataToDB {
         let fb = new FirebaseDatabase();
         await fb.getFirebaseLogin(() => fb.putData(`/contacts/${this.id}`, data));
     }
-}
+} */
 
