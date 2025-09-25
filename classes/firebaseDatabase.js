@@ -93,6 +93,12 @@ class FirebaseDatabase {
         }
     }
 
+    async createNewSignedUser(id, firstname, lastname, pwd, email, phone, initial, initialColor) {
+        const contact = new Contact(id, firstname, lastname, pwd, email, phone, initial, initialColor);
+        const fb = new FirebaseDatabase();
+        return await fb.getFirebaseLogin(() => fb.putData(`/contacts/${contact.id}`, contact));
+    }
+
 
 }
 

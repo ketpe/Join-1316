@@ -130,7 +130,7 @@ class TaskElements{
             <aside class="field-frame">
                 <label for="task-assign-to">Assigned to</label>
                 <div class="contact-select-container show-front">
-                    <input class="a-t-input show-front a-t-contact-input" type="text" name="task-assign-to"
+                    <input class="a-t-input show-front a-t-contact-input" autocomplete="off" type="text" name="task-assign-to"
                         id="task-assign-to" value="Select contacts to assign" onclick="${this.currentInstance}.showAndHideContacts('show')"
                         oninput="${this.currentInstance}.filterContactFromInputValue(this.value)">
 

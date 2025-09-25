@@ -105,3 +105,4 @@ function toggleBorderColorByError(elementId = null) {
         });
     }, 3000);
 }
+
