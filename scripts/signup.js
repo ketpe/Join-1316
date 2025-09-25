@@ -10,7 +10,7 @@ async function signUpForm(event) {
     event.preventDefault();
     let signUp = new FormData(event.target);
     if (!checkName(signUp)) return;
-    let { firstname, lastname, initials } = splitName(signUp);
+    let { firstname, lastname, initial } = splitName(signUp);
     let email = await checkEmailTwice(signUp);
     if (!email) return;
     let password = checkPassword(signUp);
@@ -19,7 +19,7 @@ async function signUpForm(event) {
         showErrorMessage("Please accept the privacy policy.");
         return;
     }
-    await safeDataToDB(firstname, lastname, email, password, initials, getRandomColor());
+    await SafeDataToDB.safeDataToFirebaseDB(null, firstname, lastname, password, email, null, initial, null);
     toggleDNone('successfullySignUp');
 }
 
@@ -45,8 +45,8 @@ function splitName(signUp) {
     let cap = s => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
     firstname = firstname.split(" ").map(cap).join(" ");
     lastname = cap(lastname);
-    let initials = firstname.charAt(0).toUpperCase() + lastname.charAt(0).toUpperCase();
-    return { firstname, lastname, initials };
+    let initial = firstname.charAt(0).toUpperCase() + lastname.charAt(0).toUpperCase();
+    return { firstname, lastname, initial };
 }
 
 function checkPassword(signUp) {
@@ -67,7 +67,7 @@ async function checkEmailTwice(signUp) {
 
 function checkEmailWithFormValidation(signUp) {
     let email = signUp.get("email");
-    let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (pattern.test(email)) return email;
     errorHandling('email', "Please enter a valid email address.");
     return null;
@@ -79,14 +79,6 @@ async function checkEmailInDatabase(email) {
     if (!found) return email;
     errorHandling('email', "This email is already registered. Please use another one.");
     return null;
-}
-
-async function safeDataToDB(firstname, lastname, email, password, initials, initialColor) {
-    let uid = getNewUid();
-    let data = { id: uid, firstname, lastname, email, password, initial: initials, initialColor };
-    let fb = new FirebaseDatabase();
-    await fb.getFirebaseLogin(() => fb.putData(`/contacts/${uid}`, data));
-    signupinit()
 }
 
 function errorHandling(elementID = null, errorMessage) {

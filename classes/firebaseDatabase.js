@@ -95,3 +95,34 @@ class FirebaseDatabase {
 
 
 }
+
+
+class SafeDataToDB {
+    constructor(id, firstname, lastname, password, email, phone, initial, initialColor) {
+        this.id = id || getNewUid();
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password = password;
+        this.email = email;
+        this.phone = phone || '';  // Falls phone leer oder null ist -> ""
+        this.initial = initial;
+        this.initialColor = initialColor || getRandomColor();
+    }
+
+    async safeDataToFirebaseDB() {
+        let data = {
+            id: this.id,
+            firstname: this.firstname,
+            lastname: this.lastname,
+            email: this.email,
+            password: this.password,
+            initial: this.initial,
+            initialColor: this.initialColor,
+            phone: this.phone
+        };
+
+        let fb = new FirebaseDatabase();
+        await fb.getFirebaseLogin(() => fb.putData(`/contacts/${this.id}`, data));
+    }
+}
+
