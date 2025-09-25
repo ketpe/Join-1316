@@ -75,13 +75,13 @@
 
                 <div class="signup-confirm-container">
                     <input type="checkbox" id="signupConfirm" class="signup-confirm-button"
-                        onclick="toggleDNone('signup-hidden', '')" required>
+                        onclick="toggleSignUpButton()" required>
                     <label for="signupConfirm" class="signup-confirm-label"></label>
                     <span>I accept the <a href="./privacyPolicy.html?backToLogin=true">Privacy policy</a></span>
                 </div>
 
                 <div class="login-form-buttons fixed-height">
-                    <button id="signup-hidden" type="submit" class="btn btn-fill btn-md d-none">Sign up</button>
+                    <button id="signup-hidden" type="submit" class="btn btn-fill btn-md" disabled>Sign up</button>
                 </div>
 
             </form>

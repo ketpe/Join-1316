@@ -87,3 +87,13 @@ function errorHandling(elementID = null, errorMessage) {
     if (!elementID) document.getElementById(elementID).value = '';
     return;
 }
+
+function toggleSignUpButton() {
+let checkFlag = document.getElementById('signup-hidden');
+    if(checkFlag.disabled) {
+        checkFlag.disabled = false;
+      }
+        else {
+        checkFlag.disabled = true;
+      }
+    }
