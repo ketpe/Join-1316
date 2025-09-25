@@ -19,7 +19,16 @@
     flex-direction: column;
 }
 
-#add-task-dialog{
+#dialog-content {
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 786px;
+    width: 1061px;
+}
+
+#add-task-dialog {
     padding: 0;
     border: none !important;
     margin: auto;
@@ -27,8 +36,8 @@
     background-color: white;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0, 0.10);
     transform: translateX(150%);
-    height: 870px;
-    width: 1061px;
+    /* height: 870px;
+    width: 1061px; */
 }
 
 .add-task-head {
@@ -44,18 +53,19 @@
     font-family: 'Inter';
 }
 
-.field-frame{
+.field-frame {
     display: flex;
     flex-direction: column;
     gap: 4px;
     width: 440px;
 }
 
-.field-frame-due-date{
+.field-frame-due-date {
     height: 80px;
 }
 
-label, legend {
+label,
+legend {
     font-family: 'Inter';
     font-size: 20px;
     font-weight: 400;
@@ -151,10 +161,10 @@ span {
 
 .a-t-input:-webkit-autofill,
 .a-t-input:-webkit-autofill:hover,
-.a-t-input:-webkit-autofill:focus{
-  box-shadow: 0 0 0 1000px #fff inset !important;
-  -webkit-text-fill-color:#000 !important;
-  caret-color:#000;
+.a-t-input:-webkit-autofill:focus {
+    box-shadow: 0 0 0 1000px #fff inset !important;
+    -webkit-text-fill-color: #000 !important;
+    caret-color: #000;
 }
 
 
@@ -183,7 +193,7 @@ span {
     font-family: 'Inter';
     color: (--input-border-color);
     z-index: 200;
-    
+
     /* padding-right: 50px; */
     /* width: calc(440px - (12px + 50px + 11px)); */
     /* width: 80%; */
@@ -215,7 +225,7 @@ span {
     outline: none;
 }
 
-.date-input-hidden-dialog{
+.date-input-hidden-dialog {
     transform: translateY(-108%) translateX(5px);
 }
 
@@ -293,7 +303,7 @@ span {
     font-size: 20px;
 }
 
-.a-t-text-area-task-edit{
+.a-t-text-area-task-edit {
     min-height: 120px;
 }
 
@@ -334,7 +344,7 @@ span {
 
 }
 
-.any-list-scroll{
+.any-list-scroll {
     overflow: unset !important;
 }
 
@@ -386,14 +396,14 @@ span {
 .a-t-sub-input,
 .a-t-category-input,
 .a-t-contact-input {
+    width: 100%;
     padding-right: 50px;
-    width: calc(440px - (2 * 1px) - 21px - 50px);
     cursor: pointer;
 }
 
 .a-t-sub-input {
     padding-right: 75px;
-    width: calc(440px - (2 * 1px) - 21px - 75px);
+    /* width: calc(440px - (2 * 1px) - 21px - 75px); */
 }
 
 .btn-show-hide-category-list,
@@ -639,7 +649,7 @@ span {
     cursor: pointer;
 }
 
-.sub-task-list-input-readonly:focus{
+.sub-task-list-input-readonly:focus {
     outline: none;
 }
 

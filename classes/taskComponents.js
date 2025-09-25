@@ -314,8 +314,7 @@ class TaskComponents{
      * @param {string} showOrHide - Determines whether to show or hide the contact list.
      */
     showAndHideContacts(showOrHide = "show") {
-        const buttonShowOhrHide = document.getElementById('show-and-hide-contacts');
-        buttonShowOhrHide.setAttribute('onclick', (showOrHide == "show" ? `${this.currentInstance}.showAndHideContacts("hide")` : `${this.currentInstance}.showAndHideContacts("show")`));
+        this.setInputAndButtonOnclickFunctionForContacts(showOrHide);
         const inputField = document.getElementById('task-assign-to');
         if (showOrHide == "show") {
             inputField.value = "";
@@ -328,7 +327,15 @@ class TaskComponents{
             this.hideContactListForSelect();
             this.renderShowIcon('show-hide-icon-contacts');
             this.showOrHideBadgeContainer("show");
+            inputField.blur();
         }
+    }
+
+    setInputAndButtonOnclickFunctionForContacts(showOrHide){
+        const buttonShowOhrHide = document.getElementById('show-and-hide-contacts');
+        buttonShowOhrHide.setAttribute('onclick', (showOrHide == "show" ? `${this.currentInstance}.showAndHideContacts("hide")` : `${this.currentInstance}.showAndHideContacts("show")`));
+        const inputField = document.getElementById('task-assign-to');
+        inputField.setAttribute('onclick', (showOrHide == "show" ? `${this.currentInstance}.showAndHideContacts("hide")` : `${this.currentInstance}.showAndHideContacts("show")`));
     }
 
     /**

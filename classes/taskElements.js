@@ -127,18 +127,20 @@ class TaskElements{
 
     getContactComponents(){
         return `
-            <label for="task-assign-to">Assigned to</label>
-            <div class="contact-select-container show-front">
-                <input class="a-t-input show-front a-t-contact-input" type="text" name="task-assign-to"
-                    id="task-assign-to" value="Select contacts to assign" onclick="${this.currentInstance}.showAndHideContacts('show')"
-                    oninput="${this.currentInstance}.filterContactFromInputValue(this.value)">
+            <aside class="field-frame">
+                <label for="task-assign-to">Assigned to</label>
+                <div class="contact-select-container show-front">
+                    <input class="a-t-input show-front a-t-contact-input" type="text" name="task-assign-to"
+                        id="task-assign-to" value="Select contacts to assign" onclick="${this.currentInstance}.showAndHideContacts('show')"
+                        oninput="${this.currentInstance}.filterContactFromInputValue(this.value)">
 
-                <button id="show-and-hide-contacts" class="btn-show-hide-contact-list" type="button"
-                    title="show and hide button for contactlist" onclick="${this.currentInstance}.showAndHideContacts('show')">
-                    <div id="show-hide-icon-contacts" class="icon-show-list" role="img" title="show or hide icon">
-                    </div>
-                </button>
-            </div>
+                    <button id="show-and-hide-contacts" class="btn-show-hide-contact-list" type="button"
+                        title="show and hide button for contactlist" onclick="${this.currentInstance}.showAndHideContacts('show')">
+                        <div id="show-hide-icon-contacts" class="icon-show-list" role="img" title="show or hide icon">
+                        </div>
+                    </button>
+                </div>
+            </aside>
 
             <div id="contact-List-container" class="contact-List-container">
                 <div id="contact-List-for-task" class="contact-List-for-task">
@@ -157,20 +159,20 @@ class TaskElements{
 
     getCategoryComponents(){
         return `
-            <label for="task-category">Category<span>*</span></label>
+            <aside class="field-frame">
+                <label for="task-category">Category<span>*</span></label>
+                <div class="category-select-container show-front ">
+                    <input class="a-t-input a-t-category-input" type="text" name="task-category" id="task-category"
+                        value="Select task category" placeholder="Select task category" readonly aria-required="true"
+                        onclick="${this.currentInstance}.onclickCategoryInput(this)">
 
-            <div class="category-select-container show-front ">
-                <input class="a-t-input a-t-category-input" type="text" name="task-category" id="task-category"
-                    value="Select task category" placeholder="Select task category" readonly aria-required="true"
-                    onclick="${this.currentInstance}.onclickCategoryInput(this)">
-
-                <button id="show-and-hide-categories" class="btn-show-hide-category-list" type="button"
-                    title="show and hide button for categories" onclick="${this.currentInstance}.showAndHideCategories('show')">
-                    <div id="show-hide-icon-category" class="icon-show-list" role="img" title="show or hide icon">
-                    </div>
-                </button>
-
-            </div>
+                    <button id="show-and-hide-categories" class="btn-show-hide-category-list" type="button"
+                        title="show and hide button for categories" onclick="${this.currentInstance}.showAndHideCategories('show')">
+                        <div id="show-hide-icon-category" class="icon-show-list" role="img" title="show or hide icon">
+                        </div>
+                    </button>
+                </div>
+            </aside>
 
             <div class="a-t-error-text-container">
                 <p id="a-t-category-required" class="error-text-hidden" role="alert">This field is required</p>
@@ -190,20 +192,22 @@ class TaskElements{
 
     getSubTaskComponents(){
         return `
-            <label for="task-sub-task">Subtasks</label>
-            <div class="sub-input-container">
-                <input class="a-t-input a-t-sub-input" type="text" name="task-sub-task" id="task-sub-task"
-                    onclick="${this.currentInstance}.onclickSubtaskInput(this)" placeholder="Add new subtask" onkeydown="${this.currentInstance}.subtaskInputfieldPressEnter(event, this)">
-                <div id="sub-writing-buttons" class="sub-input-writing-btn-container d-none">
-                    <button type="button" title="delete current entry button" aria-label="Delete current entry" onclick="${this.currentInstance}.clearSubInputField()">
-                        <div role="img" title="delete icon" aria-hidden="true"></div>
-                    </button>
-                    <div></div>
-                    <button type="button" title="adopt current entry" aria-label="Adopt current entry" onclick="${this.currentInstance}.adoptCurrentSubEntry()">
-                        <div role="img" title="check icon" aria-hidden="true"></div>
-                    </button>
+            <aside class="field-frame">
+                <label for="task-sub-task">Subtasks</label>
+                <div class="sub-input-container">
+                    <input class="a-t-input a-t-sub-input" type="text" name="task-sub-task" id="task-sub-task"
+                        onclick="${this.currentInstance}.onclickSubtaskInput(this)" placeholder="Add new subtask" onkeydown="${this.currentInstance}.subtaskInputfieldPressEnter(event, this)">
+                    <div id="sub-writing-buttons" class="sub-input-writing-btn-container d-none">
+                        <button type="button" title="delete current entry button" aria-label="Delete current entry" onclick="${this.currentInstance}.clearSubInputField()">
+                            <div role="img" title="delete icon" aria-hidden="true"></div>
+                        </button>
+                        <div></div>
+                        <button type="button" title="adopt current entry" aria-label="Adopt current entry" onclick="${this.currentInstance}.adoptCurrentSubEntry()">
+                            <div role="img" title="check icon" aria-hidden="true"></div>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </aside>
         `;
     }
 

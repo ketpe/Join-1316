@@ -37,12 +37,15 @@ function addTaskDialogClose(event) {
     const dialog = document.getElementById('add-task-dialog');
     const closeDiv = document.getElementById('a-t-dialog-close-div');
     const addTaskForm = document.getElementById('add-task-form');
+    const dialogContent = document.getElementById('dialog-content');
+
+    if(event.target == addTaskForm){return;}
+    if(event.target == dialogContent){return;}
 
     if(event.target == dialog || 
         event.target == closeDiv || 
         event.target.closest('.btn-clear-cancel') || 
-        event.target.closest('.btn-create') ||
-        event.target == addTaskForm
+        event.target.closest('.btn-create')
     ){
         addDialogHideClass('add-task-dialog');
         setTimeout(function() {
