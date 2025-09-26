@@ -55,7 +55,6 @@ function showErrorMessage(message) {
     let errorText = document.getElementById("login-error-text");
     errorText.textContent = message;
     errorText.classList.remove("d-none");
-    setTimeout(() => errorText.classList.add("d-none"), 3000);
 }
 
 function getRandomColor() {
@@ -99,10 +98,5 @@ function toggleBorderColorByError(elementId = null) {
     elementsRef.forEach(elementRef => {
         elementRef.classList.replace("login-signup-input", "loginErrorBorder");
     });
-    setTimeout(() => {
-        elementsRef.forEach(elementRef => {
-            elementRef.classList.replace("loginErrorBorder", "login-signup-input");
-        });
-    }, 3000);
 }
 
