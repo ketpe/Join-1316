@@ -47,10 +47,17 @@ class TaskComponents{
         this.setNewPriority(this.currentTask['priority']);
         this.currentContactAssignList = boardEditUtil.getCurrentAssignList();
         this.showOrHideBadgeContainer('show');
-        this.currentSubTasks = currentTask['subTasks'];
         this.renderSubtasks();
         document.getElementById('detail-edit-ok-btn').setAttribute('data-id', this.currentTaskId);
         document.getElementsByTagName('body')[0].setAttribute("onmouseup", `${this.currentInstance}.addTaskWindowMouseClick(event)`);
+        this.readCurrentTaskDateIntoVariables();
+    }
+
+    readCurrentTaskDateIntoVariables(){
+        this.currentSubTasks = this.currentTask['subTasks'];
+        this.currentDueDate = this.currentTask['dueDate'];
+        this.currentTitle = this.currentTask['title'];
+        this.currentCategory = this.currentTask['categoryData'];
     }
 
     addTaskTitleOnInput() {
@@ -137,10 +144,9 @@ class TaskComponents{
     /**
     * Checks if all required fields are filled and enables/disables the create button accordingly.
     */
-    addTaskCheckRequiredField() {
+    addTaskCheckRequiredField(createButton) {
 
-        let createButton = document.getElementById('createTaskButton');
-
+        if(!createButton){return;}
         createButton.disabled =
             this.currentDueDate.length > 0 &&
                 this.currentTitle.length > 0 &&
@@ -152,10 +158,10 @@ class TaskComponents{
     /**
     * Handles the mouse click event on the Add Task form to validate required fields.
     */
-    addTaskSubmitOnMouse() {
+    addTaskSubmitOnMouse(button) {
         document.getElementById('task-title').blur();
         document.getElementById('due-date-display').blur();
-        this.addTaskCheckRequiredField();
+        this.addTaskCheckRequiredField(button);
     }
 
     /**
@@ -185,9 +191,8 @@ class TaskComponents{
         if (!dateField) { return; }
         const dueDateCheck = new DueDateCheck(dateField.value, this.currentDueDate, this);
         const [result, dueDate] = dueDateCheck.startDueDateValidation();
-        if (result) {
-            this.currentDueDate = dueDate;
-        }
+
+        this.currentDueDate = result ? dueDate : "";
 
     }
 

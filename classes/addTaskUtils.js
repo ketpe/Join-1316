@@ -4,7 +4,7 @@
  */
 class AddTaskUtils {
 
-    constructor(){}
+    constructor() { }
 
     /**
      * Retrieves the current user ID from session storage.
@@ -105,13 +105,13 @@ class AddTaskUtils {
      */
     addSubtaskToArray(subTaskEntry, currentSubTasks) {
 
-        const position = currentSubTasks.length != 0 ? this.getMaxPositionOfSubtasks(currentSubTasks) + 1 : 0;        
+        const position = currentSubTasks.length != 0 ? this.getMaxPositionOfSubtasks(currentSubTasks) + 1 : 0;
 
         const newSubTask = {
             'id': getNewUid(),
             'title': subTaskEntry,
             'taskChecked': false,
-            'position' : position
+            'position': position
         };
 
         currentSubTasks.push(newSubTask);
@@ -123,15 +123,15 @@ class AddTaskUtils {
      * @param {Array} currentSubTasks - The list of current subtasks.
      * @returns {number} The maximum position of the subtasks.
      */
-    getMaxPositionOfSubtasks(currentSubTasks){
-        if(currentSubTasks.length === 0){
+    getMaxPositionOfSubtasks(currentSubTasks) {
+        if (currentSubTasks.length === 0) {
             return 0;
-        }else{
+        } else {
             const firstSubstak = currentSubTasks[0];
-            if(!firstSubstak.hasOwnProperty('position')){return 0;}
+            if (!firstSubstak.hasOwnProperty('position')) { return 0; }
         }
         const positions = currentSubTasks.map(s => s['position']).filter(p => typeof p === 'number' && !isNaN(p));
-        if(positions.length === 0){return 0;}
+        if (positions.length === 0) { return 0; }
         const maxPosition = Math.max(...positions);
         return maxPosition;
     }
@@ -142,10 +142,16 @@ class AddTaskUtils {
      * @param {Array} currentSubTasks - The list of currently existing subtasks.
      * @returns {Array} The updated list of subtasks.
      */
-    removeSubtaskFromArray(subtaskID, currentSubTasks){
+    removeSubtaskFromArray(subtaskID, currentSubTasks) {
         let indexOfSubtask = this.getIndexOfObjectOfArray(subtaskID, currentSubTasks);
-        if(indexOfSubtask < 0 ){return currentSubTasks;}
+        if (indexOfSubtask < 0) { return currentSubTasks; }
         currentSubTasks.splice(indexOfSubtask, 1);
         return currentSubTasks;
+    }
+
+    setAddTaskCreateBtnMouseFunction(buttonID, currentInstanceName) {
+        const btn = document.getElementById(buttonID);
+        if (!btn) { return; }
+        btn.setAttribute('onmouseover', `${currentInstanceName}.addTaskSubmitOnMouse(this)`);
     }
 }

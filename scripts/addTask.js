@@ -28,7 +28,7 @@ async function renderAddTaskWithNavAndHeader() {
     taskElements.fillLeftContainerOnAddTask();
     taskElements.fillRightContainerOnAddTask();
     setAddTaskFormSubmitFunction();
-    setAddTaskCreateBtnMouseFunction();
+    addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTasktaskComponents');
 }
 
 function setAddTaskFormSubmitFunction(){
@@ -36,13 +36,6 @@ function setAddTaskFormSubmitFunction(){
     if(!form){return;}
     form.setAttribute('onsubmit', "return addTasktaskComponents.addTaskCreateTask(event)");
 }
-
-function setAddTaskCreateBtnMouseFunction(){
-    const btn = document.getElementById('createTaskButton');
-    if(!btn){return;}
-    btn.setAttribute('onmouseover', `addTasktaskComponents.addTaskSubmitOnMouse(this)`);
-}
-
 
 
 /**

@@ -25,6 +25,7 @@ async function onAddTaskDialogOpen() {
     addTaskDialogTaskComponents = new TaskComponents(currentUser, "addTaskDialogTaskComponents");
     addTaskDialogTaskComponents.run();
     document.getElementsByTagName('body')[0].setAttribute("onmouseup", "addTaskDialogTaskComponents.addTaskWindowMouseClick(event)");
+    addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTaskDialogTaskComponents');
 }
 
 /**
@@ -52,8 +53,8 @@ function addTaskDialogClose(event) {
             dialog.close();
             document.getElementsByTagName('body')[0].removeAttribute("onmouseup");
             addTaskDialogtoggleScrollOnBody(false);
-            taskComponents = null;
-            getBoardTasks();
+            addTaskDialogTaskComponents = null;
+            navigateToBoard();
         }, 1000);
   
     }

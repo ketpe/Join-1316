@@ -5,6 +5,7 @@ let boardTaskComponents = null;
  * @returns {Promise<void>} - A promise that resolves when the tasks have been fetched and rendered.
 */
 async function getBoardTasks() {
+    boardTaskComponents = null;
     const { taskContentelements } = getHtmlTasksContent();
     const fb = new FirebaseDatabase();
     let tasks = await fb.getFirebaseLogin(() => fb.getAllData("tasks"));

@@ -11,7 +11,7 @@ class DueDateCheck {
 
     startDueDateValidation() {
         if (this.dueDateValue) {
-            this.checkTheDateValue(this.dueDateValue);
+            return [this.checkTheDateValue(this.dueDateValue), this.dueDate];
         } else {
             this.dueDateSetError();
             return [this.result = false, ""];
@@ -27,20 +27,23 @@ class DueDateCheck {
 
         if (this.currentDueDate === dateCleanValue) {
             this.dueDate = this.currentDueDate;
-            this.result = true;
-            return; 
+            return true; 
         }
 
         if ((dateCleanValue.length == 10 && !this.checkIsCorrectDate(dateCleanValue)) || dateCleanValue.length > 10) {
             this.dueDateSetError();
+            return false;
         } else if (dateCleanValue.length < 10) {
             this.checkDateCharSet(dateCleanValue)
             this.dueDateSetError();
+            return false;
         } else {
+            this.dueDate = dateCleanValue;
             this.dueDateSetOk();
+            return true;
         }
 
-        this.dueDate = dateCleanValue;
+        
     }
 
     /**
