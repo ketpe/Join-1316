@@ -3,33 +3,97 @@ let currentUser = "";
 let isGuest = false;
 let addTaskUtils = new AddTaskUtils();
 let addTasktaskComponents = null;
+let currentView = ""; //ich meine hier Desktop oder Mobile
+const minDesktopHeight = 880;
+const minDesktopWidth = 1180;
 
+//TODO - Die aktuellen Werte zwischenspeichern, damit wenn die Seite von mobile zu Desktop verschoben oder umgekehrt, diese nicht verschwinden!
 
 /**
  * Initializes the Add Task view by rendering necessary components and loading data.
  */
 async function onLoadAddTask() {
-    await renderAddTaskWithNavAndHeader();
+    const [height, width] = getCurrentAddTaskSize();
+
+    if(height >= minDesktopHeight && width >= minDesktopWidth){
+        await loadHtmlComponentsForDesktop();
+    }else{
+        await loadHtmlComponentsForMobile();
+    }
+   
     changeAddTaskViewToStandard();
     await loadDataForAddTask();
+    changeAddTaskFieldSize(height, width);
 }
 
-/**
- * Render the Add Task view along with the navigation bar and header.
- */
-async function renderAddTaskWithNavAndHeader() {
+
+async function addTaskPageResize(){
+
+    const [height, width] = getCurrentAddTaskSize();
+    if((height <= minDesktopHeight || width <= minDesktopWidth) && currentView != "mobile"){
+        await loadHtmlComponentsForMobile();
+        location.reload();
+        
+    }else if(height >= minDesktopHeight + 1 && width >= minDesktopWidth + 1 && currentView != "desktop"){
+        await loadHtmlComponentsForDesktop();
+        location.reload();
+    }
+  
+}
+
+function getCurrentAddTaskSize(){
+    return [height, width] = [window.innerHeight, window.innerWidth];
+}
+
+
+async function loadHtmlComponentsForDesktop() {
+    currentView = "desktop";
+    clearAddTaskHtmlBody();
+    await Promise.all([
+        includeHtmlForNode("body", "addTaskDesktop.html")
+    ]);
 
     await Promise.all([
         includeHtml("navbar", "navbarDesktop.html"),
         includeHtml("header", "headerDesktop.html"),
-        includeHtml("add-task-content", "addTask.html")
+        includeHtml("add-task-content", "addTaskContent.html")
     ]);
+   
+    await fillHtmlWithContent();
+}
+
+async function loadHtmlComponentsForMobile() {
+    currentView = "mobile"
+    clearAddTaskHtmlBody();
+
+
+
+    //await fillHtmlWithContent();
+}
+
+
+function clearAddTaskHtmlBody() {
+    document.querySelector('body').innerHTML = "";
+}
+
+async function fillHtmlWithContent() {
     const taskElements = new TaskElements("addTasktaskComponents");
     taskElements.fillLeftContainerOnAddTask();
     taskElements.fillRightContainerOnAddTask();
     setAddTaskFormSubmitFunction();
     addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTasktaskComponents');
 }
+
+
+function changeAddTaskFieldSize(height, width){
+    if(currentView == "desktop"){
+        const dHeightForFields = addTaskUtils.measureTheRemainingSpaceOfFieldsForDesktop(height);
+        document.querySelector(".add-task-fields").style.height = dHeightForFields + "px";
+    }
+}
+
+
+
 
 function setAddTaskFormSubmitFunction(){
     const form = document.getElementById('add-task-form');

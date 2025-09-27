@@ -20,6 +20,25 @@ async function includeHtml(targetId, file) {
     return error.message;
   }
 
+}
+
+async function includeHtmlForNode(nodeName, file) {
+
+  try {
+    const element = document.querySelector(nodeName);
+    if (!element) throw new Error(`Node #${nodeName} not found`);
+    element.innerHTML = "";
+
+    const res = await fetch(file, { cache: "no-cache" });
+    if (!res.ok) throw new Error(`Error loading: ${file} (${res.status})`);
+
+    const html = await res.text();
+    element.innerHTML = html;
+
+    return element;
+  } catch (error) {
+    return error.message;
+  }
 
 }
 
@@ -38,6 +57,7 @@ function getLogStatus() {
 
 
 window.includeHtml = includeHtml;
+window.includeHtmlForNode = includeHtmlForNode;
 window.firebaseAuth = auth;
 window.firebaseDb = db;
 window.firebaseOnAutheChanged = onAuthStateChanged;

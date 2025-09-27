@@ -43,7 +43,7 @@ function navigateToHelp() {
 }
 
 function navigateToAddTask() {
-    window.location.href = './addTaskDesktop.html';
+    window.location.href = './addTask.html';
 }
 
 function navigateToBoard() {

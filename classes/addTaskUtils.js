@@ -154,4 +154,15 @@ class AddTaskUtils {
         if (!btn) { return; }
         btn.setAttribute('onmouseover', `${currentInstanceName}.addTaskSubmitOnMouse(this)`);
     }
+
+    measureTheRemainingSpaceOfFieldsForDesktop(aHeight){
+        const headerHeight = document.querySelector(".header-desktop").offsetHeight;
+        const footerHeight = document.querySelector(".add-task-footer").offsetHeight;
+        const distanceButtom = 45;
+        const addTaskHeader = document.querySelector(".add-task-head").offsetHeight;
+
+        const res = aHeight - (headerHeight + footerHeight + distanceButtom + addTaskHeader + 24);
+        return res;
+
+    }
 }

@@ -1,43 +1,11 @@
-<!DOCTYPE html>
-<html lang="de">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Task</title>
-    <link rel="shortcut icon" href="./assets/logo-for-Favicon.svg" type="image/x-icon">
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./styles/addTask.css">
-
-</head>
-
-<body onload="onLoadAddTask()">
-
-    <div class="main-container">
-        <aside class="left-container">
-            <nav id="navbar" aria-label="Mainnavigation"></nav>
-        </aside>
-        <div class="right-container">
-            <div class="header-section" id="header"></div>
-            <main class="right-content" aria-labelledby="add-task-title">
-                <section id="add-task-content" class="add-task-content"></section>
-            </main>
-        </div>
+<div class="main-container">
+    <aside class="left-container">
+        <nav id="navbar" aria-label="Mainnavigation"></nav>
+    </aside>
+    <div class="right-container">
+        <div class="header-section" id="header"></div>
+        <main class="right-content" aria-labelledby="add-task-title">
+            <section id="add-task-content" class="add-task-content"></section>
+        </main>
     </div>
-
-
-</body>
-<script type="module" src="./app.js"></script>
-<script src="./classes/taskComponents.js"></script>
-<script src="./classes/dueDateCheck.js"></script>
-<script src="./classes/firebaseDatabase.js"></script>
-<script src="./classes/addTaskCreateTask.js"></script>
-<script src="./classes/addTaskUtils.js"></script>
-<script src="./classes/taskElements.js"></script>
-<script defer src="./script.js"></script>
-<script defer src="./classes/models.js"></script>
-<script defer src="./scripts/template.js"></script>
-<script defer src="./scripts/navigations.js"></script>
-<script src="./scripts/addTask.js"></script>
-
-</html>
+</div>
