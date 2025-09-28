@@ -2,6 +2,10 @@
  * @fileoverview summary.js - Handles loading and displaying task summaries.
  */
 
+let currentView = ""; //ich meine hier Desktop oder Mobile
+const minDesktopHeight = 880;
+const minDesktopWidth = 1024;
+
 /**
  * Loads tasks from Firebase, calculates summary statistics, and updates the UI.
  * @async
@@ -127,4 +131,78 @@ function checkDate(tasks) {
     let futureDate = getNextDueDate(futureDates);
     let formatedDateString = formatDate(futureDate);
     return formatedDateString;
+}
+
+async function onLoadSummary() {
+    const [height, width] = getCurrentAddTaskSize();
+    const head = document.getElementsByTagName('head');
+    if (width >= minDesktopWidth) {
+        await loadHtmlComponentsForDesktop(head);
+
+    } else {
+        await loadHtmlComponentsForMobile(head);
+
+    }
+
+}
+
+async function loadHtmlComponentsForDesktop(head) {
+    currentView = "desktop";
+    clearAddTaskHtmlBody();
+    await Promise.all([
+        includeCSSToHead("styles/summaryDesktop.css"),
+        includeHtmlForNode("body", "summaryDesktop.html")
+    ]);
+
+    await Promise.all([
+        includeHtml("navbar", "navbarDesktop.html"),
+        includeHtml("header", "headerDesktop.html"),
+
+    ]);
+    renderGreetings();
+
+}
+/*REVIEW - möglichweise in script.js*/
+function getCurrentAddTaskSize() {
+    return [height, width] = [window.innerHeight, window.innerWidth];
+}
+
+async function loadHtmlComponentsForMobile() {
+    currentView = "mobile"
+    clearAddTaskHtmlBody();
+
+    await Promise.all([
+        includeCSSToHead("styles/summaryMobile.css"),
+        includeHtmlForNode("body", "summaryMobile.html")
+    ]);
+
+    await Promise.all([
+        includeHtml("header", "headerMobile.html"),
+        includeHtml("navbar", "navbarMobil.html"),
+    ]);
+
+}
+
+function includeCSSToHead(href) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
+}
+
+function clearAddTaskHtmlBody() {
+    document.querySelector('body').innerHTML = "";
+}
+
+async function addSummaryPageResize() {
+    const [height, width] = getCurrentAddTaskSize();
+    if ((width <= minDesktopWidth) && currentView != "mobile") {
+        await loadHtmlComponentsForMobile();
+
+
+    } else if (width >= minDesktopWidth + 1 && currentView != "desktop") {
+        await loadHtmlComponentsForDesktop();
+
+    }
+
 }
