@@ -86,7 +86,8 @@ body {
     background-image: url("../assets/login-icon.svg");
 }
 
-.nav-mobile-btn p {
+.nav-mobile-btn p,
+.nav-mobile-btn-compliance p {
     font-family: 'Open Sans';
     font-weight: 400;
     font-style: Regular;
@@ -105,21 +106,40 @@ body {
 }
 
 .nav-mobile-menu-spezial {
-    padding: 0;
+    padding: 66px 16px;
     width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
 
+}
+
+.nav-mobile-btn-compliance {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    height: 76px;
+    width: 112px;
+    background-color: transparent;
+    color: var(--btn-menu-text-color);
+    gap: 4px;
+}
+
+.nav-mobile-btn-compliance:active {
+    border-radius: 8px;
+    background-color: var(--btn-bg-active)
 }
 
 /*TODO Muss noch fertig gestylt werden*/
 .compliance-links-spezial {
     flex-grow: 1;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    text-wrap: nowrap;
     justify-content: flex-end;
-    padding-bottom: 64px;
     gap: 8px;
 }
 
