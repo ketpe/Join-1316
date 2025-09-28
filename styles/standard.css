@@ -5,6 +5,10 @@ body {
     background-color: var(--default-bg-color);
 }
 
+button {
+    cursor: pointer;
+}
+
 .join-h1 {
     font-family: 'Inter';
     font-size: 61px;
@@ -12,7 +16,7 @@ body {
     color: black;
 }
 
-.join-h1-mobile{
+.join-h1-mobile {
     font-family: 'Inter';
     font-size: 47px;
     font-weight: 700;
