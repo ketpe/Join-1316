@@ -9,59 +9,73 @@ const minDesktopWidth = 1180;
 
 //TODO - Die aktuellen Werte zwischenspeichern, damit wenn die Seite von mobile zu Desktop verschoben oder umgekehrt, diese nicht verschwinden!
 
+
+//TODO - Berechnung!
 /**
  * Initializes the Add Task view by rendering necessary components and loading data.
  */
 async function onLoadAddTask() {
     const [height, width] = getCurrentAddTaskSize();
 
-    if(height >= minDesktopHeight && width >= minDesktopWidth){
+    if (height >= minDesktopHeight && width >= minDesktopWidth) {
         await loadHtmlComponentsForDesktop();
         changeAddTaskViewToStandard();
-        changeAddTaskFieldSize(height, width);
-    }else{
+        changeAddTaskDesktopFields(height, width);
+        await loadDataForAddTask();
+    } else {
         await loadHtmlComponentsForMobile();
-        changeAddTaskFieldSize(height, width);
+        changeAddTaskMobileFields(height, width);
+        await loadDataForAddTask();
     }
-   
-    
-    await loadDataForAddTask();
-    
 }
 
 
-async function addTaskPageResize(){
-
+async function addTaskPageResize() {
     const [height, width] = getCurrentAddTaskSize();
-    if((height <= minDesktopHeight || width <= minDesktopWidth) && currentView != "mobile"){
-        await loadHtmlComponentsForMobile();
-        location.reload();
-        
-    }else if(height >= minDesktopHeight + 1 && width >= minDesktopWidth + 1 && currentView != "desktop"){
-        await loadHtmlComponentsForDesktop();
-        location.reload();
+    if (height <= minDesktopHeight || width <= minDesktopWidth) {
+        if (currentView !== "mobile") {
+            await loadHtmlComponentsForMobile();
+            await loadDataForAddTask();
+            changeAddTaskMobileFields(height, width);
+        }else if(currentView == "mobile"){changeAddTaskMobileFields(height, width);}
+
+    } else if (height >= minDesktopHeight + 1 && width >= minDesktopWidth + 1 && currentView !== "desktop") {
+        if (currentView !== "desktop") {
+            await loadHtmlComponentsForDesktop();
+            changeAddTaskViewToStandard();
+            await loadDataForAddTask();
+            changeAddTaskDesktopFields(height, width);
+        }else if(currentView == "desktop"){changeAddTaskMobileFields(height, width);}
     }
-  
+
 }
 
-function getCurrentAddTaskSize(){
-    return [height, width] = [window.innerHeight, window.innerWidth];
+function changeAddTaskMobileFields(height, width) {
+    const dHeightForFieldsMobile = addTaskUtils.measureTheRemainingSpaceOfFieldsForMobile(height);
+    document.querySelector(".add-task-mobile-fields").style.height = dHeightForFieldsMobile + "px";
+}
+
+function changeAddTaskDesktopFields(height, width) {
+    const dHeightForFields = addTaskUtils.measureTheRemainingSpaceOfFieldsForDesktop(height);
+    document.querySelector(".add-task-fields").style.height = dHeightForFields + "px";
+}
+
+function getCurrentAddTaskSize() {
+    return [window.innerHeight, window.innerWidth];
 }
 
 
 async function loadHtmlComponentsForDesktop() {
     currentView = "desktop";
     clearAddTaskHtmlBody();
-    await Promise.all([
-        includeHtmlForNode("body", "addTaskDesktop.html")
-    ]);
+    await includeHtmlForNode("body", "addTaskDesktop.html");
 
     await Promise.all([
         includeHtml("navbar", "navbarDesktop.html"),
         includeHtml("header", "headerDesktop.html"),
         includeHtml("add-task-content", "addTaskContent.html")
     ]);
-   
+
     await fillHtmlWithContent();
 }
 
@@ -69,14 +83,12 @@ async function loadHtmlComponentsForMobile() {
     currentView = "mobile"
     clearAddTaskHtmlBody();
 
-    await Promise.all([
-        includeHtmlForNode("body", "addTaskMobile.html")
-    ]);
+    await includeHtmlForNode("body", "addTaskMobile.html")
 
     await Promise.all([
         includeHtml("header", "headerMobile.html"),
         includeHtml("navbar", "navbarMobil.html"),
-        includeHtml("add-task-content-mobile", "addTaskContentMobile.html")       
+        includeHtml("add-task-content-mobile", "addTaskContentMobile.html")
     ]);
 
     await fillMobileHtmlWithContent();
@@ -101,22 +113,9 @@ async function fillMobileHtmlWithContent() {
 }
 
 
-function changeAddTaskFieldSize(height, width){
-    if(currentView == "desktop"){
-        const dHeightForFields = addTaskUtils.measureTheRemainingSpaceOfFieldsForDesktop(height);
-        document.querySelector(".add-task-fields").style.height = dHeightForFields + "px";
-    }else if(currentView == "mobile"){
-        const dHeightForFieldsMobile = addTaskUtils.measureTheRemainingSpaceOfFieldsForMobile(height);
-        document.querySelector(".add-task-mobile-fields").style.height = dHeightForFieldsMobile + "px";
-    }
-}
-
-
-
-
-function setAddTaskFormSubmitFunction(){
+function setAddTaskFormSubmitFunction() {
     const form = document.getElementById('add-task-form');
-    if(!form){return;}
+    if (!form) { return; }
     form.setAttribute('onsubmit', "return addTasktaskComponents.addTaskCreateTask(event)");
 }
 
