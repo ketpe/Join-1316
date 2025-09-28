@@ -1,0 +1,36 @@
+.add-task-head-mobile{
+    height: 112px;
+}
+
+.content-mobile{
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.add-task-mobile-fields{
+    overflow-y: scroll;
+}
+
+.add-task-footer-mobile{
+    width: 100%;
+    position: absolute;
+    bottom: 95px;
+    display: flex;
+    justify-content: flex-end;
+    z-index: 1000;
+}
+
+.add-task-form-buttons-mobile{
+    height: 61px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.notice-required{
+    padding-left: 8px;
+    font-family: 'Inter';
+    font-size: 16px;
+}
+

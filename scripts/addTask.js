@@ -17,13 +17,16 @@ async function onLoadAddTask() {
 
     if(height >= minDesktopHeight && width >= minDesktopWidth){
         await loadHtmlComponentsForDesktop();
+        changeAddTaskViewToStandard();
+        changeAddTaskFieldSize(height, width);
     }else{
         await loadHtmlComponentsForMobile();
+        changeAddTaskFieldSize(height, width);
     }
    
-    changeAddTaskViewToStandard();
+    
     await loadDataForAddTask();
-    changeAddTaskFieldSize(height, width);
+    
 }
 
 
@@ -66,9 +69,17 @@ async function loadHtmlComponentsForMobile() {
     currentView = "mobile"
     clearAddTaskHtmlBody();
 
+    await Promise.all([
+        includeHtmlForNode("body", "addTaskMobile.html")
+    ]);
 
+    await Promise.all([
+        includeHtml("header", "headerMobile.html"),
+        includeHtml("navbar", "navbarMobil.html"),
+        includeHtml("add-task-content-mobile", "addTaskContentMobile.html")       
+    ]);
 
-    //await fillHtmlWithContent();
+    await fillMobileHtmlWithContent();
 }
 
 
@@ -84,11 +95,19 @@ async function fillHtmlWithContent() {
     addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTasktaskComponents');
 }
 
+async function fillMobileHtmlWithContent() {
+    const taskMobileUtil = new AddTaskMobileUtil();
+    await taskMobileUtil.startRenderAddTaskMobile();
+}
+
 
 function changeAddTaskFieldSize(height, width){
     if(currentView == "desktop"){
         const dHeightForFields = addTaskUtils.measureTheRemainingSpaceOfFieldsForDesktop(height);
         document.querySelector(".add-task-fields").style.height = dHeightForFields + "px";
+    }else if(currentView == "mobile"){
+        const dHeightForFieldsMobile = addTaskUtils.measureTheRemainingSpaceOfFieldsForMobile(height);
+        document.querySelector(".add-task-mobile-fields").style.height = dHeightForFieldsMobile + "px";
     }
 }
 

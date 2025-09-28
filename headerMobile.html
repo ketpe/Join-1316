@@ -1,33 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="./styles/headerMobile.css">
-    <!-- /*NOTE - Body und html raus nehmen, wenn fertig*/ -->
-</head>
-
-<body>
-    <header class="header-mobile">
-        <article class="header-content-container-mobile">
-            <div role="img" aria-label="Logo" class="logo-header-mobile"></div>
-            <div class="help-profile-actions-mobile">
-                <button type="button" class="profil-btn-mobile" onclick="toggleDNone('subMenu', event)">
-                    <p class="user-initial-mobile" id="user-initial-render">G</p>
-                </button>
-                <section id="section"> <!-- Slide-Out-Menu -->
-                    <div id="subMenu" class="subMenuBox d-none" onclick="noBubbling(event)">
-                        <button class="nav-mobile-btn" onclick='navigateToLegalNotice("login")'>Legal Notice</button>
-                        <button class="nav-mobile-btn" onclick='navigateToPrivacy("login")'>Privacy Policy</button>
-                        <button class="nav-mobile-btn" onclick='navigateToLogin()'>Log out</button>
-                    </div>
-                </section>
-            </div>
-        </article>
-    </header>
-</body>
-
-</html>
+<header class="header-mobile">
+    <article class="header-content-container-mobile">
+        <div role="img" aria-label="Logo" class="logo-header-mobile"></div>
+        <div class="help-profile-actions-mobile">
+            <button type="button" class="profil-btn-mobile" onclick="toggleDNone('subMenu', event)">
+                <p class="user-initial-mobile" id="user-initial-render">G</p>
+            </button>
+            <section id="section"> <!-- Slide-Out-Menu -->
+                <div id="subMenu" class="subMenuBox d-none" onclick="noBubbling(event)">
+                    <button class="nav-mobile-btn" onclick='navigateToLegalNotice("login")'>Legal Notice</button>
+                    <button class="nav-mobile-btn" onclick='navigateToPrivacy("login")'>Privacy Policy</button>
+                    <button class="nav-mobile-btn" onclick='navigateToLogin()'>Log out</button>
+                </div>
+            </section>
+        </div>
+    </article>
+</header>
