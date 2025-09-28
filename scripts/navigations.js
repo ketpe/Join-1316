@@ -3,7 +3,7 @@ function navigateToSignUp() {
 }
 
 function navigateToSummary() {
-    window.location.href = './summaryDesktop.html';
+    window.location.href = './summary.html';
 }
 
 function navigateToContact() {
