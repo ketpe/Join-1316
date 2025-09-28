@@ -10,6 +10,8 @@ class BoardTaskDetailEditUtils{
         this.cleanDialog();
         await this.loadEditHtmlIntoDialog();
         this.renderEditComponents();
+        const addTaskUtils = new AddTaskUtils();
+        addTaskUtils.setAddTaskCreateBtnMouseFunction('detail-edit-ok-btn', this.currentInstance);
 
     }
 

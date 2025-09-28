@@ -57,11 +57,13 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
-    width: 440px;
+    /* width: 440px; */
+    width: 100%;
 }
 
 .field-frame-due-date {
     height: 80px;
+    margin-bottom: 36px;
 }
 
 label,
@@ -94,6 +96,7 @@ span {
 }
 
 .a-t-f-i-right {
+    width: 440px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -131,7 +134,7 @@ span {
 }
 
 .a-t-priority-button-container {
-    width: 440px;
+    width: 100%;
     height: 58px;
     display: flex;
     justify-content: space-between;
@@ -759,5 +762,45 @@ span {
 
     to {
         transform: translateY(0%);
+    }
+}
+
+@media (max-width: 1290px) {
+
+    .a-t-f-i-left,
+    .a-t-f-i-right {
+        width: 380px;
+    }
+
+    .a-t-f-i-midle {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .a-t-f-i-container {
+        width: calc((2 * 380px) + (2 * 24px) + 2px);
+    }
+
+    .btn-priority {
+        width: 120px;
+
+        div>p {
+            font-size: 16px;
+        }
+    }
+
+    .prio-selected {
+        font-size: 18px !important;
+    }
+
+    .add-task-footer {
+        width: calc((2 * 380px) + (2 * 24px) + 2px);
+    }
+
+}
+
+@media(max-height: 880px){
+    .add-task-fields{
+        overflow-y: scroll;
     }
 }

@@ -86,6 +86,7 @@ class BoardTaskDetailViewUtils {
     viewAssignedContacts() {
         let counter = 0;
         let contactSelectElement = document.getElementById('contact-List-for-task');
+        contactSelectElement.innerHTML = "";
         for (let i = 0; i < this.currentTask.assignedContacts.length; i++) {
             if(this.currentTask.assignedContacts[i].length == 0){continue;}
             contactSelectElement.innerHTML += getContactListElement(this.currentTask.assignedContacts[i][0], false, true, this.currentInstance);

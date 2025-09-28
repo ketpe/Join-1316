@@ -1,53 +1,30 @@
-<form id="add-task-form" class="" action="/post" method="post" aria-labelledby="add-task-title" novalidate>
-    <header class="add-task-head">
-        <h1 class="join-h1">Add Task</h1>
-        <button id="a-t-dialog-close-btn" class="btn-overlay-close" type="button" aria-label="Close dialog" onclick="addTaskDialogClose(event)">
-            <div id="a-t-dialog-close-div" role="img" title="Close dialog icon" aria-hidden="true"></div>
-        </button>
-    </header>
+<!DOCTYPE html>
+<html lang="de">
 
-    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task</title>
+    <link rel="shortcut icon" href="./assets/logo-for-Favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./styles/addTask.css">
 
-    <section class="add-task-fields">
-        <div class="a-t-f-i-container">
-            <div class="a-t-f-i-left">
-            </div>
+</head>
 
-            <div id="a-t-middle-container" class="a-t-f-i-midle" aria-hidden="true"></div>
+<body onload="onLoadAddTask()" onresize="addTaskPageResize()">
 
-            <div class="a-t-f-i-right">
-            </div>
-        </div>
-        <footer class="add-task-footer">
-            <p><span aria-hidden="true">*</span>This field is required</p>
+</body>
+<script type="module" src="./app.js"></script>
+<script src="./classes/taskComponents.js"></script>
+<script src="./classes/dueDateCheck.js"></script>
+<script src="./classes/firebaseDatabase.js"></script>
+<script src="./classes/addTaskCreateTask.js"></script>
+<script src="./classes/addTaskUtils.js"></script>
+<script src="./classes/taskElements.js"></script>
+<script defer src="./script.js"></script>
+<script defer src="./classes/models.js"></script>
+<script defer src="./scripts/template.js"></script>
+<script defer src="./scripts/navigations.js"></script>
+<script src="./scripts/addTask.js"></script>
 
-            <div class="add-task-form-buttons">
-                <button id="a-t-clear-btn" class="btn btn-outline btn-clear-cancel" type="button" onclick="taskComponents.addTaskFormClear()">
-                    <div>
-                        <p>Clear</p>
-                        <div role="img" title="Clear-Icon" aria-hidden="true"></div>
-                    </div>
-                </button>
-                <button id="a-t-cancel-btn" class="btn btn-outline btn-clear-cancel" type="button" onclick="addTaskDialogClose(event)">
-                    <div>
-                        <p>Cancel</p>
-                        <div role="img" title="Clear-Icon" aria-hidden="true"></div>
-                    </div>
-                </button>
-                <button id="createTaskButton" type="submit" class="btn btn-fill btn-create-task" disabled>
-                    <div>
-                        <p>Create Task</p>
-                        <div role="img" title="Check-Icon" aria-hidden="true"></div>
-                    </div>
-                </button>
-            </div>
-        </footer>
-    </section>
-
-    <dialog id="add-task-safe-dialog" class="add-task-safe-dialog visually-hidden" aria-labelledby="safe-dialog-title" aria-modal="true">
-        <div>
-            <p>Task added to board</p>
-            <div role="img" title="board icon" aria-hidden="true"></div>
-        </div>
-    </dialog>
-</form>
+</html>

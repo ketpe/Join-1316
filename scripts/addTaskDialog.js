@@ -25,6 +25,7 @@ async function onAddTaskDialogOpen() {
     addTaskDialogTaskComponents = new TaskComponents(currentUser, "addTaskDialogTaskComponents");
     addTaskDialogTaskComponents.run();
     document.getElementsByTagName('body')[0].setAttribute("onmouseup", "addTaskDialogTaskComponents.addTaskWindowMouseClick(event)");
+    addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTaskDialogTaskComponents');
 }
 
 /**
@@ -52,8 +53,8 @@ function addTaskDialogClose(event) {
             dialog.close();
             document.getElementsByTagName('body')[0].removeAttribute("onmouseup");
             addTaskDialogtoggleScrollOnBody(false);
-            taskComponents = null;
-            getBoardTasks();
+            addTaskDialogTaskComponents = null;
+            navigateToBoard();
         }, 1000);
   
     }
@@ -72,12 +73,12 @@ function addTaskDialogtoggleScrollOnBody(addClass) {
 /**
  * Renders the Add Task content into the dialog.
  * This function is asynchronous to accommodate the loading of HTML content.
- * It uses the includeHtml function to load the 'addTask.html' file into the dialog's content area.
+ * It uses the includeHtml function to load the 'addTaskContent.html' file into the dialog's content area.
  * @returns {Promise<void>} A promise that resolves when the content is fully rendered.
  */
 async function renderAddTaskIntoDialog() {
     await Promise.all([
-        includeHtml("dialog-content", "addTask.html")
+        includeHtml("dialog-content", "addTaskContent.html")
     ]);
     const taskElements = new TaskElements("addTaskDialogTaskComponents");
     taskElements.fillLeftContainerOnAddTask();
