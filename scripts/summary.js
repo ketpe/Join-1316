@@ -128,3 +128,11 @@ function checkDate(tasks) {
     let formatedDateString = formatDate(futureDate);
     return formatedDateString;
 }
+
+async function onLoadSummary() {
+    await Promise.all([
+        includeHtml("navbar", "navbarMobil.html"),
+        includeHtml("header", "headerMobile.html")
+    ]);
+
+}

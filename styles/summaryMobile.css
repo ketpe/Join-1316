@@ -1,0 +1,348 @@
+.right-container {
+    width: 100% !important;
+    max-width: 428px;
+    height: 100vh;
+}
+
+.summary-header {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    gap: 8px;
+    padding-top: calc(104px - 80px);
+    padding-left: 16px;
+}
+
+.summary-title {
+    margin: 0;
+    font-family: Inter;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 47px;
+}
+
+.summary-subtitle {
+    margin: 0;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+}
+
+.summary-content {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    padding-left: 16px;
+}
+
+.summary-user {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 396px;
+    max-height: 562px;
+    height: 100%;
+    padding: 32px 0 0 0;
+    border-radius: 16px;
+}
+
+.task-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.btn-task {
+    display: flex;
+    flex-direction: row;
+    border: none;
+    padding: 38px 19px;
+    gap: 10px;
+    width: 186px;
+    height: 110px;
+    border-radius: 20px;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 100ms ease-in-out, box-shadow 100ms ease-in-out;
+}
+
+.btn-task:hover {
+    background-color: var(--bg-default);
+}
+
+.btn-task:active {
+    background-color: var(--default-bg-color);
+    box-shadow: 0px 4px 4px 0px var(--bg-shadow-btn-task);
+
+}
+
+.btn-task:hover .todo-icon {
+    background-image: url('../assets/todo-icon-hover.svg');
+}
+
+.btn-task:active .todo-icon {
+    background-image: url('../assets/todo-icon.svg');
+}
+
+
+.btn-task:hover .quantity-task {
+    color: #FFFFFF;
+}
+
+.btn-task:active .quantity-task {
+    color: inherit;
+}
+
+.btn-task:hover .quantity-label-task {
+    color: #ffffff;
+}
+
+.todo-icon {
+    width: 40px;
+    height: 40px;
+    background-image: url('../assets/todo-icon.svg');
+    background-size: cover;
+}
+
+.done-icon {
+    width: 40px;
+    height: 40px;
+    background-image: url('../assets/done-icon.svg');
+    background-size: cover;
+}
+
+.btn-task:hover .done-icon {
+    background-image: url('../assets/done-icon-hover.svg');
+}
+
+.btn-task:active .done-icon {
+    background-image: url('../assets/done-icon.svg');
+}
+
+.quantity-task {
+    font-family: Inter;
+    font-weight: 600;
+    font-style: Semi Bold;
+    font-size: 47px;
+    margin: 0;
+}
+
+.quantity-label-task {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    margin: 0;
+}
+
+.btn-urgent {
+    display: flex;
+    flex-direction: row;
+    border: none;
+    width: 100%;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 28px 28px;
+    border-radius: 20px;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 100ms ease-in-out, box-shadow 100ms ease-in-out;
+}
+
+.btn-urgent:hover {
+    background: var(--bg-default);
+}
+
+.btn-urgent:active {
+    background: var(--default-bg-color);
+    box-shadow: 0px 4px 4px 0px var(--bg-shadow-btn-task);
+}
+
+.btn-urgent:hover .quantity-task {
+    color: #FFFFFF;
+}
+
+.btn-urgent:active .quantity-task {
+    color: inherit;
+}
+
+.btn-urgent:hover .quantity-label-task {
+    color: #FFFFFF;
+}
+
+.btn-urgent:active .quantity-label-task {
+    color: inherit;
+}
+
+.urgent-icon {
+    width: 40px;
+    height: 40px;
+    background-image: url('../assets/urgent-icon.svg');
+    background-size: cover;
+}
+
+.urgent-date-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
+.urgent-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+}
+
+
+.urgent-time {
+    font-family: Inter;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 16px;
+
+    letter-spacing: 0%;
+
+    white-space: nowrap;
+}
+
+.btn-urgent:hover .urgent-time {
+    color: #FFFFFF;
+}
+
+.btn-urgent:active .urgent-time {
+    color: inherit;
+}
+
+.urgent-time-underline {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+
+}
+
+.btn-urgent:hover .urgent-time-underline {
+    color: #FFFFFF;
+}
+
+.btn-urgent:active .urgent-time-underline {
+    color: inherit;
+}
+
+.summary-tasks {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 13px;
+
+}
+
+.btn-summary-tasks {
+    border: none;
+    width: 100%;
+    height: 100%;
+    max-height: 116px;
+    padding: 25px 25px;
+    gap: 13px;
+    background-color: white;
+    border: none;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 100ms ease-in-out, box-shadow 100ms ease-in-out;
+}
+
+.btn-summary-tasks:hover {
+    background: var(--bg-default);
+}
+
+.btn-summary-tasks:active {
+    background: inherit;
+    box-shadow: 0px 4px 4px 0px var(--bg-shadow-btn-task);
+}
+
+.btn-summary-tasks:hover .number-of-Tasks {
+    color: #FFFFFF;
+}
+
+.btn-summary-tasks:active .number-of-Tasks {
+    color: inherit;
+}
+
+
+.btn-summary-tasks:hover .description-of-task {
+    color: #FFFFFF;
+}
+
+.btn-summary-tasks:active .description-of-task {
+    color: inherit;
+}
+
+.number-of-Tasks {
+    font-family: Inter;
+    font-weight: 600;
+    font-style: Semi Bold;
+    font-size: 47px;
+    margin: 0;
+}
+
+.description-of-task {
+    margin: 0;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 14px;
+
+
+}
+
+.personal-greets {
+    width: 385px;
+    min-height: 136px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+}
+
+.headline-greet {
+    margin: 0;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 47px;
+    color: var(--bg-default);
+}
+
+.headings-separator-mobile {
+    height: 3px;
+    width: 90px;
+    background-color: var(--btn-bg-hover);
+}
+
+.personal-greets-user {
+    margin: 0;
+    font-family: Inter;
+    font-weight: 700;
+    font-size: 64px;
+    color: var(--btn-bg-hover);
+}
+
+.footer-mobile {
+    max-width: 428px;
+    width: 100%;
+    height: 80px;
+    position: sticky;
+    bottom: 0;
+}
