@@ -12,6 +12,16 @@ body {
     color: black;
 }
 
+.join-h1-mobile{
+    font-family: 'Inter';
+    font-size: 47px;
+    font-weight: 700;
+    color: black;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-top: 42px;
+}
+
 .join-h1-dialog {
     margin-block-start: 0;
     margin-block-end: 0;

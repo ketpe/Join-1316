@@ -161,8 +161,15 @@ class AddTaskUtils {
         const distanceButtom = 45;
         const addTaskHeader = document.querySelector(".add-task-head").offsetHeight;
 
-        const res = aHeight - (headerHeight + footerHeight + distanceButtom + addTaskHeader + 24);
-        return res;
-
+        return aHeight - (headerHeight + footerHeight + distanceButtom + addTaskHeader + 24);
     }
+
+    measureTheRemainingSpaceOfFieldsForMobile(aHeight){
+        const headerHeight = document.querySelector(".top-container-mobile").offsetHeight;
+        const footerHeight = document.querySelector(".buttom-container-mobile").offsetHeight;
+        const distanceButtom = 95;
+        const addTaskHeader = document.querySelector(".add-task-head-mobile").offsetHeight;
+        return aHeight - (headerHeight + footerHeight + distanceButtom + addTaskHeader + 24);
+    }
+
 }

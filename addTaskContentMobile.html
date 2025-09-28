@@ -1,0 +1,32 @@
+<form action="/post" method="post" aria-labelledby="add-task-title" novalidate>
+    <header class="add-task-head-mobile">
+        <h1 class="join-h1-mobile">Add Task</h1>
+        <!-- <button id="a-t-dialog-close-btn" class="btn-overlay-close" type="button" aria-label="Close dialog" onclick="addTaskDialogClose(event)">
+            <div id="a-t-dialog-close-div" role="img" title="Close dialog icon" aria-hidden="true"></div>
+        </button> -->
+    </header>
+    <div class="add-task-mobile-fields">
+
+    </div>
+
+    <footer class="add-task-footer-mobile">
+
+        <div class="add-task-form-buttons-mobile">
+            <button id="a-t-clear-btn" class="btn btn-outline btn-clear-cancel" type="button"
+                onclick="taskComponents.addTaskFormClear()">
+                <div>
+                    <p>Clear</p>
+                    <div role="img" title="Clear-Icon" aria-hidden="true"></div>
+                </div>
+            </button>
+            <button id="createTaskButton" type="submit" class="btn btn-fill btn-create-task" disabled>
+                <div>
+                    <p>Create Task</p>
+                    <div role="img" title="Check-Icon" aria-hidden="true"></div>
+                </div>
+            </button>
+        </div>
+    </footer>
+
+
+</form>
