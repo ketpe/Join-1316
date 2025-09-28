@@ -13,7 +13,7 @@
         <section class="right-container-contacts">
             <div class="close-contact-overlay">
                 <button onclick="closeDialogByEvent(event, 'add-contact-dialog')" class="btn-overlay-close"
-                    id="btn-overlay-close-contacts" type="button">
+                    id="btn-overlay-close-contacts" aria-label="Close dialog" type="button">
                     <div id="btn-overlay-close-div" role="img" title="Close dialog icon"></div>
                 </button>
             </div>
@@ -53,7 +53,7 @@
                                 <div aria-label="Close dialog" role="img" class="btn-cancel-icon"></div>
                             </button>
                             <button type="submit" id="btn-create-contact" onmouseover="toggleBtnCreateContact()"
-                                class="btn-create btn btn-fill btn-md" disabled="true">
+                                class="btn-create btn btn-fill btn-md" aria-label="Create contact" disabled="true">
                                 <p class="">Create contact</p>
                                 <div aria-label="Create contact" role="img" class="btn-create-icon"></div>
                             </button>
