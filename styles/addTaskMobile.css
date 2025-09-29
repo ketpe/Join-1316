@@ -1,11 +1,12 @@
 .add-task-head-mobile{
     height: 112px;
+    padding-left: 16px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .content-mobile{
-    max-width: 400px;
+    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -14,6 +15,8 @@
     overflow-y: scroll;
     margin-left: auto;
     margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 .add-task-footer-mobile{

@@ -155,21 +155,79 @@ class AddTaskUtils {
         btn.setAttribute('onmouseover', `${currentInstanceName}.addTaskSubmitOnMouse(this)`);
     }
 
-    measureTheRemainingSpaceOfFieldsForDesktop(aHeight){
-        const headerHeight = document.querySelector(".header-desktop").offsetHeight;
-        const footerHeight = document.querySelector(".add-task-footer").offsetHeight;
-        const distanceButtom = 45;
-        const addTaskHeader = document.querySelector(".add-task-head").offsetHeight;
 
-        return aHeight - (headerHeight + footerHeight + distanceButtom + addTaskHeader + 24);
+    getElementsForDesktop() {
+        const header = document.querySelector(".header-desktop");
+        const footer = document.querySelector(".add-task-footer");
+        const addTaskHeader = document.querySelector(".add-task-head");
+        if (header && footer && addTaskHeader){
+            return {header, footer, addTaskHeader};
+        }
+
+        return null;
     }
 
-    measureTheRemainingSpaceOfFieldsForMobile(aHeight){
-        const headerHeight = document.querySelector(".top-container-mobile").offsetHeight;
-        const footerHeight = document.querySelector(".buttom-container-mobile").offsetHeight;
-        const distanceButtom = 95;
-        const addTaskHeader = document.querySelector(".add-task-head-mobile").offsetHeight;
-        return aHeight - (headerHeight + footerHeight + distanceButtom + addTaskHeader + 24);
+    getElementsForMobile(){
+        const header = document.querySelector(".top-container-mobile");
+        const footer = document.querySelector(".buttom-container-mobile");
+        const addTaskHeader = document.querySelector(".add-task-head-mobile");
+
+        if(header && footer && addTaskHeader){
+            return {header, footer, addTaskHeader};
+        }
+
+        return null;
+    }
+
+    calculateSpaceForFields(aHeight, distanceFromButtom, {header, footer, addTaskHeader}){
+        const headerHeight = header.offsetHeight;
+        const footerHeight = footer.offsetHeight;
+        const addTaskHeight = addTaskHeader.offsetHeight;
+        return aHeight - (headerHeight + footerHeight + addTaskHeight + distanceFromButtom + 24);
+    }
+
+    
+    measureTheRemainingSpaceOfFieldsForDesktop(aHeight, retries = 3, delay = 100) {
+        return new Promise((resolve) => {
+            let counter = 0;
+            function tryCalculateDesktopField(){
+
+                const addTaskU = new AddTaskUtils();
+                const elements = addTaskU.getElementsForDesktop();
+
+                if(elements){
+                    resolve(addTaskU.calculateSpaceForFields(aHeight, 45, elements));
+                }else if(counter < retries){
+                    counter++;
+                    setTimeout(tryCalculateDesktopField, delay);
+                }
+            }
+
+            tryCalculateDesktopField();
+
+        });
+
+    }
+
+    
+    measureTheRemainingSpaceOfFieldsForMobile(aHeight, retries = 3, delay = 100) {
+        return new Promise((resolve) => {
+            let counter = 0;
+            function tryCalculateMobileField() {
+                const addTaskU = new AddTaskUtils();
+                const elements = addTaskU.getElementsForMobile();
+
+                if(elements){
+                    resolve(addTaskU.calculateSpaceForFields(aHeight, 95, elements));
+                }else if (counter < retries){
+                    counter++;
+                    setTimeout(tryCalculateMobileField, delay);
+                }
+
+            }
+
+            tryCalculateMobileField();
+        });
     }
 
 }

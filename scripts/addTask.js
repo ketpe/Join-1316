@@ -1,11 +1,16 @@
+const MOBILE = "mobile";
+const DESKTOP = "desktop";
+const DESKTOPSINGLE = "desktopSingle";
+const minDesktopHeight = 880;
+const breakPointToDesktopSingle = 1180;
+const breakPointToMobile = 800;
 
 let currentUser = "";
 let isGuest = false;
 let addTaskUtils = new AddTaskUtils();
 let addTasktaskComponents = null;
 let currentView = ""; //ich meine hier Desktop oder Mobile
-const minDesktopHeight = 880;
-const minDesktopWidth = 1180;
+
 
 //TODO - Die aktuellen Werte zwischenspeichern, damit wenn die Seite von mobile zu Desktop verschoben oder umgekehrt, diese nicht verschwinden!
 
@@ -17,47 +22,66 @@ const minDesktopWidth = 1180;
 async function onLoadAddTask() {
     const [height, width] = getCurrentAddTaskSize();
 
-    if (height >= minDesktopHeight && width >= minDesktopWidth) {
-        await loadHtmlComponentsForDesktop();
-        changeAddTaskViewToStandard();
-        changeAddTaskDesktopFields(height, width);
-        await loadDataForAddTask();
+    if (width >= breakPointToDesktopSingle) {
+        await changeAddTaskToDesktop(height, width);
+    } else if (width < breakPointToDesktopSingle && width > breakPointToMobile) {
+        await changeAddTaskToDesktopSingle(height, width);
     } else {
-        await loadHtmlComponentsForMobile();
-        changeAddTaskMobileFields(height, width);
-        await loadDataForAddTask();
+        await changeAddTaskToMobile(height, width);
     }
+
+    changeAddTaskFormFieldSize(height, width, currentView);
 }
 
 
 async function addTaskPageResize() {
     const [height, width] = getCurrentAddTaskSize();
-    if (height <= minDesktopHeight || width <= minDesktopWidth) {
-        if (currentView !== "mobile") {
-            await loadHtmlComponentsForMobile();
-            await loadDataForAddTask();
-            changeAddTaskMobileFields(height, width);
-        }else if(currentView == "mobile"){changeAddTaskMobileFields(height, width);}
-
-    } else if (height >= minDesktopHeight + 1 && width >= minDesktopWidth + 1 && currentView !== "desktop") {
-        if (currentView !== "desktop") {
-            await loadHtmlComponentsForDesktop();
-            changeAddTaskViewToStandard();
-            await loadDataForAddTask();
-            changeAddTaskDesktopFields(height, width);
-        }else if(currentView == "desktop"){changeAddTaskMobileFields(height, width);}
+    if (width <= breakPointToMobile && currentView !== MOBILE) {
+        await changeAddTaskToMobile(height, width);
+    } else if (width >= breakPointToDesktopSingle && currentView !== DESKTOP) {
+        await changeAddTaskToDesktop(height, width);
+    }else if(width > breakPointToMobile && width <= breakPointToDesktopSingle && currentView != DESKTOPSINGLE){
+        await changeAddTaskToDesktopSingle(height, width);
     }
 
+    changeAddTaskFormFieldSize(height, width, currentView);
+
 }
 
-function changeAddTaskMobileFields(height, width) {
-    const dHeightForFieldsMobile = addTaskUtils.measureTheRemainingSpaceOfFieldsForMobile(height);
-    document.querySelector(".add-task-mobile-fields").style.height = dHeightForFieldsMobile + "px";
+async function changeAddTaskToDesktop() {
+    currentView = DESKTOP;
+    await loadHtmlComponentsForDesktop();
+    changeAddTaskViewToStandard();
+    await loadDataForAddTask();
+    
 }
 
-function changeAddTaskDesktopFields(height, width) {
-    const dHeightForFields = addTaskUtils.measureTheRemainingSpaceOfFieldsForDesktop(height);
-    document.querySelector(".add-task-fields").style.height = dHeightForFields + "px";
+async function changeAddTaskToDesktopSingle() {
+    currentView = DESKTOPSINGLE;
+    await loadHtmlComponentsForDesktopSingle();
+    await loadDataForAddTask();
+    
+}
+
+async function changeAddTaskToMobile() {
+    currentView = MOBILE;
+    await loadHtmlComponentsForMobile();
+    await loadDataForAddTask();
+    
+}
+
+function changeAddTaskFormFieldSize(height, width, currentView) {
+    if (currentView == MOBILE) {
+        addTaskUtils.measureTheRemainingSpaceOfFieldsForMobile(height)
+            .then((result) => {
+                document.querySelector(".add-task-mobile-fields").style.height = result + "px";
+            });
+    } else if (currentView == DESKTOP) {
+        addTaskUtils.measureTheRemainingSpaceOfFieldsForDesktop(height)
+            .then((result) => {
+                document.querySelector(".add-task-fields").style.height = result + "px";
+            });
+    }
 }
 
 function getCurrentAddTaskSize() {
@@ -66,7 +90,6 @@ function getCurrentAddTaskSize() {
 
 
 async function loadHtmlComponentsForDesktop() {
-    currentView = "desktop";
     clearAddTaskHtmlBody();
     await includeHtmlForNode("body", "addTaskDesktop.html");
 
@@ -79,8 +102,21 @@ async function loadHtmlComponentsForDesktop() {
     await fillHtmlWithContent();
 }
 
+async function loadHtmlComponentsForDesktopSingle() {
+    clearAddTaskHtmlBody();
+    await includeHtmlForNode("body", "addTaskDesktop.html");
+
+    await Promise.all([
+        includeHtml("navbar", "navbarDesktop.html"),
+        includeHtml("header", "headerDesktop.html"),
+        includeHtml("add-task-content", "addTaskContentMobile.html")
+    ]);
+
+    await fillMobileHtmlWithContent();
+
+}
+
 async function loadHtmlComponentsForMobile() {
-    currentView = "mobile"
     clearAddTaskHtmlBody();
 
     await includeHtmlForNode("body", "addTaskMobile.html")

@@ -799,6 +799,25 @@ span {
 
 }
 
+@media(max-width: 1180px){
+    .add-task-content{
+        max-width: 600px;
+        padding-left: 10%;
+    }
+}
+
+@media(max-width: 970px){
+    .add-task-content{
+        padding-left: 5%;
+    }
+}
+
+@media(max-width: 826px){
+    .add-task-content{
+        padding-left: 2%;
+    }
+}
+
 @media(max-height: 880px){
     .add-task-fields{
         overflow-y: scroll;
