@@ -4,7 +4,7 @@
     height: 100vh;
 } */
 
-.summary-header {
+.summary-header-mobile {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -13,7 +13,7 @@
     padding-left: 16px;
 }
 
-.summary-title {
+.summary-title-mobile {
     margin: 0;
     font-family: Inter;
     font-weight: 700;
@@ -21,7 +21,7 @@
     font-size: 47px;
 }
 
-.summary-subtitle {
+.summary-subtitle-mobile {
     margin: 0;
     font-family: Inter;
     font-weight: 400;
@@ -29,14 +29,14 @@
     font-size: 20px;
 }
 
-.summary-content {
+.summary-content-mobile {
     display: flex;
     flex-direction: row;
     gap: 40px;
     padding-left: 16px;
 }
 
-.summary-user {
+.summary-user-mobile {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -48,7 +48,7 @@
     border-radius: 16px;
 }
 
-.task-actions {
+.task-actions-mobile {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -57,7 +57,7 @@
     margin-bottom: 20px;
 }
 
-.btn-task {
+.btn-task-mobile {
     display: flex;
     flex-direction: row;
     border: none;
@@ -72,60 +72,60 @@
     transition: background-color 100ms ease-in-out, box-shadow 100ms ease-in-out;
 }
 
-.btn-task:hover {
+.btn-task-mobile:hover {
     background-color: var(--bg-default);
 }
 
-.btn-task:active {
+.btn-task-mobile:active {
     background-color: var(--default-bg-color);
     box-shadow: 0px 4px 4px 0px var(--bg-shadow-btn-task);
 
 }
 
-.btn-task:hover .todo-icon {
+.btn-task-mobile:hover .todo-icon-mobile {
     background-image: url('../assets/todo-icon-hover.svg');
 }
 
-.btn-task:active .todo-icon {
+.btn-task-mobile:active .todo-icon-mobile {
     background-image: url('../assets/todo-icon.svg');
 }
 
 
-.btn-task:hover .quantity-task {
+.btn-task-mobile:hover .quantity-task-mobile {
     color: #FFFFFF;
 }
 
-.btn-task:active .quantity-task {
+.btn-task-mobile:active .quantity-task-mobile {
     color: inherit;
 }
 
-.btn-task:hover .quantity-label-task {
+.btn-task-mobile:hover .quantity-label-task-mobile {
     color: #ffffff;
 }
 
-.todo-icon {
+.todo-icon-mobile {
     width: 40px;
     height: 40px;
     background-image: url('../assets/todo-icon.svg');
     background-size: cover;
 }
 
-.done-icon {
+.done-icon-mobile {
     width: 40px;
     height: 40px;
     background-image: url('../assets/done-icon.svg');
     background-size: cover;
 }
 
-.btn-task:hover .done-icon {
+.btn-task-mobile:hover .done-icon-mobile {
     background-image: url('../assets/done-icon-hover.svg');
 }
 
-.btn-task:active .done-icon {
+.btn-task-mobile:active .done-icon-mobile {
     background-image: url('../assets/done-icon.svg');
 }
 
-.quantity-task {
+.quantity-task-mobile {
     font-family: Inter;
     font-weight: 600;
     font-style: Semi Bold;
@@ -133,7 +133,7 @@
     margin: 0;
 }
 
-.quantity-label-task {
+.quantity-label-task-mobile {
     font-family: Inter;
     font-weight: 400;
     font-style: Regular;
@@ -141,7 +141,7 @@
     margin: 0;
 }
 
-.btn-urgent {
+.btn-urgent-mobile {
     display: flex;
     flex-direction: row;
     border: none;
@@ -156,46 +156,46 @@
     transition: background-color 100ms ease-in-out, box-shadow 100ms ease-in-out;
 }
 
-.btn-urgent:hover {
+.btn-urgent-mobile:hover {
     background: var(--bg-default);
 }
 
-.btn-urgent:active {
+.btn-urgent-mobile:active {
     background: var(--default-bg-color);
     box-shadow: 0px 4px 4px 0px var(--bg-shadow-btn-task);
 }
 
-.btn-urgent:hover .quantity-task {
+.btn-urgent-mobile:hover .quantity-task-mobile {
     color: #FFFFFF;
 }
 
-.btn-urgent:active .quantity-task {
+.btn-urgent-mobile:active .quantity-task-mobile {
     color: inherit;
 }
 
-.btn-urgent:hover .quantity-label-task {
+.btn-urgent-mobile:hover .quantity-label-task-mobile {
     color: #FFFFFF;
 }
 
-.btn-urgent:active .quantity-label-task {
+.btn-urgent-mobile:active .quantity-label-task-mobile {
     color: inherit;
 }
 
-.urgent-icon {
+.urgent-icon-mobile {
     width: 40px;
     height: 40px;
     background-image: url('../assets/urgent-icon.svg');
     background-size: cover;
 }
 
-.urgent-date-container {
+.urgent-date-container-mobile {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: start;
 }
 
-.urgent-display {
+.urgent-display-mobile {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -203,7 +203,7 @@
 }
 
 
-.urgent-time {
+.urgent-time-mobile {
     font-family: Inter;
     font-weight: 700;
     font-style: Bold;
@@ -214,15 +214,15 @@
     white-space: nowrap;
 }
 
-.btn-urgent:hover .urgent-time {
+.btn-urgent-mobile:hover .urgent-time-mobile {
     color: #FFFFFF;
 }
 
-.btn-urgent:active .urgent-time {
+.btn-urgent-mobile:active .urgent-time-mobile {
     color: inherit;
 }
 
-.urgent-time-underline {
+.urgent-time-underline-mobile {
     font-family: Inter;
     font-weight: 400;
     font-style: Regular;
@@ -230,15 +230,15 @@
 
 }
 
-.btn-urgent:hover .urgent-time-underline {
+.btn-urgent-mobile:hover .urgent-time-underline-mobile {
     color: #FFFFFF;
 }
 
-.btn-urgent:active .urgent-time-underline {
+.btn-urgent-mobile:active .urgent-time-underline-mobile {
     color: inherit;
 }
 
-.summary-tasks {
+.summary-tasks-mobile {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -248,7 +248,7 @@
 
 }
 
-.btn-summary-tasks {
+.btn-summary-tasks-mobile {
     border: none;
     width: 100%;
     height: 100%;
@@ -265,33 +265,33 @@
     transition: background-color 100ms ease-in-out, box-shadow 100ms ease-in-out;
 }
 
-.btn-summary-tasks:hover {
+.btn-summary-tasks-mobile:hover {
     background: var(--bg-default);
 }
 
-.btn-summary-tasks:active {
+.btn-summary-tasks-mobile:active {
     background: inherit;
     box-shadow: 0px 4px 4px 0px var(--bg-shadow-btn-task);
 }
 
-.btn-summary-tasks:hover .number-of-Tasks {
+.btn-summary-tasks-mobile:hover .number-of-Tasks-mobile {
     color: #FFFFFF;
 }
 
-.btn-summary-tasks:active .number-of-Tasks {
+.btn-summary-tasks-mobile:active .number-of-Tasks-mobile {
     color: inherit;
 }
 
 
-.btn-summary-tasks:hover .description-of-task {
+.btn-summary-tasks-mobile:hover .description-of-task-mobile {
     color: #FFFFFF;
 }
 
-.btn-summary-tasks:active .description-of-task {
+.btn-summary-tasks-mobile:active .description-of-task-mobile {
     color: inherit;
 }
 
-.number-of-Tasks {
+.number-of-Tasks-mobile {
     font-family: Inter;
     font-weight: 600;
     font-style: Semi Bold;
@@ -299,7 +299,7 @@
     margin: 0;
 }
 
-.description-of-task {
+.description-of-task-mobile {
     margin: 0;
     font-family: Inter;
     font-weight: 400;
@@ -308,7 +308,7 @@
 
 }
 
-.personal-greets {
+.personal-greets-mobile {
     width: 385px;
     min-height: 136px;
     display: flex;
@@ -317,7 +317,7 @@
     gap: 3px;
 }
 
-.headline-greet {
+.headline-greet-mobile {
     margin: 0;
     font-family: Inter;
     font-weight: 500;
@@ -331,7 +331,7 @@
     background-color: var(--btn-bg-hover);
 }
 
-.personal-greets-user {
+.personal-greets-user-mobile {
     margin: 0;
     font-family: Inter;
     font-weight: 700;

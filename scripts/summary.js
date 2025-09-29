@@ -159,6 +159,7 @@ async function loadHtmlComponentsForDesktop(head) {
         includeHtml("header", "headerDesktop.html"),
 
     ]);
+    loadTasksforSummary();
     renderGreetings();
 
 }
@@ -180,7 +181,7 @@ async function loadHtmlComponentsForMobile() {
         includeHtml("header", "headerMobile.html"),
         includeHtml("navbar", "navbarMobil.html"),
     ]);
-
+    loadTasksforSummary();
 }
 
 function includeCSSToHead(href) {
