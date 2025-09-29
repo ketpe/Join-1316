@@ -23,7 +23,7 @@ body {
 
 .nav-mobile {
     height: 100%;
-    max-width: 428px;
+    /* max-width: 428px; */
     background-color: var(--bg-default);
     display: flex;
     flex-direction: row;

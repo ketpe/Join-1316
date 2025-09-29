@@ -314,3 +314,27 @@
     font-size: 64px;
     color: var(--btn-bg-hover);
 }
+
+@media (max-width: 1290px) {
+    .summary-content {
+        padding-left: 2vw;
+    }
+
+    .summary-header {
+        padding-left: 2vw;
+    }
+}
+
+@media (max-width: 1180px) {
+    .personal-greets {
+        display: none;
+    }
+
+    .summary-title {
+        font-size: calc(61px * 0.9);
+    }
+
+    .summary-subtitle {
+        font-size: calc(27px * 0.9);
+    }
+}

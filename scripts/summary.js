@@ -4,7 +4,7 @@
 
 let currentView = ""; //ich meine hier Desktop oder Mobile
 const minDesktopHeight = 880;
-const minDesktopWidth = 1024;
+const minDesktopWidth = 840;
 
 /**
  * Loads tasks from Firebase, calculates summary statistics, and updates the UI.
@@ -150,7 +150,6 @@ async function loadHtmlComponentsForDesktop(head) {
     currentView = "desktop";
     clearAddTaskHtmlBody();
     await Promise.all([
-        includeCSSToHead("styles/summaryDesktop.css"),
         includeHtmlForNode("body", "summaryDesktop.html")
     ]);
 
@@ -173,7 +172,6 @@ async function loadHtmlComponentsForMobile() {
     clearAddTaskHtmlBody();
 
     await Promise.all([
-        includeCSSToHead("styles/summaryMobile.css"),
         includeHtmlForNode("body", "summaryMobile.html")
     ]);
 
