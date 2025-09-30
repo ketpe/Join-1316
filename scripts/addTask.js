@@ -35,12 +35,13 @@ async function onLoadAddTask() {
 
 
 async function addTaskPageResize() {
+    AddTaskUtils.captureCurrentAddTaskDataFromView();
     const [height, width] = getCurrentAddTaskSize();
     if (width <= breakPointToMobile && currentView !== MOBILE) {
         await changeAddTaskToMobile(height, width);
     } else if (width >= breakPointToDesktopSingle && currentView !== DESKTOP) {
         await changeAddTaskToDesktop(height, width);
-    }else if(width > breakPointToMobile && width <= breakPointToDesktopSingle && currentView != DESKTOPSINGLE){
+    } else if (width > breakPointToMobile && width <= breakPointToDesktopSingle && currentView != DESKTOPSINGLE) {
         await changeAddTaskToDesktopSingle(height, width);
     }
 
@@ -49,25 +50,28 @@ async function addTaskPageResize() {
 }
 
 async function changeAddTaskToDesktop() {
+    AddTaskUtils.captureCurrentAddTaskDataFromView();
     currentView = DESKTOP;
     await loadHtmlComponentsForDesktop();
     changeAddTaskViewToStandard();
     await loadDataForAddTask();
-    
+
 }
 
 async function changeAddTaskToDesktopSingle() {
+    AddTaskUtils.captureCurrentAddTaskDataFromView();
     currentView = DESKTOPSINGLE;
     await loadHtmlComponentsForDesktopSingle();
     await loadDataForAddTask();
-    
+
 }
 
 async function changeAddTaskToMobile() {
+    AddTaskUtils.captureCurrentAddTaskDataFromView();
     currentView = MOBILE;
     await loadHtmlComponentsForMobile();
     await loadDataForAddTask();
-    
+
 }
 
 function changeAddTaskFormFieldSize(height, width, currentView) {
@@ -144,7 +148,7 @@ async function fillHtmlWithContent() {
 }
 
 async function fillMobileHtmlWithContent() {
-    const taskMobileUtil = new AddTaskMobileUtil();
+    const taskMobileUtil = new AddTaskMobileUtil("addTasktaskComponents");
     await taskMobileUtil.startRenderAddTaskMobile();
 }
 
@@ -177,8 +181,14 @@ async function loadDataForAddTask() {
     renderUserInitial();
     currentUser = addTaskUtils.readCurrentUserID();
     isGuest = addTaskUtils.isCurrentUserGuest();
-    addTasktaskComponents = new TaskComponents(currentUser, "addTasktaskComponents");
-    addTasktaskComponents.run();
+
+    if (!addTasktaskComponents) {
+        addTasktaskComponents = new TaskComponents(currentUser, "addTasktaskComponents");
+        addTasktaskComponents.run();
+    }
+
+    AddTaskUtils.applyAddTaskDataToView(addTasktaskComponents);
+
 }
 
 

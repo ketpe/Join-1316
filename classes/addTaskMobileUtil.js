@@ -1,9 +1,7 @@
 class AddTaskMobileUtil{
 
-    currentInstance = "addTaskMobile";
-
-    constructor(){
-
+    constructor(currentInstance){
+        this.currentInstance = currentInstance;
     }
 
     async startRenderAddTaskMobile(){
@@ -19,9 +17,11 @@ class AddTaskMobileUtil{
         taskContent.innerHTML += taskElements.getDueDateComponents(true, "");
         taskContent.innerHTML += taskElements.getPrioButtonComponents();
         taskContent.innerHTML += taskElements.getContactComponents();
-
+        taskContent.innerHTML += taskElements.getAssignedBadges();
         taskContent.innerHTML += taskElements.getCategoryComponents();
+        taskContent.innerHTML += taskElements.getCategoryListContainer();
         taskContent.innerHTML += taskElements.getSubTaskComponents();
+        taskContent.innerHTML += taskElements.getSubtaskListContainer();
         taskContent.innerHTML += `<p class="notice-required"><span aria-hidden="true">*</span>This field is required</p>`;
     }
 }
