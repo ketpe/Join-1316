@@ -2,9 +2,10 @@
  * @fileoverview summary.js - Handles loading and displaying task summaries.
  */
 
-let currentView = ""; //ich meine hier Desktop oder Mobile
+let currentView = "";
 const minDesktopHeight = 880;
 const minDesktopWidth = 840;
+const breakPointToDesktopSingle = 1180;
 
 /**
  * Loads tasks from Firebase, calculates summary statistics, and updates the UI.

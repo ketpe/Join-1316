@@ -330,6 +330,14 @@
         display: none;
     }
 
+    .right-container {
+        width: auto;
+    }
+
+    .summary-section {
+        align-items: center;
+    }
+
     .summary-title {
         font-size: calc(61px * 0.9);
     }
