@@ -4,6 +4,102 @@
  */
 class AddTaskUtils {
 
+    static _addTaskCache = {
+        formData: { title: "", description: "", dueDate: "", priority: "Medium" },
+        category: null, 
+        assignedContacts: [],
+        subTasks: []
+    };
+
+
+    static getAddTaskCache(){
+        return this._addTaskCache;
+    }
+
+    static setAddTaskCache(patch){
+        this._addTaskCache = {...this._addTaskCache, ...patch};
+    }
+
+
+    static captureCurrentAddTaskDataFromView(){
+
+        const {titleElement, descriptionElement, dueDateElement} = this.captureInputFields();
+
+        const prioButtonsContainer = document.getElementById('task-priority-button');
+        const selectedPrioButton = prioButtonsContainer?.querySelector('.btn[data-selected="true"]');
+        const priority = selectedPrioButton?.getAttribute('name') || this._addTaskCache.formData.priority || "Medium";
+
+        const components = window.addTasktaskComponents;
+        const category = components?.currentCategory?.id ? components.currentCategory : this._addTaskCache.category;
+        const assignedContacts = components?.currentContactAssignList || this._addTaskCache.assignedContacts;
+        const subTasks = components?.currentSubTasks || this._addTaskCache.subTasks;
+        
+        this.setAddTaskCache({
+            formData: {
+                title: (titleElement?.value ?? "").trim(),
+                description: (descriptionElement?.value ?? "").trim(),
+                dueDate: (dueDateElement?.value ?? "").trim(),
+                priority: priority
+            },
+            category,
+            assignedContacts: [...assignedContacts],
+            subTasks: [...subTasks]
+        });
+    }
+
+
+    static applyAddTaskDataToView(components){
+        if(!components){return;}
+        const {formData, category, assignedContacts, subTasks} = this._addTaskCache;
+
+        components.currentTitle = formData.title;
+        components.currentDueDate = formData.dueDate || "";
+        components.currentPriority = formData.priority || "Medium";
+        components.currentCategory = category || {};
+        components.currentContactAssignList = [...assignedContacts];
+        components.currentSubTasks = [...subTasks];
+
+        this.applyFormDataIntoInputFields(formData);
+
+        components.setNewPriority(formData.priority || "Medium");
+
+        this.applyCategoryToView(category, components);
+
+        components.showOrHideBadgeContainer('show');
+        components.renderSubtasks();
+
+        const btn = document.getElementById('createTaskButton');
+        components.addTaskCheckRequiredField(btn);
+
+    }
+
+    static applyFormDataIntoInputFields(formData){
+        const {titleElement, descriptionElement, dueDateElement} = this.captureInputFields();
+        if(titleElement){titleElement.value = formData.title || "";}
+        if(descriptionElement){descriptionElement.value = formData.description || "";}
+        if(dueDateElement){dueDateElement.value = formData.dueDate || "";}
+    }
+
+
+    static applyCategoryToView(category, components){
+        if(category?.title){
+            components.setCategoryInputfieldValue(category.title);
+            components.showAndLeaveErrorMessage('a-t-category-required', false);
+            components.showAndLeaveErrorBorder('task-category', false);
+        }else{
+            components.setCategoryInputfieldValue('Select task category');
+        }
+    }
+
+    static captureInputFields(){
+        const titleElement = document.getElementById('task-title');
+        const descriptionElement = document.getElementById('task-description');
+        const dueDateElement = document.getElementById('due-date-display');
+
+        return {titleElement, descriptionElement, dueDateElement};
+    }
+
+
     constructor() { }
 
     /**
