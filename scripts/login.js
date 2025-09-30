@@ -16,6 +16,7 @@ async function checkLogin(email, password) {
         setLogStatus('0');
         toggleBorderColorByError();
         showErrorMessage('Check your email and password. Please try again.')
+        document.getElementById("password").value = '';
     }
 };
 
