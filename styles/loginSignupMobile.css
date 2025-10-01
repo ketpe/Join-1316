@@ -4,36 +4,21 @@
     body {
         margin: 0;
         box-sizing: border-box;
-        overflow-x: hidden;
+        overflow: hidden;
     }
 
     .login-signup-page {
-        background-color: var(--default-bg-color);
-        display: flex;
-        justify-content: center;
-        width: 90%;
-        height: 100vh;
-    }
-
-    .login-signup-main {
-        max-width: var(--max-width);
         width: 100%;
         height: 100vh;
-        position: relative;
-        margin: 0 auto;
     }
 
+
     .login-signup-logo {
-        position: absolute;
         top: 37px;
         left: 38px;
         height: 78px;
         width: 64px;
         background-image: url('../assets/logo-for-Favicon.svg');
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center center;
-        z-index: 1000;
     }
 
     .logo-for-login {
@@ -45,7 +30,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         height: 100%;
         animation: startup 500ms ease-in;
     }
@@ -56,33 +41,32 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0 50px;
         min-height: 49px;
-        margin-top: 32px;
+        margin-bottom: 75px;
     }
 
-    .login-signup-header p {
-        font-family: 'Inter';
-        font-size: 20px;
-        font-weight: 400;
-        color: black;
-        margin-right: 35px;
-    }
 
     .login-signup-container {
         order: 1;
-        height: 475px;
-        width: 396px;
+        width: 100%;
+        margin-top: 30%;
+        padding: 32px 16px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 32px 0 32px 16px;
+    }
+
+    footer {
+        order: 3;
+        display: flex;
     }
 
 
     .login-signup-footer {
-        order: 3;
-        display: flex;
         justify-content: center;
         align-items: center;
         gap: 16px;
@@ -103,7 +87,7 @@
     .login-signup-form {
         position: relative;
         background-color: white;
-        margin-bottom: 80px;
+        margin: 0;
         border-radius: 30px;
         display: flex;
         flex-direction: column;
@@ -114,12 +98,12 @@
 
     .form-for-login {
         height: 450px;
-        width: 650px;
+        width: 100%;
     }
 
     .form-for-signup {
         height: 598px;
-        width: 630px;
+        width: 100%;
     }
 
     .login-signup-form h1 {
@@ -138,7 +122,8 @@
     }
 
     .login-signup-input-field-container {
-        width: 422px;
+        width: 100%;
+        padding: 0 16px;
         display: flex;
         flex-direction: column;
     }
@@ -350,6 +335,12 @@
             left: 77px;
             transform: scale(1);
         }
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
     }
 
 }
