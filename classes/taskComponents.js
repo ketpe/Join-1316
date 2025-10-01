@@ -147,11 +147,14 @@ class TaskComponents{
     addTaskCheckRequiredField(createButton) {
 
         if(!createButton){return;}
+
+        const hasCategory = this.currentCategory && typeof this.currentCategory === 'object' && 'title' in this.currentCategory;
+
         createButton.disabled =
             this.currentDueDate.length > 0 &&
                 this.currentTitle.length > 0 &&
                 this.currentPriority.length > 0 &&
-                this.currentCategory.hasOwnProperty("title") ? false : true;
+                hasCategory;
 
     }
 
@@ -240,8 +243,9 @@ class TaskComponents{
      * Resets all priority buttons to their default state (not selected).
      */
     allPriortyButtonsReset() {
-        currentPriority = "";
+        this.currentPriority = "";
         const btnContainer = document.getElementById('task-priority-button');
+        if(!btnContainer){return;}
         const buttons = btnContainer.querySelectorAll('.btn');
 
         buttons.forEach((b) => {
@@ -453,7 +457,7 @@ class TaskComponents{
      * @param {string} contactID
      */
     checkInContact(currentContact, contactID) {
-        this.currentContactAssignList = addTaskUtils.contactAddToTask(contactID, this.contactAllListFromDB, this.currentContactAssignList);
+        this.currentContactAssignList = this.addTaskUtils.contactAddToTask(contactID, this.contactAllListFromDB, this.currentContactAssignList);
         currentContact.classList.add('contact-selected');
         const elementName = currentContact.querySelector(`.contact-profil-container p`);
         elementName.classList.add('white');
@@ -471,7 +475,7 @@ class TaskComponents{
      * @param {string} contactID
      */
     checkOutContact(currentContact, contactID) {
-        this.currentContactAssignList = addTaskUtils.contactRemoveFromTask(contactID, this.currentContactAssignList);
+        this.currentContactAssignList = this.addTaskUtils.contactRemoveFromTask(contactID, this.currentContactAssignList);
         currentContact.classList.remove('contact-selected');
         const elementName = currentContact.querySelector(`.contact-profil-container p`);
         elementName.classList.remove('white');
@@ -793,7 +797,7 @@ class TaskComponents{
         if (!currentSubTask) { return; }
         const inputField = document.getElementById(`subTaskEdit-${subtaskID}`);
         const inputValueClean = (inputField.value ?? "").trim();
-        if (inputValueClean <= 3) { return; }
+        if (inputValueClean.length <= 3) { return; }
         currentSubTask['title'] = inputField.value;
         this.renderSubtasks();
     }

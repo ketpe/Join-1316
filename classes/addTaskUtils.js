@@ -23,12 +23,15 @@ class AddTaskUtils {
 
     static captureCurrentAddTaskDataFromView(){
 
+        if(!this.checkNodyIsNotEmpty()){return;}
+
         const {titleElement, descriptionElement, dueDateElement} = this.captureInputFields();
 
         const prioButtonsContainer = document.getElementById('task-priority-button');
         const selectedPrioButton = prioButtonsContainer?.querySelector('.btn[data-selected="true"]');
         const priority = selectedPrioButton?.getAttribute('name') || this._addTaskCache.formData.priority || "Medium";
 
+        //Eventuell Fallstrick!
         const components = window.addTasktaskComponents;
         const category = components?.currentCategory?.id ? components.currentCategory : this._addTaskCache.category;
         const assignedContacts = components?.currentContactAssignList || this._addTaskCache.assignedContacts;
@@ -42,11 +45,14 @@ class AddTaskUtils {
                 priority: priority
             },
             category,
-            assignedContacts: [...assignedContacts],
-            subTasks: [...subTasks]
+            assignedContacts: Array.isArray(assignedContacts) ? [...assignedContacts] : [],
+            subTasks: Array.isArray(subTasks) ? [...subTasks] : []
         });
     }
 
+    static checkNodyIsNotEmpty(){
+        return document.body && document.body.children.length > 0 ? true : false;
+    }
 
     static applyAddTaskDataToView(components){
         if(!components){return;}
@@ -56,8 +62,8 @@ class AddTaskUtils {
         components.currentDueDate = formData.dueDate || "";
         components.currentPriority = formData.priority || "Medium";
         components.currentCategory = category || {};
-        components.currentContactAssignList = [...assignedContacts];
-        components.currentSubTasks = [...subTasks];
+        components.currentContactAssignList = Array.isArray(assignedContacts) ? [...assignedContacts] : [];
+        components.currentSubTasks = Array.isArray(subTasks) ? [...subTasks] : [];
 
         this.applyFormDataIntoInputFields(formData);
 
@@ -275,54 +281,74 @@ class AddTaskUtils {
         return null;
     }
 
+    getElementsForDesktopSingle(){
+        const header = document.querySelector(".header-desktop");
+        const addTaskHeader = document.querySelector(".add-task-head-mobile");
+        const footer = null;
+
+        if(header && addTaskHeader){
+            return {header, footer, addTaskHeader}
+        }
+
+        return null;
+    }
+
     calculateSpaceForFields(aHeight, distanceFromButtom, {header, footer, addTaskHeader}){
         const headerHeight = header.offsetHeight;
-        const footerHeight = footer.offsetHeight;
+        const footerHeight = footer?.offsetHeight || 0;
         const addTaskHeight = addTaskHeader.offsetHeight;
         return aHeight - (headerHeight + footerHeight + addTaskHeight + distanceFromButtom + 24);
     }
 
     
-    measureTheRemainingSpaceOfFieldsForDesktop(aHeight, retries = 3, delay = 100) {
-        return new Promise((resolve) => {
-            let counter = 0;
-            function tryCalculateDesktopField(){
+    measureTheRemainingSpaceOfFieldsForDesktop(aHeight) {
+        return this.measureWithRetry(
+            aHeight, 
+            (addTaskU) => addTaskU.getElementsForDesktop(),
+            45,
+            3,
+            100
+        );
+    }
 
-                const addTaskU = new AddTaskUtils();
-                const elements = addTaskU.getElementsForDesktop();
-
-                if(elements){
-                    resolve(addTaskU.calculateSpaceForFields(aHeight, 45, elements));
-                }else if(counter < retries){
-                    counter++;
-                    setTimeout(tryCalculateDesktopField, delay);
-                }
-            }
-
-            tryCalculateDesktopField();
-
-        });
-
+    measureTheRemainingSpaceOfFieldsForDesktopSingle(aHeight){
+        return this.measureWithRetry(
+            aHeight,
+            (addTaskU) => addTaskU.getElementsForDesktopSingle(),
+            45,
+            3,
+            100
+        );
     }
 
     
-    measureTheRemainingSpaceOfFieldsForMobile(aHeight, retries = 3, delay = 100) {
+    measureTheRemainingSpaceOfFieldsForMobile(aHeight) {
+        return this.measureWithRetry(
+            aHeight,
+            (addTaskU) => addTaskU.getElementsForMobile(),
+            95,
+            3,
+            100
+        );
+    }
+
+    measureWithRetry(aHeight, getElementsFunction, offset, retries = 3, delay = 100){
         return new Promise((resolve) => {
             let counter = 0;
-            function tryCalculateMobileField() {
+
+            function tryCalculate(){
                 const addTaskU = new AddTaskUtils();
-                const elements = addTaskU.getElementsForMobile();
+                const elements = getElementsFunction(addTaskU);
 
                 if(elements){
-                    resolve(addTaskU.calculateSpaceForFields(aHeight, 95, elements));
-                }else if (counter < retries){
+                    resolve(addTaskU.calculateSpaceForFields(aHeight, offset, elements));
+                } else if(counter < retries){
                     counter++;
-                    setTimeout(tryCalculateMobileField, delay);
+                    setTimeout(tryCalculate, delay);
                 }
-
             }
 
-            tryCalculateMobileField();
+            tryCalculate();
         });
     }
 
