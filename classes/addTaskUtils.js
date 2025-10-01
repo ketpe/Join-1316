@@ -31,6 +31,7 @@ class AddTaskUtils {
         const selectedPrioButton = prioButtonsContainer?.querySelector('.btn[data-selected="true"]');
         const priority = selectedPrioButton?.getAttribute('name') || this._addTaskCache.formData.priority || "Medium";
 
+        //Eventuell Fallstrick!
         const components = window.addTasktaskComponents;
         const category = components?.currentCategory?.id ? components.currentCategory : this._addTaskCache.category;
         const assignedContacts = components?.currentContactAssignList || this._addTaskCache.assignedContacts;
@@ -284,7 +285,7 @@ class AddTaskUtils {
         const header = document.querySelector(".header-desktop");
         const addTaskHeader = document.querySelector(".add-task-head-mobile");
         const footer = null;
-        
+
         if(header && addTaskHeader){
             return {header, footer, addTaskHeader}
         }
