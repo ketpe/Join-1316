@@ -8,6 +8,7 @@
     <link rel="shortcut icon" href="./assets/logo-for-Favicon.svg" type="image/x-icon">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./styles/loginSignup.css">
+    <link rel="stylesheet" href="./styles/loginSignupMobile.css">
 </head>
 
 
@@ -18,7 +19,7 @@
         <div class="login-signup-logo logo-for-login" aria-label="Join Application Logo" role="img"></div>
 
         <section class="login-section" aria-labelledby="login-section-title">
-            <header class="login-sigup-header">
+            <header class="login-signup-header">
                 <p>Not a Join user?</p>
                 <button type="button" class="btn btn-fill btn-sm" aria-label="Sign up if you are not a user"
                     onclick="navigateToSignUp()">Sign up</button>
@@ -40,7 +41,7 @@
                             <input type="password" id="password" name="password"
                                 class="login-signup-input login-password" placeholder="Password" autocomplete="off"
                                 spellcheck="false" autocapitalize="none"
-                                onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')">
+                                onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')" onclick="toggleBorderColorByError('password')">
 
                             <button type="button" title="password icon"
                                 class="login-toggle-password login-password-lock" id="loginTogglePassword" role="img"

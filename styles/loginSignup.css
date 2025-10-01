@@ -34,7 +34,7 @@
     animation: startup 500ms ease-in;
 }
 
-.login-sigup-header {
+.login-signup-header {
     padding-right: 64px;
     padding-top: 64px;
     display: flex;
@@ -43,7 +43,7 @@
     min-height: 48px;
 }
 
-.login-sigup-header p {
+.login-signup-header p {
     font-family: 'Inter';
     font-size: 20px;
     font-weight: 400;
