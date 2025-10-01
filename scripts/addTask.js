@@ -10,6 +10,7 @@ let isGuest = false;
 let addTaskUtils = new AddTaskUtils();
 let addTasktaskComponents = null;
 let currentView = ""; //ich meine hier Desktop oder Mobile
+let resizeLock = false;
 
 
 //TODO - Die aktuellen Werte zwischenspeichern, damit wenn die Seite von mobile zu Desktop verschoben oder umgekehrt, diese nicht verschwinden!
@@ -35,22 +36,33 @@ async function onLoadAddTask() {
 
 
 async function addTaskPageResize() {
-    AddTaskUtils.captureCurrentAddTaskDataFromView();
-    const [height, width] = getCurrentAddTaskSize();
-    if (width <= breakPointToMobile && currentView !== MOBILE) {
-        await changeAddTaskToMobile(height, width);
-    } else if (width >= breakPointToDesktopSingle && currentView !== DESKTOP) {
-        await changeAddTaskToDesktop(height, width);
-    } else if (width > breakPointToMobile && width <= breakPointToDesktopSingle && currentView != DESKTOPSINGLE) {
-        await changeAddTaskToDesktopSingle(height, width);
+
+    if (resizeLock) { return; }
+    resizeLock = true;
+
+    try {
+        const [height, width] = getCurrentAddTaskSize();
+        if (width <= breakPointToMobile && currentView !== MOBILE) {
+            AddTaskUtils.captureCurrentAddTaskDataFromView();
+            await changeAddTaskToMobile(height, width);
+        } else if (width >= breakPointToDesktopSingle && currentView !== DESKTOP) {
+            AddTaskUtils.captureCurrentAddTaskDataFromView();
+            await changeAddTaskToDesktop(height, width);
+        } else if (width > breakPointToMobile && width <= breakPointToDesktopSingle && currentView != DESKTOPSINGLE) {
+            AddTaskUtils.captureCurrentAddTaskDataFromView();
+            await changeAddTaskToDesktopSingle(height, width);
+        }
+
+        changeAddTaskFormFieldSize(height, width, currentView);
+    }finally{
+        resizeLock = false;
     }
 
-    changeAddTaskFormFieldSize(height, width, currentView);
+    
 
 }
 
 async function changeAddTaskToDesktop() {
-    AddTaskUtils.captureCurrentAddTaskDataFromView();
     currentView = DESKTOP;
     await loadHtmlComponentsForDesktop();
     changeAddTaskViewToStandard();
@@ -59,7 +71,6 @@ async function changeAddTaskToDesktop() {
 }
 
 async function changeAddTaskToDesktopSingle() {
-    AddTaskUtils.captureCurrentAddTaskDataFromView();
     currentView = DESKTOPSINGLE;
     await loadHtmlComponentsForDesktopSingle();
     await loadDataForAddTask();
@@ -67,7 +78,6 @@ async function changeAddTaskToDesktopSingle() {
 }
 
 async function changeAddTaskToMobile() {
-    AddTaskUtils.captureCurrentAddTaskDataFromView();
     currentView = MOBILE;
     await loadHtmlComponentsForMobile();
     await loadDataForAddTask();
@@ -84,6 +94,11 @@ function changeAddTaskFormFieldSize(height, width, currentView) {
         addTaskUtils.measureTheRemainingSpaceOfFieldsForDesktop(height)
             .then((result) => {
                 document.querySelector(".add-task-fields").style.height = result + "px";
+            });
+    }else if(currentView == DESKTOPSINGLE){
+        addTaskUtils.measureTheRemainingSpaceOfFieldsForDesktopSingle(height)
+            .then((result) => {
+                document.querySelector(".add-task-mobile-fields").style.height = result + "px";
             });
     }
 }
@@ -184,7 +199,8 @@ async function loadDataForAddTask() {
 
     if (!addTasktaskComponents) {
         addTasktaskComponents = new TaskComponents(currentUser, "addTasktaskComponents");
-        addTasktaskComponents.run();
+        await addTasktaskComponents.run();
+        window.addTasktaskComponents = addTasktaskComponents;
     }
 
     AddTaskUtils.applyAddTaskDataToView(addTasktaskComponents);
