@@ -1,5 +1,5 @@
 .right-container {
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 160px);
 }
 
 .summary-section-mobile {
@@ -15,6 +15,8 @@
     gap: 8px;
     padding-top: calc(104px - 80px);
     padding-left: 16px;
+    width: 412px;
+
 }
 
 .summary-title-mobile {
@@ -40,7 +42,7 @@
     flex-direction: row;
     gap: 40px;
     padding-left: 16px;
-    padding-right: 16px;
+
 }
 
 .summary-user-mobile {
@@ -146,6 +148,13 @@
     font-style: Regular;
     font-size: 14px;
     margin: 0;
+}
+
+.urgent-separator-mobile {
+    width: 2px;
+    height: 106px;
+    background-color: var(--input-border-color);
+
 }
 
 .btn-urgent-mobile {
@@ -355,15 +364,60 @@
     left: 0;
 }
 
-@media (max-width: 480px) {
-    /* .btn-task-mobile {
+@media (max-width: 427px) {
+    .summary-header-mobile {
+        width: auto;
+    }
+
+    .summary-user-mobile {
+        align-items: center;
+        width: auto;
+    }
+
+    .task-actions-mobile {
         width: 90%;
-        height: 10vh;
+        height: auto;
+        justify-content: center;
+    }
+
+    .btn-task-mobile {
+        padding: 19px 9px;
+        width: 40%;
+        height: 40%;
+        gap: 10px;
+        ;
     }
 
     .btn-urgent-mobile {
-        width: 90%;
-        height: 20vh;
+        width: 75%;
+        height: 40%;
+        padding: 19px 9px;
+        gap: 8px;
+        margin-bottom: 0;
+    }
+
+    .urgent-display-mobile {
+        gap: 2px;
+    }
+
+    .urgent-separator-mobile {
+        height: 50px;
+    }
+
+    .urgent-time-underline-mobile {
+        margin: 0;
+    }
+
+    .summary-tasks-mobile {
+        padding: 12px 12px;
+        height: 40%;
+        width: 40%;
+        flex-wrap: wrap;
+    }
+
+    .btn-summary-tasks-mobile {
+        padding: 19px 9px;
+        max-height: 80px;
     }
 
     .quantity-task-mobile {
@@ -379,5 +433,5 @@
     .urgent-icon-mobile {
         width: 30px;
         height: 30px;
-    } */
+    }
 }
