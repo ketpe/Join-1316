@@ -146,6 +146,8 @@ async function loadHtmlComponentsForMobile() {
         includeHtml("add-task-content-mobile", "addTaskContentMobile.html")
     ]);
 
+    document.querySelector('header').classList.add('add-task-header-mobile');
+
     await fillMobileHtmlWithContent();
 }
 

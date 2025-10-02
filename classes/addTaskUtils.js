@@ -315,7 +315,7 @@ class AddTaskUtils {
         return this.measureWithRetry(
             aHeight,
             (addTaskU) => addTaskU.getElementsForDesktopSingle(),
-            45,
+            95,
             3,
             100
         );
