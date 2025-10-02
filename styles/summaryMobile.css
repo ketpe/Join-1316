@@ -16,7 +16,6 @@
     padding-top: calc(104px - 80px);
     padding-left: 16px;
     width: 412px;
-
 }
 
 .summary-title-mobile {
@@ -42,7 +41,6 @@
     flex-direction: row;
     gap: 40px;
     padding-left: 16px;
-
 }
 
 .summary-user-mobile {
@@ -154,7 +152,6 @@
     width: 2px;
     height: 106px;
     background-color: var(--input-border-color);
-
 }
 
 .btn-urgent-mobile {
@@ -204,19 +201,7 @@
     background-size: cover;
 }
 
-.urgent-date-container-mobile {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
-}
 
-.urgent-display-mobile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 18px;
-}
 
 
 .urgent-time-mobile {
@@ -224,9 +209,7 @@
     font-weight: 700;
     font-style: Bold;
     font-size: 16px;
-
     letter-spacing: 0%;
-
     white-space: nowrap;
 }
 
@@ -243,7 +226,6 @@
     font-weight: 400;
     font-style: Regular;
     font-size: 14px;
-
 }
 
 .btn-urgent-mobile:hover .urgent-time-underline-mobile {
@@ -261,7 +243,6 @@
     align-items: center;
     width: 100%;
     gap: 13px;
-
 }
 
 .btn-summary-tasks-mobile {
@@ -320,25 +301,6 @@
     font-family: Inter;
     font-weight: 400;
     font-size: 14px;
-
-
-}
-
-.personal-greets-mobile {
-    width: 385px;
-    min-height: 136px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 3px;
-}
-
-.headline-greet-mobile {
-    margin: 0;
-    font-family: Inter;
-    font-weight: 500;
-    font-size: 47px;
-    color: var(--bg-default);
 }
 
 .headings-separator-mobile {
@@ -347,16 +309,7 @@
     background-color: var(--btn-bg-hover);
 }
 
-.personal-greets-user-mobile {
-    margin: 0;
-    font-family: Inter;
-    font-weight: 700;
-    font-size: 64px;
-    color: var(--btn-bg-hover);
-}
-
 .footer-mobile {
-    /* max-width: 428px; */
     width: 100%;
     height: 80px;
     position: sticky;
@@ -396,7 +349,7 @@
         margin-bottom: 0;
     }
 
-    .urgent-display-mobile {
+    .urgent-display {
         gap: 2px;
     }
 
