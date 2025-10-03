@@ -6,6 +6,9 @@
 
 .login-signup-main {
     max-width: var(--max-width);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100vh;
     position: relative;
@@ -16,8 +19,8 @@
     position: absolute;
     top: 80px;
     left: 77px;
-    height: 121px;
-    width: 100px;
+    height: var(--login-signup-logo-height);
+    width: var(--login-signup-logo-width);
     background-image: url('../assets/logo-for-Favicon.svg');
     background-repeat: no-repeat;
     background-size: cover;
@@ -52,6 +55,7 @@
 }
 
 .login-signup-container {
+    flex: 1;
     height: calc(100vh - (114px + 72px));
     display: flex;
     flex-direction: column;
@@ -67,6 +71,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     gap: 16px;
     padding-bottom: 32px;
 }
@@ -94,8 +99,8 @@
 }
 
 .form-for-login {
-    height: 450px;
-    width: 650px;
+    height: var(--form-for-login-height);
+    width: var(--form-for-login-width);
 }
 
 .form-for-signup {
