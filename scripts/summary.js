@@ -199,11 +199,12 @@ async function addSummaryPageResize() {
     const [height, width] = getCurrentAddTaskSize();
     if ((width <= minDesktopWidth) && currentView != "mobile") {
         await loadHtmlComponentsForMobile();
-        setNavigationButtonActive('summary', "desktop");
+        setNavigationButtonActive('summary', "mobile");
 
     } else if (width >= minDesktopWidth + 1 && currentView != "desktop") {
         await loadHtmlComponentsForDesktop();
-        setNavigationButtonActive('summary', "mobile");
+        setNavigationButtonActive('summary', "desktop");
+        
     }
 
 }

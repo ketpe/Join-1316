@@ -15,6 +15,16 @@ let addTaskDialogTaskComponents = null;
  * @returns {Promise<void>} A promise that resolves when the dialog is fully opened and rendered.
  */
 async function onAddTaskDialogOpen() {
+    const [height, width] = addTaskUtils.getCurrentAddTaskSize;
+
+    if(width <= 880){
+        navigateToAddTask();
+    }else{
+        await showAddTaskAsDialog();
+    }
+}
+
+async function showAddTaskAsDialog() {
     addTaskDialogtoggleScrollOnBody(true);
     addDialogShowClass('add-task-dialog');
     document.getElementById('add-task-dialog').showModal();
@@ -26,6 +36,7 @@ async function onAddTaskDialogOpen() {
     addTaskDialogTaskComponents.run();
     document.getElementsByTagName('body')[0].setAttribute("onmouseup", "addTaskDialogTaskComponents.addTaskWindowMouseClick(event)");
     addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTaskDialogTaskComponents');
+    
 }
 
 /**
