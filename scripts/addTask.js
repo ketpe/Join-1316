@@ -17,7 +17,7 @@ let resizeLock = false;
  * Initializes the Add Task view by rendering necessary components and loading data.
  */
 async function onLoadAddTask() {
-    const [height, width] = getCurrentAddTaskSize();
+    const [height, width] = addTaskUtils.getCurrentAddTaskSize;
     if (width >= breakPointToDesktopSingle) {
         await changeAddTaskToDesktop(height, width);
     } else if (width < breakPointToDesktopSingle && width > breakPointToMobile) {
@@ -35,7 +35,7 @@ async function addTaskPageResize() {
     resizeLock = true;
 
     try {
-        const [height, width] = getCurrentAddTaskSize();
+        const [height, width] = addTaskUtils.getCurrentAddTaskSize;
         if (width <= breakPointToMobile && currentView !== MOBILE) {
             AddTaskUtils.captureCurrentAddTaskDataFromView();
             await changeAddTaskToMobile(height, width);
@@ -94,10 +94,6 @@ function changeAddTaskFormFieldSize(height, width, currentView) {
                 document.querySelector(".add-task-mobile-fields").style.height = result + "px";
             });
     }
-}
-
-function getCurrentAddTaskSize() {
-    return [window.innerHeight, window.innerWidth];
 }
 
 

@@ -6,26 +6,26 @@ class AddTaskUtils {
 
     static _addTaskCache = {
         formData: { title: "", description: "", dueDate: "", priority: "Medium" },
-        category: null, 
+        category: null,
         assignedContacts: [],
         subTasks: []
     };
 
 
-    static getAddTaskCache(){
+    static getAddTaskCache() {
         return this._addTaskCache;
     }
 
-    static setAddTaskCache(patch){
-        this._addTaskCache = {...this._addTaskCache, ...patch};
+    static setAddTaskCache(patch) {
+        this._addTaskCache = { ...this._addTaskCache, ...patch };
     }
 
 
-    static captureCurrentAddTaskDataFromView(){
+    static captureCurrentAddTaskDataFromView() {
 
-        if(!this.checkNodyIsNotEmpty()){return;}
+        if (!this.checkNodyIsNotEmpty()) { return; }
 
-        const {titleElement, descriptionElement, dueDateElement} = this.captureInputFields();
+        const { titleElement, descriptionElement, dueDateElement } = this.captureInputFields();
 
         const prioButtonsContainer = document.getElementById('task-priority-button');
         const selectedPrioButton = prioButtonsContainer?.querySelector('.btn[data-selected="true"]');
@@ -36,7 +36,7 @@ class AddTaskUtils {
         const category = components?.currentCategory?.id ? components.currentCategory : this._addTaskCache.category;
         const assignedContacts = components?.currentContactAssignList || this._addTaskCache.assignedContacts;
         const subTasks = components?.currentSubTasks || this._addTaskCache.subTasks;
-        
+
         this.setAddTaskCache({
             formData: {
                 title: (titleElement?.value ?? "").trim(),
@@ -50,13 +50,13 @@ class AddTaskUtils {
         });
     }
 
-    static checkNodyIsNotEmpty(){
+    static checkNodyIsNotEmpty() {
         return document.body && document.body.children.length > 0 ? true : false;
     }
 
-    static applyAddTaskDataToView(components){
-        if(!components){return;}
-        const {formData, category, assignedContacts, subTasks} = this._addTaskCache;
+    static applyAddTaskDataToView(components) {
+        if (!components) { return; }
+        const { formData, category, assignedContacts, subTasks } = this._addTaskCache;
 
         components.currentTitle = formData.title;
         components.currentDueDate = formData.dueDate || "";
@@ -79,30 +79,30 @@ class AddTaskUtils {
 
     }
 
-    static applyFormDataIntoInputFields(formData){
-        const {titleElement, descriptionElement, dueDateElement} = this.captureInputFields();
-        if(titleElement){titleElement.value = formData.title || "";}
-        if(descriptionElement){descriptionElement.value = formData.description || "";}
-        if(dueDateElement){dueDateElement.value = formData.dueDate || "";}
+    static applyFormDataIntoInputFields(formData) {
+        const { titleElement, descriptionElement, dueDateElement } = this.captureInputFields();
+        if (titleElement) { titleElement.value = formData.title || ""; }
+        if (descriptionElement) { descriptionElement.value = formData.description || ""; }
+        if (dueDateElement) { dueDateElement.value = formData.dueDate || ""; }
     }
 
 
-    static applyCategoryToView(category, components){
-        if(category?.title){
+    static applyCategoryToView(category, components) {
+        if (category?.title) {
             components.setCategoryInputfieldValue(category.title);
             components.showAndLeaveErrorMessage('a-t-category-required', false);
             components.showAndLeaveErrorBorder('task-category', false);
-        }else{
+        } else {
             components.setCategoryInputfieldValue('Select task category');
         }
     }
 
-    static captureInputFields(){
+    static captureInputFields() {
         const titleElement = document.getElementById('task-title');
         const descriptionElement = document.getElementById('task-description');
         const dueDateElement = document.getElementById('due-date-display');
 
-        return {titleElement, descriptionElement, dueDateElement};
+        return { titleElement, descriptionElement, dueDateElement };
     }
 
 
@@ -262,48 +262,48 @@ class AddTaskUtils {
         const header = document.querySelector(".header-desktop");
         const footer = document.querySelector(".add-task-footer");
         const addTaskHeader = document.querySelector(".add-task-head");
-        if (header && footer && addTaskHeader){
-            return {header, footer, addTaskHeader};
+        if (header && footer && addTaskHeader) {
+            return { header, footer, addTaskHeader };
         }
 
         return null;
     }
 
-    getElementsForMobile(){
+    getElementsForMobile() {
         const header = document.querySelector(".top-container-mobile");
         const footer = document.querySelector(".buttom-container-mobile");
         const addTaskHeader = document.querySelector(".add-task-head-mobile");
 
-        if(header && footer && addTaskHeader){
-            return {header, footer, addTaskHeader};
+        if (header && footer && addTaskHeader) {
+            return { header, footer, addTaskHeader };
         }
 
         return null;
     }
 
-    getElementsForDesktopSingle(){
+    getElementsForDesktopSingle() {
         const header = document.querySelector(".header-desktop");
         const addTaskHeader = document.querySelector(".add-task-head-mobile");
         const footer = null;
 
-        if(header && addTaskHeader){
-            return {header, footer, addTaskHeader}
+        if (header && addTaskHeader) {
+            return { header, footer, addTaskHeader }
         }
 
         return null;
     }
 
-    calculateSpaceForFields(aHeight, distanceFromButtom, {header, footer, addTaskHeader}){
+    calculateSpaceForFields(aHeight, distanceFromButtom, { header, footer, addTaskHeader }) {
         const headerHeight = header.offsetHeight;
         const footerHeight = footer?.offsetHeight || 0;
         const addTaskHeight = addTaskHeader.offsetHeight;
         return aHeight - (headerHeight + footerHeight + addTaskHeight + distanceFromButtom + 24);
     }
 
-    
+
     measureTheRemainingSpaceOfFieldsForDesktop(aHeight) {
         return this.measureWithRetry(
-            aHeight, 
+            aHeight,
             (addTaskU) => addTaskU.getElementsForDesktop(),
             45,
             3,
@@ -311,7 +311,7 @@ class AddTaskUtils {
         );
     }
 
-    measureTheRemainingSpaceOfFieldsForDesktopSingle(aHeight){
+    measureTheRemainingSpaceOfFieldsForDesktopSingle(aHeight) {
         return this.measureWithRetry(
             aHeight,
             (addTaskU) => addTaskU.getElementsForDesktopSingle(),
@@ -321,7 +321,7 @@ class AddTaskUtils {
         );
     }
 
-    
+
     measureTheRemainingSpaceOfFieldsForMobile(aHeight) {
         return this.measureWithRetry(
             aHeight,
@@ -332,17 +332,17 @@ class AddTaskUtils {
         );
     }
 
-    measureWithRetry(aHeight, getElementsFunction, offset, retries = 3, delay = 100){
+    measureWithRetry(aHeight, getElementsFunction, offset, retries = 3, delay = 100) {
         return new Promise((resolve) => {
             let counter = 0;
 
-            function tryCalculate(){
+            function tryCalculate() {
                 const addTaskU = new AddTaskUtils();
                 const elements = getElementsFunction(addTaskU);
 
-                if(elements){
+                if (elements) {
                     resolve(addTaskU.calculateSpaceForFields(aHeight, offset, elements));
-                } else if(counter < retries){
+                } else if (counter < retries) {
                     counter++;
                     setTimeout(tryCalculate, delay);
                 }
@@ -352,6 +352,9 @@ class AddTaskUtils {
         });
     }
 
-    
-
+    get getCurrentAddTaskSize() {
+        return [window.innerHeight, window.innerWidth];
+    }
 }
+
+

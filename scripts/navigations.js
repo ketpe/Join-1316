@@ -49,7 +49,10 @@ function navigateToHelp() {
 }
 
 function navigateToAddTask(button) {
-    if (button.getAttribute('data-active') == "true") { return; }
+    if (button) {
+        if (button.getAttribute('data-active') == "true") { return; }
+    }
+
     window.location.href = './addTask.html';
 }
 
