@@ -4,16 +4,16 @@ function navigateToSignUp() {
 
 function navigateToSummary(button) {
 
-    if(button){
-         if(button.getAttribute('data-active') == "true"){return;}
+    if (button) {
+        if (button.getAttribute('data-active') == "true") { return; }
     }
-  
+
     window.location.href = './summary.html';
 }
 
 function navigateToContact(button) {
-    if(button.getAttribute('data-active') == "true"){return;}
-    window.location.href = './contactsDesktop.html';
+    if (button.getAttribute('data-active') == "true") { return; }
+    window.location.href = './contacts.html';
 }
 
 function navigateToPrivacy(source = "") {
@@ -49,27 +49,27 @@ function navigateToHelp() {
 }
 
 function navigateToAddTask(button) {
-    if(button.getAttribute('data-active') == "true"){return;}
+    if (button.getAttribute('data-active') == "true") { return; }
     window.location.href = './addTask.html';
 }
 
 function navigateToBoard(button) {
-    if(button.getAttribute('data-active') == "true"){return;}
+    if (button.getAttribute('data-active') == "true") { return; }
     window.location.href = './boardDesktop.html';
 }
 
-function setNavigationButtonActive(viewName, desktopOrMobile){
-    if(desktopOrMobile.length == 0 || viewName.length == 0){return;}
+function setNavigationButtonActive(viewName, desktopOrMobile) {
+    if (desktopOrMobile.length == 0 || viewName.length == 0) { return; }
     const activeClass = desktopOrMobile == "desktop" ? 'nav-desktop-btn-active' : 'nav-mobile-btn-active';
     const btnContainer = desktopOrMobile == 'desktop' ? '.nav-desktop-menu' : '.nav-mobile-menu';
 
     const buttons = getNavButtons(btnContainer);
-    if(!buttons){return;}
+    if (!buttons) { return; }
 
     resetNavButtonsOnDesktop(buttons, activeClass);
     buttons.forEach(btn => {
         const btnName = btn.getAttribute('data-nav-name');
-        if(btnName == viewName){
+        if (btnName == viewName) {
             btn.classList.add(activeClass);
             btn.setAttribute('data-active', 'true');
         }
@@ -85,6 +85,6 @@ function resetNavButtonsOnDesktop(buttons, activeClass) {
 
 function getNavButtons(containerClass) {
     const btnContainer = document.querySelector(containerClass);
-    if(!btnContainer){return null;}
+    if (!btnContainer) { return null; }
     return btnContainer.querySelectorAll('button');
 }

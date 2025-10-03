@@ -115,7 +115,6 @@ async function onDeleteContact(event, element) {
         const fb = new FirebaseDatabase();
         const data = await fb.getFirebaseLogin(() => fb.deleteData(`/contacts/${element.id}`));
         clearActiveContactClass();
-        addContactDialogClose(event);
         renderContacts();
     } else {
         console.warn("Keine gültige ID übergeben!");
@@ -123,8 +122,6 @@ async function onDeleteContact(event, element) {
 }
 
 //REVIEW - Validierung der Kontaktdaten, könnte zusammengelegt werden mit Validierung in add-task
-
-//NOTE - Generische Funktion zum Anzeigen / Ausblenden der Errormeldung
 
 /**
  * @description - Show or hide an error message. This function displays an error message for a specific form field by changing its visibility.

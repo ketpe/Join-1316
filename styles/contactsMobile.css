@@ -1,0 +1,396 @@
+body,
+html {
+    max-width: 500px;
+}
+
+.contact-list-mobile {
+    height: calc(100vh - var(--header-height));
+    max-width: var(--contacts-scrollbar-width);
+    box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
+}
+
+.contacts-main-mobile {
+    display: flex;
+}
+
+.contact-list-content-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 32px;
+    padding-right: 24px;
+    padding-bottom: 32px;
+    padding-left: 24px;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.add-btn-mobile {
+    width: 352px;
+    height: 56px;
+    padding-top: 12px;
+    padding-right: 16px;
+    padding-bottom: 12px;
+    padding-left: 16px;
+    gap: 16px;
+    border-radius: 10px;
+    border-width: 1px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.add-contact-mobile {
+    width: 352px;
+    height: 56px;
+    padding-top: 12px;
+    padding-right: 16px;
+    padding-bottom: 12px;
+    padding-left: 16px;
+    gap: 16px;
+    border-radius: 10px;
+    border-width: 1px;
+    position: static;
+    z-index: 2;
+}
+
+.btn-add-contacts-icon-mobile {
+    width: 32px;
+    height: 32px;
+}
+
+.btn-add-contacts-text-mobile {
+    font-family: Inter;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 21px;
+    padding: 12px 0;
+}
+
+.contacts-scroll-wrapper-mobile {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    max-height: calc(100vh - var(--header-height));
+
+}
+
+.contacts-mobile {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contact-initials-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 2px solid (inherit);
+    border-radius: 50%;
+    gap: 10px;
+}
+
+.contact-initials-text-mobile {
+
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+}
+
+.separator-contact-list-mobile {
+    height: 1px;
+    background-color: var(--input-border-color);
+    width: 100%;
+}
+
+.contact-letter-mobile {
+    width: 352;
+    height: 58;
+    padding-top: 17px;
+    padding-right: 36px;
+    padding-bottom: 17px;
+    padding-left: 36px;
+    gap: 8px;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+    vertical-align: middle;
+
+}
+
+.contact-item-mobile {
+    display: flex;
+    padding: 15px 24px;
+    gap: 35px;
+    cursor: pointer;
+}
+
+.contact-item-active-mobile {
+    display: flex;
+    padding: 15px 24px;
+    gap: 35px;
+    background-color: var(--bg-default);
+    border-radius: 10px;
+}
+
+.contact-item-active-mobile .contact-name-mobile {
+    color: white;
+}
+
+.contact-item-active-mobile .contact-initials-mobile {
+    border: 2px solid white;
+}
+
+.contact-item-active-mobile:hover {
+    background-color: var(--bg-default);
+}
+
+.contact-info-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.contact-item-mobile:hover {
+    background-color: var(--bg-contact-item);
+    border-radius: 10px;
+}
+
+.contact-info-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.contact-item-mobile:not(.contact-item-active-mobile):hover {
+    background-color: var(--bg-contact-item);
+    border-radius: 10px;
+}
+
+.contact-item-active {
+    background-color: var(--bg-default);
+    border-radius: 10px;
+
+}
+
+.contact-item-active-mobile:hover {
+    background-color: var(--bg-default);
+}
+
+.contact-name-mobile {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+.contact-email-mobile {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    vertical-align: middle;
+    color: var(--font-email-color);
+}
+
+.contact-detail-view-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 21px;
+
+}
+
+.contacts-header-mobile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    padding-top: calc(208px - var(--header-height));
+    padding-left: calc(743px - var(--navbar-width) - var(--contacts-scrollbar-width));
+}
+
+.contacts-title-mobile {
+    margin: 0;
+    font-size: 61px;
+    font-weight: 700;
+    font-family: 'Inter';
+}
+
+.contacts-subtitle-mobile {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 27px;
+    margin: 0;
+}
+
+.contact-detail-content-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 21px;
+    padding-left: calc(750px - var(--navbar-width) - var(--contacts-scrollbar-width));
+}
+
+.slide-Details-in-mobile {
+    animation: slide-Dialog-in 1000ms ease-in-out forwards;
+}
+
+.first-line-detail-view-mobile {
+    display: flex;
+    flex-direction: row;
+    gap: 54px;
+}
+
+.initial-avatar-mobile {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid (inherit);
+    border-radius: 50%;
+    gap: 10px;
+}
+
+.detail-view-initials-mobile {
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 47px;
+    text-align: center;
+    vertical-align: middle;
+    color: #ffffff;
+}
+
+.name-and-action-panel-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+}
+
+.contacts-detailview-name-mobile {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 47px;
+    vertical-align: middle;
+
+}
+
+.contacts-detailview-actions-mobile {
+    display: flex;
+    gap: 13px;
+
+}
+
+.action-icons-mobile {
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+
+}
+
+/**FIXME - apply .action-icons  funktioniert nicht*/
+.action-edit-icon-mobile {
+    /* @apply .action-icons; */
+    background-image: url(../assets/edit-contacts-icon.svg);
+}
+
+.action-delete-icon-mobile {
+    /* @apply .action-icons; */
+    background-image: url(../assets/delete-contacts-icon.svg);
+
+}
+
+.btn-contact-edit-mobile {
+    width: 63px;
+    height: 24px;
+}
+
+.btn-contact-delete-mobile {
+    width: 83px;
+    height: 24px;
+}
+
+/*TODO - Btn sollten noch verschoben werden*/
+.btn-contact-action-mobile {
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding-inline: 0;
+    gap: 8px;
+
+    p {
+        font-family: Inter;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 16px;
+        vertical-align: middle;
+        margin: 0;
+    }
+}
+
+.btn-contact-action-mobile:hover p {
+    color: var(--btn-bg-hover);
+    font-family: Inter;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 16px;
+    vertical-align: middle;
+
+}
+
+.btn-contact-action-mobile:hover .action-edit-icon-mobile {
+    background-image: url(../assets/edit-contacts-icon-hover.svg);
+}
+
+.btn-contact-action-mobile:hover .action-delete-icon-mobile {
+    background-image: url(../assets/delete-contacts-icon-hover.svg);
+}
+
+.detail-c-view-subline-mobile {
+    display: flex;
+    justify-content: start;
+
+    p {
+        font-family: Inter;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 20px;
+    }
+}
+
+.detail-c-view-email-mobile:first-child,
+.detail-c-view-phone-mobile:first-child {
+    font-family: Inter;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 16px;
+}
+
+
+.detail-c-view-email-mobile:last-child,
+.detail-c-view-phone-mobile:last-child {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+}
+
+.detail-c-view-email-mobile:last-child {
+    color: var(--font-email-color);
+}
