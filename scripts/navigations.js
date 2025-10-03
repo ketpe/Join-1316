@@ -3,7 +3,11 @@ function navigateToSignUp() {
 }
 
 function navigateToSummary(button) {
-    if(button.getAttribute('data-active') == "true"){return;}
+
+    if(button){
+         if(button.getAttribute('data-active') == "true"){return;}
+    }
+  
     window.location.href = './summary.html';
 }
 
