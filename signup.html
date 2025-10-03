@@ -25,11 +25,11 @@
         <section aria-label="form section" class="login-signup-container" aria-labelledby="signup-form-title">
 
             <form class="login-signup-form form-for-signup" method="post" onsubmit="signUpForm(event)">
-
-                <div class="arrow-left" aria-label="Arrow to navigate back to login" role="img"
-                    onclick="navigateToLogin()"></div>
-
-                <h1>Sign up</h1>
+                <div class="signup-title" aria-hidden="true">
+                    <div class="arrow-left" aria-label="Arrow to navigate back to login" role="img"
+                        onclick="navigateToLogin()"></div>
+                    <h1 id="signup-form-title">Sign up</h1>
+                </div>
                 <div class="login-signup-h1-line" aria-hidden="true"></div>
 
                 <div class="login-signup-input-field-container">
@@ -88,17 +88,14 @@
 
             </form>
 
-
+            <footer>
+                <div class="login-signup-footer">
+                    <a aria-label="Read our Privacy Policy" href="./privacyPolicy.html?backToLogin=true">Privacy
+                        Policy</a>
+                    <a aria-label="Read our Legal Notice" href="./legalNotice.html?backToLogin=true">Legal notice</a>
+                </div>
+            </footer>
         </section>
-
-
-        <footer>
-            <div class="login-signup-footer">
-                <a aria-label="Read our Privacy Policy" href="./privacyPolicy.html?backToLogin=true">Privacy Policy</a>
-                <a aria-label="Read our Legal Notice" href="./legalNotice.html?backToLogin=true">Legal notice</a>
-            </div>
-        </footer>
-
     </main>
 
     <script type="module" src="./app.js"></script>
