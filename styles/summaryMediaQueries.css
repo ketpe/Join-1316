@@ -1,0 +1,106 @@
+@media (max-width: 1290px) {
+    .summary-content {
+        padding-left: 2vw;
+    }
+
+    .summary-header {
+        padding-left: 2vw;
+    }
+}
+
+@media (max-width: 1180px) {
+    .personal-greets {
+        display: none;
+    }
+
+    .right-container {
+        width: auto;
+    }
+
+    .summary-section {
+        align-items: center;
+    }
+
+    .summary-title {
+        font-size: calc(61px * 0.9);
+    }
+
+    .summary-subtitle {
+        font-size: calc(27px * 0.9);
+    }
+}
+
+
+@media (max-width: 427px) {
+    .summary-header-mobile {
+        width: auto;
+    }
+
+    .summary-user-mobile {
+        align-items: center;
+        justify-content: center;
+        width: auto;
+    }
+
+    .task-actions-mobile {
+        width: 90%;
+        height: auto;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .btn-task-mobile {
+        padding: 19px 9px;
+        width: 40%;
+        max-height: 80px;
+        gap: 10px;
+
+    }
+
+    .btn-urgent-mobile {
+        width: 75%;
+        /* height: 40%; */
+        padding: 19px 9px;
+        gap: 8px;
+        margin-bottom: 0;
+    }
+
+    .urgent-display {
+        gap: 2px;
+    }
+
+    .urgent-separator-mobile {
+        height: 50px;
+    }
+
+    .urgent-time-underline-mobile {
+        margin: 0;
+    }
+
+    .summary-tasks-mobile {
+        padding: 12px 12px;
+        height: 40%;
+        width: 40%;
+        flex-wrap: wrap;
+    }
+
+    .btn-summary-tasks-mobile {
+        padding: 19px 9px;
+        max-height: 80px;
+    }
+
+    .quantity-task-mobile {
+        font-size: calc(47px * 0.6);
+    }
+
+    .number-of-Tasks-mobile {
+        font-size: calc(47px * 0.6);
+    }
+
+    .todo-icon-mobile,
+    .done-icon-mobile,
+    .urgent-icon-mobile {
+        width: 30px;
+        height: 30px;
+    }
+}
