@@ -139,10 +139,11 @@ async function onLoadSummary() {
     const head = document.getElementsByTagName('head');
     if (width >= minDesktopWidth) {
         await loadHtmlComponentsForDesktop(head);
+        setNavigationButtonActive('summary', "desktop");
 
     } else {
         await loadHtmlComponentsForMobile(head);
-
+        setNavigationButtonActive('summary', "mobile");
     }
 
 }
@@ -198,11 +199,11 @@ async function addSummaryPageResize() {
     const [height, width] = getCurrentAddTaskSize();
     if ((width <= minDesktopWidth) && currentView != "mobile") {
         await loadHtmlComponentsForMobile();
-
+        setNavigationButtonActive('summary', "desktop");
 
     } else if (width >= minDesktopWidth + 1 && currentView != "desktop") {
         await loadHtmlComponentsForDesktop();
-
+        setNavigationButtonActive('summary', "mobile");
     }
 
 }

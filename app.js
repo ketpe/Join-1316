@@ -70,3 +70,4 @@ window.firebaseUpdate = update;
 window.firebaseRemove = remove;
 window.setLogStatus = setLogStatus;
 window.getLogStatus = getLogStatus;
+

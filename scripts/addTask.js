@@ -13,16 +13,11 @@ let currentView = ""; //ich meine hier Desktop oder Mobile
 let resizeLock = false;
 
 
-//TODO - Die aktuellen Werte zwischenspeichern, damit wenn die Seite von mobile zu Desktop verschoben oder umgekehrt, diese nicht verschwinden!
-
-
-//TODO - Berechnung!
 /**
  * Initializes the Add Task view by rendering necessary components and loading data.
  */
 async function onLoadAddTask() {
     const [height, width] = getCurrentAddTaskSize();
-
     if (width >= breakPointToDesktopSingle) {
         await changeAddTaskToDesktop(height, width);
     } else if (width < breakPointToDesktopSingle && width > breakPointToMobile) {
@@ -36,7 +31,6 @@ async function onLoadAddTask() {
 
 
 async function addTaskPageResize() {
-
     if (resizeLock) { return; }
     resizeLock = true;
 
@@ -57,16 +51,15 @@ async function addTaskPageResize() {
     }finally{
         resizeLock = false;
     }
-
-    
-
 }
+
 
 async function changeAddTaskToDesktop() {
     currentView = DESKTOP;
     await loadHtmlComponentsForDesktop();
     changeAddTaskViewToStandard();
     await loadDataForAddTask();
+    setNavigationButtonActive('addTask', "desktop");
 
 }
 
@@ -74,12 +67,14 @@ async function changeAddTaskToDesktopSingle() {
     currentView = DESKTOPSINGLE;
     await loadHtmlComponentsForDesktopSingle();
     await loadDataForAddTask();
+    setNavigationButtonActive('addTask', "desktop");
 }
 
 async function changeAddTaskToMobile() {
     currentView = MOBILE;
     await loadHtmlComponentsForMobile();
     await loadDataForAddTask();
+    setNavigationButtonActive('addTask', "mobile");
 }
 
 function changeAddTaskFormFieldSize(height, width, currentView) {

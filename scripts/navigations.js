@@ -2,11 +2,13 @@ function navigateToSignUp() {
     window.location.href = './signup.html';
 }
 
-function navigateToSummary() {
+function navigateToSummary(button) {
+    if(button.getAttribute('data-active') == "true"){return;}
     window.location.href = './summary.html';
 }
 
-function navigateToContact() {
+function navigateToContact(button) {
+    if(button.getAttribute('data-active') == "true"){return;}
     window.location.href = './contactsDesktop.html';
 }
 
@@ -42,10 +44,43 @@ function navigateToHelp() {
     window.location.href = './help.html?source=' + cuurentPathName;
 }
 
-function navigateToAddTask() {
+function navigateToAddTask(button) {
+    if(button.getAttribute('data-active') == "true"){return;}
     window.location.href = './addTask.html';
 }
 
-function navigateToBoard() {
+function navigateToBoard(button) {
+    if(button.getAttribute('data-active') == "true"){return;}
     window.location.href = './boardDesktop.html';
+}
+
+function setNavigationButtonActive(viewName, desktopOrMobile){
+    if(desktopOrMobile.length == 0 || viewName.length == 0){return;}
+    const activeClass = desktopOrMobile == "desktop" ? 'nav-desktop-btn-active' : 'nav-mobile-btn-active';
+    const btnContainer = desktopOrMobile == 'desktop' ? '.nav-desktop-menu' : '.nav-mobile-menu';
+
+    const buttons = getNavButtons(btnContainer);
+    if(!buttons){return;}
+
+    resetNavButtonsOnDesktop(buttons, activeClass);
+    buttons.forEach(btn => {
+        const btnName = btn.getAttribute('data-nav-name');
+        if(btnName == viewName){
+            btn.classList.add(activeClass);
+            btn.setAttribute('data-active', 'true');
+        }
+    });
+}
+
+function resetNavButtonsOnDesktop(buttons, activeClass) {
+    buttons.forEach(btn => {
+        btn.classList.remove(activeClass);
+        btn.setAttribute('data-active', 'false');
+    });
+}
+
+function getNavButtons(containerClass) {
+    const btnContainer = document.querySelector(containerClass);
+    if(!btnContainer){return null;}
+    return btnContainer.querySelectorAll('button');
 }

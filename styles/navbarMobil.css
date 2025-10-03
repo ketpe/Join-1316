@@ -69,7 +69,12 @@ body {
 
 .nav-mobile-btn:active {
     border-radius: 8px;
-    background-color: var(--btn-bg-active)
+    background-color: var(--btn-bg-active);
+}
+
+.nav-mobile-btn-active{
+    border-radius: 8px;
+    background-color: var(--btn-bg-active);
 }
 
 .summary-img {

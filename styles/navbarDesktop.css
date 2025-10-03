@@ -85,6 +85,14 @@
     background-color: var(--btn-submenu-bg-hover);
 }
 
+.nav-desktop-btn:active{
+    background-color: var(--btn-bg-active);
+}
+
+.nav-desktop-btn-active {
+    background-color: var(--btn-bg-active);
+}
+
 .nav-desktop-menu {
     padding: 0;
     width: 100%;
