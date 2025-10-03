@@ -59,7 +59,7 @@
 
     .btn-urgent-mobile {
         width: 75%;
-        /* height: 40%; */
+        max-height: 80px;
         padding: 19px 9px;
         gap: 8px;
         margin-bottom: 0;
