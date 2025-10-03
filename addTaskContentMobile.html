@@ -1,4 +1,4 @@
-<form action="/post" method="post" aria-labelledby="add-task-title" novalidate>
+<form id="add-task-form" action="/post" method="post" aria-labelledby="add-task-title" novalidate>
     <header class="add-task-head-mobile">
         <h1 class="join-h1-mobile">Add Task</h1>
         <!-- <button id="a-t-dialog-close-btn" class="btn-overlay-close" type="button" aria-label="Close dialog" onclick="addTaskDialogClose(event)">
@@ -13,13 +13,13 @@
 
         <div class="add-task-form-buttons-mobile">
             <button id="a-t-clear-btn" class="btn btn-outline btn-clear-cancel" type="button"
-                onclick="taskComponents.addTaskFormClear()">
+                onclick="addTasktaskComponents.addTaskFormClear()">
                 <div>
                     <p>Clear</p>
                     <div role="img" title="Clear-Icon" aria-hidden="true"></div>
                 </div>
             </button>
-            <button id="createTaskButton" type="submit" class="btn btn-fill btn-create-task" disabled>
+            <button id="createTaskButton" type="submit" class="btn btn-fill btn-create-task" disabled = true>
                 <div>
                     <p>Create Task</p>
                     <div role="img" title="Check-Icon" aria-hidden="true"></div>
@@ -28,5 +28,11 @@
         </div>
     </footer>
 
+    <dialog id="add-task-safe-dialog" class="add-task-safe-dialog visually-hidden" aria-labelledby="safe-dialog-title" aria-modal="true">
+        <div>
+            <p>Task added to board</p>
+            <div role="img" title="board icon" aria-hidden="true"></div>
+        </div>
+    </dialog>
 
 </form>

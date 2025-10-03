@@ -74,14 +74,12 @@ async function changeAddTaskToDesktopSingle() {
     currentView = DESKTOPSINGLE;
     await loadHtmlComponentsForDesktopSingle();
     await loadDataForAddTask();
-
 }
 
 async function changeAddTaskToMobile() {
     currentView = MOBILE;
     await loadHtmlComponentsForMobile();
     await loadDataForAddTask();
-
 }
 
 function changeAddTaskFormFieldSize(height, width, currentView) {
@@ -167,6 +165,8 @@ async function fillHtmlWithContent() {
 async function fillMobileHtmlWithContent() {
     const taskMobileUtil = new AddTaskMobileUtil("addTasktaskComponents");
     await taskMobileUtil.startRenderAddTaskMobile();
+    //setAddTaskFormSubmitFunction();
+    //addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTasktaskComponents');
 }
 
 

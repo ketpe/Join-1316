@@ -1,0 +1,240 @@
+@media (max-width: 1290px) {
+
+    .a-t-f-i-left,
+    .a-t-f-i-right {
+        width: 380px;
+    }
+
+    .a-t-f-i-midle {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .a-t-f-i-container {
+        width: calc((2 * 380px) + (2 * 24px) + 2px);
+    }
+
+    .btn-priority {
+        width: 120px;
+
+        div>p {
+            font-size: 16px;
+        }
+    }
+
+    .prio-selected {
+        font-size: 18px !important;
+    }
+
+    .add-task-footer {
+        width: calc((2 * 380px) + (2 * 24px) + 2px);
+    }
+
+}
+
+@media(max-width: 1180px) {
+    .add-task-content {
+        max-width: 600px;
+        width: 100%;
+        margin-left: 24px;
+        margin-right: 24px;
+    }
+
+    .right-content {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media(max-width: 800px) {
+    .add-task-footer-mobile {
+        bottom: -10px;
+    }
+}
+
+@media (max-width: 750px) {
+    .add-task-content {
+        width: auto;
+    }
+}
+
+@media(max-width: 470px) {
+    .btn-priority {
+        width: 100px;
+
+        div>p {
+            font-size: 16px;
+        }
+    }
+
+    .prio-selected {
+        font-size: 18px !important;
+    }
+
+    .btn-priority div>div {
+        width: 18px;
+        height: 14px;
+    }
+
+    .add-task-form-buttons-mobile {
+        padding-right: 12px;
+    }
+}
+
+@media(max-width: 450px) {
+    .add-task-header-mobile {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .join-h1-mobile {
+        font-size: 38px;
+    }
+
+    .btn-clear-cancel {
+        width: 108px;
+        padding: 9px;
+    }
+
+    .btn-clear-cancel>div>p {
+        font-size: 18px;
+    }
+
+    .btn-create-task {
+        width: 165px;
+        padding: 9px;
+    }
+
+    .btn-create-task>div>p {
+        font-size: 18px;
+    }
+
+    .nav-mobile-btn {
+        height: 67px;
+        width: 74px;
+    }
+
+    .nav-mobile-btn p{
+        font-size: 14px !important;
+    }
+}
+
+@media(max-width: 400px) {
+    .btn-priority {
+        width: 90px;
+        padding: 12px 10px;
+
+        div>p {
+            font-size: 14px;
+        }
+    }
+
+    .prio-selected {
+        font-size: 16px !important;
+    }
+
+    .btn-priority div>div {
+        width: 16px;
+        height: 12px;
+    }
+
+    .add-task-content {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+
+    .contact-profil-container {
+        margin: 8px 10px;
+
+        p {
+            font-size: 18px !important;
+        }
+    }
+
+    .contact-ellipse {
+        height: 35px !important;
+        width: 35px !important;
+    }
+
+}
+
+@media(max-width: 380px) {
+    .btn-clear-cancel {
+        width: 98px;
+        padding: 9px;
+    }
+
+    .btn-clear-cancel>div>p {
+        font-size: 16px;
+    }
+
+    .btn-create-task {
+        width: 155px;
+        padding: 9px;
+    }
+
+    .btn-create-task>div>p {
+        font-size: 16px;
+    }
+
+
+}
+
+
+@media(max-width: 350px) {
+    .add-task-header-mobile {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    .a-t-input::placeholder {
+        font-size: 16px !important;
+    }
+
+    label,
+    legend {
+        font-size: 16px !important;
+    }
+
+    .a-t-input {
+        font-size: 16px !important;
+        padding: 12px 15px !important;
+    }
+
+    .btn-priority {
+        width: 80px;
+
+        div>p {
+            font-size: 12px;
+        }
+    }
+
+    .prio-selected {
+        font-size: 13px !important;
+    }
+
+    .btn-priority div>div {
+        width: 13px;
+        height: 10px;
+    }
+
+    .category-list-btn>p {
+        font-size: 16px !important;
+    }
+
+    .btn-create-task>div>p {
+        font-size: 16px;
+    }
+
+    .nav-mobile-btn p{
+        font-size: 13px !important;
+    }
+
+}
+
+
+@media(max-height: 880px) {
+    .add-task-fields {
+        overflow-y: scroll;
+    }
+}

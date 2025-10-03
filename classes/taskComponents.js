@@ -149,12 +149,11 @@ class TaskComponents{
         if(!createButton){return;}
 
         const hasCategory = this.currentCategory && typeof this.currentCategory === 'object' && 'title' in this.currentCategory;
-
-        createButton.disabled =
+        createButton.disabled = !(
             this.currentDueDate.length > 0 &&
                 this.currentTitle.length > 0 &&
                 this.currentPriority.length > 0 &&
-                hasCategory;
+                hasCategory);
 
     }
 
@@ -385,11 +384,11 @@ class TaskComponents{
         this.renderContactOptions(contactListArray);
         const contactListContainer = document.getElementById('contact-List-container');
         const contactList = document.getElementById('contact-List-for-task');
-        //const heightOfOneContact = document.getElementById(contactListArray[0]['id']).offsetHeight;
         const heightOfOneContact = 56;
         let heightOfContainer = (contactListArray.length <= 5 ? heightOfOneContact * contactListArray.length : heightOfOneContact * 5) + 25;
         contactListContainer.style.height = heightOfContainer + "px";
         contactList.style.height = (heightOfContainer - 27) + "px";
+        contactList.style.marginTop = "28px";
         this.isContactListOpen = true;
         contactListContainer.classList.add("any-list-scroll");
     }
@@ -412,6 +411,7 @@ class TaskComponents{
         requestAnimationFrame(() => {
             contactListContainer.style.height = "0";
             contactList.style.height = "0";
+            contactList.style.marginTop = "0";
         });
 
         contactList.innerHTML = "";
