@@ -12,7 +12,6 @@ async function renderContacts() {
     contactList.innerHTML = "";
     const fb = new FirebaseDatabase();
     const sortedContacts = await fb.getFirebaseLogin(() => fb.getSortedContact());
-
     let currentLetter = null;
     createContactList(currentLetter, sortedContacts, contactList)
 }
@@ -106,3 +105,63 @@ async function addContactsPageResize() {
     }
 
 }
+
+async function openContactDetail(element) {
+    const listContactElement = element;
+    const [height, width] = getCurrentContactSize();
+    toggleActiveContactClass(listContactElement);
+    const fb = new FirebaseDatabase();
+    const detailContact = await fb.getFirebaseLogin(() => fb.getDataByKey(key = "id", values = listContactElement.id, tableName = "contacts"));
+    if ((width <= minDesktopWidth) && currentView == "mobile") {
+        openContactDetailMobile(detailContact);
+    } else if ((width >= minDesktopWidth + 1) && currentView == "desktop") {
+        openContactDetailDesktop(detailContact);
+    }
+}
+
+function toggleActiveContactClass(activeContact) {
+    const contactItems = document.querySelectorAll('#contact-list .contact-item');
+    contactItems.forEach(item => {
+        item.classList.remove('contact-item-active');
+    });
+    if (activeContact) {
+        activeContact.classList.add('contact-item-active');
+    }
+}
+
+function clearActiveContactClass() {
+    const detailContact = document.getElementById('contact-detail-content');
+    detailContact.innerHTML = "";
+    renderContacts(); /*TODO - neue funktion zum zurücksetzen des Aktiven Kontakts*/
+}
+
+function onEditContactDialogOpen(id) {
+    toggleScrollOnBody(true);
+    addDialogShowClass();
+    document.getElementById('add-contact-dialog').showModal();
+    renderEditContactIntoDialog(id);
+}
+
+function openContactDetailMobile(detailContact) {
+    let renderDetailContact = document.getElementById('contact-detail-content');
+    let contactListMobile = document.getElementById('contact-list-mobile');
+    contactListMobile.classList.add('visually-hidden');
+    renderDetailContact.parentElement.classList.remove('visually-hidden');
+    renderDetailContact.innerHTML = "";
+    // renderDetailContact.classList.remove('slide-Details-in');
+    // renderDetailContact.offsetWidth;
+    // renderDetailContact.classList.add('slide-Details-in');
+    renderDetailContact.innerHTML = getContactDetailView(detailContact);
+}
+function openContactDetailDesktop(detailContact) {
+    let renderDetailContact = document.getElementById('contact-detail-content');
+    let contactListDesktop = document.getElementById('contact-list');
+    contactListDesktop.classList.remove('visually-hidden');
+    renderDetailContact.classList.add('visually-hidden');
+    renderDetailContact.innerHTML = "";
+    renderDetailContact.classList.remove('slide-Details-in');
+    renderDetailContact.offsetWidth;
+    renderDetailContact.classList.add('slide-Details-in');
+    renderDetailContact.innerHTML = getContactDetailView(detailContact);
+}
+
