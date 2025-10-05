@@ -31,8 +31,8 @@ class AddTaskUtils {
         const selectedPrioButton = prioButtonsContainer?.querySelector('.btn[data-selected="true"]');
         const priority = selectedPrioButton?.getAttribute('name') || this._addTaskCache.formData.priority || "Medium";
 
-        //Eventuell Fallstrick!
-        const components = window.addTasktaskComponents;
+        //Eventuell Fallstrick! -> vielleicht über Nullprüfung abfangen -> Variable im Window
+        const components = this.getTaskComponent;
         const category = components?.currentCategory?.id ? components.currentCategory : this._addTaskCache.category;
         const assignedContacts = components?.currentContactAssignList || this._addTaskCache.assignedContacts;
         const subTasks = components?.currentSubTasks || this._addTaskCache.subTasks;
@@ -48,6 +48,16 @@ class AddTaskUtils {
             assignedContacts: Array.isArray(assignedContacts) ? [...assignedContacts] : [],
             subTasks: Array.isArray(subTasks) ? [...subTasks] : []
         });
+    }
+
+    static get getTaskComponent(){
+        if(window.isAddTask == true){
+            return window.addTasktaskComponents;
+        }else if(window.isBord == true){
+            return window.addTaskDialogTaskComponents;
+        }else{
+            return null;
+        }
     }
 
     static checkNodyIsNotEmpty() {
@@ -293,10 +303,20 @@ class AddTaskUtils {
         return null;
     }
 
+    getElementsForBoardDialog(){
+        const header = document.querySelector('.add-task-head');
+
+        if(header){
+            return {header};
+        }
+
+        return null;
+    }
+
     calculateSpaceForFields(aHeight, distanceFromButtom, { header, footer, addTaskHeader }) {
-        const headerHeight = header.offsetHeight;
+        const headerHeight = header?.offsetHeight || 0;
         const footerHeight = footer?.offsetHeight || 0;
-        const addTaskHeight = addTaskHeader.offsetHeight;
+        const addTaskHeight = addTaskHeader?.offsetHeight || 0;
         return aHeight - (headerHeight + footerHeight + addTaskHeight + distanceFromButtom + 24);
     }
 
@@ -331,6 +351,17 @@ class AddTaskUtils {
             100
         );
     }
+
+    measureTheRemainingSpaceOfFieldsForBoardSingle(dialogHeight){
+        return this.measureWithRetry(
+            dialogHeight,
+            (addTaskU) => addTaskU.getElementsForBoardDialog(),
+            150,
+            3,
+            100
+        );
+    }
+
 
     measureWithRetry(aHeight, getElementsFunction, offset, retries = 3, delay = 100) {
         return new Promise((resolve) => {

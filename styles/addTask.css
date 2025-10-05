@@ -17,6 +17,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    resize: both;
 }
 
 #dialog-content {
@@ -28,7 +29,7 @@
     width: 1061px; */
 }
 
-#add-task-dialog {
+.add-task-dialog {
     padding: 0;
     border: none !important;
     margin: auto;
@@ -39,6 +40,20 @@
     height: 870px;
     width: 1061px;
     overflow-y: hidden;
+}
+
+.add-task-board-dialog-single{
+    padding: 0;
+    border: none !important;
+    margin: auto;
+    border-radius: 30px;
+    background-color: white;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0, 0.10);
+    overflow-y: hidden;
+}
+
+.add-task-mobile-fields{
+    
 }
 
 .add-task-head {

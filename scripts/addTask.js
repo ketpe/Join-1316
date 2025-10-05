@@ -194,6 +194,8 @@ async function loadDataForAddTask() {
         addTasktaskComponents = new TaskComponents(currentUser, "addTasktaskComponents");
         await addTasktaskComponents.run();
         window.addTasktaskComponents = addTasktaskComponents;
+        window.isAddTask = true;
+        window.isBoard = false;
     }
 
     AddTaskUtils.applyAddTaskDataToView(addTasktaskComponents);

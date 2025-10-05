@@ -57,7 +57,10 @@ function navigateToAddTask(button) {
 }
 
 function navigateToBoard(button) {
-    if (button.getAttribute('data-active') == "true") { return; }
+    if(button){
+        if (button.getAttribute('data-active') == "true") { return; }
+    }
+    
     window.location.href = './boardDesktop.html';
 }
 

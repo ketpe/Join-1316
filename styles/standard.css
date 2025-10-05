@@ -31,6 +31,16 @@ button {
     margin-block-end: 0;
 }
 
+.join-h1-dialog-sm {
+    font-family: 'Inter';
+    font-size: 47px;
+    font-weight: 700;
+    color: black;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-bottom: 24px;
+}
+
 .join-h2 {
     font-family: 'Inter';
     font-size: 27px;
