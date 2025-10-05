@@ -1,11 +1,12 @@
 body,
 html {
-    max-width: 500px;
+    max-width: 428px;
+    overflow: hidden;
 }
 
 .contact-list-mobile {
-    height: calc(100vh - var(--header-height));
-    max-width: var(--contacts-scrollbar-width);
+    height: calc(100vh - 160px);
+    width: 100%;
     box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
 }
 
@@ -17,10 +18,10 @@ html {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding-top: 32px;
-    padding-right: 24px;
-    padding-bottom: 32px;
-    padding-left: 24px;
+    padding-top: 36px;
+    /* padding-right: 24px; */
+    padding-bottom: 36px;
+    /* padding-left: 24px; */
     height: 100%;
     box-sizing: border-box;
     background-color: white;
@@ -71,7 +72,8 @@ html {
 .contacts-scroll-wrapper-mobile {
     flex: 1 1 auto;
     overflow-y: auto;
-    max-height: calc(100vh - var(--header-height));
+    max-height: calc(100vh - 160px);
+    padding: 17px 36px;
 
 }
 
@@ -79,6 +81,7 @@ html {
     list-style: none;
     padding: 0;
     margin: 0;
+    max-height: calc(100vh-160px);
 }
 
 .contact-initials-mobile {
@@ -206,16 +209,34 @@ html {
     flex-direction: column;
     align-items: start;
     gap: 21px;
+    height: calc(100vh - 160px);
+}
 
+.contacts-header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.btn-back-to-contact-list {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    width: 24px;
+    height: 24px;
+    margin-bottom: 8px;
 }
 
 .contacts-header-mobile {
     display: flex;
+    width: 100%;
     flex-direction: row;
-    align-items: center;
+    justify-content: space-between;
     gap: 30px;
-    padding-top: calc(208px - var(--header-height));
-    padding-left: calc(743px - var(--navbar-width) - var(--contacts-scrollbar-width));
+    padding-top: 48px;
+    padding-left: 16px;
 }
 
 .contacts-title-mobile {
@@ -232,12 +253,19 @@ html {
     margin: 0;
 }
 
+.headings-separator-icon {
+    width: 90px;
+    height: 3px;
+    background-color: var(--btn-bg-hover);
+}
+
 .contact-detail-content-mobile {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 21px;
-    padding-left: calc(750px - var(--navbar-width) - var(--contacts-scrollbar-width));
+    padding-left: 16px;
 }
 
 .slide-Details-in-mobile {
