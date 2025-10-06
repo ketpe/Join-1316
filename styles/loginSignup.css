@@ -1,7 +1,13 @@
 .login-signup-page {
+    --animation-duration: 500ms;
     background-color: var(--default-bg-color);
     display: flex;
     justify-content: center;
+    
+}
+
+.login-mobile-aninmation{
+    animation: fadeBackground var(--animation-duration) ease-in-out forwards;
 }
 
 .login-signup-main {
@@ -29,12 +35,12 @@
 }
 
 .logo-for-login {
-    animation: moveLogo 450ms ease-in;
+    animation: moveLogo var(--animation-duration) ease-in;
 }
 
 
 .login-section {
-    animation: startup 500ms ease-in;
+    animation: startup var(--animation-duration) ease-in;
 }
 
 .login-signup-header {
@@ -312,6 +318,14 @@
     height: 50px;
 }
 
+@keyframes fadeBackground {
+    0% {
+        background-color: rgba(0, 0, 0, 1);
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 0);
+    }
+}
 
 @keyframes startup {
     0% {
