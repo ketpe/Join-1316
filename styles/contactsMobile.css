@@ -455,6 +455,18 @@ body,
     writing-mode: vertical-lr;
     color: white;
     font-size: 21px;
+}
 
-
+.detail-contact-actions-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 20px 20px 0px 20px;
+    gap: 16px;
+    height: 100px;
+    background-color: #ffffff;
+    position: fixed;
+    bottom: 85px;
+    right: 20px;
 }

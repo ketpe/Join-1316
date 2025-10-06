@@ -149,7 +149,7 @@ function openContactDetailMobile(detailContact) {
     renderDetailContact.parentElement.classList.remove('visually-hidden');
     renderDetailContact.innerHTML = "";
     renderDetailContact.innerHTML = getContactDetailView(detailContact, "-mobile");
-    addNewActionBtns();
+    addNewActionBtns(detailContact);
 }
 function openContactDetailDesktop(detailContact) {
     let renderDetailContact = document.getElementById('contact-detail-content');
@@ -161,12 +161,26 @@ function openContactDetailDesktop(detailContact) {
     renderDetailContact.innerHTML += getContactDetailView(detailContact, "");
 }
 
-function addNewActionBtns() {
+function addNewActionBtns(detailContact) {
     document.getElementsByClassName('contacts-detailview-actions')[0].classList.add('visually-hidden');
     let refmobileBtn = document.getElementsByClassName('contacts-main-mobile')[0];
-    console.log(refmobileBtn);
-    refmobileBtn.innerHTML += getMobileBtnTemplate();
+    refmobileBtn.innerHTML += getMobileBtnTemplate(detailContact);
+}
 
+function backToContactList() {
+    let renderDetailContact = document.getElementById('contact-detail-content');
+    let contactListMobile = document.getElementById('contact-list-mobile');
+    contactListMobile.classList.remove('visually-hidden');
+    renderDetailContact.parentElement.classList.add('visually-hidden');
+    renderDetailContact.innerHTML = "";
+    renderContacts();
+    // renderDetailContact.innerHTML = getContactDetailView(detailContact, "-mobile");
+}
 
-
+function openActionMenuMobile() {
+    const actionMenu = document.querySelector('.detail-contact-actions-mobile');
+    actionMenu.classList.toggle('visually-hidden');
+    actionMenu.classList.remove('slide-Details-in');
+    actionMenu.offsetWidth;
+    actionMenu.classList.add('slide-Details-in');
 }

@@ -64,8 +64,19 @@ function getContactDetailView(cd, mobileSuffix) {
 </div>`
 }
 
-function getMobileBtnTemplate() {
-    return `<button type="button" class="mobile-menu-btn">
+function getMobileBtnTemplate(cd) {
+    return `<button onclick="openActionMenuMobile()" type="button" class="mobile-menu-btn">
         &#x2022;&#x2022;&#x2022;
-    </button>`
+    </button>
+    <div class="detail-contact-actions-mobile visually-hidden">
+        <button onclick="openDialog('add-contact-dialog', ()  => renderEditContactIntoDialog('${cd.id}'))"
+            class="btn-contact-action btn-contact-edit">
+            <div class="action-icons action-edit-icon"></div>
+            <p>Edit</p>
+        </button>
+        <button onclick="onDeleteContact(event,this)" id="${cd.id}" class="btn-contact-action btn-contact-delete">
+            <div class="action-icons action-delete-icon"></div>
+            <p>Delete</p>
+        </button>
+    </div>`
 }
