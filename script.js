@@ -87,8 +87,8 @@ function togglePasswordVisibility(toggleCounter, passwortInputID, toggleIconID) 
 }
 
 function toggleBorderColorByError(elementId = null, loginErrorBorder = false) {
-    const elements = elementId 
-        ? [document.getElementById(elementId)].filter(Boolean) 
+    const elements = elementId
+        ? [document.getElementById(elementId)].filter(Boolean)
         : document.querySelectorAll(".login-signup-input, .loginErrorBorder");
 
     elements.forEach(el => {
@@ -98,5 +98,7 @@ function toggleBorderColorByError(elementId = null, loginErrorBorder = false) {
     });
 }
 
-
+function getCurrentWindowSize() {
+    return [window.innerHeight, window.innerWidth];
+}
 
