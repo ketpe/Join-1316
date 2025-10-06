@@ -62,28 +62,38 @@ async function resizeAddTaskBoardDialog(event) {
 
 //TODO - TaskComponents hier rausnehmen und nachladen, wie bei addTask.js
 async function showAddTaskAsDialog() {
+    AddTaskUtils.captureCurrentAddTaskDataFromView();
     clearDialogContent();
     addTaskDialogtoggleScrollOnBody(true);
     addDialogShowClass('add-task-dialog');
     document.getElementById('add-task-dialog').showModal();
     await renderAddTaskIntoDialog();
     changeAddTaskViewToDialog();
-    currentUser = addTaskUtils.readCurrentUserID();
-    isGuest = addTaskUtils.isCurrentUserGuest();
-    addTaskDialogTaskComponents = new TaskComponents(currentUser, "addTaskDialogTaskComponents");
-    addTaskDialogTaskComponents.run();
-    addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTaskDialogTaskComponents');
+    await loadDataForAddTaskDialog();
 }
 
 
 async function showAddTaskAsDialogSingle() {
+    AddTaskUtils.captureCurrentAddTaskDataFromView();
     clearDialogContent();
     addTaskDialogtoggleScrollOnBody(true);
     addDialogShowClass('add-task-dialog');
     document.getElementById('add-task-dialog').showModal();
     await renderAddTaskIntoDialogSingle();
+    await loadDataForAddTaskDialog();
+}
+
+async function loadDataForAddTaskDialog() {
     currentUser = addTaskUtils.readCurrentUserID();
     isGuest = addTaskUtils.isCurrentUserGuest();
+    if (!addTaskDialogTaskComponents) {
+        addTaskDialogTaskComponents = new TaskComponents(currentUser, "addTaskDialogTaskComponents");
+        addTaskDialogTaskComponents.run();
+        window.addTaskDialogTaskComponents = addTaskDialogTaskComponents;
+    }
+
+    addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTaskDialogTaskComponents');
+    AddTaskUtils.applyAddTaskDataToView(addTaskDialogTaskComponents);
 }
 
 function clearDialogContent() {
