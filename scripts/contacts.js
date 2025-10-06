@@ -1,6 +1,6 @@
 let currentView = "";
 const minDesktopHeight = 880;
-const minDesktopWidth = 840;
+const minDesktopWidth = 880;
 const breakPointToDesktopSingle = 1180;
 
 /**
@@ -67,7 +67,7 @@ async function loadHtmlComponentsForDesktop(head) {
         includeHtml("header", "headerDesktop.html"),
 
     ]);
-
+    renderContacts();
 }
 /*REVIEW - möglichweise in script.js*/
 function getCurrentContactSize() {
@@ -86,7 +86,7 @@ async function loadHtmlComponentsForMobile() {
         includeHtml("header", "headerMobile.html"),
         includeHtml("navbar", "navbarMobil.html"),
     ]);
-
+    renderContacts()
 }
 
 function clearContactsHtmlBody() {
@@ -148,20 +148,25 @@ function openContactDetailMobile(detailContact) {
     contactListMobile.classList.add('visually-hidden');
     renderDetailContact.parentElement.classList.remove('visually-hidden');
     renderDetailContact.innerHTML = "";
-    // renderDetailContact.classList.remove('slide-Details-in');
-    // renderDetailContact.offsetWidth;
-    // renderDetailContact.classList.add('slide-Details-in');
-    renderDetailContact.innerHTML = getContactDetailView(detailContact);
+    renderDetailContact.innerHTML = getContactDetailView(detailContact, "-mobile");
+    addNewActionBtns();
 }
 function openContactDetailDesktop(detailContact) {
     let renderDetailContact = document.getElementById('contact-detail-content');
-    let contactListDesktop = document.getElementById('contact-list');
-    contactListDesktop.classList.remove('visually-hidden');
-    renderDetailContact.classList.add('visually-hidden');
+    renderDetailContact.classList.remove('visually-hidden');
     renderDetailContact.innerHTML = "";
     renderDetailContact.classList.remove('slide-Details-in');
     renderDetailContact.offsetWidth;
     renderDetailContact.classList.add('slide-Details-in');
-    renderDetailContact.innerHTML = getContactDetailView(detailContact);
+    renderDetailContact.innerHTML += getContactDetailView(detailContact, "");
 }
 
+function addNewActionBtns() {
+    document.getElementsByClassName('contacts-detailview-actions')[0].classList.add('visually-hidden');
+    let refmobileBtn = document.getElementsByClassName('contacts-main-mobile')[0];
+    console.log(refmobileBtn);
+    refmobileBtn.innerHTML += getMobileBtnTemplate();
+
+
+
+}

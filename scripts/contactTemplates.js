@@ -30,13 +30,13 @@ function getContactListContent(obj) {
 }
 
 
-function getContactDetailView(cd) {
-    return `<div class="first-line-detail-view">
-    <div class="initial-avatar ${cd.initialColor}">
-        <p class="detail-view-initials">${cd.initial}</p>
+function getContactDetailView(cd, mobileSuffix) {
+    return `<div class="first-line-detail-view${mobileSuffix}">
+    <div class="initial-avatar${mobileSuffix} ${cd.initialColor}">
+        <p class="detail-view-initials${mobileSuffix}">${cd.initial}</p>
     </div>
     <div class="name-and-action-panel">
-        <div class="contacts-detailview-name">${cd.firstname} ${cd.lastname}</div>
+        <div class="contacts-detailview-name${mobileSuffix}">${cd.firstname} ${cd.lastname}</div>
         <div class="contacts-detailview-actions">
             <button onclick="openDialog('add-contact-dialog', ()  => renderEditContactIntoDialog('${cd.id}'))" class="btn-contact-action btn-contact-edit">
                 <div class="action-icons action-edit-icon"></div>
@@ -49,17 +49,23 @@ function getContactDetailView(cd) {
         </div>
     </div>
 </div>
-<div class="detail-c-view-subline">
+<div class="detail-c-view-subline${mobileSuffix}">
     <p>Contact Information</p>
 </div>
-<div class="detail-c-view-information">
-    <div class="detail-c-view-email">
+<div class="detail-c-view-information${mobileSuffix}">
+    <div class="detail-c-view-email${mobileSuffix}">
         <p>Email:</p>
         <p>${cd.email}</p>
     </div>
-    <div class="detail-c-view-phone">
+    <div class="detail-c-view-phone${mobileSuffix}">
         <p>Phone:</p>
         <p>${cd.phone}</p>
     </div>
 </div>`
+}
+
+function getMobileBtnTemplate() {
+    return `<button type="button" class="mobile-menu-btn">
+        &#x2022;&#x2022;&#x2022;
+    </button>`
 }
