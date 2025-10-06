@@ -13,7 +13,7 @@
     flex-direction: column;
     gap: 16px;
     padding-top: 32px;
-    padding-right: 24px;
+    /* padding-right: 24px; */
     padding-bottom: 32px;
     padding-left: 24px;
     height: 100%;
@@ -72,7 +72,7 @@
 
 .contacts {
     list-style: none;
-    padding: 0;
+    padding: 0 24px 0 0;
     margin: 0;
 }
 
@@ -104,8 +104,9 @@
     width: 100%;
 }
 
+/*FIXME - Abstände noch anpassen und breite*/
 .contact-letter {
-    width: 352px;
+    /* width: 352px; */
     height: 58px;
     padding-top: 17px;
     padding-right: 36px;
