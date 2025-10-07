@@ -4,7 +4,7 @@
     margin: auto;
     border-radius: 30px;
     background-color: white;
-    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.10);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
     transform: translateX(150%);
     max-width: 1212px;
     width: 100%;
@@ -233,4 +233,104 @@
     background-image: url(../assets/cancel-clear-default.svg);
     background-position: right center;
     background-repeat: no-repeat;
+}
+
+/*NOTE - MOBILE */
+
+.main-add-contact-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    /* height: 592px; */
+}
+
+.left-container-contacts-mobile {
+    /* width: 467px; */
+    height: 352px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: var(--bg-default);
+    padding: 66px 24px;
+    gap: 12px;
+    box-sizing: border-box;
+}
+
+.add-contact-form-and-picture-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add-contact-profil-picture-mobile {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    background-image: url(../assets/profil-picture.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 292px;
+    left: 138px;
+}
+
+.add-contact-form-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 32px;
+    padding-left: 16px;
+    gap: 8px;
+}
+
+.add-contact-input-field-container-mobile {
+    width: auto;
+}
+
+.add-contact-input.input-mail,
+.add-contact-input.input-name,
+.add-contact-input.input-phone,
+.add-contact-input-mobile.input-mail,
+.add-contact-input-mobile.input-name,
+.add-contact-input-mobile.input-phone {
+    background-position: right 16px center;
+}
+
+.login-form-buttons-mobile {
+    display: flex;
+    justify-content: center;
+    padding-top: 17px;
+}
+
+.add-contact-input-mobile {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--input-border-color);
+    border-radius: 10px;
+    padding: 13px 50px 13px 21px;
+    /* margin: 10px 0; */
+    background-color: white;
+    background-repeat: no-repeat;
+    background-position: 380px center;
+    font-family: 'Inter';
+    font-size: 16px;
+}
+
+.close-contact-overlay-mobile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* padding-right: 48px; */
+    padding-left: calc(100% - 48px + 12px);
+    padding-top: 24px;
+
+}
+
+.close-contact-overlay-mobile button {
+    filter: brightness(0) invert(1);
 }

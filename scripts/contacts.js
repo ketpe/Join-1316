@@ -184,3 +184,7 @@ function openActionMenuMobile() {
     actionMenu.offsetWidth;
     actionMenu.classList.add('slide-Details-in');
 }
+
+function openAddContactMobile() {
+
+}
