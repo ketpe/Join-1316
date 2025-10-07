@@ -82,6 +82,9 @@
     margin-right: 24px;
 }
 
+.mt-24 {
+    margin-top: 24px;
+}
 
 @media (max-width: 880px) {
     .phl-content-section {
@@ -93,5 +96,16 @@
 
     .help-actions-sticky {
         top: 137px;
+    }
+
+    .help-back {
+        width: 28px;
+        height: 28px;
+    }
+
+    .help-back:hover {
+        left: 58px;
+        width: 28px;
+        background-image: url("../assets/arrow-left-default.svg");
     }
 }
