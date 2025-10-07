@@ -58,6 +58,7 @@ button {
 
 a {
     text-decoration: none;
+    overflow-wrap: break-word;
 }
 
 .d-none {
