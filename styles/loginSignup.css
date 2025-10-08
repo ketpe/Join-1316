@@ -17,10 +17,10 @@
 
 .login-signup-logo {
     position: absolute;
-    top: 80px;
-    left: 77px;
-    height: var(--login-signup-logo-height);
-    width: var(--login-signup-logo-width);
+    top: var(--logo-position-top);
+    left: var(--logo-position-left);
+    height: var(--logo-height);
+    width: var(--logo-width);
     background-image: url('../assets/logo-for-Favicon.svg');
     background-repeat: no-repeat;
     background-size: cover;
@@ -312,6 +312,13 @@
     height: 50px;
 }
 
+.intro-mobile {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-default);
+}
+
 
 @keyframes startup {
     0% {
@@ -331,8 +338,8 @@
     }
 
     100% {
-        top: 80px;
-        left: 77px;
+        top: var(--logo-position-top);
+        left: var(--logo-position-left);
         transform: scale(1);
     }
 }

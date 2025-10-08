@@ -4,8 +4,10 @@
     --header-height: 96px;
     --max-width: 1440px;
     --contacts-scrollbar-width: 456px;
-    --login-signup-logo-width: 100px;
-    --login-signup-logo-height: 121px;
+    --logo-width: 100px;
+    --logo-height: 121px;
+    --logo-position-top: 80px;
+    --logo-position-left: 77px;
     --form-for-login-width: 650px;
     --form-for-login-height: 450px;
 }

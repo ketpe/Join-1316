@@ -1,8 +1,10 @@
 @media (max-width: 1010px) {
 
     .login-signup-logo {
-        height: calc(var(--login-signup-logo-height) * 0.85);
-        width: calc(var(--login-signup-logo-width) * 0.85);
+        top: calc(var(--logo-position-top) * 0.85);
+        left: calc(var(--logo-position-left) * 0.85);
+        height: calc(var(logo-height) * 0.85);
+        width: calc(var(logo-width) * 0.85);
     }
 
     .form-for-login {
@@ -14,10 +16,10 @@
 @media (max-width: 600px) {
 
     .login-signup-logo {
-        top: 60px;
-        left: 57px;
-        height: calc(var(--login-signup-logo-height) * 0.75);
-        width: calc(var(--login-signup-logo-width) * 0.75);
+        top: calc(var(--logo-position-top) * 0.75);
+        left: calc(var(--logo-position-left) * 0.75);
+        height: calc(var(--logo-height) * 0.75);
+        width: calc(var(--logo-width) * 0.75);
     }
 
     .form-for-login {
@@ -35,23 +37,41 @@
         overflow-x: hidden;
     }
 
-    .login-signup-page {
+
+    .intro-mobile.intro-active::before {
         width: 100%;
         height: 100vh;
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-color: var(--bg-default);
+        z-index: 99999;
+        pointer-events: none;
+        animation: intro-mobile 5000ms ease-in forwards;
+
+    }
+/* 
+    .login-signup-page.intro-active::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-color: var(--bg-default);
+        z-index: 99999;
+        pointer-events: none;
+        animation: intro-mobile 5000ms ease-in forwards;
     }
 
-
-
-    .login-signup-logo {
-        top: 37px;
-        left: 38px;
-        height: 78px;
-        width: 64px;
-        background-image: url('../assets/logo-for-Favicon.svg');
+ */    .login-signup-logo {
+        top: calc(var(--logo-position-top) * 0.45);
+        left: calc(var(--logo-position-left) * 0.45);
+        height: calc(var(--logo-height) * 0.65);
+        width: calc(var(--logo-width) * 0.65);
+        z-index: 100000;
     }
 
     .logo-for-login {
-        animation: moveLogo 450ms ease-in;
+        animation: moveLogo 4500ms ease-in;
+        z-index: 100000;
     }
 
 
@@ -61,7 +81,6 @@
         align-items: center;
         justify-content: flex-start;
         height: 100%;
-        animation: startup 500ms ease-in;
     }
 
     .login-signup-header {
@@ -72,11 +91,14 @@
         align-items: center;
         width: 100%;
         box-sizing: border-box;
-        padding: 0 50px;
+        padding: 0 25px;
         min-height: 49px;
         margin-bottom: 75px;
     }
 
+    .login-signup-header p {
+        margin-right: 15px;
+    }
 
     .login-signup-container {
         order: 1;
@@ -138,7 +160,7 @@
     .login-signup-form h1 {
         font-family: 'Inter';
         font-weight: 700;
-        font-size: 61px;
+        font-size: 47px;
         margin: 0;
         margin-bottom: 16px;
     }
@@ -324,7 +346,7 @@
         gap: 12px;
         width: 100%;
         box-sizing: border-box;
-        padding: 24px 48px 0;
+        padding: 24px 10px 0;
     }
 
     .signup-title .arrow-left {
@@ -334,7 +356,7 @@
         width: 33px;
         height: 32px;
         background-repeat: no-repeat;
-        background-position: center center;
+        background-position: right center;
         background-size: cover;
         cursor: pointer;
         background-image: url("../assets/arrow-left-default.svg");
@@ -350,26 +372,49 @@
     }
 
 
-    @keyframes startup {
+    @keyframes intro-mobile {
         0% {
-            opacity: 0;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        99% {
+            visibility: visible;
+            opacity: 1;
         }
 
         100% {
-            opacity: 1;
+            opacity: 0;
+            visibility: hidden;
         }
     }
 
+
     @keyframes moveLogo {
         0% {
+            background-image: url('../assets/join-logo.svg');
             top: 50%;
             left: 50%;
-            transform: scale(2.74);
+            height: var(--logo-height);
+            width: var(--logo-width);
+            transform: scale(2);
+        }
+
+        50% {
+            background-image: url('../assets/join-logo.svg');
+            transform: scale(1.5);
+        }
+
+        50.1% {
+            background-image: url('../assets/logo-for-Favicon.svg');
+            transform: scale(1.5);
         }
 
         100% {
-            top: 80px;
-            left: 77px;
+            top: calc(var(--logo-position-top) * 0.45);
+            left: calc(var(--logo-position-left) * 0.45);
+            height: calc(var(--logo-height) * 0.65);
+            width: calc(var(--logo-width) * 0.65);
             transform: scale(1);
         }
     }
