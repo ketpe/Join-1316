@@ -1,77 +1,44 @@
-<!DOCTYPE html>
-<html lang="de">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacts</title>
-    <link rel="shortcut icon" href="./assets/logo-for-Favicon.svg" type="image/x-icon">
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./styles/contactsDesktop.css">
-    <link rel="stylesheet" href="./styles/addContact.css">
-
-</head>
-
-<body onload="init(), renderContacts()">
-
-    <div class="main-container">
-        <div class="left-container">
-            <div id="navbar"></div>
-        </div>
-        <div class="right-container">
-            <div class="header-section" id="header"></div>
-            <main class="right-content">
-                <article class="contacts-main">
-                    <section class="contact-list">
-                        <section class="contact-list-content">
-                            <div class="add-contact">
-                                <button onclick="openDialog('add-contact-dialog',renderAddContactIntoDialog)"
-                                    type="button" class="btn btn-fill btn-lg btn-block btn-add-contacts">
-                                    <p class="btn-add-contacts-text">Add new contact</p>
-                                    <img class="btn-add-contacts-icon" src="./assets/person-add-icon.svg"
-                                        alt="Add Contact Icon">
-                                </button>
-                            </div>
-                            <div class="contacts-scroll-wrapper">
-                                <ul class="contacts" id="contact-list">
-                                </ul>
-                            </div>
-                        </section>
-                    </section>
-                    <section class="contact-detail-view">
-                        <header class="contacts-header">
-                            <p class="contacts-title">Contacts</p>
-                            <img class="headings-separator" src="./assets/headings-separator.svg"
-                                alt="Headings  separator" srcset="">
-                            <p class="contacts-subtitle">Better with a team</p>
-                        </header>
-                        <div class="contact-detail-content" id="contact-detail-content">
+<div class="main-container">
+    <div class="left-container">
+        <div id="navbar"></div>
+    </div>
+    <div class="right-container">
+        <div class="header-section" id="header"></div>
+        <main class="right-content">
+            <article class="contacts-main">
+                <section class="contact-list">
+                    <section class="contact-list-content">
+                        <div class="add-contact">
+                            <button onclick="openDialog('add-contact-dialog',renderAddContactIntoDialog)" type="button"
+                                class="btn btn-fill btn-lg btn-block btn-add-contacts">
+                                <p class="btn-add-contacts-text">Add new contact</p>
+                                <img class="btn-add-contacts-icon" src="./assets/person-add-icon.svg"
+                                    alt="Add Contact Icon">
+                            </button>
+                        </div>
+                        <div class="contacts-scroll-wrapper">
+                            <ul class="contacts" id="contact-list">
+                            </ul>
                         </div>
                     </section>
-
-                </article>
-                <section id="add-contact-dialog-section" class="add-contact-dialog-section">
-                    <dialog id="add-contact-dialog" class="" onclick="closeDialogByEvent(event,'add-contact-dialog')">
-                        <div id="dialog-content-contacts"></div>
-                    </dialog>
                 </section>
-            </main>
-        </div>
+                <section class="contact-detail-view">
+                    <header class="contacts-header">
+                        <p class="contacts-title">Contacts</p>
+                        <img class="headings-separator" src="./assets/headings-separator.svg" alt="Headings  separator"
+                            srcset="">
+                        <p class="contacts-subtitle">Better with a team</p>
+                    </header>
+                    <div class="contact-detail-content" id="contact-detail-content">
+                    </div>
+                </section>
+
+            </article>
+            <section id="add-contact-dialog-section" class="add-contact-dialog-section">
+                <dialog id="add-contact-dialog" class="" onclick="closeDialogByEvent(event,'add-contact-dialog')">
+                    <div id="dialog-content-contacts"></div>
+                </dialog>
+            </section>
+        </main>
     </div>
-
-
-    <script type="module" src="./app.js"></script>
-    <script src="./script.js"></script>
-    <script src="./scripts/navigations.js"></script>
-    <!-- <script src="./scripts/add_edit-contact-dialog.js"></script> -->
-    <script src="./scripts/openCloseDialog.js"></script>
-    <script src="./classes/firebaseDatabase.js"></script>
-    <script src="./scripts/addEditContacts.js"></script>
-    <script src="./scripts/contacts.js"></script>
-    <script src="./scripts/contactTemplates.js"></script>
-    <script src="./scripts/showContactDetails.js"></script>
-
-</body>
-
-
-</html>
+</div>

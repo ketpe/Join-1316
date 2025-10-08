@@ -24,25 +24,15 @@ class AddTaskUtils {
     static captureCurrentAddTaskDataFromView() {
 
         if (!this.checkNodyIsNotEmpty()) { return; }
-
         const { titleElement, descriptionElement, dueDateElement } = this.captureInputFields();
-
-        const prioButtonsContainer = document.getElementById('task-priority-button');
-        const selectedPrioButton = prioButtonsContainer?.querySelector('.btn[data-selected="true"]');
-        const priority = selectedPrioButton?.getAttribute('name') || this._addTaskCache.formData.priority || "Medium";
-
-        //Eventuell Fallstrick! -> vielleicht über Nullprüfung abfangen -> Variable im Window
-        const components = this.getTaskComponent;
-        const category = components?.currentCategory?.id ? components.currentCategory : this._addTaskCache.category;
-        const assignedContacts = components?.currentContactAssignList || this._addTaskCache.assignedContacts;
-        const subTasks = components?.currentSubTasks || this._addTaskCache.subTasks;
+        const {category, assignedContacts, subTasks} = this.getTaskComponentVariablen;
 
         this.setAddTaskCache({
             formData: {
                 title: (titleElement?.value ?? "").trim(),
                 description: (descriptionElement?.value ?? "").trim(),
                 dueDate: (dueDateElement?.value ?? "").trim(),
-                priority: priority
+                priority: this.getPrioDataForCache
             },
             category,
             assignedContacts: Array.isArray(assignedContacts) ? [...assignedContacts] : [],
@@ -50,14 +40,22 @@ class AddTaskUtils {
         });
     }
 
+    static get getTaskComponentVariablen(){
+        const components = this.getTaskComponent;
+        const category = components?.currentCategory?.id ? components.currentCategory : this._addTaskCache.category;
+        const assignedContacts = components?.currentContactAssignList || this._addTaskCache.assignedContacts;
+        const subTasks = components?.currentSubTasks || this._addTaskCache.subTasks;
+        return {category, assignedContacts, subTasks};
+    }
+
+    static get getPrioDataForCache(){
+        const prioButtonsContainer = document.getElementById('task-priority-button');
+        const selectedPrioButton = prioButtonsContainer?.querySelector('.btn[data-selected="true"]');
+        return selectedPrioButton?.getAttribute('name') || this._addTaskCache.formData.priority || "Medium";
+    }
+
     static get getTaskComponent(){
-        if(window.isAddTask == true){
-            return window.addTasktaskComponents;
-        }else if(window.isBord == true){
-            return window.addTaskDialogTaskComponents;
-        }else{
-            return null;
-        }
+        return window.addTasktaskComponents || window.addTaskDialogTaskComponents;
     }
 
     static checkNodyIsNotEmpty() {
@@ -76,14 +74,10 @@ class AddTaskUtils {
         components.currentSubTasks = Array.isArray(subTasks) ? [...subTasks] : [];
 
         this.applyFormDataIntoInputFields(formData);
-
         components.setNewPriority(formData.priority || "Medium");
-
         this.applyCategoryToView(category, components);
-
         components.showOrHideBadgeContainer('show');
         components.renderSubtasks();
-
         const btn = document.getElementById('createTaskButton');
         components.addTaskCheckRequiredField(btn);
 

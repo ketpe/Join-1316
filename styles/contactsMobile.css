@@ -1,8 +1,8 @@
 body,
-html {
+/* html {
     max-width: 428px;
     overflow: hidden;
-}
+} */
 
 .contact-list-mobile {
     height: calc(100vh - 160px);
@@ -210,9 +210,11 @@ html {
     align-items: start;
     gap: 21px;
     height: calc(100vh - 160px);
+    padding-right: 16px;
+    width: 100%;
 }
 
-.contacts-header-text {
+.contacts-header-text-mobile {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -224,9 +226,14 @@ html {
     cursor: pointer;
     padding: 0;
     margin: 0;
-    width: 24px;
-    height: 24px;
-    margin-bottom: 8px;
+    width: 32px;
+    height: 32px;
+    margin-right: 16px;
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
 }
 
 .contacts-header-mobile {
@@ -234,23 +241,26 @@ html {
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
-    gap: 30px;
     padding-top: 48px;
     padding-left: 16px;
+    padding: 48px 16px 0 16px;
 }
 
 .contacts-title-mobile {
     margin: 0;
-    font-size: 61px;
+    font-family: Inter;
     font-weight: 700;
-    font-family: 'Inter';
+    font-style: Bold;
+    font-size: 47px;
+
 }
 
 .contacts-subtitle-mobile {
+    margin: 0;
     font-family: Inter;
     font-weight: 400;
-    font-size: 27px;
-    margin: 0;
+    font-style: Regular;
+    font-size: 20px;
 }
 
 .headings-separator-icon {
@@ -264,8 +274,8 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 21px;
     padding-left: 16px;
+    gap: 21px;
 }
 
 .slide-Details-in-mobile {
@@ -275,12 +285,12 @@ html {
 .first-line-detail-view-mobile {
     display: flex;
     flex-direction: row;
-    gap: 54px;
+    gap: 20px;
 }
 
 .initial-avatar-mobile {
-    width: 120px;
-    height: 120px;
+    width: 80px;
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -291,11 +301,12 @@ html {
 
 .detail-view-initials-mobile {
     font-family: Inter;
-    font-weight: 500;
-    font-style: Medium;
-    font-size: 47px;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 27px;
     text-align: center;
     vertical-align: middle;
+
     color: #ffffff;
 }
 
@@ -309,17 +320,17 @@ html {
 
 .contacts-detailview-name-mobile {
     font-family: Inter;
-    font-weight: 500;
-    font-size: 47px;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 36px;
+    line-height: 120%;
+    letter-spacing: 0%;
     vertical-align: middle;
 
-}
-
-.contacts-detailview-actions-mobile {
-    display: flex;
-    gap: 13px;
 
 }
+
+
 
 .action-icons-mobile {
     width: 24px;
@@ -393,8 +404,10 @@ html {
 .detail-c-view-subline-mobile {
     display: flex;
     justify-content: start;
+    gap: 30px;
 
     p {
+        margin: 0;
         font-family: Inter;
         font-weight: 400;
         font-style: Regular;
@@ -402,23 +415,58 @@ html {
     }
 }
 
-.detail-c-view-email-mobile:first-child,
-.detail-c-view-phone-mobile:first-child {
+.detail-c-view-email-mobile p:first-of-type,
+.detail-c-view-phone-mobile p:first-of-type {
     font-family: Inter;
     font-weight: 700;
     font-style: Bold;
     font-size: 16px;
+    margin: 0 !important;
 }
 
 
-.detail-c-view-email-mobile:last-child,
-.detail-c-view-phone-mobile:last-child {
+.detail-c-view-email-mobile p:last-child,
+.detail-c-view-phone-mobile p:last-child {
     font-family: Inter;
     font-weight: 400;
     font-style: Regular;
     font-size: 16px;
+
 }
 
-.detail-c-view-email-mobile:last-child {
+.detail-c-view-email-mobile p:last-child {
     color: var(--font-email-color);
+}
+
+.mobile-menu-btn {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    background-color: var(--bg-default);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    writing-mode: vertical-lr;
+    color: white;
+    font-size: 21px;
+}
+
+.detail-contact-actions-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 20px 20px 0px 20px;
+    gap: 16px;
+    height: 100px;
+    background-color: #ffffff;
+    position: fixed;
+    bottom: 85px;
+    right: 20px;
 }

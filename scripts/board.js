@@ -5,7 +5,6 @@ let boardTaskComponents = null;
  * @returns {Promise<void>} - A promise that resolves when the tasks have been fetched and rendered.
 */
 async function getBoardTasks() {
-    boardTaskComponents = null;
     const { taskContentelements } = getHtmlTasksContent();
     const fb = new FirebaseDatabase();
     let tasks = await fb.getFirebaseLogin(() => fb.getAllData("tasks"));
@@ -15,6 +14,7 @@ async function getBoardTasks() {
     kanbanUpdateSize();
     renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     addLeftPositionStyleassignedContacts();
+    setNavigationButtonActive('board', "desktop");
 }
 
 /**

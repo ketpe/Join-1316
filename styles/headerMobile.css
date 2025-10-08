@@ -16,6 +16,7 @@ body {
     background: #fff;
     position: sticky;
     z-index: 200;
+    top: 0;
 }
 
 .header-mobile {
@@ -32,7 +33,7 @@ body {
 }
 
 .logo-header-mobile {
-    height: 32px;
+    height: 39px;
     width: 32px;
     background-image: url("../assets/logo-for-Favicon.svg");
     background-repeat: no-repeat;

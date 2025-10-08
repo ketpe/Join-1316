@@ -16,21 +16,26 @@ function navigateToContact(button) {
     window.location.href = './contacts.html';
 }
 
-function navigateToPrivacy(source = "") {
+function navigateToPrivacy(event, login = "") {
 
-    if (source == "login") {
-        window.location.href = './privacyPolicy.html?backToLogin=true';
+    const pathName = event?.view.location.pathname || "";
+
+    if (login == "login") {
+        window.location.href = `./privacyPolicy.html?backToLogin=true&source=${pathName}`;
     } else {
-        window.location.href = './privacyPolicy.html';
+        window.location.href = `./privacyPolicy.html?backToLogin=false&source=${pathName}`;
     }
 
 }
 
-function navigateToLegalNotice(source) {
-    if (source == "login" || source == "signin") {
-        window.location.href = "./legalNotice.html?backToLogin=true";
+function navigateToLegalNotice(event, loginOrSignin = "") {
+
+    const pathName = event?.view.location.pathname || "";
+
+    if (loginOrSignin == "login" || loginOrSignin == "signin") {
+        window.location.href = `./legalNotice.html?backToLogin=true&source=${pathName}`;
     } else {
-        window.location.href = "./legalNotice.html";
+        window.location.href = `./legalNotice.html?backToLogin=false&source=${pathName}`;
     }
 }
 
