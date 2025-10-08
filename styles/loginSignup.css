@@ -1,5 +1,4 @@
 .login-signup-page {
-    --animation-duration: 500ms;
     background-color: var(--default-bg-color);
     display: flex;
     justify-content: center;
@@ -7,7 +6,7 @@
 }
 
 .login-mobile-aninmation{
-    animation: fadeBackground var(--animation-duration) ease-in-out forwards;
+    animation: fadeBackground 600ms ease-in-out forwards;
 }
 
 .login-signup-main {
@@ -35,12 +34,12 @@
 }
 
 .logo-for-login {
-    animation: moveLogo var(--animation-duration) ease-in;
+    animation: moveLogo 450ms ease-in;
 }
 
 
 .login-section {
-    animation: startup var(--animation-duration) ease-in;
+    animation: startup 500ms ease-in;
 }
 
 .login-signup-header {
