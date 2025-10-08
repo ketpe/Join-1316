@@ -109,7 +109,7 @@
 
 /*NOTE - - Warnung invalid aus add-task*/
 .contact-error-text-container {
-    height: 12px;
+    /* height: 12px; */
     /* /* margin-top: 8px;
     margin-bottom: 24px; */
     margin: 0;
@@ -132,7 +132,8 @@
     margin-block-end: 0;
 }
 
-.add-contact-input:focus {
+.add-contact-input:focus,
+.add-contact-input-mobile:focus {
     outline: none;
     border-color: var(--btn-bg-hover);
 }
@@ -144,13 +145,14 @@
 .error-text-hidden {
     color: transparent !important;
     cursor: inherit;
+    position: absolute;
+    left: -9999px;
+
 }
 
 .input-has-error {
     border-color: var(--input-error-color) !important;
 }
-
-/* Geht bis hierhin */
 
 .add-contact-profil-picture {
     width: 120px;
@@ -283,13 +285,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-top: 92px;
-    padding-left: 16px;
+    padding: 92px 16px 24px 24px;
+    /* padding-left: 16px; */
     gap: 8px;
 }
 
 .add-contact-input-field-container-mobile {
+    display: flex;
+    flex-direction: column;
     width: auto;
+    gap: 12px;
 }
 
 .add-contact-input.input-mail,
@@ -326,11 +331,27 @@
     top: 0;
     left: 0;
     /* padding-right: 48px; */
-    padding-left: calc(100% - 48px + 12px);
+    padding-left: calc(100% - 48px);
     padding-top: 24px;
 
 }
 
 .close-contact-overlay-mobile button {
     filter: brightness(0) invert(1);
+}
+
+.add-contacts-headlines-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 16px;
+}
+
+.underline-add-contacts-mobile {
+    color: white;
+    font-family: 'Inter';
+    font-size: 27px;
+    font-weight: 400;
+    margin: 0;
 }

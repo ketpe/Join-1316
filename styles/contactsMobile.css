@@ -458,7 +458,7 @@ body,
 }
 
 .detail-contact-actions-mobile {
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     padding: 10px;
@@ -469,4 +469,10 @@ body,
     position: fixed;
     bottom: 85px;
     right: 20px;
+}
+
+.contact-dialog-mobile {
+    border: none;
+    border-radius: 30px;
+    padding: 0;
 }

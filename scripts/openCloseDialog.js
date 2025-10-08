@@ -17,7 +17,7 @@ function openDialog(dialogId, renderSpecificFunction) {
  */
 function closeDialogByEvent(event, dialogId) {
     //resetAddTaskVariables();
-    
+
     const dialog = document.getElementById(dialogId);
     const closeDiv = document.getElementById('btn-overlay-close-div');
     if (
@@ -86,4 +86,8 @@ function renderAddContactIntoDialog() {
 async function renderDetailViewTemplate(taskId) {
     await includeHtml("dialog-content-detail-view-task", "taskTemplate.html");
     getDetailViewTask(taskId);
+}
+
+function renderAddContactIntoDialogMobile() {
+    includeHtml("dialog-content-contacts", "addContactMobile.html");
 }

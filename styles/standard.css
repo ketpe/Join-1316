@@ -26,6 +26,13 @@ button {
     padding-top: 42px;
 }
 
+.join-h1-mobile-contact-dialog {
+    font-family: Inter;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 47px;
+}
+
 .join-h1-dialog {
     margin-block-start: 0;
     margin-block-end: 0;

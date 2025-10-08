@@ -14,7 +14,6 @@
                 </section>
                 <section id="contact-detail-view-mobile" class="contact-detail-view-mobile visually-hidden">
                     <header class="contacts-header-mobile">
-
                         <div class=" contacts-header-text-mobile">
                             <p class="contacts-title-mobile">Contacts</p>
                             <p class="contacts-subtitle-mobile">Better with a team</p>
@@ -27,11 +26,18 @@
                     <div class="contact-detail-content-mobile" id="contact-detail-content">
                     </div>
                 </section>
-
             </article>
-            <button onclick="openAddContactMobile()" type="button" title="add New Contact" class="mobile-menu-btn">
+            <button id="btn-add-contact-mobile"
+                onclick="openDialog('add-contact-dialog-mobile',renderAddContactIntoDialogMobile)" type="button"
+                title="add New Contact" class="mobile-menu-btn">
                 <img class="btn-add-contacts-icon" src="./assets/person-add-icon.svg" alt="Add Contact Icon">
             </button>
+            <section id="add-contact-dialog-mobile-section" class="add-contact-dialog-mobile-section">
+                <dialog id="add-contact-dialog-mobile" class="contact-dialog-mobile"
+                    onclick="closeDialogByEvent(event,'add-contact-dialog-mobile')">
+                    <div id="dialog-content-contacts"></div>
+                </dialog>
+            </section>
             <footer class="footer-mobile" id="navbar"></footer>
         </main>
     </div>

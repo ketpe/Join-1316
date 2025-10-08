@@ -50,11 +50,6 @@ async function onLoadContacts() {
     renderContacts()
 }
 
-async function onLoadSummary() {
-
-
-}
-
 async function loadHtmlComponentsForDesktop(head) {
     currentView = "desktop";
     clearContactsHtmlBody();
@@ -163,6 +158,7 @@ function openContactDetailDesktop(detailContact) {
 
 function addNewActionBtns(detailContact) {
     document.getElementsByClassName('contacts-detailview-actions')[0].classList.add('visually-hidden');
+    document.getElementById('btn-add-contact-mobile').classList.add('visually-hidden');
     let refmobileBtn = document.getElementsByClassName('contacts-main-mobile')[0];
     refmobileBtn.innerHTML += getMobileBtnTemplate(detailContact);
 }
@@ -176,9 +172,10 @@ function backToContactList() {
     renderContacts();
     // renderDetailContact.innerHTML = getContactDetailView(detailContact, "-mobile");
 }
-
+/*FIXME - möglicherweise als mini Dialog um bauen?*/
 function openActionMenuMobile() {
     const actionMenu = document.querySelector('.detail-contact-actions-mobile');
+    actionMenu.style.display = "flex";
     actionMenu.classList.toggle('visually-hidden');
     actionMenu.classList.remove('slide-Details-in');
     actionMenu.offsetWidth;
