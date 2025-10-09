@@ -18,24 +18,20 @@ function navigateToContact(button) {
 
 function navigateToPrivacy(event, login = "") {
 
-    const pathName = event?.view.location.pathname || "";
-
     if (login == "login") {
-        window.location.href = `./privacyPolicy.html?backToLogin=true&source=${pathName}`;
+        window.location.href = `./privacyPolicy.html?backToLogin=true`;
     } else {
-        window.location.href = `./privacyPolicy.html?backToLogin=false&source=${pathName}`;
+        window.location.href = `./privacyPolicy.html?backToLogin=false`;
     }
 
 }
 
 function navigateToLegalNotice(event, loginOrSignin = "") {
 
-    const pathName = event?.view.location.pathname || "";
-
     if (loginOrSignin == "login" || loginOrSignin == "signin") {
-        window.location.href = `./legalNotice.html?backToLogin=true&source=${pathName}`;
+        window.location.href = `./legalNotice.html?backToLogin=true`;
     } else {
-        window.location.href = `./legalNotice.html?backToLogin=false&source=${pathName}`;
+        window.location.href = `./legalNotice.html?backToLogin=false`;
     }
 }
 
@@ -45,12 +41,7 @@ function navigateToLogin() {
 }
 
 function navigateToHelp() {
-
-    const currentURL = window.location.pathname;
-    const currentPath = currentURL.substring(1, currentURL.length);
-    const cuurentPathName = currentPath.split('.')[0];
-
-    window.location.href = './help.html?source=' + cuurentPathName;
+    window.location.href = './help.html';
 }
 
 function navigateToAddTask(button) {

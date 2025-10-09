@@ -17,14 +17,14 @@
     align-items: center;
     padding-left: calc(348px - var(--navbar-width));
     z-index: 200;
-    position: sticky;
+    position: relative;
 }
 
-.header-section {
+/* .header-section {
     position: sticky;
     top: 0;
     z-index: 200;
-}
+} */
 
 
 .header-headline {
@@ -74,4 +74,22 @@
 .profil-btn:hover {
     background-color: var(--btn-profil-hover);
 
+}
+
+.subMenuBox {
+    position: absolute;
+    top: calc(var(--header-height) - 14px); 
+    right: 40px; 
+    background-color: var(--bg-default);
+    border-radius: 20px 0 20px 20px;
+    color: var(--btn-menu-text-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    gap: 8px;
+    z-index: 400;
+    width: 150px;
+    height: 158px;
 }

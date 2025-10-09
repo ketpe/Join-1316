@@ -13,7 +13,6 @@ async function onHelpLoad() {
    
 }
 
-
 async function resizeHelp() {
 
     if(resizeLockHelp){return;}
@@ -60,9 +59,7 @@ function getCurrentSource() {
 }
 
 function navigateBackToSource() {
-    if(currentSource.length > 0){
-        window.location.href = `./${currentSource}.html`;
-    }
+   history.back();
 }
 
 function hideHelpButton() {

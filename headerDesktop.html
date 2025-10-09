@@ -7,11 +7,11 @@
             <button type="button" class="profil-btn" onclick="toggleDNone('subMenu', event)">
                 <p class="user-initial" id="user-initial-render">G</p>
             </button>
-            <section id="section"> <!-- Slide-Out-Menu -->
+            <section id="section">
                 <div id="subMenu" class="subMenuBox d-none" onclick="noBubbling(event)">
-                    <button class="nav-desktop-btn" onclick='navigateToLegalNotice(event)'>Legal Notice</button>
-                    <button class="nav-desktop-btn" onclick='navigateToPrivacy(event)'>Privacy Policy</button>
-                    <button class="nav-desktop-btn" onclick='navigateToLogin()'>Log out</button>
+                    <button type="button" class="btn-submenu" onclick='navigateToLegalNotice(event)'><p>Legal Notice</p></button>
+                    <button type="button" class="btn-submenu" onclick='navigateToPrivacy(event)'><p>Privacy Policy</p></button>
+                    <button type="button" class="btn-submenu" onclick='navigateToLogin()'><p>Log out</p></button>
                 </div>
             </section>
         </div>
