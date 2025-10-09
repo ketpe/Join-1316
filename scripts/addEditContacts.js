@@ -262,3 +262,8 @@ function renderEditContactIntoDialog(id) {
 function cancelAddContact(event) {
     validateName, validateEmail, validatePhone = false;
 }
+
+function onDeleteContactMobile(event, element) {
+    onDeleteContact(event, element);
+    backToContactList();
+}

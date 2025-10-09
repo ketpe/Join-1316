@@ -38,6 +38,24 @@
                     <div id="dialog-content-contacts"></div>
                 </dialog>
             </section>
+
+            <section id="btns-action-menu" class="btns-action-menu visually-hidden">
+                <dialog id="btns-action-menu-mobile" class="dialog-action-menu-mobile"
+                    onclick=" closeDialogByEvent(event,'btns-action-menu-mobile')">
+                    <button onclick="openDialog('add-contact-dialog', ()  => renderEditContactIntoDialog('${cd.id}'))"
+                        class="btn-contact-action btn-contact-edit-mobile">
+                        <div class="action-icons action-edit-icon"></div>
+                        <p>Edit</p>
+                    </button>
+                    <button onclick="onDeleteContactMobile(event,this)" id="${cd.id}"
+                        class="btn-contact-action btn-contact-delete-mobile">
+                        <div class="action-icons action-delete-icon"></div>
+                        <p>Delete</p>
+                    </button>
+
+                </dialog>
+            </section>
+
             <footer class="footer-mobile" id="navbar"></footer>
         </main>
     </div>
