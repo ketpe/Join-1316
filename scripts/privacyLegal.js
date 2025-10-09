@@ -1,16 +1,13 @@
 let backToLoginPage = false;
 let resizeLockPandL = false;
-let sourcePage = "";
 
 
 
 async function privacyOrLegalLoad(privacyOrLegal) {
     let param = new URLSearchParams(document.location.search);
     let pageParam = param.get('backToLogin');
-    let sourceParam = param.get('source');
 
     backToLoginPage = pageParam != null && pageParam.startsWith("true");
-    sourceParam != null && sourceParam.length > 0 ? sourcePage = sourceParam : sourcePage = "";
     const [height, width] = getCurrentWindowSize();
 
     if(width <= 880){
@@ -56,6 +53,8 @@ async function loadInDesktopMode(pOrL) {
             includeHtml("header", "headerDesktop.html")
         ]);
     }
+
+    setPrivacyOrLegalButtonActiv(pOrL, "desktop");
 }
 
 async function loadInMobileMode(pOrL) {
@@ -76,16 +75,35 @@ async function loadInMobileMode(pOrL) {
             includeHtml("navbar", "navbarMobil.html")
         ]);
     }
+
+    setPrivacyOrLegalButtonActiv(pOrL, "mobile");
 }
 
+function setPrivacyOrLegalButtonActiv(pOrL, desktopOrMobile){
+    const buttonClass = desktopOrMobile == "desktop" ? ".compliance-button" : '.nav-mobile-btn-compliance';
+    const activeClass = desktopOrMobile == "desktop" ? "compliance-button-active" : "nav-mobile-btn-active";
+    const buttons = document.querySelectorAll(buttonClass);
+    if(!buttons){
+        return;
+    }
+
+    buttons.forEach((btn) => {
+        if(btn.getAttribute('data-target') == pOrL){
+            btn.classList.add(activeClass);
+            btn.setAttribute('disabled', 'true');
+        }
+    });
+}
 
 function clearPorLBody() {
     document.querySelector('body').innerHTML = "";
 }
 
 function backToSourcePage(){
-    if(sourcePage.length > 0){
-        window.location.href = sourcePage;
+    if(backToLoginPage){
+        navigateToLogin();
+    }else{
+        history.back();
     }
 }
 

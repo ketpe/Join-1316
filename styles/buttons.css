@@ -17,7 +17,7 @@
   font-size: 14px;
 }
 
-.btn-small{
+.btn-small {
   width: 89px !important;
 }
 
@@ -295,10 +295,32 @@
   }
 }
 
-.btn-overlay-close:focus{
+.btn-overlay-close:focus {
   outline: none;
 }
 
 .btn-overlay-close:hover:enabled {
   background-color: var(--bg-btn-hover-special);
+}
+
+.btn-submenu {
+  width: 130px;
+  height: 46px;
+  background-color: transparent;
+  border: unset;
+  display: flex;
+  align-items: center;
+}
+
+.btn-submenu:hover{
+  background-color: var(--btn-submenu-bg-hover);
+}
+
+.btn-submenu > p{
+  font-family: 'Inter';
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--btn-menu-text-color);
+  text-align: left;
+  padding-inline-start: 8px;
 }
