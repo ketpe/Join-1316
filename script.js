@@ -1,4 +1,6 @@
 
+setOnClickEventToDocument();
+
 async function init() {
     await Promise.all([
         includeHtml("navbar", "navbarDesktop.html"),
@@ -6,6 +8,7 @@ async function init() {
     ]);
 
     renderUserInitial();
+    
 }
 
 async function renderUserInitial() {
@@ -20,14 +23,31 @@ async function renderUserInitial() {
     renderUserInitialRef.textContent = userinitial;
 }
 
+/**
+ * Set onclick event to document body to close submenu when clicking outside
+ */
+function setOnClickEventToDocument() {
+    const body = document.querySelector('body');
+    body.setAttribute('onclick', 'subMenuClose(event)');
+}
+
 
 /**
- *
+ * Show submenu in desktop or mobile mode
  * @param {*} id
  */
-function toggleDNone(id, event) {
+function showSubmenu(id, event, desktopOrMobile) {
     if (event) event.stopPropagation();
-    document.getElementById(id).classList.toggle('d-none')
+    const subMenu = document.getElementById(id);
+
+    if(desktopOrMobile == "desktop"){
+        subMenu.classList.toggle('d-none');
+    }
+    
+    if(desktopOrMobile == "mobile"){
+        subMenu.classList.toggle('is-submenu-mobile-open');
+    }
+    
 };
 
 /**
@@ -39,16 +59,23 @@ function noBubbling(event) {
     event.stopPropagation()
 };
 
-document.addEventListener('click', function (event) {
-    let subMenu = document.getElementById('subMenu');
-    if (
-        subMenu &&
-        !subMenu.classList.contains('d-none') &&
-        !subMenu.contains(event.target)
-    ) {
+/**
+ * Close the submenu when clicking outside of it
+ * @param {*} event
+ * @returns
+ */
+function subMenuClose(event){
+
+    let subMenu = document.getElementById('subMenu')
+    if(!subMenu){return;}
+    const desktopOrMobile = subMenu.getAttribute('data-dOrM');
+
+    if (desktopOrMobile == "desktop" && !subMenu.classList.contains('d-none') && !subMenu.contains(event.target)) {
         subMenu.classList.add('d-none');
+    }else if(desktopOrMobile == "mobile" && subMenu.classList.contains('is-submenu-mobile-open') && !subMenu.contains(event.target)){
+        subMenu.classList.remove('is-submenu-mobile-open');
     }
-});
+}
 
 
 function showErrorMessage(message) {

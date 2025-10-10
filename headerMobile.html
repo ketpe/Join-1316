@@ -2,14 +2,15 @@
     <article class="header-content-container-mobile">
         <div role="img" aria-label="Logo" class="logo-header-mobile"></div>
         <div class="help-profile-actions-mobile">
-            <button type="button" class="profil-btn-mobile" onclick="toggleDNone('subMenu', event)">
+            <button type="button" class="profil-btn-mobile" onclick="showSubmenu('subMenu', event, 'mobile')">
                 <p class="user-initial-mobile" id="user-initial-render">G</p>
             </button>
-            <section id="section"> <!-- Slide-Out-Menu -->
-                <div id="subMenu" class="subMenuBox d-none" onclick="noBubbling(event)">
-                    <button type="button" class="nav-mobile-btn" onclick='navigateToLegalNotice(event)'>Legal Notice</button>
-                    <button type="button" class="nav-mobile-btn" onclick='navigateToPrivacy(event)'>Privacy Policy</button>
-                    <button type="button" class="nav-mobile-btn" onclick='navigateToLogin()'>Log out</button>
+            <section>
+                <div id="subMenu" class="subMenuMobileBox" data-dOrM="mobile" onclick="noBubbling(event)">
+                    <button type="button" class="btn-submenu" onclick='navigateToHelp()'><p>Help</p></button>
+                    <button type="button" class="btn-submenu" onclick='navigateToLegalNotice(event)'><p>Legal Notice</p></button>
+                    <button type="button" class="btn-submenu" onclick='navigateToPrivacy(event)'><p>Privacy Policy</p></button>
+                    <button type="button" class="btn-submenu" onclick='navigateToLogin()'><p>Log out</p></button>
                 </div>
             </section>
         </div>
