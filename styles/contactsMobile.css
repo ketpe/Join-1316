@@ -4,6 +4,10 @@ body,
     overflow: hidden;
 } */
 
+.nav-mobile-menu {
+    height: 80px
+}
+
 .contact-list-mobile {
     height: calc(100vh - 160px);
     width: 100%;
@@ -228,7 +232,6 @@ body,
     margin: 0;
     width: 32px;
     height: 32px;
-    margin-right: 16px;
 
     img {
         width: 100%;
@@ -243,7 +246,8 @@ body,
     justify-content: space-between;
     padding-top: 48px;
     padding-left: 16px;
-    padding: 48px 16px 0 16px;
+    padding: 48px 0 0 16px;
+    box-sizing: border-box;
 }
 
 .contacts-title-mobile {
@@ -440,7 +444,7 @@ body,
 
 .mobile-menu-btn {
     position: fixed;
-    bottom: 90px;
+    top: calc(758px - 80px);
     right: 20px;
     width: 56px;
     height: 56px;
@@ -475,4 +479,59 @@ body,
     border: none;
     border-radius: 30px;
     padding: 0;
+}
+
+.dialog-action-menu-mobile {
+    border: none;
+    border-radius: 20px 20px 0 20px;
+    height: 100px;
+    width: 116px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    position: fixed !important;
+    right: 16px;
+    bottom: 16px;
+
+}
+
+.dialog-action-menu-mobile[open] {
+    height: 100px;
+    width: 116px;
+    position: fixed !important;
+    right: 16px;
+    bottom: calc(16px + 80px);
+    left: auto !important;
+    top: auto !important;
+    margin: 0 !important;
+    transform: none !important;
+    padding: 10px;
+}
+
+.dialog-action-menu-mobile:not([open]) {
+    display: none;
+}
+
+.dialog-action-menu-mobile-wrapper {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    width: 116px;
+    height: 100px;
+    background: #fff;
+    border-radius: 20px 20px 0 20px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 1001;
+}
+
+.btn-contact-edit-mobile,
+.btn-contact-delete-mobile {
+    width: 116px;
+    height: 100px;
 }

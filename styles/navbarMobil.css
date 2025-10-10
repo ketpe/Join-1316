@@ -1,13 +1,3 @@
-/*FIXME - HTML und Body raus nehmen, wenn fertig*/
-/* html {
-    width: 428px;
-    height: 926px;
-}
-
-body {
-    overflow: hidden;
-} */
-
 .buttom-container-mobile {
     position: fixed;
     bottom: 0;
@@ -55,7 +45,7 @@ body {
     padding-inline-start: 0;
 }
 
-.nav-mobile-btn-container{
+.nav-mobile-btn-container {
     display: flex;
     justify-content: center;
     align-items: center;

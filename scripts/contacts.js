@@ -169,6 +169,7 @@ function backToContactList() {
     contactListMobile.classList.remove('visually-hidden');
     renderDetailContact.parentElement.classList.add('visually-hidden');
     renderDetailContact.innerHTML = "";
+    resetActionMenuMobile()
     renderContacts();
     // renderDetailContact.innerHTML = getContactDetailView(detailContact, "-mobile");
 }
@@ -182,6 +183,8 @@ function openActionMenuMobile() {
     actionMenu.classList.add('slide-Details-in');
 }
 
-function openAddContactMobile() {
-
+function resetActionMenuMobile() {
+    document.getElementsByClassName('contacts-detailview-actions')[0].classList.remove('visually-hidden');
+    document.getElementById('btn-add-contact-mobile').classList.remove('visually-hidden');
+    let refmobileBtn = document.getElementsByClassName('contacts-main-mobile')[0];
 }
