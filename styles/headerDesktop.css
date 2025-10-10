@@ -1,12 +1,17 @@
+.header-section {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+}
+
+
 .header-desktop {
     height: var(--header-height);
-    z-index: 200;
     display: flex;
     flex-direction: row;
     align-items: center;
     background: #fff;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
-    position: sticky;
 }
 
 .header-content-container {
@@ -19,12 +24,6 @@
     z-index: 200;
     position: relative;
 }
-
-/* .header-section {
-    position: sticky;
-    top: 0;
-    z-index: 200;
-} */
 
 
 .header-headline {
@@ -92,4 +91,5 @@
     z-index: 400;
     width: 150px;
     height: 158px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
 }

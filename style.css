@@ -50,3 +50,7 @@
     width: 100%;
     background-color: var(--bg-default-sites);
 }
+
+@media (max-width: 880px) {
+  html, body { overflow-x: hidden; } 
+}

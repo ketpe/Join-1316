@@ -33,6 +33,8 @@ async function onAddTaskDialogOpen() {
         showAddTaskAsDialogSingle();
         giveFunctionsToBoardBody();
     }
+
+    currentDialogView == "desktop-single" ? changeAddTaskFormFieldSizeBoardDialogSingle() : changeAddTaskFormFieldSizeBoardDialog();
 }
 
 //TODO - Speichern der Daten vornehmen -> Achtung "Fallstrick" beachten

@@ -1,12 +1,11 @@
-/*FIXME - HTML und Body raus nehmen, wenn fertig*/
-/* html {
-    width: 428px;
-    height: 926px;
-}
-
+html,
 body {
-    overflow: hidden;
-} */
+    overflow: visible !important;
+    transform: none !important;
+    perspective: none !important;
+    filter: none !important;
+    contain: none !important;
+}
 
 .top-container-mobile {
     display: flex;
@@ -14,13 +13,12 @@ body {
     align-items: center;
     justify-content: center;
     background: #fff;
-    position: sticky;
+    position: sticky !important;
     z-index: 200;
     top: 0;
 }
 
 .header-mobile {
-    /* min-width: 428px; */
     width: 100%;
     height: 80px;
     display: flex;
@@ -30,6 +28,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+    z-index: 200;
 }
 
 .logo-header-mobile {
@@ -50,21 +49,16 @@ body {
     align-items: center;
     padding: 20px 16px;
     z-index: 200;
-    position: sticky;
-    top: 0;
-    left: 0;
 }
 
 .header-section-mobile {
-    position: sticky;
-    top: 0;
-    z-index: 200;
+    position: static;
+    z-index: auto;
 }
 
 .help-profile-actions-mobile {
     display: flex;
     align-items: center;
-    /* gap: 16px; */
 }
 
 .profil-btn-mobile {
@@ -83,3 +77,37 @@ body {
     font-size: 16px;
     font-weight: bold;
 }
+
+
+.subMenuMobileBox {
+    position: fixed;
+    top: 7%;
+    right: 4px;
+    background-color: var(--bg-default);
+    border-radius: 20px 0 20px 20px;
+    color: var(--btn-menu-text-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    gap: 8px;
+    z-index: 2000;
+    width: 150px;
+    height: 204px;
+    transform: translateX(110%);
+    transition: transform 250ms ease-in-out;
+    will-change: transform;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+.is-submenu-mobile-open {
+    transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .subMenuMobileBox {
+        transition: none;
+    }
+}
+

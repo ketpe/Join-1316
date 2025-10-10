@@ -4,11 +4,11 @@
         <div class="help-profile-actions">
             <button id="help-button" type="button" class="help-btn" onclick="navigateToHelp()"
                 title="Help Button"></button>
-            <button type="button" class="profil-btn" onclick="toggleDNone('subMenu', event)">
+            <button type="button" class="profil-btn" onclick="showSubmenu('subMenu', event, 'desktop')">
                 <p class="user-initial" id="user-initial-render">G</p>
             </button>
-            <section id="section">
-                <div id="subMenu" class="subMenuBox d-none" onclick="noBubbling(event)">
+            <section>
+                <div id="subMenu" class="subMenuBox d-none" data-dOrM="desktop" onclick="noBubbling(event)">
                     <button type="button" class="btn-submenu" onclick='navigateToLegalNotice(event)'><p>Legal Notice</p></button>
                     <button type="button" class="btn-submenu" onclick='navigateToPrivacy(event)'><p>Privacy Policy</p></button>
                     <button type="button" class="btn-submenu" onclick='navigateToLogin()'><p>Log out</p></button>
