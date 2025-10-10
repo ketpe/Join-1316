@@ -217,7 +217,7 @@ span {
 .date-input {
     font-family: 'Inter';
     color: (--input-border-color);
-    z-index: 200;
+    /* z-index: 200; */
 
     /* padding-right: 50px; */
     /* width: calc(440px - (12px + 50px + 11px)); */

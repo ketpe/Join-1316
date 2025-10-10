@@ -81,7 +81,7 @@ body {
 
 .subMenuMobileBox {
     position: fixed;
-    top: 7%;
+    top: 61px;
     right: 4px;
     background-color: var(--bg-default);
     border-radius: 20px 0 20px 20px;
