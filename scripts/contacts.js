@@ -157,9 +157,11 @@ function openContactDetailDesktop(detailContact) {
 }
 
 function addNewActionBtns(detailContact) {
-    document.getElementsByClassName('contacts-detailview-actions')[0].classList.add('visually-hidden');
+    document.querySelector('.contacts-detailview-actions').classList.add('visually-hidden');
     document.getElementById('btn-add-contact-mobile').classList.add('visually-hidden');
-    let refmobileBtn = document.getElementsByClassName('contacts-main-mobile')[0];
+    let refmobileBtn = document.querySelector('.contacts-main-mobile');
+    let menuActionBtn = document.getElementById('btns-action-menu-mobile');
+    menuActionBtn.innerHTML += getBtnsInMobileDetails(detailContact);
     refmobileBtn.innerHTML += getMobileBtnTemplate(detailContact);
 }
 
@@ -184,7 +186,10 @@ function openActionMenuMobile() {
 }
 
 function resetActionMenuMobile() {
-    document.getElementsByClassName('contacts-detailview-actions')[0].classList.remove('visually-hidden');
+    //NOTE -
+    document.querySelector('.contacts-detailview-actions').classList.remove('visually-hidden');
     document.getElementById('btn-add-contact-mobile').classList.remove('visually-hidden');
-    let refmobileBtn = document.getElementsByClassName('contacts-main-mobile')[0];
+    /*FIXME -  Dialog schließen*/
+    closeDialogByEvent(event, 'btns-action-menu-mobile');
+    let refmobileBtn = document.querySelector('.contacts-main-mobile');
 }

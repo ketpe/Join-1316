@@ -70,3 +70,17 @@ function getMobileBtnTemplate(cd) {
     </button>
     `
 }
+
+function getBtnsInMobileDetails(cd) {
+    return `<button type="button"
+                        onclick="openDialog('add-contact-dialog', ()  => renderEditContactIntoDialog('${cd.id}'))"
+                        class="btn-contact-action btn-contact-edit-mobile">
+                        <div class="action-icons action-edit-icon"></div>
+                        <p>Edit</p>
+                    </button>
+                    <button type="button" onclick="onDeleteContactMobile(event,this)" id="${cd.id}"
+                        class="btn-contact-action btn-contact-delete-mobile">
+                        <div class="action-icons action-delete-icon"></div>
+                        <p>Delete</p>
+                    </button>`
+}

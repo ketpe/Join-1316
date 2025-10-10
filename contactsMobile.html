@@ -19,7 +19,7 @@
                             <p class="contacts-subtitle-mobile">Better with a team</p>
                             <div role="img" aria-label="Headings separator" class="headings-separator-icon"></div>
                         </div>
-                        <button onclick="backToContactList()" class="btn-back-to-contact-list">
+                        <button type="button" onclick="backToContactList()" class="btn-back-to-contact-list">
                             <img src="./assets/arrow-left-default.svg" alt=" Back Arrow Icon">
                         </button>
                     </header>
@@ -27,7 +27,7 @@
                     </div>
                 </section>
             </article>
-            <button id="btn-add-contact-mobile"
+            <button type="button" id="btn-add-contact-mobile"
                 onclick="openDialog('add-contact-dialog-mobile',renderAddContactIntoDialogMobile)" type="button"
                 title="add New Contact" class="mobile-menu-btn">
                 <img class="btn-add-contacts-icon" src="./assets/person-add-icon.svg" alt="Add Contact Icon">
@@ -42,16 +42,6 @@
             <section id="btns-action-menu" class="btns-action-menu visually-hidden">
                 <dialog id="btns-action-menu-mobile" class="dialog-action-menu-mobile"
                     onclick=" closeDialogByEvent(event,'btns-action-menu-mobile')">
-                    <button onclick="openDialog('add-contact-dialog', ()  => renderEditContactIntoDialog('${cd.id}'))"
-                        class="btn-contact-action btn-contact-edit-mobile">
-                        <div class="action-icons action-edit-icon"></div>
-                        <p>Edit</p>
-                    </button>
-                    <button onclick="onDeleteContactMobile(event,this)" id="${cd.id}"
-                        class="btn-contact-action btn-contact-delete-mobile">
-                        <div class="action-icons action-delete-icon"></div>
-                        <p>Delete</p>
-                    </button>
 
                 </dialog>
             </section>

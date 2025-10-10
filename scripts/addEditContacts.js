@@ -265,5 +265,6 @@ function cancelAddContact(event) {
 
 function onDeleteContactMobile(event, element) {
     onDeleteContact(event, element);
+    closeDialogByEvent(event, 'btns-action-menu-mobile')
     backToContactList();
 }
