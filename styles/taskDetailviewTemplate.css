@@ -13,10 +13,7 @@
     max-width: 525px;
     min-width: 376px;
     max-height: 747px;
-    padding-top: 48px;
-    padding-right: 40px;
-    padding-bottom: 48px;
-    padding-left: 40px;
+    padding: 24px 32px;
     gap: 24px;
     display: flex;
     flex-direction: column;

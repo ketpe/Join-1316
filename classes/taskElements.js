@@ -1,12 +1,31 @@
+/**
+ * Class representing task elements for a task management interface.
+ * Provides methods to generate HTML components for task attributes such as title, description, due date, priority, contacts, categories, and subtasks.
+ * Designed to be used in conjunction with a task management application.
+ * Example usage:
+ * const taskElements = new TaskElements(currentInstance);
+ */
+
 class TaskElements{
+
+    /**
+     * Creates an instance of the TaskElements class.
+     * @param {*} currentInstance - The current instance of the task management application.
+     */
     constructor(currentInstance){
         this.currentInstance = currentInstance;
     }
 
-    getTitleComonents(isrequired = true, title = ""){
+    /**
+     * Gets the title component for the task.
+     * @param {boolean} isrequired - Indicates if the title is required.
+     * @param {string} title - The title text.
+     * @returns {string} - The HTML string for the title component.
+     */
+    getTitleComponent(isrequired = true, title = ""){
         return `
            <aside class="field-frame">
-                <label for="task-title">Title ${isrequired ? '<span aria-hidden="true">*</span>' : ''} </label>
+                <label class="task-mobile-label" for="task-title">Title ${isrequired ? '<span aria-hidden="true">*</span>' : ''} </label>
                 <input 
                     class="a-t-input" 
                     id="task-title" 
@@ -26,20 +45,32 @@ class TaskElements{
         `;
     }
 
+    /**
+     * Gets the description component for the task.
+     * @param {string} description - The description text.
+     * @param {boolean} isTaskEdit - Indicates if the task is being edited.
+     * @returns {string} - The HTML string for the description component.
+     */
     getDescriptionComponents(description = "", isTaskEdit = false){
         return `
             <aside class="field-frame">
-                <label for="task-description">Description</label>
+                <label class="task-mobile-label" for="task-description">Description</label>
                 <textarea class="a-t-text-area ${isTaskEdit ? 'a-t-text-area-task-edit' : ''}" name="task-description" id="task-description"
                     placeholder="Enter a Description">${description}</textarea>
             </aside>
         `;
     }
 
+    /**
+     * Gets the due date component for the task.
+     * @param {boolean} isrequired - Indicates if the due date is required.
+     * @param {string} dueDateValue - The due date value.
+     * @returns {string} - The HTML string for the due date component.
+     */
     getDueDateComponents(isrequired = true, dueDateValue = ""){
         return `
             <aside class="field-frame field-frame-due-date">
-                <label for="due-date">Due date ${isrequired ? '<span>*</span>' : ''}</label>
+                <label class="task-mobile-label" for="due-date">Due date ${isrequired ? '<span>*</span>' : ''}</label>
                 <div class="date-field">
                     <input class="a-t-input date-input" id="due-date-display" type="text" maxlength="10" placeholder="dd/mm/yyyy" name="due-date" aria-required="true" aria-describedby="a-t-due-date-error"
                         inputmode="numeric" onblur="${this.currentInstance}.dateFieldOnChange()"
@@ -62,18 +93,24 @@ class TaskElements{
         `;
     }
 
-
+    /**
+     * Fills the left container with the task elements for adding a new task.
+     */
     fillLeftContainerOnAddTask(){
         let leftContainer = document.querySelector(".a-t-f-i-left");
         if(!leftContainer){return;}
-        leftContainer.innerHTML += this.getTitleComonents();
+        leftContainer.innerHTML += this.getTitleComponent();
         leftContainer.innerHTML += this.getDescriptionComponents();
         leftContainer.innerHTML += this.getDueDateComponents();
     }
 
+    /**
+     * Gets the priority button components for the task.
+     * @returns {string} - The HTML string for the priority button components.
+     */
     getPrioButtonComponents(){
         return `
-            <legend for="task-priority-button">Priority</legend>
+            <legend class="task-mobile-label" for="task-priority-button">Priority</legend>
             <fieldset id="task-priority-button" class="a-t-priority-button-container">
                 <button id="btn-priority-alta" class="btn btn-priority prio-alta" type="button" name="Urgent" data-selected="false" data-name="alta"
                     onclick="${this.currentInstance}.addTaskPrioritySelect(this)">
@@ -100,10 +137,14 @@ class TaskElements{
         `;
     }
 
+    /**
+     * Gets the contact components for the task.
+     * @returns {string} - The HTML string for the contact components.
+     */
     getContactComponents(){
         return `
             <aside class="field-frame">
-                <label for="task-assign-to">Assigned to</label>
+                <label class="task-mobile-label" for="task-assign-to">Assigned to</label>
                 <div class="contact-select-container show-front">
                     <input class="a-t-input show-front a-t-contact-input" autocomplete="off" type="text" name="task-assign-to"
                         id="task-assign-to" value="Select contacts to assign" onclick="${this.currentInstance}.showAndHideContacts('show')"
@@ -125,6 +166,10 @@ class TaskElements{
         `;
     }
 
+    /**
+     * Gets the assigned badges for the task.
+     * @returns {string} - The HTML string for the assigned badges.
+     */
     getAssignedBadges(){
         return `
             <div id="contact-assigned-badge" class="contact-assigned-badge">
@@ -132,6 +177,10 @@ class TaskElements{
         `;
     }
 
+    /**
+     * Gets the category components for the task.
+     * @returns {string} - The HTML string for the category components.
+     */
     getCategoryComponents(){
         return `
             <aside class="field-frame">
@@ -156,6 +205,10 @@ class TaskElements{
         `;
     }
 
+    /**
+     * Gets the category list container for the task.
+     * @returns {string} - The HTML string for the category list container.
+     */
     getCategoryListContainer(){
         return `
             <div id="category-list-container" class="category-list-container">
@@ -165,10 +218,14 @@ class TaskElements{
         `;
     }
 
+    /**
+     * Gets the subtask components for the task.
+     * @returns {string} - The HTML string for the subtask components.
+     */
     getSubTaskComponents(){
         return `
             <aside class="field-frame">
-                <label for="task-sub-task">Subtasks</label>
+                <label class="task-mobile-label" for="task-sub-task">Subtasks</label>
                 <div class="sub-input-container">
                     <input class="a-t-input a-t-sub-input" type="text" name="task-sub-task" id="task-sub-task"
                         onclick="${this.currentInstance}.onclickSubtaskInput(this)" placeholder="Add new subtask" onkeydown="${this.currentInstance}.subtaskInputfieldPressEnter(event, this)">
@@ -186,6 +243,10 @@ class TaskElements{
         `;
     }
 
+    /**
+     * Gets the subtask list container for the task.
+     * @returns {string} - The HTML string for the subtask list container.
+     */
     getSubtaskListContainer(){
         return `
             <ul class="sub-task-list" aria-live="polite" aria-relevant="additions removals">
@@ -193,6 +254,9 @@ class TaskElements{
         `;
     }
 
+    /**
+     * Fills the right container with the task elements for adding a new task.
+     */
     fillRightContainerOnAddTask(){
         let rightContainer = document.querySelector('.a-t-f-i-right');
         rightContainer.innerHTML += this.getPrioButtonComponents();

@@ -9,6 +9,12 @@ class BoardTaskDetailViewUtils {
 
     currentTask;
 
+    /** 
+     * Creates an instance of the BoardTaskDetailViewUtils class.
+     * @param {string} currentTaskID - The ID of the current task.
+     * @param {Object} currentTask - The current task object.
+     * @param {Object} currentInstance - The current instance of the task.
+     */
     constructor(currentTaskID, currentTask, currentInstance) {
         this.currentTaskID = currentTaskID;
         this.currentTask = currentTask;

@@ -79,7 +79,7 @@ async function loadHtmlComponentsForMobile() {
 
     await Promise.all([
         includeHtml("header", "headerMobile.html"),
-        includeHtml("navbar", "navbarMobil.html"),
+        includeHtml("navbar", "navbarMobile.html"),
     ]);
     renderContacts()
 }

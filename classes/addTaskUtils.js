@@ -1,6 +1,7 @@
 /**
  * Utility class for managing tasks, contacts, and subtasks.
  * Provides methods for handling user IDs, contact assignments, and subtask management.
+ * Also includes caching functionality for task data in the add task view.
  */
 class AddTaskUtils {
 
@@ -11,19 +12,28 @@ class AddTaskUtils {
         subTasks: []
     };
 
-
+    /**
+     * Gets the cached data for the add task view.
+     * @returns {Object} The cached data for the add task view.
+     */
     static getAddTaskCache() {
         return this._addTaskCache;
     }
 
+    /**
+     * Sets the cached data for the add task view.
+     * @param {Object} patch - The data to update in the cache.
+     */
     static setAddTaskCache(patch) {
         this._addTaskCache = { ...this._addTaskCache, ...patch };
     }
 
-
+    /**
+     * Captures the current data from the add task view and updates the cache.
+     */
     static captureCurrentAddTaskDataFromView() {
 
-        if (!this.checkNodyIsNotEmpty()) { return; }
+        if (!this.checkBodyIsNotEmpty()) { return; }
         const { titleElement, descriptionElement, dueDateElement } = this.captureInputFields();
         const {category, assignedContacts, subTasks} = this.getTaskComponentVariablen;
 
@@ -40,6 +50,10 @@ class AddTaskUtils {
         });
     }
 
+    /**
+     * Gets the current task component variables, falling back to cached values if necessary.
+     * @returns {Object} An object containing the current category, assigned contacts, and subtasks.
+     */
     static get getTaskComponentVariablen(){
         const components = this.getTaskComponent;
         const category = components?.currentCategory?.id ? components.currentCategory : this._addTaskCache.category;
@@ -48,20 +62,36 @@ class AddTaskUtils {
         return {category, assignedContacts, subTasks};
     }
 
+    /**
+     * Gets the selected priority from the view or falls back to the cached priority.
+     * @returns {string} The selected priority or the cached priority.
+     */
     static get getPrioDataForCache(){
         const prioButtonsContainer = document.getElementById('task-priority-button');
         const selectedPrioButton = prioButtonsContainer?.querySelector('.btn[data-selected="true"]');
         return selectedPrioButton?.getAttribute('name') || this._addTaskCache.formData.priority || "Medium";
     }
 
+    /**
+     * Gets the current task component instance from the global window object.
+     * @returns {Object} The current task component instance.
+     */
     static get getTaskComponent(){
         return window.addTasktaskComponents || window.addTaskDialogTaskComponents;
     }
 
-    static checkNodyIsNotEmpty() {
+    /**
+     * Checks if the document body is not empty.
+     * @returns {boolean} True if the document body has children, false otherwise.
+     */
+    static checkBodyIsNotEmpty() {
         return document.body && document.body.children.length > 0 ? true : false;
     }
 
+    /**
+     * Applies the cached add task data to the view components.
+     * @param {Object} components - The components to apply the data to.
+     */
     static applyAddTaskDataToView(components) {
         if (!components) { return; }
         const { formData, category, assignedContacts, subTasks } = this._addTaskCache;
@@ -83,6 +113,10 @@ class AddTaskUtils {
 
     }
 
+    /**
+     * Applies form data into the input fields of the add task view.
+     * @param {Object} formData - The form data to apply.
+     */
     static applyFormDataIntoInputFields(formData) {
         const { titleElement, descriptionElement, dueDateElement } = this.captureInputFields();
         if (titleElement) { titleElement.value = formData.title || ""; }
@@ -90,7 +124,11 @@ class AddTaskUtils {
         if (dueDateElement) { dueDateElement.value = formData.dueDate || ""; }
     }
 
-
+    /**
+     * Applies the selected category to the view components.
+     * @param {Object} category - The category to apply.
+     * @param {Object} components - The components to apply the category to.
+     */
     static applyCategoryToView(category, components) {
         if (category?.title) {
             components.setCategoryInputfieldValue(category.title);
@@ -101,6 +139,10 @@ class AddTaskUtils {
         }
     }
 
+    /**
+     * Captures the input fields from the add task view.
+     * @returns {Object} An object containing the title, description, and due date elements.
+     */
     static captureInputFields() {
         const titleElement = document.getElementById('task-title');
         const descriptionElement = document.getElementById('task-description');
@@ -109,7 +151,9 @@ class AddTaskUtils {
         return { titleElement, descriptionElement, dueDateElement };
     }
 
-
+    /**
+     * Constructor for the AddTaskUtils class.
+     */
     constructor() { }
 
     /**
@@ -255,13 +299,21 @@ class AddTaskUtils {
         return currentSubTasks;
     }
 
+    /**
+     * Sets the mouseover function for the add task create button.
+     * @param {string} buttonID - The ID of the button element.
+     * @param {string} currentInstanceName - The name of the current instance to reference in the mouseover function.
+     */
     setAddTaskCreateBtnMouseFunction(buttonID, currentInstanceName) {
         const btn = document.getElementById(buttonID);
         if (!btn) { return; }
         btn.setAttribute('onmouseover', `${currentInstanceName}.addTaskSubmitOnMouse(this)`);
     }
 
-
+    /**
+     * Retrieves the necessary DOM elements for desktop layout.
+     * @returns {Object|null} An object containing the header, footer, and add task header elements, or null if any are missing.
+     */
     getElementsForDesktop() {
         const header = document.querySelector(".header-desktop");
         const footer = document.querySelector(".add-task-footer");
@@ -273,6 +325,10 @@ class AddTaskUtils {
         return null;
     }
 
+    /**
+     * Retrieves the necessary DOM elements for mobile layout.
+     * @returns {Object|null} An object containing the header, footer, and add task header elements, or null if any are missing.
+     */
     getElementsForMobile() {
         const header = document.querySelector(".top-container-mobile");
         const footer = document.querySelector(".buttom-container-mobile");
@@ -285,18 +341,26 @@ class AddTaskUtils {
         return null;
     }
 
+    /**
+     * Retrieves the necessary DOM elements for desktop layout in single view.
+     * @returns {Object|null} An object containing the header, footer, and add task header elements, or null if any are missing.
+     */
     getElementsForDesktopSingle() {
         const header = document.querySelector(".header-desktop");
         const addTaskHeader = document.querySelector(".add-task-head-mobile");
         const footer = null;
 
         if (header && addTaskHeader) {
-            return { header, footer, addTaskHeader }
+            return { header, footer, addTaskHeader };
         }
 
         return null;
     }
 
+    /**
+     * Retrieves the necessary DOM elements for the board dialog layout.
+     * @returns {Object|null} An object containing the header element, or null if it is missing.
+     */
     getElementsForBoardDialog(){
         const header = document.querySelector('.add-task-head');
 
@@ -307,6 +371,13 @@ class AddTaskUtils {
         return null;
     }
 
+    /**
+     * Calculates the available space for input fields.
+     * @param {number} aHeight - The total available height.
+     * @param {number} distanceFromButtom - The distance from the bottom of the viewport.
+     * @param {Object} elements - The DOM elements to consider.
+     * @returns {number} The calculated space for input fields.
+     */
     calculateSpaceForFields(aHeight, distanceFromButtom, { header, footer, addTaskHeader }) {
         const headerHeight = header?.offsetHeight || 0;
         const footerHeight = footer?.offsetHeight || 0;
@@ -314,7 +385,11 @@ class AddTaskUtils {
         return aHeight - (headerHeight + footerHeight + addTaskHeight + distanceFromButtom + 24);
     }
 
-
+    /**
+     * Measures the remaining space for input fields in the desktop layout.
+     * @param {number} aHeight - The total available height.
+     * @returns {Promise<number>} A promise that resolves to the calculated space for input fields.
+     */
     measureTheRemainingSpaceOfFieldsForDesktop(aHeight) {
         return this.measureWithRetry(
             aHeight,
@@ -325,6 +400,11 @@ class AddTaskUtils {
         );
     }
 
+    /**
+     * Measures the remaining space for input fields in the desktop layout in single view.
+     * @param {number} aHeight - The total available height.
+     * @returns {Promise<number>} A promise that resolves to the calculated space for input fields.
+     */
     measureTheRemainingSpaceOfFieldsForDesktopSingle(aHeight) {
         return this.measureWithRetry(
             aHeight,
@@ -335,7 +415,11 @@ class AddTaskUtils {
         );
     }
 
-
+    /**
+     * Measures the remaining space for input fields in the mobile layout.
+     * @param {number} aHeight - The total available height.
+     * @returns {Promise<number>} A promise that resolves to the calculated space for input fields.
+     */
     measureTheRemainingSpaceOfFieldsForMobile(aHeight) {
         return this.measureWithRetry(
             aHeight,
@@ -346,6 +430,11 @@ class AddTaskUtils {
         );
     }
 
+    /**
+     * Measures the remaining space for input fields in the board dialog layout.
+     * @param {number} dialogHeight - The total available height of the dialog.
+     * @returns {Promise<number>} A promise that resolves to the calculated space for input fields.
+     */
     measureTheRemainingSpaceOfFieldsForBoardSingle(dialogHeight){
         return this.measureWithRetry(
             dialogHeight,
@@ -356,7 +445,10 @@ class AddTaskUtils {
         );
     }
 
-
+    /**
+     * Measures the available space for input fields with retries.
+     * @param {number} aHeight - The total available height.            
+     */
     measureWithRetry(aHeight, getElementsFunction, offset, retries = 3, delay = 100) {
         return new Promise((resolve) => {
             let counter = 0;
@@ -377,6 +469,10 @@ class AddTaskUtils {
         });
     }
 
+    /**
+     * Gets the current size of the add task view.
+     * @returns {Array} An array containing the current height and width of the window.
+     */
     get getCurrentAddTaskSize() {
         return [window.innerHeight, window.innerWidth];
     }

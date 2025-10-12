@@ -37,8 +37,11 @@ async function onAddTaskDialogOpen() {
     currentDialogView == "desktop-single" ? changeAddTaskFormFieldSizeBoardDialogSingle() : changeAddTaskFormFieldSizeBoardDialog();
 }
 
-//TODO - Speichern der Daten vornehmen -> Achtung "Fallstrick" beachten
-
+/**
+ * Handles the resizing of the Add Task dialog.
+ * @param {Event} event - The resize event.
+ * @returns {Promise<void>}
+ */
 async function resizeAddTaskBoardDialog(event) {
     if (resizeLockDialog) { return; }
     resizeLockDialog = true;
@@ -62,7 +65,12 @@ async function resizeAddTaskBoardDialog(event) {
     resizeLockDialog = false;
 }
 
-//TODO - TaskComponents hier rausnehmen und nachladen, wie bei addTask.js
+/**
+ * Displays the Add Task dialog in desktop mode.
+ * Captures current form data, clears dialog content, and renders the Add Task components.
+ * Adjusts the dialog view for desktop presentation.
+ * @returns {Promise<void>}
+ */
 async function showAddTaskAsDialog() {
     AddTaskUtils.captureCurrentAddTaskDataFromView();
     clearDialogContent();
@@ -74,7 +82,12 @@ async function showAddTaskAsDialog() {
     await loadDataForAddTaskDialog();
 }
 
-
+/**
+ * Displays the Add Task dialog in desktop single-column mode.
+ * Captures current form data, clears dialog content, and renders the Add Task components.
+ * Adjusts the dialog view for single-column presentation.
+ * @returns {Promise<void>}
+ */
 async function showAddTaskAsDialogSingle() {
     AddTaskUtils.captureCurrentAddTaskDataFromView();
     clearDialogContent();
@@ -85,6 +98,11 @@ async function showAddTaskAsDialogSingle() {
     await loadDataForAddTaskDialog();
 }
 
+/**
+ * Loads data for the Add Task dialog.
+ * Initializes the TaskComponents class if not already done, sets up button functions, and applies data to the view.
+ * @returns {Promise<void>}
+ */
 async function loadDataForAddTaskDialog() {
     currentUser = addTaskUtils.readCurrentUserID();
     isGuest = addTaskUtils.isCurrentUserGuest();
@@ -98,10 +116,18 @@ async function loadDataForAddTaskDialog() {
     AddTaskUtils.applyAddTaskDataToView(addTaskDialogTaskComponents);
 }
 
+/**
+ * Clears the content of the Add Task dialog.
+ * This function removes all HTML content from the dialog's content area.
+ */
 function clearDialogContent() {
     document.getElementById('dialog-content').innerHTML = "";
 }
 
+/**
+ * Gives necessary functions to the board body element.
+ * @returns {void}      
+ */
 function giveFunctionsToBoardBody() {
     const body = document.querySelector('body');
     if (!body) { return; }
@@ -166,6 +192,11 @@ async function renderAddTaskIntoDialog() {
     taskElements.fillRightContainerOnAddTask();
 }
 
+/**
+ * Renders the Add Task content into the dialog in single-column mode.
+ * This function is asynchronous to accommodate the loading of HTML content.
+ * It uses the includeHtml function to load the 'addTaskContentSingle.html' file into the dialog's content area.
+ */
 async function renderAddTaskIntoDialogSingle() {
     await Promise.all([
         includeHtml("dialog-content", "addTaskContentSingle.html")
@@ -178,6 +209,11 @@ async function renderAddTaskIntoDialogSingle() {
 
 }
 
+/**
+ * Adjusts the form field sizes for the Add Task dialog in single-column mode.
+ * This function calculates the appropriate heights for the dialog and its fields based on the current window size.
+ * It ensures that the form fields are displayed correctly within the dialog.
+ */
 function changeAddTaskFormFieldSizeBoardDialogSingle() {
 
     const [height, width] = addTaskUtils.getCurrentAddTaskSize;
@@ -190,6 +226,12 @@ function changeAddTaskFormFieldSizeBoardDialogSingle() {
         });
 }
 
+/**
+ * Adjusts the form field sizes for the Add Task dialog in board mode.
+ * This function calculates the appropriate heights for the dialog and its fields based on the current window size.
+ * It ensures that the form fields are displayed correctly within the dialog.   
+ * @param {*} params 
+ */
 function changeAddTaskFormFieldSizeBoardDialog(params) {
     const [height, width] = addTaskUtils.getCurrentAddTaskSize;
     const dialog = document.getElementById('add-task-dialog');
@@ -197,7 +239,10 @@ function changeAddTaskFormFieldSizeBoardDialog(params) {
     dialog.style.height = heightDialog + "px";
 }
 
-
+/**
+ * Changes the dialog style to single-column mode.
+ * @returns {void}
+ */
 function changeDialogStyleToSingle() {
     const dialog = document.getElementById('add-task-dialog');
     if (!dialog) { return; }

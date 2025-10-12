@@ -1,14 +1,30 @@
+/**
+ * Class for validating and managing due date input for tasks.
+ * Ensures the due date is in the correct format (DD/MM/YYYY) and not in the past.
+ * Provides feedback to the user through UI components.
+ */
+
 class DueDateCheck {
 
     dueDate = "";
     result = false;
 
+    /**
+     * Creates an instance of the DueDateCheck class.
+     * @param {string} dueDateValue - The due date value to validate.
+     * @param {string} currentDueDate - The current due date value.
+     * @param {Object} taskComponents - The task components for UI feedback.
+     */
     constructor(dueDateValue, currentDueDate, taskComponents) {
         this.dueDateValue = dueDateValue;
         this.currentDueDate = currentDueDate;
         this.taskComponents = taskComponents;
     }
 
+    /**
+     * Starts the due date validation process.
+     * @returns {Array} The validation result and the due date.
+     */
     startDueDateValidation() {
         if (this.dueDateValue) {
             return [this.checkTheDateValue(this.dueDateValue), this.dueDate];
@@ -16,11 +32,13 @@ class DueDateCheck {
             this.dueDateSetError();
             return [this.result = false, ""];
         }
-        
-        return [this.result = true, this.dueDate];
     }
 
-
+    /**
+     * Checks the validity of the provided date value.
+     * @param {string} dateValue - The date value to check.
+     * @returns {boolean} True if the date is valid, false otherwise.
+     */
     checkTheDateValue(dateValue) {
 
         const dateCleanValue = (dateValue ?? "").trim();
@@ -132,8 +150,6 @@ class DueDateCheck {
     isNumeric(n) {
         return !isNaN(parseFloat(n)) && isFinite(n);
     }
-
-    //FIXME - prüfen Kommt aus der taskComponent
 
     /**
      * Highlight the date field so the user can see that their entry was invalid.

@@ -2,6 +2,12 @@
 import { auth, db, onAuthStateChanged } from "./scripts/firebase.js";
 import { ref, set, get, getDatabase, child, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
+/**
+ * Includes HTML content into a target element.
+ * @param {string} targetId 
+ * @param {string} file 
+ * @returns {Promise<Element|string>}
+ */
 async function includeHtml(targetId, file) {
 
   try {
@@ -22,6 +28,12 @@ async function includeHtml(targetId, file) {
 
 }
 
+/**
+ * Includes HTML content into a specified node.
+ * @param {string} nodeName 
+ * @param {string} file 
+ * @returns {Promise<Element|string>}     
+ */
 async function includeHtmlForNode(nodeName, file) {
 
   try {
@@ -42,10 +54,18 @@ async function includeHtmlForNode(nodeName, file) {
 
 }
 
+/** Sets the login status in session storage.
+ * @param {string} setLogStatus 
+ */
 function setLogStatus(setLogStatus) {
   sessionStorage.setItem('logInStatus', setLogStatus);
 };
 
+/**
+ * Gets the current login status from session storage.
+ * @returns {string}  The current login status from session storage.
+ * Redirects to the login page if no status is found.
+ */
 function getLogStatus() {
   let logInStatus = sessionStorage.getItem('logInStatus');
   if (!logInStatus) {

@@ -268,7 +268,7 @@ class EditTaskSafeUtil{
         const fb = new FirebaseDatabase();
         for(let i = 0; i < contactListForAdd.length; i++){
             const caID = getNewUid();
-            const ca = new ContactAssinged(caID, this.task['id'], contactListForAdd[i]['id']);
+            const ca = new ContactAssigned(caID, this.task['id'], contactListForAdd[i]['id']);
             const result = await fb.getFirebaseLogin(() => fb.putData(`taskContactAssigned/${caID}`, ca));
             if(!result){return false;}
         }
@@ -307,7 +307,7 @@ class EditTaskSafeUtil{
         for(let i = 0; i < newSubtasks.length; i++){
             maxPos++;
             const subTask = new Subtask(newSubtasks[i]['id'], newSubtasks[i]['title'], false, maxPos);
-            const subTaskToTask = new SubstaskToTask(getNewUid(), this.task['id'], subTask.id);
+            const subTaskToTask = new SubtaskToTask(getNewUid(), this.task['id'], subTask.id);
             const resultSubtask = await fb.getFirebaseLogin(() => fb.putData(`subTasks/${subTask.id}`, subTask));
             if(!resultSubtask){return false;}
             const resultTaskToSubstask = await fb.getFirebaseLogin(() => fb.putData(`taskSubtask/${subTaskToTask.id}`, subTaskToTask));

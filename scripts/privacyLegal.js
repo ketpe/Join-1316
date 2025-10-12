@@ -2,7 +2,10 @@ let backToLoginPage = false;
 let resizeLockPandL = false;
 
 
-
+/**
+ *  Initializes the Privacy Policy or Legal Notice page on load.    
+ * @param {string} privacyOrLegal 
+ */
 async function privacyOrLegalLoad(privacyOrLegal) {
     let param = new URLSearchParams(document.location.search);
     let pageParam = param.get('backToLogin');
@@ -18,6 +21,12 @@ async function privacyOrLegalLoad(privacyOrLegal) {
     
 }
 
+/**
+ * Handles window resize events to adjust the Privacy Policy or Legal Notice page layout.
+ * Uses a lock to prevent multiple simultaneous executions.
+ * @param {string} privacyOrLegal 
+ * @returns {void}
+ */
 async function privacyOrLegalResize(privacyOrLegal){
     if(resizeLockPandL){return;}
     resizeLockPandL = true;
@@ -29,11 +38,13 @@ async function privacyOrLegalResize(privacyOrLegal){
         await loadInDesktopMode(privacyOrLegal);
     }
 
-
     resizeLockPandL = false;
 }
 
-
+/**
+ * Loads the Privacy Policy or Legal Notice content in desktop mode.
+ * @param {string} pOrL 
+ */
 async function loadInDesktopMode(pOrL) {
     
     const content = pOrL == "privacy" ? "privacyPolicyDesktopContent.html" : "legalNoticeDesktopContent.html";
@@ -57,6 +68,10 @@ async function loadInDesktopMode(pOrL) {
     setPrivacyOrLegalButtonActiv(pOrL, "desktop");
 }
 
+/**
+ * Loads the Privacy Policy or Legal Notice content in mobile mode.
+ * @param {string} pOrL 
+ */
 async function loadInMobileMode(pOrL) {
     const content = pOrL == "privacy" ? "privacyPolicyMobileContent.html" : "legalNoticeMobileContent.html";
     clearPorLBody();
@@ -72,13 +87,19 @@ async function loadInMobileMode(pOrL) {
         await includeHtmlForNode("body", content);
         await Promise.all([
             includeHtml("header", "headerMobile.html"),
-            includeHtml("navbar", "navbarMobil.html")
+            includeHtml("navbar", "navbarMobile.html")
         ]);
     }
 
     setPrivacyOrLegalButtonActiv(pOrL, "mobile");
 }
 
+/**
+ * Sets the active state of the compliance button based on the current view.
+ * @param {string} pOrL 
+ * @param {string} desktopOrMobile 
+ * @returns {void}
+ */
 function setPrivacyOrLegalButtonActiv(pOrL, desktopOrMobile){
     const buttonClass = desktopOrMobile == "desktop" ? ".compliance-button" : '.nav-mobile-btn-compliance';
     const activeClass = desktopOrMobile == "desktop" ? "compliance-button-active" : "nav-mobile-btn-active";
@@ -95,10 +116,18 @@ function setPrivacyOrLegalButtonActiv(pOrL, desktopOrMobile){
     });
 }
 
+/**
+ * Clears the body content of the Privacy Policy or Legal Notice page.
+ * @returns {void}
+ */
 function clearPorLBody() {
     document.querySelector('body').innerHTML = "";
 }
 
+/**
+ * Navigates back to the source page, either the login page or the previous page in history.
+ * @returns {void}
+ */
 function backToSourcePage(){
     if(backToLoginPage){
         navigateToLogin();

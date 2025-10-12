@@ -58,7 +58,7 @@ class CreateNewTask {
             subTaskArray.push(new Subtask(getNewUid(), this.subtasks[i]['title'], false, this.subtasks[i]['position']));
         }
 
-        await this.addTaskContactAssinged(currentTask, subTaskArray);
+        await this.addTaskContactAssigned(currentTask, subTaskArray);
     }
 
     /**
@@ -68,14 +68,14 @@ class CreateNewTask {
      * @param {Array} subTaskArray  Array of subtasks to be associated with the task.
      * @returns {Promise<void>} A promise that resolves when the contacts have been associated with the task.
      */
-    async addTaskContactAssinged(currentTask, subTaskArray) {
+    async addTaskContactAssigned(currentTask, subTaskArray) {
 
         let newContactAssignedArray = [];
 
-        // newContactAssignedArray.push(new ContactAssinged(getNewUid(), currentTask.id, this.currentUserId));
+        // newContactAssignedArray.push(new ContactAssigned(getNewUid(), currentTask.id, this.currentUserId));
 
         for (let i = 0; i < this.contactAssignArray.length; i++) {
-            newContactAssignedArray.push(new ContactAssinged(getNewUid(), currentTask.id, this.contactAssignArray[i]['id']));
+            newContactAssignedArray.push(new ContactAssigned(getNewUid(), currentTask.id, this.contactAssignArray[i]['id']));
         }
 
         await this.subtaskToTaskConnection(currentTask, subTaskArray, newContactAssignedArray);
@@ -83,7 +83,7 @@ class CreateNewTask {
 
     /**
      * Connects subtasks to the main task and assigns contacts to the task.
-     * This method creates an array of SubstaskToTask objects to establish the relationship between the main task and its subtasks.
+     * This method creates an array of SubtaskToTask objects to establish the relationship between the main task and its subtasks.
      * It then calls the method to write all collected data to the database.
      * @returns {Promise<void>} A promise that resolves when the subtasks have been connected to the task and all data has been written to the database.
      * @param {Task} currentTask
@@ -94,7 +94,7 @@ class CreateNewTask {
         let subtaskToTaskArray = [];
 
         for (let i = 0; i < subTaskArray.length; i++) {
-            subtaskToTaskArray.push(new SubstaskToTask(getNewUid(), currentTask.id, subTaskArray[i]['id']));
+            subtaskToTaskArray.push(new SubtaskToTask(getNewUid(), currentTask.id, subTaskArray[i]['id']));
         }
 
         await this.addTaskCreateDBEntries(currentTask, subTaskArray, assignedContactArray, subtaskToTaskArray)

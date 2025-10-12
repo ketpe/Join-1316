@@ -93,6 +93,10 @@ function getRandomColor() {
     return colorClasses[randomIndex];
 }
 
+/**
+ * Generates a new unique identifier (UUID).
+ * @returns {string} A new UUID.
+ */
 function getNewUid() {
     return crypto.randomUUID();
 }
@@ -125,6 +129,9 @@ function toggleBorderColorByError(elementId = null, loginErrorBorder = false) {
     });
 }
 
+/** Get the current window size.
+ * @returns {number[]} An array containing the height and width of the window.
+ */
 function getCurrentWindowSize() {
     return [window.innerHeight, window.innerWidth];
 }

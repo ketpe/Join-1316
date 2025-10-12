@@ -39,7 +39,7 @@ let subTask = {
 };
 
 //Jeder Task mit einen oder mehrere Kontakten haben. Beispiel Task:1 und Contact:2 / Task:1 und Contact:3 Beziehung 1 > n
-let taskContactAssinged = {
+let taskContactAssigned = {
     'id': 112,
     'taskID': 1,
     'contatactId' : 1

@@ -1,3 +1,6 @@
+/**
+ * Represents a task in the system.
+ */
 class Task {
     constructor(id, title, description, dueDate, priority, category, taskStateCategory) {
         this.id = id;
@@ -11,6 +14,9 @@ class Task {
 
 }
 
+/**
+ * Represents a subtask in the system.
+ */ 
 class Subtask {
     constructor(id, title, taskChecked, position) {
         this.id = id;
@@ -20,7 +26,10 @@ class Subtask {
     }
 }
 
-class ContactAssinged {
+/**
+ * Represents a contact assigned to a task.
+ */
+class ContactAssigned {
     constructor(id, taskID, contactId) {
         this.id = id;
         this.taskID = taskID;
@@ -28,7 +37,10 @@ class ContactAssinged {
     }
 }
 
-class SubstaskToTask {
+/** 
+ * Represents the association between a subtask and its parent task.
+ */
+class SubtaskToTask {
     constructor(id, maintaskID, subTaskID) {
         this.id = id;
         this.maintaskID = maintaskID;
@@ -36,7 +48,10 @@ class SubstaskToTask {
     }
 }
 
-class Contact{
+/** 
+ * Represents a contact in the system.
+ */
+class Contact {
     constructor(id, firstname, lastname, password, email, phone, initial, initialColor) {
         this.id = id || getNewUid();
         this.firstname = firstname;

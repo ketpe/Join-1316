@@ -9,12 +9,14 @@ let currentUser = "";
 let isGuest = false;
 let addTaskUtils = new AddTaskUtils();
 let addTasktaskComponents = null;
-let currentView = ""; //ich meine hier Desktop oder Mobile
+let currentView = "";
 let resizeLock = false;
 
 
 /**
- * Initializes the Add Task view by rendering necessary components and loading data.
+ * Initializes the Add Task page on load.
+ * Sets up the layout based on the current window size and adjusts form field sizes.
+ * @returns {Promise<void>}
  */
 async function onLoadAddTask() {
     const [height, width] = addTaskUtils.getCurrentAddTaskSize;
@@ -29,7 +31,12 @@ async function onLoadAddTask() {
     changeAddTaskFormFieldSize(height, width, currentView);
 }
 
-
+/** 
+ * Handles window resize events to adjust the Add Task page layout.
+ * Uses a lock to prevent multiple simultaneous executions.
+ * Adjusts the layout based on predefined breakpoints and resizes form fields accordingly.
+ * @returns {Promise<void>}
+ */
 async function addTaskPageResize() {
     if (resizeLock) { return; }
     resizeLock = true;
@@ -53,7 +60,12 @@ async function addTaskPageResize() {
     }
 }
 
-
+/**
+ * Changes the Add Task view to desktop mode.
+ * Loads the necessary HTML components and adjusts the view to standard mode.
+ * Also loads data for the Add Task view and sets the navigation button as active.
+ * @returns {Promise<void>}
+ */
 async function changeAddTaskToDesktop() {
     currentView = DESKTOP;
     await loadHtmlComponentsForDesktop();
@@ -63,6 +75,12 @@ async function changeAddTaskToDesktop() {
 
 }
 
+/**
+ * Changes the Add Task view to desktop single-column mode.
+ * Loads the necessary HTML components and adjusts the view to standard mode.
+ * Also loads data for the Add Task view and sets the navigation button as active.
+ * @returns {Promise<void>}
+ */
 async function changeAddTaskToDesktopSingle() {
     currentView = DESKTOPSINGLE;
     await loadHtmlComponentsForDesktopSingle();
@@ -70,6 +88,12 @@ async function changeAddTaskToDesktopSingle() {
     setNavigationButtonActive('addTask', "desktop");
 }
 
+/**
+ * Changes the Add Task view to mobile mode.
+ * Loads the necessary HTML components and loads data for the Add Task view.
+ * Also sets the navigation button as active.
+ * @returns {Promise<void>}
+ */
 async function changeAddTaskToMobile() {
     currentView = MOBILE;
     await loadHtmlComponentsForMobile();
@@ -77,6 +101,12 @@ async function changeAddTaskToMobile() {
     setNavigationButtonActive('addTask', "mobile");
 }
 
+/**
+ * Changes the size of the form fields in the Add Task view based on the current layout.
+ * @param {number} height The current height of the form fields.
+ * @param {number} width The current width of the form fields.
+ * @param {string} currentView The current view mode (mobile, desktop, etc.).
+ */
 function changeAddTaskFormFieldSize(height, width, currentView) {
     if (currentView == MOBILE) {
         addTaskUtils.measureTheRemainingSpaceOfFieldsForMobile(height)
@@ -96,7 +126,12 @@ function changeAddTaskFormFieldSize(height, width, currentView) {
     }
 }
 
-
+/**
+ * Loads the HTML components for the Add Task view in desktop mode.
+ * Clears the current body content and includes necessary HTML files for the layout.
+ * Fills the HTML with content after loading the components.
+ * @returns {Promise<void>}
+ */
 async function loadHtmlComponentsForDesktop() {
     clearAddTaskHtmlBody();
     await includeHtmlForNode("body", "addTaskDesktop.html");
@@ -110,6 +145,12 @@ async function loadHtmlComponentsForDesktop() {
     await fillHtmlWithContent();
 }
 
+/**
+ * Loads the HTML components for the Add Task view in desktop single-column mode.
+ * Clears the current body content and includes necessary HTML files for the layout.
+ * Fills the HTML with content after loading the components.
+ * @returns {Promise<void>}
+ */
 async function loadHtmlComponentsForDesktopSingle() {
     clearAddTaskHtmlBody();
     await includeHtmlForNode("body", "addTaskDesktop.html");
@@ -124,14 +165,20 @@ async function loadHtmlComponentsForDesktopSingle() {
 
 }
 
+/**
+ * Loads the HTML components for the Add Task view in mobile mode.
+ * Clears the current body content and includes necessary HTML files for the layout.
+ * Fills the HTML with content after loading the components.
+ * @returns {Promise<void>}
+ */
 async function loadHtmlComponentsForMobile() {
     clearAddTaskHtmlBody();
 
-    await includeHtmlForNode("body", "addTaskMobile.html")
+    await includeHtmlForNode("body", "addTaskMobile.html");
 
     await Promise.all([
         includeHtml("header", "headerMobile.html"),
-        includeHtml("navbar", "navbarMobil.html"),
+        includeHtml("navbar", "navbarMobile.html"),
         includeHtml("add-task-content-mobile", "addTaskContentMobile.html")
     ]);
 
@@ -140,11 +187,19 @@ async function loadHtmlComponentsForMobile() {
     await fillMobileHtmlWithContent();
 }
 
-
+/**
+ * Clears the current HTML body content.
+ * This is used before loading new HTML components for the Add Task view.
+ */
 function clearAddTaskHtmlBody() {
     document.querySelector('body').innerHTML = "";
 }
 
+/** Fills the HTML with content for the Add Task view.
+ * Initializes the TaskElements class and populates the left and right containers.
+ * Sets up the form submission function and button click handlers.
+ * @returns {Promise<void>}
+ */
 async function fillHtmlWithContent() {
     const taskElements = new TaskElements("addTasktaskComponents");
     taskElements.fillLeftContainerOnAddTask();
@@ -153,6 +208,12 @@ async function fillHtmlWithContent() {
     addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTasktaskComponents');
 }
 
+/**
+ * Fills the mobile HTML with content for the Add Task view.
+ * Initializes the AddTaskMobileUtil class and renders the mobile components.
+ * Sets up the form submission function.
+ * @returns {Promise<void>}
+ */
 async function fillMobileHtmlWithContent() {
     const taskMobileUtil = new AddTaskMobileUtil("addTasktaskComponents");
     await taskMobileUtil.startRenderAddTaskMobile();
@@ -160,7 +221,10 @@ async function fillMobileHtmlWithContent() {
     //addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTasktaskComponents');
 }
 
-
+/**
+ * Sets the form submission function for the Add Task view.
+ * @returns {void}
+ */
 function setAddTaskFormSubmitFunction() {
     const form = document.getElementById('add-task-form');
     if (!form) { return; }

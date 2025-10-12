@@ -1,3 +1,13 @@
+/**
+ * Class to manage task components including contacts, categories, priorities, and subtasks.
+ * This class provides methods to load and manipulate task-related data.
+ * It interacts with Firebase for data retrieval and updates the UI accordingly.
+ * It also includes validation for task title and due date.
+ * It is designed to be used in a task management application.
+ * Example usage:
+ * const taskComponents = new TaskComponents(currentUser, 'taskInstance');
+ */
+
 class TaskComponents{
 
     contactAllListFromDB = [];
@@ -14,18 +24,31 @@ class TaskComponents{
     currentTask = null;
     currentTaskId = "";
 
+    /**     
+     * Constructor for the TaskComponents class.
+     * @param {User} currentUser - The current user object.
+     * @param {string} currentInstance - The current instance identifier.
+     */
     constructor(currentUser, currentInstance) {
         this.currentUser = currentUser;
         this.currentInstance = currentInstance;
     }
 
+    /**
+     * Initializes the task components and loads necessary data.
+     * @returns {Promise<void>}
+     */
     async run() {
         await this.loadContactsAllFromDB();
         await this.loadCategoriesFromDB();
         this.setNewPriority("Medium");
     }
 
-
+    /**
+     * Runs the task components with the specified data as view.
+     * @param {Object} currentTask - The current task object.
+     * @returns {Promise<void>}
+     */
     async runWithDataAsView(currentTask) {
         this.currentTask = currentTask;
         this.currentTaskId = this.currentTask['id'];
@@ -37,6 +60,11 @@ class TaskComponents{
         this.currentSubTasks = currentTask['subTasks'];
     }
 
+    /**
+     * Runs the task components with the specified data as edit.
+     * @param {Object} currentTask - The current task object.
+     * @returns {Promise<void>}
+     */
     async runWithDataAsEdit(currentTask) {
         this.currentTask = currentTask;
         this.currentTaskId = this.currentTask['id'];
@@ -53,6 +81,10 @@ class TaskComponents{
         this.readCurrentTaskDateIntoVariables();
     }
 
+    /**
+     * Reads the current task date into variables.
+     * @returns {void}
+     */
     readCurrentTaskDateIntoVariables(){
         this.currentSubTasks = this.currentTask['subTasks'];
         this.currentDueDate = this.currentTask['dueDate'];
@@ -60,6 +92,10 @@ class TaskComponents{
         this.currentCategory = this.currentTask['categoryData'];
     }
 
+    /**
+     * Adds the task title on input change.
+     * @returns {void}
+     */
     addTaskTitleOnInput() {
         let titleValue = document.getElementById('task-title');
         if (!titleValue.value) {
@@ -70,6 +106,10 @@ class TaskComponents{
         }
     }
 
+    /**
+     * Gets the task details for submission.
+     * @returns {Array} - The task details array.
+     */
     get getTaskDetails() {
         return [this.currentPriority, this.currentCategory['id'], this.currentSubTasks, this.currentContactAssignList];
     }
@@ -197,8 +237,6 @@ class TaskComponents{
         this.currentDueDate = result ? dueDate : "";
 
     }
-
-
 
     /**
      * Handles the click event on the date icon to show the date picker.
@@ -339,6 +377,11 @@ class TaskComponents{
         }
     }
 
+    /**
+     * Sets the onclick function for the input field and button for showing/hiding contacts.
+     * @param {string} showOrHide - Determines whether to show or hide the contact list.
+     * @returns {void}
+     */
     setInputAndButtonOnclickFunctionForContacts(showOrHide){
         const buttonShowOhrHide = document.getElementById('show-and-hide-contacts');
         buttonShowOhrHide.setAttribute('onclick', (showOrHide == "show" ? `${this.currentInstance}.showAndHideContacts("hide")` : `${this.currentInstance}.showAndHideContacts("show")`));
