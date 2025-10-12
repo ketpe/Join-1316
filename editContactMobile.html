@@ -1,0 +1,57 @@
+<main class="main-add-contact-mobile">
+    <div class="close-contact-overlay-mobile">
+        <button onclick="closeDialogByEvent(event, 'add-contact-dialog')" class="btn-overlay-close"
+            id="btn-overlay-close-contacts" aria-label="Close dialog" type="button">
+            <div id="btn-overlay-close-div" role="img" title="Close dialog icon"></div>
+        </button>
+    </div>
+    <section class="left-container-contacts-mobile">
+        <aside class="add-contacts-headlines-mobile">
+            <p class="headline-add-contacts join-h1-mobile-contact-dialog">Edit contact</p>
+            <div class="add-contacts-line"></div>
+        </aside>
+    </section>
+    <section class="right-container-contacts-mobile">
+        <section class="add-contact-form-and-picture-mobile">
+            <div class="initial-avatar" id="initial-avatar">
+                <p class="detail-view-initials"></p>
+            </div>
+            <form class="add-contact-form-mobile form-for-add-contact" action="/post" method="dialog"
+                onsubmit="return editContactMobile(event)">
+
+                <div class="add-contact-input-field-container-mobile">
+                    <label for="contact-name" class="visually-hidden">Contact Name</label>
+                    <input oninput="contactNameValidation(this.value)" type="text" id="contact-name"
+                        class="add-contact-input-mobile input-name" placeholder="Name">
+                    <label for="email" class="visually-hidden">Email</label>
+                    <input oninput="contactEmailValidation(this.value)" type="email" id="contact-email"
+                        class="add-contact-input-mobile input-mail" placeholder="Email">
+                    <label for="phone" class="visually-hidden">Phone</label>
+                    <input oninput="contactPhoneValidation(this.value)" type="tel" id="contact-phone"
+                        class="add-contact-input-mobile input-phone" placeholder="Phone">
+                    <div class="contact-error-text-container">
+                        <p id="contact-phone-required" class="error-text-hidden">This field is required. +1234567890
+                        </p>
+                        <p id="contact-email-required" class="error-text-hidden">This field is required.
+                            example@domain.com</p>
+                        <p id="contact-name-required" class="error-text-hidden">This field is required. John Doe
+                        </p>
+                    </div>
+                    <div class="login-form-buttons-mobile">
+                        <button type="button" class=" btn-clear-cancel btn btn-outline btn-md"
+                            onclick="cancelAddContact()">
+                            <p class="">Cancel</p>
+                            <div aria-label="Close dialog" role="img" class="btn-cancel-icon"></div>
+                        </button>
+                        <button type="submit" onmouseover="toggleBtnEditContact(this)"
+                            class="btn-create btn btn-fill btn-md" id="btn-create-contact" disabled="true">
+                            <p class="">Save</p>
+                            <div aria-label="Save contact" role="img" class="btn-create-icon"></div>
+                        </button>
+                    </div>
+
+                </div>
+
+            </form>
+        </section>
+</main>

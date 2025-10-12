@@ -38,11 +38,11 @@ function getContactDetailView(cd, mobileSuffix) {
     <div class="name-and-action-panel">
         <div class="contacts-detailview-name${mobileSuffix}">${cd.firstname} ${cd.lastname}</div>
         <div class="contacts-detailview-actions">
-            <button onclick="openDialog('add-contact-dialog', ()  => renderEditContactIntoDialog('${cd.id}'))" class="btn-contact-action btn-contact-edit">
+            <button type="button" onclick="openDialog('add-contact-dialog', ()  => renderEditContactIntoDialog('${cd.id}'))" class="btn-contact-action btn-contact-edit">
                 <div class="action-icons action-edit-icon"></div>
                 <p>Edit</p>
             </button>
-            <button onclick="onDeleteContact(event,this)" id="${cd.id}" class="btn-contact-action btn-contact-delete">
+            <button type="button" onclick="onDeleteContact(event,this)" id="${cd.id}" class="btn-contact-action btn-contact-delete">
                 <div class="action-icons action-delete-icon"></div>
                 <p>Delete</p>
             </button>
@@ -73,7 +73,7 @@ function getMobileBtnTemplate(cd) {
 
 function getBtnsInMobileDetails(cd) {
     return `<button type="button"
-                        onclick="openDialog('add-contact-dialog', ()  => renderEditContactIntoDialog('${cd.id}'))"
+                        onclick="openDialog('add-contact-dialog-mobile', ()  => renderEditContactIntoDialogMobile('${cd.id}'))"
                         class="btn-contact-action btn-contact-edit-mobile">
                         <div class="action-icons action-edit-icon"></div>
                         <p>Edit</p>
@@ -83,4 +83,8 @@ function getBtnsInMobileDetails(cd) {
                         <div class="action-icons action-delete-icon"></div>
                         <p>Delete</p>
                     </button>`
+}
+
+function getListContacttemplate(id) {
+    return `<li class="contact-item obj contact-item-active" id="${id}" active="false" onclick="openContactDetail(this)">`
 }

@@ -89,6 +89,16 @@ async function editContact(event) {
     renderContacts();
 
 }
+
+async function editContactMobile(event) {
+    if (event) event.preventDefault();
+    const buttonID = event.submitter.id;
+    const contact = createUpdateContactObject();
+    const fb = new FirebaseDatabase();
+    const data = await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${buttonID}`, contact));
+    openContactDetail(buttonID);
+}
+
 /**
  *
  * @returns {Object} - The updated contact object.
@@ -243,7 +253,7 @@ function toggleBtnEditContact(element) {
  */
 function renderEditContactIntoDialog(id) {
     const fb = new FirebaseDatabase();
-    includeHtml("dialog-content-contacts", "editContact.html").then(() => {
+    includeHtml("add-contact-dialog-mobile", "editContact.html").then(() => {
         fb.getDataByKey("id", id, "contacts").then(contact => {
             document.getElementById('contact-name').value = `${contact.firstname} ${contact.lastname}`;
             document.getElementById('contact-email').value = contact.email;
@@ -255,6 +265,22 @@ function renderEditContactIntoDialog(id) {
         });
     });
 }
+
+function renderEditContactIntoDialogMobile(id) {
+    const fb = new FirebaseDatabase();
+    includeHtml("add-contact-dialog-mobile", "editContactMobile.html").then(() => {
+        fb.getDataByKey("id", id, "contacts").then(contact => {
+            document.getElementById('contact-name').value = `${contact.firstname} ${contact.lastname}`;
+            document.getElementById('contact-email').value = contact.email;
+            document.getElementById('contact-phone').value = contact.phone;
+            document.getElementById('initial-avatar').classList.add(contact.initialColor);
+            document.querySelector('#initial-avatar .detail-view-initials').innerText = contact.initial;
+            document.querySelector('.btn-create').id = contact.id;
+            document.querySelector('.btn-clear-cancel').id = contact.id;
+        });
+    });
+}
+
 /**
  * @description - Cancel the addition of a new contact. This function resets the validation status of the contact form fields.
  * @param {*} event
@@ -265,6 +291,8 @@ function cancelAddContact(event) {
 
 function onDeleteContactMobile(event, element) {
     onDeleteContact(event, element);
-    closeDialogByEvent(event, 'btns-action-menu-mobile')
     backToContactList();
+    const dialog = document.getElementById('btns-action-menu-mobile');
+    if (dialog && dialog.open) dialog.close();
 }
+

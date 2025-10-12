@@ -91,3 +91,12 @@ async function renderDetailViewTemplate(taskId) {
 function renderAddContactIntoDialogMobile() {
     includeHtml("dialog-content-contacts", "addContactMobile.html");
 }
+function renderEditContactIntoDialog(contactId) {
+    includeHtml("dialog-content-contacts", "editContact.html")
+    getContactData(contactId);
+}
+function renderEditContactIntoDialogMobile(contactId) {
+    includeHtml("add-contact-dialog-mobile", "editContactMobile.html");
+    getContactData(contactId);
+}
+

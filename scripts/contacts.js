@@ -161,6 +161,7 @@ function addNewActionBtns(detailContact) {
     document.getElementById('btn-add-contact-mobile').classList.add('visually-hidden');
     let refmobileBtn = document.querySelector('.contacts-main-mobile');
     let menuActionBtn = document.getElementById('btns-action-menu-mobile');
+    menuActionBtn.innerHTML = "";
     menuActionBtn.innerHTML += getBtnsInMobileDetails(detailContact);
     refmobileBtn.innerHTML += getMobileBtnTemplate(detailContact);
 }
@@ -173,9 +174,9 @@ function backToContactList() {
     renderDetailContact.innerHTML = "";
     resetActionMenuMobile()
     renderContacts();
-    // renderDetailContact.innerHTML = getContactDetailView(detailContact, "-mobile");
+
 }
-/*FIXME - möglicherweise als mini Dialog um bauen?*/
+
 function openActionMenuMobile() {
     const actionMenu = document.querySelector('.detail-contact-actions-mobile');
     actionMenu.style.display = "flex";
@@ -186,10 +187,11 @@ function openActionMenuMobile() {
 }
 
 function resetActionMenuMobile() {
-    //NOTE -
-    document.querySelector('.contacts-detailview-actions').classList.remove('visually-hidden');
     document.getElementById('btn-add-contact-mobile').classList.remove('visually-hidden');
-    /*FIXME -  Dialog schließen*/
     closeDialogByEvent(event, 'btns-action-menu-mobile');
     let refmobileBtn = document.querySelector('.contacts-main-mobile');
+    let btnToRemove = refmobileBtn.querySelector('.mobile-menu-btn');
+    if (btnToRemove) {
+        btnToRemove.remove();
+    }
 }
