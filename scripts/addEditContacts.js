@@ -96,7 +96,11 @@ async function editContactMobile(event) {
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
     const data = await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${buttonID}`, contact));
-    openContactDetail(buttonID);
+    closeDialogByEvent(event, 'add-contact-dialog');
+    const updatedContact = await fb.getDataByKey("id", buttonID, "contacts");
+    if (typeof openContactDetailMobile === "function") {
+        openContactDetailMobile(updatedContact);
+    }
 }
 
 /**
@@ -253,7 +257,7 @@ function toggleBtnEditContact(element) {
  */
 function renderEditContactIntoDialog(id) {
     const fb = new FirebaseDatabase();
-    includeHtml("add-contact-dialog-mobile", "editContact.html").then(() => {
+    includeHtml("add-contact-dialog", "editContact.html").then(() => {
         fb.getDataByKey("id", id, "contacts").then(contact => {
             document.getElementById('contact-name').value = `${contact.firstname} ${contact.lastname}`;
             document.getElementById('contact-email').value = contact.email;
@@ -267,6 +271,7 @@ function renderEditContactIntoDialog(id) {
 }
 
 function renderEditContactIntoDialogMobile(id) {
+    closeDialog('btns-action-menu-mobile');
     const fb = new FirebaseDatabase();
     includeHtml("add-contact-dialog-mobile", "editContactMobile.html").then(() => {
         fb.getDataByKey("id", id, "contacts").then(contact => {

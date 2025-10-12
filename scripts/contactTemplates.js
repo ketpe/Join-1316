@@ -84,7 +84,3 @@ function getBtnsInMobileDetails(cd) {
                         <p>Delete</p>
                     </button>`
 }
-
-function getListContacttemplate(id) {
-    return `<li class="contact-item obj contact-item-active" id="${id}" active="false" onclick="openContactDetail(this)">`
-}

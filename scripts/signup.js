@@ -21,7 +21,7 @@ async function signUpForm(event) {
     }
 
     const fb = new FirebaseDatabase();
-    if(!fb.createNewSignedUser(null, firstname, lastname, password.password, email, null, initial, null)){return;}
+    if (!fb.createNewSignedUser(null, firstname, lastname, password.password, email, null, initial, null)) { return; }
     //const result = await SafeDataToDB.safeDataToFirebaseDB(null, firstname, lastname, password, email, null, initial, null);
     toggleDNone('successfullySignUp');
 }
@@ -94,11 +94,11 @@ function errorHandling(elementID = null, errorMessage) {
 }
 
 function toggleSignUpButton() {
-let checkFlag = document.getElementById('signup-hidden');
-    if(checkFlag.disabled) {
+    let checkFlag = document.getElementById('signup-hidden');
+    if (checkFlag.disabled) {
         checkFlag.disabled = false;
-      }
-        else {
-        checkFlag.disabled = true;
-      }
     }
+    else {
+        checkFlag.disabled = true;
+    }
+}

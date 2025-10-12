@@ -1,6 +1,6 @@
 <main class="main-add-contact-mobile">
     <div class="close-contact-overlay-mobile">
-        <button onclick="closeDialogByEvent(event, 'add-contact-dialog')" class="btn-overlay-close"
+        <button onclick="closeDialogByEvent(event, 'add-contact-dialog-mobile')" class="btn-overlay-close"
             id="btn-overlay-close-contacts" aria-label="Close dialog" type="button">
             <div id="btn-overlay-close-div" role="img" title="Close dialog icon"></div>
         </button>
@@ -11,11 +11,13 @@
             <div class="add-contacts-line"></div>
         </aside>
     </section>
+    <div class="add-contact-profil-mobile">
+        <div class="initial-avatar" id="initial-avatar">
+            <p class="detail-view-initials"></p>
+        </div>
+    </div>
     <section class="right-container-contacts-mobile">
         <section class="add-contact-form-and-picture-mobile">
-            <div class="initial-avatar" id="initial-avatar">
-                <p class="detail-view-initials"></p>
-            </div>
             <form class="add-contact-form-mobile form-for-add-contact" action="/post" method="dialog"
                 onsubmit="return editContactMobile(event)">
 
@@ -38,13 +40,12 @@
                         </p>
                     </div>
                     <div class="login-form-buttons-mobile">
-                        <button type="button" class=" btn-clear-cancel btn btn-outline btn-md"
+                        <button type="button" class=" btn-clear-cancel-mobile btn btn-outline btn-md"
                             onclick="cancelAddContact()">
-                            <p class="">Cancel</p>
-                            <div aria-label="Close dialog" role="img" class="btn-cancel-icon"></div>
+                            <p class="">Delete</p>
                         </button>
                         <button type="submit" onmouseover="toggleBtnEditContact(this)"
-                            class="btn-create btn btn-fill btn-md" id="btn-create-contact" disabled="true">
+                            class="btn-create btn btn-fill btn-mobile" id="btn-create-contact" disabled="true">
                             <p class="">Save</p>
                             <div aria-label="Save contact" role="img" class="btn-create-icon"></div>
                         </button>

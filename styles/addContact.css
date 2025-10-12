@@ -237,6 +237,10 @@
     background-repeat: no-repeat;
 }
 
+.btn-clear-cancel:hover>.btn-cancel-icon {
+    background-image: url(../assets/cancel-clear-secondary.svg);
+}
+
 /*NOTE - MOBILE */
 
 .main-add-contact-mobile {
@@ -310,6 +314,16 @@
     display: flex;
     justify-content: center;
     padding-top: 17px;
+    gap: 20px;
+}
+
+.login-form-buttons-mobile>button>p {
+    font-family: Inter;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 21px;
+    margin: 0;
+    text-align: center;
 }
 
 .add-contact-input-mobile {
@@ -354,4 +368,15 @@
     font-size: 27px;
     font-weight: 400;
     margin: 0;
+}
+
+.add-contact-profil-mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translateX(-50%);
 }
