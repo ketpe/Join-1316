@@ -41,14 +41,14 @@
 }
 
 .btn-clear-cancel > div { display: flex; justify-content: center; align-items: center; }
-.btn-clear-cancel > div > p { font-size: 20px; font-weight: 400; margin: 0 8px 0 0; color: var(--bg-default); }
+.btn-clear-cancel > div > p, span { font-size: 20px; font-weight: 400; margin: 0 8px 0 0; color: var(--bg-default); }
 .btn-clear-cancel > div > div {
   width: 24px; height: 24px;
   background: url('../assets/cancel-clear-default.svg') center/cover no-repeat;
 }
-.btn-clear-cancel:hover:enabled > div > p { color: var(--btn-bg-hover); }
+.btn-clear-cancel:hover:enabled > div > span { color: var(--btn-bg-hover) !important; }
 .btn-clear-cancel:hover:enabled > div > div { background-image: url('../assets/cancel-clear-secondary.svg'); }
-.btn-clear-cancel:active:enabled > div > p { color: var(--btn-bg-active); }
+.btn-clear-cancel:active:enabled > div > span { color: var(--btn-bg-active); }
 .btn-clear-cancel:active:enabled > div > div { background-image: url('../assets/cancel-clear-active.svg'); }
 
 /* Create Task */
@@ -57,7 +57,7 @@
   padding: 16px;
 }
 .btn-create-task > div { display: flex; justify-content: center; align-items: center; }
-.btn-create-task > div > p { font-size: 21px; font-weight: 400; color: white; margin: 0 8px 0 0; }
+.btn-create-task > div > span { font-size: 21px; font-weight: 400; color: white; margin: 0 8px 0 0; }
 .btn-create-task > div > div {
   width: 24px; height: 24px;
   background: url('../assets/check-icon.svg') center/cover no-repeat;
@@ -78,7 +78,7 @@
 .btn-priority:hover:enabled { box-shadow: 0 4px 4px rgba(0,0,0,.25); }
 
 .btn-priority div { display: flex; align-items: center; justify-content: center; }
-.btn-priority div > p { font-size: 20px; font-weight: 400; color: black; margin: 0 8px 0 0; }
+.btn-priority div > p, span { font-size: 20px; font-weight: 400; color: black ; margin: 0 8px 0 0; }
 .btn-priority div > div { width: 20px; height: 15px; background: center/cover no-repeat; }
 
 /* Icons + Active States */

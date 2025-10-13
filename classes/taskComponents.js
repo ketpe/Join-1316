@@ -77,7 +77,7 @@ class TaskComponents{
         this.showOrHideBadgeContainer('show');
         this.renderSubtasks();
         document.getElementById('detail-edit-ok-btn').setAttribute('data-id', this.currentTaskId);
-        document.getElementsByTagName('body')[0].setAttribute("onmouseup", `${this.currentInstance}.addTaskWindowMouseClick(event)`);
+        document.querySelector('body').setAttribute("onmouseup", `${this.currentInstance}.addTaskWindowMouseClick(event)`);
         this.readCurrentTaskDateIntoVariables();
     }
 
@@ -194,6 +194,8 @@ class TaskComponents{
                 this.currentTitle.length > 0 &&
                 this.currentPriority.length > 0 &&
                 hasCategory);
+
+        createButton.disabled ? createButton.setAttribute('aria-disabled', 'true') : createButton.removeAttribute('aria-disabled');
 
     }
 
@@ -346,7 +348,7 @@ class TaskComponents{
      */
     togglePrioButtonTextColor(button, whiteOrBlack) {
         if (!button) { return; }
-        let btnText = button.querySelector('p');
+        let btnText = button.querySelector('span');
         if (whiteOrBlack == "white") {
             btnText.classList.add('prio-selected');
         } else {

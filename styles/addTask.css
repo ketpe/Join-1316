@@ -91,7 +91,7 @@ legend {
     margin-bottom: 8px;
 }
 
-span {
+.required-label {
     color: var(--input-error-color);
 }
 
@@ -157,7 +157,7 @@ span {
 
 .a-t-priority-button-container {
     width: 100%;
-    height: 58px;
+    /* height: 58px; */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -755,7 +755,7 @@ span {
     transform: translateY(100%);
 }
 
-.add-task-safe-dialog p {
+.add-task-safe-dialog span {
     font-family: 'Inter';
     font-size: 20px;
     font-weight: 400;

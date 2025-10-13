@@ -21,6 +21,7 @@ async function loadTasksforSummary() {
     summaryVariables = getSummeryCounts(tasks, summaryVariables);
     let nextDueDate = checkDate(tasks);
     renderNewSummery(tasks, summaryVariables, nextDueDate);
+    renderUserInitial();
 }
 
 /**

@@ -25,7 +25,7 @@ class TaskElements{
     getTitleComponent(isrequired = true, title = ""){
         return `
            <aside class="field-frame">
-                <label class="task-mobile-label" for="task-title">Title ${isrequired ? '<span aria-hidden="true">*</span>' : ''} </label>
+                <label class="task-mobile-label" for="task-title">Title ${isrequired ? '<span class="required-label" aria-hidden="true">*</span>' : ''} </label>
                 <input 
                     class="a-t-input" 
                     id="task-title" 
@@ -33,7 +33,7 @@ class TaskElements{
                     type="text" 
                     placeholder="Enter a title"
                     aria-required="true"
-                    aria-describedby="a-t-title-error"
+                    aria-describedby="a-t-title-required"
                     oninput="${this.currentInstance}.addTaskTitleOnInput()" 
                     onblur="${this.currentInstance}.taskTitleValidation(this.value)"
                     value="${title}"
@@ -70,14 +70,15 @@ class TaskElements{
     getDueDateComponents(isrequired = true, dueDateValue = ""){
         return `
             <aside class="field-frame field-frame-due-date">
-                <label class="task-mobile-label" for="due-date">Due date ${isrequired ? '<span>*</span>' : ''}</label>
+                <label class="task-mobile-label" for="due-date-display">Due date ${isrequired ? '<span class="required-label">*</span>' : ''}</label>
                 <div class="date-field">
-                    <input class="a-t-input date-input" id="due-date-display" type="text" maxlength="10" placeholder="dd/mm/yyyy" name="due-date" aria-required="true" aria-describedby="a-t-due-date-error"
+                    <input class="a-t-input date-input" id="due-date-display" type="text" maxlength="10" placeholder="dd/mm/yyyy" name="due-date" aria-required="true" aria-describedby="a-t-due-date-required"
                         inputmode="numeric" onblur="${this.currentInstance}.dateFieldOnChange()"
                         oninput="${this.currentInstance}.dateFieldOnChange()"
                         value="${dueDateValue}"
                         >
 
+                    <label for="due-date-hidden" class="visually-hidden">Due date picker</label>
                     <input type="date" id="due-date-hidden" placeholder="Date" class="date-input-hidden"
                         onchange="${this.currentInstance}.datePickerSelectionChange(event)">
                     <button type="button" class="date-trigger" aria-label="Kalender öffnen"
@@ -110,27 +111,29 @@ class TaskElements{
      */
     getPrioButtonComponents(){
         return `
-            <legend class="task-mobile-label" for="task-priority-button">Priority</legend>
             <fieldset id="task-priority-button" class="a-t-priority-button-container">
+
+                <legend class="task-mobile-label" for="task-priority-button">Priority</legend>
+
                 <button id="btn-priority-alta" class="btn btn-priority prio-alta" type="button" name="Urgent" data-selected="false" data-name="alta"
                     onclick="${this.currentInstance}.addTaskPrioritySelect(this)">
                     <div>
-                        <p>Urgent</p>
-                        <div role="img" title="Urgent-Icon" aria-hidden="true"></div>
+                        <span>Urgent</span>
+                        <div aria-hidden="true" title="Urgent-Icon"></div>
                     </div>
                 </button>
                 <button id="btn-priority-media" class="btn btn-priority prio-media" type="button" name="Medium" data-selected="false" data-name="media"
                     onclick="${this.currentInstance}.addTaskPrioritySelect(this)">
                     <div>
-                        <p>Medium</p>
-                        <div role="img" title="Medium-Icon" aria-hidden="true"></div>
+                        <span>Medium</span>
+                        <div aria-hidden="true" title="Medium-Icon"></div>
                     </div>
                 </button>
                 <button id="btn-priority-baja" class="btn btn-priority prio-baja" type="button" name="Low" data-selected="false" data-name="baja"
                     onclick="${this.currentInstance}.addTaskPrioritySelect(this)">
                     <div>
-                        <p>Low</p>
-                        <div role="img" title="Low-Icon" aria-hidden="true"></div>
+                        <span>Low</span>
+                        <div aria-hidden="true" title="Low-Icon"></div>
                     </div>
                 </button>
             </fieldset>
@@ -184,7 +187,7 @@ class TaskElements{
     getCategoryComponents(){
         return `
             <aside class="field-frame">
-                <label for="task-category">Category<span>*</span></label>
+                <label for="task-category">Category<span class="required-label">*</span></label>
                 <div class="category-select-container show-front ">
                     <input class="a-t-input a-t-category-input" type="text" name="task-category" id="task-category"
                         value="Select task category" placeholder="Select task category" readonly aria-required="true"

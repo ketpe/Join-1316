@@ -86,6 +86,7 @@ async function changeAddTaskToDesktopSingle() {
     await loadHtmlComponentsForDesktopSingle();
     await loadDataForAddTask();
     setNavigationButtonActive('addTask', "desktop");
+    document.querySelector('body').setAttribute("onmouseup", "addTasktaskComponents.addTaskWindowMouseClick(event)");
 }
 
 /**
@@ -99,6 +100,7 @@ async function changeAddTaskToMobile() {
     await loadHtmlComponentsForMobile();
     await loadDataForAddTask();
     setNavigationButtonActive('addTask', "mobile");
+    document.querySelector('body').setAttribute("onmouseup", "addTasktaskComponents.addTaskWindowMouseClick(event)");
 }
 
 /**
@@ -217,8 +219,8 @@ async function fillHtmlWithContent() {
 async function fillMobileHtmlWithContent() {
     const taskMobileUtil = new AddTaskMobileUtil("addTasktaskComponents");
     await taskMobileUtil.startRenderAddTaskMobile();
-    //setAddTaskFormSubmitFunction();
-    //addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTasktaskComponents');
+    setAddTaskFormSubmitFunction();
+    addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTasktaskComponents');
 }
 
 /**
@@ -242,7 +244,7 @@ function changeAddTaskViewToStandard() {
     document.getElementById('add-task-form').classList.add('add-task-form-desktop');
     document.getElementById('add-task-form').classList.remove('add-task-form-dialog');
     document.getElementById('a-t-middle-container').classList.remove('a-t-f-i-midle-dialog');
-    document.getElementsByTagName('body')[0].setAttribute("onmouseup", "addTasktaskComponents.addTaskWindowMouseClick(event)");
+    document.querySelector('body').setAttribute("onmouseup", "addTasktaskComponents.addTaskWindowMouseClick(event)");
 }
 
 
