@@ -2,11 +2,7 @@
     background-color: var(--default-bg-color);
     display: flex;
     justify-content: center;
-    
-}
 
-.login-mobile-aninmation{
-    animation: fadeBackground 600ms ease-in-out forwards;
 }
 
 .login-signup-main {
@@ -14,10 +10,10 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    align-items: start;
     width: 100%;
     height: 100vh;
-    position: relative;
-    margin: 0 auto;
+    margin: 0;
 }
 
 .login-signup-logo {
@@ -34,12 +30,12 @@
 }
 
 .logo-for-login {
-    animation: moveLogo 450ms ease-in;
+    animation: moveLogo 4500ms ease-in;
 }
 
 
 .login-section {
-    animation: startup 500ms ease-in;
+    animation: startup 5000ms ease-in;
 }
 
 .login-signup-header {
@@ -52,7 +48,6 @@
 }
 
 .login-signup-header p {
-    font-family: 'Inter';
     font-size: 20px;
     font-weight: 400;
     color: black;
@@ -82,7 +77,6 @@
 }
 
 .login-signup-footer a {
-    font-family: "Inter";
     color: var(--btn-compliance-links-font-color);
 }
 
@@ -114,7 +108,6 @@
 }
 
 .login-signup-form h1 {
-    font-family: 'Inter';
     font-weight: 700;
     font-size: 61px;
     margin: 0;
@@ -171,7 +164,6 @@
 }
 
 .login-signup-input::placeholder {
-    font-family: 'Inter';
     font-size: 16px;
     font-weight: 400;
     color: var(--input-border-color);
@@ -324,14 +316,6 @@
     background-color: var(--bg-default);
 }
 
-@keyframes fadeBackground {
-    0% {
-        background-color: rgba(0, 0, 0, 1);
-    }
-    100% {
-        background-color: rgba(0, 0, 0, 0);
-    }
-}
 
 @keyframes startup {
     0% {
