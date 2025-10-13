@@ -235,6 +235,7 @@
     background-image: url(../assets/cancel-clear-default.svg);
     background-position: right center;
     background-repeat: no-repeat;
+    border: unset;
 }
 
 .btn-clear-cancel:hover>.btn-cancel-icon {

@@ -1,0 +1,337 @@
+/* Basis für alle Buttons */
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 100ms ease-in-out;
+}
+
+/* Größen */
+.btn-sm {
+  padding: 15px 16px;
+  font-size: 14px;
+}
+
+.btn-small {
+  width: 89px !important;
+}
+
+.btn-md {
+  height: 48px;
+  padding: 0 24px;
+  font-size: 16px;
+}
+
+.btn-mobile {
+  height: 48px;
+  padding: 18px 10px;
+}
+
+.btn-lg {
+  height: 56px;
+  padding: 12px 16px;
+  font-size: 21px;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn:disabled {
+  /* opacity: 0.6; */
+  cursor: not-allowed;
+}
+
+/* Farbvarianten */
+.btn-fill {
+  background-color: var(--bg-default);
+  color: white;
+}
+
+.btn-fill:hover:enabled {
+  background-color: var(--btn-bg-hover);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, .25);
+}
+
+.btn-fill:active:enabled {
+  background-color: var(--btn-bg-active);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, .25);
+}
+
+.btn-outline {
+  background: var(--default-bg-color);
+  border: 1px solid var(--bg-default);
+  color: var(--bg-default);
+}
+
+.btn-outline:hover:enabled {
+  border: 2px solid var(--btn-bg-hover);
+  color: var(--btn-bg-hover);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, .25);
+}
+
+.btn-outline:active:enabled {
+  border: 1px solid var(--btn-bg-active);
+  color: var(--btn-bg-active);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, .25);
+}
+
+
+/* Cancel Button */
+.btn-clear-cancel {
+  @apply .btn .btn-outline;
+  width: 126px;
+  padding: 16px;
+}
+
+.btn-clear-cancel-mobile {
+  @apply .btn .btn-outline;
+  width: 82px;
+  padding: 18px 10px;
+}
+
+
+/* @apply nur symbolisch, HTML behält beide Klassen */
+
+.btn-clear-cancel>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-clear-cancel>div>p {
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0 8px 0 0;
+  color: var(--bg-default);
+}
+
+.btn-clear-cancel>div>div {
+  width: 24px;
+  height: 24px;
+  background: url('../assets/cancel-clear-default.svg') center/cover no-repeat;
+}
+
+.btn-clear-cancel:hover:enabled>div>p {
+  color: var(--btn-bg-hover);
+}
+
+.btn-clear-cancel:hover:enabled>div>div {
+  background-image: url('../assets/cancel-clear-secondary.svg');
+}
+
+.btn-clear-cancel:active:enabled>div>p {
+  color: var(--btn-bg-active);
+}
+
+.btn-clear-cancel:active:enabled>div>div {
+  background-image: url('../assets/cancel-clear-active.svg');
+}
+
+/* Create Task Button*/
+.btn-create-task {
+  @apply .btn .btn-fill;
+  width: 183px;
+  padding: 16px;
+}
+
+.btn-create-task>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-create-task>div>p {
+  font-size: 21px;
+  font-weight: 400;
+  color: white;
+  margin: 0 8px 0 0;
+}
+
+.btn-create-task>div>div {
+  width: 24px;
+  height: 24px;
+  background: url('../assets/check-icon.svg') center/cover no-repeat;
+}
+
+
+/* Add Contact / Task*/
+.btn-add-contacts,
+.btn-add-tasks {
+  @apply .btn .btn-lg .btn-fill;
+  gap: 16px;
+}
+
+.btn-add-contacts-large {
+  width: 100%;
+}
+
+
+/* Priority Buttons */
+.btn-priority {
+  @apply .btn;
+  width: 136px;
+  padding: 16px 10px;
+  background-color: #fff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, .1);
+}
+
+.btn-priority:hover:enabled {
+  box-shadow: 0 4px 4px rgba(0, 0, 0, .25);
+}
+
+.btn-priority div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-priority div>p {
+  font-size: 20px;
+  font-weight: 400;
+  color: black;
+  margin: 0 8px 0 0;
+}
+
+.btn-priority div>div {
+  width: 20px;
+  height: 15px;
+  background: center/cover no-repeat;
+}
+
+/* Icons + Active States */
+.prio-alta div>div {
+  background-image: url('../assets/prio-alta-red.svg');
+}
+
+.prio-media div>div {
+  background-image: url('../assets/prio-media-default.svg');
+}
+
+.prio-baja div>div {
+  background-image: url('../assets/prio-baja-default.svg');
+}
+
+.prio-alta-selected,
+.prio-alta-selected:hover {
+  box-shadow: none !important
+}
+
+.prio-alta-selected,
+.prio-alta:active:enabled {
+  background-color: var(--bg-prio-alta-active);
+  box-shadow: none;
+}
+
+.prio-media-selected,
+.prio-media-selected:hover {
+  box-shadow: none !important;
+}
+
+.prio-media-selected,
+.prio-media:active:enabled {
+  background-color: var(--bg-prio-media-active);
+  box-shadow: none;
+}
+
+.prio-baja-selected,
+.prio-baja-selected:hover {
+  box-shadow: none !important;
+}
+
+.prio-baja-selected,
+.prio-baja:active:enabled {
+  background-color: var(--bg-prio-baja-active);
+  box-shadow: none;
+}
+
+.prio-selected,
+.prio-alta:active:enabled div>p,
+.prio-media:active:enabled div>p,
+.prio-baja:active:enabled div>p {
+  font-weight: 700 !important;
+  font-size: 21px !important;
+  color: white !important;
+}
+
+.prio-alta-selected>div>div,
+.prio-alta:active:enabled>div>div {
+  background-image: url('../assets/prio-alta-white.svg');
+}
+
+.prio-media-selected>div>div,
+.prio-media:active:enabled div>div {
+  background-image: url('../assets/prio-media-active.svg');
+}
+
+.prio-baja-selected>div>div,
+.prio-baja:active:enabled div>div {
+  background-image: url('../assets/prio-baja-active.svg');
+}
+
+/*Board Task Add*/
+.btn-add-board-task {
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent url('../assets/plus-button.svg') center/cover no-repeat;
+  transition: background-image 100ms ease-in-out;
+}
+
+.btn-add-board-task:hover:enabled {
+  background-image: url('../assets/plus-button-hover.svg');
+}
+
+/*Overlay Close*/
+.btn-overlay-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none !important;
+  border-radius: 56px;
+  background-color: transparent;
+  cursor: pointer;
+
+  div {
+    width: 32px;
+    height: 32px;
+    background: transparent url('../assets/close-icon.svg') center/cover no-repeat;
+  }
+}
+
+.btn-overlay-close:focus {
+  outline: none;
+}
+
+.btn-overlay-close:hover:enabled {
+  background-color: var(--bg-btn-hover-special);
+}
+
+.btn-submenu {
+  width: 130px;
+  height: 46px;
+  background-color: transparent;
+  border: unset;
+  display: flex;
+  align-items: center;
+}
+
+.btn-submenu:hover {
+  background-color: var(--btn-submenu-bg-hover);
+}
+
+.btn-submenu>p {
+  font-family: 'Inter';
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--btn-menu-text-color);
+  text-align: left;
+  padding-inline-start: 8px;
+}
