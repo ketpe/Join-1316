@@ -1,3 +1,18 @@
+
+function loginUpdateUIElements(){
+    const [height, width] = getCurrentWindowSize();
+
+    const loginBody = document.querySelector('body');
+
+    if(width <= 500 && !loginBody.classList.contains('login-mobile-aninmation')){
+        loginBody.classList.add('login-mobile-aninmation');
+    }else{
+        loginBody.classList.remove('login-mobile-aninmation');
+    }
+}
+
+
+
 function loginForm(event) {
     event.preventDefault();
     let signIn = new FormData(event.target);
