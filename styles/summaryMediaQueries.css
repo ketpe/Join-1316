@@ -104,3 +104,9 @@
         height: 30px;
     }
 }
+
+@media (max-width: 350px) {
+    .headline-add-contacts {
+        white-space: normal;
+    }
+}

@@ -89,7 +89,7 @@ async function renderDetailViewTemplate(taskId) {
 }
 
 function renderAddContactIntoDialogMobile() {
-    includeHtml("dialog-content-contacts", "addContactMobile.html");
+    includeHtml("add-contact-dialog-mobile", "addContactMobile.html");
 }
 function renderEditContactIntoDialog(contactId) {
     includeHtml("dialog-content-contacts", "editContact.html")

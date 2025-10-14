@@ -281,7 +281,7 @@ function renderEditContactIntoDialogMobile(id) {
             document.getElementById('initial-avatar').classList.add(contact.initialColor);
             document.querySelector('#initial-avatar .detail-view-initials').innerText = contact.initial;
             document.querySelector('.btn-create').id = contact.id;
-            document.querySelector('.btn-clear-cancel').id = contact.id;
+            document.querySelector('.btn-clear-cancel-mobile').id = contact.id;
         });
     });
 }

@@ -252,7 +252,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid (inherit);
+    border: 3px solid white;
     border-radius: 50%;
     gap: 10px;
 }
