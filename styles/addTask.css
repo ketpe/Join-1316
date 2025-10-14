@@ -92,6 +92,7 @@ legend {
 }
 
 .required-label {
+    margin-right: 4px;
     color: var(--input-error-color);
 }
 
@@ -543,12 +544,13 @@ legend {
     border-radius: 50%;
 
     span {
-        width: 100%;
+        width: 38px;
         font-family: 'Inter';
         font-size: 12px;
         font-weight: 400;
         color: white;
         text-align: center;
+        margin: 0 !important;
     }
 }
 

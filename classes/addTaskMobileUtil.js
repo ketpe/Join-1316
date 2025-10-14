@@ -35,6 +35,6 @@ class AddTaskMobileUtil{
         taskContent.innerHTML += taskElements.getCategoryListContainer();
         taskContent.innerHTML += taskElements.getSubTaskComponents();
         taskContent.innerHTML += taskElements.getSubtaskListContainer();
-        taskContent.innerHTML += `<p class="notice-required"><span aria-hidden="true">*</span>This field is required</p>`;
+        taskContent.innerHTML += `<p class="notice-required"><span class="required-label" aria-hidden="true">*</span>This field is required</p>`;
     }
 }

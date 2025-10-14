@@ -33,7 +33,7 @@
 /* Cancel Button */
 .btn-clear-cancel {
   width: 126px;
-  padding: 16px;
+  padding: 14.5px;
 }
 .btn-clear-cancel-mobile { 
   width: 82px;
@@ -41,7 +41,7 @@
 }
 
 .btn-clear-cancel > div { display: flex; justify-content: center; align-items: center; }
-.btn-clear-cancel > div > p, span { font-size: 20px; font-weight: 400; margin: 0 8px 0 0; color: var(--bg-default); }
+.btn-clear-cancel > div > span { font-size: 20px; font-weight: 400; margin: 0 8px 0 0; color: var(--bg-default); }
 .btn-clear-cancel > div > div {
   width: 24px; height: 24px;
   background: url('../assets/cancel-clear-default.svg') center/cover no-repeat;
@@ -78,7 +78,7 @@
 .btn-priority:hover:enabled { box-shadow: 0 4px 4px rgba(0,0,0,.25); }
 
 .btn-priority div { display: flex; align-items: center; justify-content: center; }
-.btn-priority div > p, span { font-size: 20px; font-weight: 400; color: black ; margin: 0 8px 0 0; }
+.btn-priority div > span { font-size: 20px; font-weight: 400; color: black ; margin: 0 8px 0 0; }
 .btn-priority div > div { width: 20px; height: 15px; background: center/cover no-repeat; }
 
 /* Icons + Active States */
