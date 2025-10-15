@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="./styles/loginSignupMobile.css">
 </head>
 
-<body class="login-signup-page" onload="loginUpdateUIElements()" onresize="loginUpdateUIElements()">
+<body class="login-signup-page" onload="loginLoaded()" onresize="loginResize()">
 
     <main class="login-signup-main">
 
@@ -32,8 +32,12 @@
 
                     <div class="login-signup-input-field-container" id="loginInputFieldContainer">
                         <label for="email" class="visually-hidden">Email</label>
-                        <input type="text" id="email" name="email" class="login-signup-input input-mail"
+                        <div class="login-signup-input-container">
+                            <input type="text" id="email" name="email" class="login-signup-input"
                             placeholder="Email" autocomplete="email">
+                            <div class="input-icons input-mail"></div>
+                        </div>
+                        
                         <label for="password" class="visually-hidden">Password</label>
 
                         <div class="login-password-container">
@@ -82,7 +86,6 @@
 
 
     </main>
-    <!-- <div class="intro-mobile"></div> -->
     <script type="module" src="./app.js"></script>
     <script src="./classes/firebaseDatabase.js"></script>
     <script src="./script.js"></script>

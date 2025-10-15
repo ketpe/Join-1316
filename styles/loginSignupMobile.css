@@ -139,41 +139,27 @@
         height: 50px;
     }
 
-    .login-join-logo{
-        transform: translate(-50%, -50%) scale(1.2);
+    .login-join-logo {
+        top: 37px;
+        left: 37px;
+        transform: scale(0.82);
+        height: calc(var(--logo-height) * 0.78);
+        width: calc(var(--logo-width) * 0.78);
     }
 
-    .login-mobile-aninmation {
-        animation: fadeBackground 500ms ease-in-out forwards;
-    }
-
-    @keyframes fadeBackground {
+    @keyframes moveLogoMobile {
         0% {
-            background-color: var(--bg-default);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.2);
+            background-image: url('../assets/join-logo.svg');
         }
 
         40% {
-            background-color: var(--bg-default);
-
-        }
-        100% {
-            background-color: var(--default-bg-color);
-        }
-    }
-
-    @keyframes moveLogo {
-        0% {
-            background-image: url('../assets/join-logo.svg');
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(1.2) !important;
-        }
-
-        40% {
+            transform: translate(-50%, -50%) scale(1.2);
             background-image: url('../assets/join-logo.svg');
-            top: 50%;
-            left: 50%;
-            transform: translate(50%, -50%) scale(1.2) !important;
         }
 
         50% {
@@ -183,10 +169,25 @@
         100% {
             top: 37px;
             left: 37px;
-            transform: scale(0.65);
+            transform: scale(0.82);
         }
     }
-   
+
+
+    @keyframes fadeBackground {
+        0% {
+            background-color: var(--bg-default);
+        }
+
+        40% {
+            background-color: var(--bg-default);
+        }
+
+        100% {
+            background-color: var(--default-bg-color);
+        }
+    }
+
 
     *,
     *::before,

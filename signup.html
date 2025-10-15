@@ -35,34 +35,46 @@
                 <div class="login-signup-input-field-container">
 
                     <label for="fullname" class="visually-hidden">Contact Name</label>
-                    <input type="text" id="fullname" class="login-signup-input input-name" placeholder="Name"
-                        name="fullname" required>
+
+                    <div class="login-signup-input-container">
+                        <input type="text" id="fullname" class="login-signup-input" placeholder="Name"
+                        name="fullname">
+                        <div class="input-icons input-name"></div>
+                    </div>
+
+                    
 
                     <label for="email" class="visually-hidden">Username</label>
-                    <input type="text" id="email" class="login-signup-input input-mail" placeholder="Email" name="email"
-                        required>
+
+                    <div class="login-signup-input-container">
+                        <input type="text" id="email" class="login-signup-input" placeholder="Email" name="email"
+                        >
+                        <div class="input-icons input-mail"></div>
+                    </div>
+
+                    
 
                     <label for="password" class="visually-hidden">Password</label>
                     <div class="login-password-container">
                         <input type="password" id="password" class="login-signup-input login-password"
-                            placeholder="Password" name="password" required
+                            placeholder="Password" name="password" 
                             onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')">
 
                         <button type="button" class="login-toggle-password login-password-lock" role="img"
                             aria-labelledby="Password visibility toggle button" id="loginTogglePassword"
-                            alt="Toggle password visibility"
+                            title="Toggle password visibility"
                             onclick="togglePasswordVisibility(2, 'password', 'loginTogglePassword')"></button>
                     </div>
 
                     <label for="password-confirm" class="visually-hidden">Password Confirm</label>
                     <div class="login-password-container">
                         <input type="password" id="password-confirm" class="login-signup-input login-password"
-                            placeholder="Confirm Password" name="password-confirm" required
+                            placeholder="Confirm Password" name="password-confirm"
                             onclick="togglePasswordVisibility(1, 'password-confirm', 'loginTogglePasswordConfirm')">
 
                         <button type="button" class="login-toggle-password login-password-lock" role="img"
                             aria-labelledby="Password visibility toggle button" id="loginTogglePasswordConfirm"
-                            alt="Toggle password visibility"
+                            title="Toggle password visibility"
                             onclick="togglePasswordVisibility(2, 'password-confirm', 'loginTogglePasswordConfirm')"></button>
 
                     </div>
@@ -77,7 +89,7 @@
 
                 <div class="signup-confirm-container">
                     <input type="checkbox" id="signupConfirm" class="signup-confirm-button"
-                        onclick="toggleSignUpButton()" required>
+                        onclick="toggleSignUpButton()" title="Confirm Checkbox">
                     <label for="signupConfirm" class="signup-confirm-label"></label>
                     <span>I accept the <a href="./privacyPolicy.html?backToLogin=true">Privacy policy</a></span>
                 </div>

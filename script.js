@@ -125,7 +125,7 @@ function toggleBorderColorByError(elementId = null, loginErrorBorder = false) {
     elements.forEach(el => {
         loginErrorBorder
             ? el.classList.add("login-signup-input") && el.classList.remove("loginErrorBorder")
-            : el.classList.contains("login-signup-input") && el.classList.replace("login-signup-input", "loginErrorBorder");
+            : el.classList.contains("login-signup-input") && el.classList.add("loginErrorBorder");
     });
 }
 
