@@ -69,7 +69,7 @@ function navigateToLegalNotice(event, loginOrSignin = "") {
  */
 function navigateToLogin() {
     setLogStatus('0');
-    window.location.href = './index.html';
+    window.location.href = './index.html?isNotStartup=true';
 }
 
 /**
