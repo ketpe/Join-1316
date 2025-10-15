@@ -48,24 +48,6 @@
                                 </button>
                             </aside>
                         </div>
-                        <div class="board-headline-bottom">
-                            <div class="board-headline-column">
-                                <p class="board-column-text">To do</p>
-                                <button type="button" title="Add Task To do" class="btn-add-board-task"></button>
-                            </div>
-                            <div class="board-headline-column">
-                                <p class="board-column-text">In progress</p>
-                                <button type="button" title="Add Task In progress" class="btn-add-board-task"></button>
-                            </div>
-                            <div class="board-headline-column">
-                                <p class="board-column-text">Await feedback</p>
-                                <button type="button" title="Add Task Await feedback"
-                                    class="btn-add-board-task"></button>
-                            </div>
-                            <div class="board-headline-column">
-                                <p class="board-column-text">Done</p>
-                            </div>
-                        </div>
                     </header>
                     <article class="board-kanban" id="board-kanban">
                         <div id="empty-Search-Result-info" class="empty-Search-Result-info">
@@ -74,6 +56,10 @@
                         <div class="kanban-column" id="todo"
                             ondragover="event.preventDefault(); this.classList.add('over');"
                             ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
+                            <div class="board-headline-column">
+                                <p class="board-column-text">To do</p>
+                                <button type="button" title="Add Task To do" class="btn-add-board-task"></button>
+                            </div>
                             <div class="kanban-tasks" id="kanban-tasks-todo" data-category="Todo">
                                 <div class="kanban-task-empty" hidden>
                                     <p>No Task To Do</p>
@@ -133,6 +119,11 @@
                         <div class="kanban-column" id="inprogress"
                             ondragover="event.preventDefault(); this.classList.add('over');"
                             ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
+
+                            <div class="board-headline-column">
+                                <p class="board-column-text">In progress</p>
+                                <button type="button" title="Add Task In progress" class="btn-add-board-task"></button>
+                            </div>
                             <div class="kanban-tasks" id="kanban-tasks-inprogress" data-category="In Progress">
                                 <div class="kanban-task-empty" hidden>
                                     <p>No Task In Progress</p>
@@ -144,6 +135,11 @@
                         <div class="kanban-column" id="awaiting"
                             ondragover="event.preventDefault(); this.classList.add('over');"
                             ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
+                            <div class="board-headline-column">
+                                <p class="board-column-text">Await feedback</p>
+                                <button type="button" title="Add Task Await feedback"
+                                    class="btn-add-board-task"></button>
+                            </div>
                             <div class="kanban-tasks" id="kanban-tasks-awaiting" data-category="Awaiting Feedback">
                                 <div class="kanban-task-empty" hidden>
                                     <p>No Task Awaiting Feedback</p>
@@ -155,6 +151,9 @@
                         <div class="kanban-column" id="done"
                             ondragover="event.preventDefault(); this.classList.add('over');"
                             ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
+                            <div class="board-headline-column">
+                                <p class="board-column-text">Done</p>
+                            </div>
                             <div class="kanban-tasks" id="kanban-tasks-done" data-category="Done">
                                 <div class="kanban-task-empty" hidden>
                                     <p>No Task Done</p>
@@ -166,7 +165,8 @@
                     </article>
                 </section>
                 <section id="add-task-dialog-section" class="add-task-dialog-section">
-                    <dialog id="add-task-dialog" class="add-task-dialog" onclick="addTaskDialogClose(event)" onresize="resizeAddTaskBoardDialog(this)">
+                    <dialog id="add-task-dialog" class="add-task-dialog" onclick="addTaskDialogClose(event)"
+                        onresize="resizeAddTaskBoardDialog(this)">
                         <div id="dialog-content"></div>
                     </dialog>
                 </section>
