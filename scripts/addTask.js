@@ -19,6 +19,7 @@ let resizeLock = false;
  * @returns {Promise<void>}
  */
 async function onLoadAddTask() {
+    checkUserOrGuestIsloggedIn();
     const [height, width] = addTaskUtils.getCurrentAddTaskSize;
     if (width >= breakPointToDesktopSingle) {
         await changeAddTaskToDesktop(height, width);

@@ -15,6 +15,7 @@ const breakPointToDesktopSingle = 1180;
  * @description This function fetches all tasks from the Firebase database, computes various summary statistics such as the number of tasks in different states and the next due date, and then updates the HTML elements to display this information.
  */
 async function loadTasksforSummary() {
+    checkUserOrGuestIsloggedIn();
     const fb = new FirebaseDatabase();
     let tasks = await fb.getFirebaseLogin(() => fb.getAllData("tasks"));
     let summaryVariables = getVariablesForSummary();

@@ -78,10 +78,18 @@ function subMenuClose(event){
 }
 
 
-function showErrorMessage(message) {
-    let errorText = document.getElementById("login-error-text");
-    errorText.textContent = message;
-    errorText.classList.remove("d-none");
+function showErrorMessage(elementId) {
+    let errorText = document.getElementById(elementId);
+    if(errorText.classList.contains('d-none')){
+        errorText.classList.remove("d-none");
+    }   
+}
+
+function removeErrorMessage(elementId) {
+    let errorText = document.getElementById(elementId);
+    if(!errorText.classList.contains('d-none')) {
+        errorText.classList.add("d-none")
+    };
 }
 
 function getRandomColor() {
@@ -120,12 +128,12 @@ function togglePasswordVisibility(toggleCounter, passwortInputID, toggleIconID) 
 function toggleBorderColorByError(elementId = null, loginErrorBorder = false) {
     const elements = elementId
         ? [document.getElementById(elementId)].filter(Boolean)
-        : document.querySelectorAll(".login-signup-input, .loginErrorBorder");
+        : document.querySelectorAll(".login-signup-input, .login-error-border");
 
     elements.forEach(el => {
         loginErrorBorder
-            ? el.classList.add("login-signup-input") && el.classList.remove("loginErrorBorder")
-            : el.classList.contains("login-signup-input") && el.classList.add("loginErrorBorder");
+            ? el.classList.remove("login-error-border")
+            : el.classList.add("login-error-border");
     });
 }
 
@@ -134,5 +142,12 @@ function toggleBorderColorByError(elementId = null, loginErrorBorder = false) {
  */
 function getCurrentWindowSize() {
     return [window.innerHeight, window.innerWidth];
+}
+
+function checkUserOrGuestIsloggedIn() {
+    let logInStatus = getLogStatus();
+    if(logInStatus == "0"){
+        navigateToLogin();
+    }
 }
 

@@ -125,7 +125,7 @@
     box-sizing: border-box;
     width: 100%;
     height: 48px;
-    margin-bottom: 8px;
+    margin-bottom: 32px;
 }
 
 .login-signup-input {
@@ -155,7 +155,7 @@
 }
 
 
-.loginErrorBorder {
+.login-error-border {
     outline: none;
     border-color: var(--input-error-color);
 }

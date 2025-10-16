@@ -26,7 +26,7 @@
 
             <section aria-label="form section" class="login-signup-container" aria-labelledby="login-form-title">
                 <form class="login-signup-form form-for-login" aria-describedby="login-error-text" method="post"
-                    onsubmit="loginForm(event)">
+                    onsubmit="loginFormSubmit(event)">
                     <h1>Log in</h1>
                     <div class="login-signup-h1-line" aria-hidden="true"></div>
 
@@ -34,7 +34,7 @@
                         <label for="email" class="visually-hidden">Email</label>
                         <div class="login-signup-input-container">
                             <input type="text" id="email" name="email" class="login-signup-input"
-                            placeholder="Email" autocomplete="email">
+                            placeholder="Email" autocomplete="email" onblur="loginInputFieldsOnBlur(this)" oninput="loginInputFieldsOnInput(this)">
                             <div class="input-icons input-mail"></div>
                         </div>
                         
@@ -44,8 +44,8 @@
                             <input type="password" id="password" name="password"
                                 class="login-signup-input login-password" placeholder="Password" autocomplete="off"
                                 spellcheck="false"
-                                onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')"
-                                onclick="toggleBorderColorByError('password')">
+                                onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')" 
+                                onblur="loginInputFieldsOnBlur(this)" oninput="loginInputFieldsOnInput(this)">
 
                             <button type="button" title="password icon"
                                 class="login-toggle-password login-password-lock" id="loginTogglePassword" role="img"

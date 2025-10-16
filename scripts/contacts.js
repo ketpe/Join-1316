@@ -37,6 +37,7 @@ function createContactList(currentLetter, sortedContacts, contactList) {
 
 
 async function onLoadContacts() {
+    checkUserOrGuestIsloggedIn();
     const [height, width] = getCurrentContactSize();
     const head = document.getElementsByTagName('head');
     if (width >= minDesktopWidth) {

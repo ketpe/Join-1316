@@ -59,14 +59,14 @@
     }
 
     .login-signup-header p {
-        margin-right: 15px;
+        margin-right: 35px;
     }
 
     .login-signup-container {
         order: 1;
         width: 100%;
         margin-top: 30%;
-        padding: 32px 16px;
+        padding: 0px 16px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -112,6 +112,7 @@
 
     .login-form-buttons {
         flex-direction: column;
+        gap: 21px;
     }
 
     .signup-title {
@@ -195,4 +196,24 @@
         box-sizing: border-box;
     }
 
+}
+
+@media(max-width: 400px) {
+    .login-join-logo {
+        top: 21px;
+        left: 26px;
+    }
+
+    .form-for-login {
+        height: 427px;
+    }
+
+    .login-signup-input{
+        font-size: 16px;
+        padding: 11px 50px 11px 12px;
+    }
+
+    .login-signup-input::placeholder{
+        font-size: 16px;
+    }
 }

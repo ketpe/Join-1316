@@ -46,13 +46,31 @@ function loginResize() {
 }
 
 
-function loginForm(event) {
+function loginFormSubmit(event) {
     event.preventDefault();
     let signIn = new FormData(event.target);
     let email = signIn.get("email");
     let password = signIn.get("password");
     checkLogin(email, password);
 };
+
+
+function loginInputFieldsOnInput(input) {
+    if(!input){return;}
+
+    if(input.value && input.value.length >= 3){
+        removeErrorMessage('login-error-text');
+    }
+}
+
+function loginInputFieldsOnBlur(input){
+    if(!input){return;}
+    if(input.value && input.value.length >= 3){
+        toggleBorderColorByError(input.id, true);
+    }else{
+        toggleBorderColorByError(input.id, false);
+    }
+}
 
 async function checkLogin(email, password) {
     const fb = new FirebaseDatabase();
@@ -64,13 +82,16 @@ async function checkLogin(email, password) {
         setLogStatus('0');
         toggleBorderColorByError();
         document.getElementById("password").value = '';
+        showErrorMessage('login-error-text');
     }
 };
 
 function loginGuest() {
-    setLogStatus('0');
+    setLogStatus('Guest');
     navigateToSummary();
 };
+
+
 
 
 
