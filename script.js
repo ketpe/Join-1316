@@ -78,11 +78,14 @@ function subMenuClose(event){
 }
 
 
-function showErrorMessage(elementId) {
+function showErrorMessage(elementId, errorMessage="") {
     let errorText = document.getElementById(elementId);
     if(errorText.classList.contains('d-none')){
         errorText.classList.remove("d-none");
-    }   
+        if(errorMessage.length > 0){
+            errorText.textContent = errorMessage;
+        }   
+    }
 }
 
 function removeErrorMessage(elementId) {

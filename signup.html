@@ -12,15 +12,15 @@
 
 </head>
 
-<body class="login-signup-page" onload="signupinit()">
+<body class="login-signup-page" onload="signupinit()" onmouseover="signupMouseUp(event)">
     <main class="login-signup-main">
-        <div class="login-signup-logo" aria-label="Join Application Logo" role="img"></div>
+        <div class="login-join-logo" aria-label="Join Application Logo" role="img"></div>
 
-        <header class="login-signup-header">
+        <!-- <header class="login-signup-header">
             <button type="button" class="btn btn-fill btn-sm d-none" aria-label="Sign up success"
                 id="successfullySignUp">You Signed Up
                 successfully</button>
-        </header>
+        </header> -->
 
         <section aria-label="form section" class="login-signup-container" aria-labelledby="signup-form-title">
 
@@ -36,29 +36,26 @@
 
                     <label for="fullname" class="visually-hidden">Contact Name</label>
 
-                    <div class="login-signup-input-container">
+                    <div class="login-signup-input-container mb-26">
                         <input type="text" id="fullname" class="login-signup-input" placeholder="Name"
-                        name="fullname">
+                        name="fullname" onblur="signInFieldOnBlur(this)">
                         <div class="input-icons input-name"></div>
                     </div>
 
-                    
-
                     <label for="email" class="visually-hidden">Username</label>
 
-                    <div class="login-signup-input-container">
-                        <input type="text" id="email" class="login-signup-input" placeholder="Email" name="email"
+                    <div class="login-signup-input-container mb-26">
+                        <input type="text" id="email" class="login-signup-input" placeholder="Email" name="email" onblur="signInFieldOnBlur(this)"
                         >
                         <div class="input-icons input-mail"></div>
                     </div>
-
                     
 
                     <label for="password" class="visually-hidden">Password</label>
-                    <div class="login-password-container">
+                    <div class="login-password-container mb-26">
                         <input type="password" id="password" class="login-signup-input login-password"
                             placeholder="Password" name="password" 
-                            onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')">
+                            onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')" onblur="signInFieldOnBlur(this)">
 
                         <button type="button" class="login-toggle-password login-password-lock" role="img"
                             aria-labelledby="Password visibility toggle button" id="loginTogglePassword"
@@ -67,35 +64,33 @@
                     </div>
 
                     <label for="password-confirm" class="visually-hidden">Password Confirm</label>
-                    <div class="login-password-container">
-                        <input type="password" id="password-confirm" class="login-signup-input login-password"
+                    <div class="login-password-container mb-8">
+                        <input type="password" id="passwordConfirm" class="login-signup-input login-password"
                             placeholder="Confirm Password" name="password-confirm"
-                            onclick="togglePasswordVisibility(1, 'password-confirm', 'loginTogglePasswordConfirm')">
+                            onclick="togglePasswordVisibility(1, 'passwordConfirm', 'loginTogglePasswordConfirm')" onblur="signInFieldOnBlur(this)">
 
                         <button type="button" class="login-toggle-password login-password-lock" role="img"
                             aria-labelledby="Password visibility toggle button" id="loginTogglePasswordConfirm"
                             title="Toggle password visibility"
-                            onclick="togglePasswordVisibility(2, 'password-confirm', 'loginTogglePasswordConfirm')"></button>
+                            onclick="togglePasswordVisibility(2, 'passwordConfirm', 'loginTogglePasswordConfirm')"></button>
 
                     </div>
 
-                    <span class="login-signup-error-text-container">
-                        <p id="login-error-text" class="d-none" role="alert">
-                            Your passwords dont´t match. Please try again.
+                    <span class="login-signup-error-text-container mb-8">
+                        <p id="login-error-text" class="d-none" role="alert">                           
                         </p>
                     </span>
 
                 </div>
 
                 <div class="signup-confirm-container">
-                    <input type="checkbox" id="signupConfirm" class="signup-confirm-button"
-                        onclick="toggleSignUpButton()" title="Confirm Checkbox">
+                    <input type="checkbox" id="signupConfirm" class="signup-confirm-button" title="Confirm Checkbox">
                     <label for="signupConfirm" class="signup-confirm-label"></label>
                     <span>I accept the <a href="./privacyPolicy.html?backToLogin=true">Privacy policy</a></span>
                 </div>
 
                 <div class="login-form-buttons fixed-height">
-                    <button id="signup-hidden" type="submit" class="btn btn-fill btn-md" disabled>Sign up</button>
+                    <button id="signup-button" type="submit" class="btn btn-fill btn-md" disabled>Sign up</button>
                 </div>
 
             </form>
@@ -108,6 +103,13 @@
                 </div>
             </footer>
         </section>
+
+        <dialog id="signUp-safe-dialog" class="signUp-safe-dialog visually-hidden" aria-labelledby="safe-dialog-title" aria-modal="true">
+        <div>
+            <span>You Signed Up</span>
+        </div>
+    </dialog>
+
     </main>
 
     <script type="module" src="./app.js"></script>

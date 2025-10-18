@@ -9,6 +9,18 @@ button {
     cursor: pointer;
 }
 
+.mb-8{
+    margin-bottom: 8px;
+}
+
+.mb-32{
+    margin-bottom: 32px;
+}
+
+.mb-26{
+    margin-bottom: 26px;
+}
+
 .join-h1 {
     font-family: 'Inter';
     font-size: 61px;
