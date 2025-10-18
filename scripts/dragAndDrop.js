@@ -18,6 +18,8 @@ function getCurrentColumnId(task) {
 function hideAllDropzones() {
     document.querySelectorAll('.kanban-dropzone').forEach(dropzone => {
         dropzone.classList.remove('show-dropzone');
+        dropzone.style.opacity = '0';
+        dropzone.classList.add('d-none');
     });
 }
 
@@ -36,7 +38,10 @@ function showAllowedDropzones(allowedColumns) {
         const col = document.getElementById(colId);
         if (col) {
             const dropzone = col.querySelector('.kanban-dropzone');
-            if (dropzone) dropzone.style.opacity = '1';
+            if (dropzone) {
+                dropzone.style.opacity = '1';
+                dropzone.classList.remove('d-none');
+            };
         }
     });
 }
@@ -46,6 +51,7 @@ function endDrag(task) {
     draggedTask = null;
     document.querySelectorAll('.kanban-dropzone').forEach(dropzone => {
         dropzone.style.opacity = '0';
+        dropzone.classList.add('d-none');
     });
 }
 
