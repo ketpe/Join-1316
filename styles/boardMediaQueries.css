@@ -128,3 +128,9 @@
         width: 77px !important;
     }
 }
+
+@media(max-width: 375px) {
+    .board-search-wrapper {
+        width: 100%;
+    }
+}
