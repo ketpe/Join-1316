@@ -1,5 +1,5 @@
 .board-task-content {
-    width: 220px;
+    /* width: 220px; */
     height: 212px;
     display: flex;
     flex-direction: column;
@@ -26,7 +26,7 @@
 }
 
 .board-task-title {
-    width: 220px;
+    /* width: 220px; */
     height: 19px;
 
     p {
@@ -38,7 +38,7 @@
 }
 
 .board-task-description {
-    width: 220px;
+    /* width: 220px; */
     height: 38px;
 
     p {
@@ -57,7 +57,7 @@
     justify-content: flex-start;
     align-items: center;
     appearance: none;
-    width: 220px;
+    /* width: 220px; */
 }
 
 .sub-task-progressbar progress {

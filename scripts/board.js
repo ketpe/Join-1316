@@ -79,13 +79,13 @@ async function addBoardPageResize() {
     const [height, width] = getCurrentBoardSize();
     if ((width <= minDesktopWidth) && currentView != "mobile") {
         await loadHtmlComponentsForMobile();
-        setNavigationButtonActive('contacts', "desktop");
-        kanbanUpdateSizeDesktop();
+        setNavigationButtonActive('contacts', "mobile");
+        kanbanUpdateSizeMobile();
 
     } else if (width >= minDesktopWidth + 1 && currentView != "desktop") {
         await loadHtmlComponentsForDesktop();
-        setNavigationButtonActive('contacts', "mobile");
-        kanbanUpdateSizeMobile();
+        setNavigationButtonActive('contacts', "desktop");
+        kanbanUpdateSizeDesktop();
     }
 
 }
@@ -105,11 +105,11 @@ function kanbanUpdateSizeDesktop() {
 
 function kanbanUpdateSizeMobile() {
     const headerHeight = document.getElementById('header').offsetHeight;
-    const boardHeaderHeight = document.querySelector('.board-header').offsetHeight;
+    const boardHeaderHeight = document.querySelector('.board-header-mobile').offsetHeight;
     const windowsHeight = window.innerHeight;
 
     const kanbanHeight = windowsHeight - (headerHeight + boardHeaderHeight + 20);
-    document.getElementById('board-kanban').style.height = kanbanHeight + "px";
+    document.getElementById('board-kanban-mobile').style.height = kanbanHeight + "px";
 }
 
 /**
