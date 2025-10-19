@@ -14,7 +14,7 @@ async function init() {
 async function renderUserInitial() {
     let logInStatus = getLogStatus();
     let userinitial = "G";
-    if (logInStatus !== "0") {
+    if (logInStatus !== "0" && logInStatus !== "Guest") {
         const fb = new FirebaseDatabase();
         const userinitialRef = await fb.getFirebaseLogin(() => fb.getDataByKey('id', logInStatus, 'contacts'));
         userinitial = userinitialRef.initial;
@@ -30,6 +30,7 @@ function setOnClickEventToDocument() {
     const body = document.querySelector('body');
     body.setAttribute('onclick', 'subMenuClose(event)');
 }
+
 
 
 /**

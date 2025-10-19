@@ -13,6 +13,7 @@ class TaskComponents{
     contactAllListFromDB = [];
     categories = [];
     currentDueDate = "";
+    currentDueDateInputValue = "";
     currentTitle = "";
     isContactListOpen = false;
     currentContactAssignList = [];
@@ -233,10 +234,14 @@ class TaskComponents{
     dateFieldOnChange() {
         let dateField = document.getElementById('due-date-display');
         if (!dateField) { return; }
-        const dueDateCheck = new DueDateCheck(dateField.value, this.currentDueDate, this);
+
+        
+
+        const dueDateCheck = new DueDateCheck(dateField.value, this.currentDueDate, this.currentDueDateInputValue, this);
         const [result, dueDate] = dueDateCheck.startDueDateValidation();
 
         this.currentDueDate = result ? dueDate : "";
+        this.currentDueDateInputValue = dateField.value;
 
     }
 

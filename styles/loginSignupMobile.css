@@ -1,12 +1,10 @@
 /* ===== Base / Tokens ===================================================== */
 :root {
-    /* Easing & Timing */
     --ease-smooth: cubic-bezier(.22, .61, .36, 1);
     --dur-fast: 200ms;
     --dur: 320ms;
     --dur-slow: 600ms;
 
-    /* Responsive scales (werden in Media Queries überschrieben) */
     --logo-pos-scale: 1;
     --logo-size-scale: 1;
     --signup-logo-pos-scale: 1;
@@ -14,7 +12,6 @@
     --form-login-scale: 1;
     --form-signup-width-scale: 1;
 
-    /* Defaults für mobile Logo-Endposition (für Animation) */
     --logo-mobile-top: 37px;
     --logo-mobile-left: 37px;
 }
@@ -238,6 +235,10 @@ body {
         transform: scale(0.82);
         height: calc(var(--logo-height) * 0.78);
         width: calc(var(--logo-width) * 0.78);
+    }
+
+    .signUp-safe-dialog{
+        width: 280px;
     }
 
     @keyframes moveLogoMobile {

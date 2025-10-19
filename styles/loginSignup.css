@@ -332,6 +332,9 @@
 
 
 .signUp-safe-dialog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 312px;
     height: 74px;
     border: none;
@@ -344,25 +347,11 @@
     background-color: rgba(0, 0, 0, .10);
 }
 
-.signUp-safe-dialog>div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    padding-left: 16px;
-    padding-right: 16px;
-    height: 24px;
-    transform: translateY(100%);
-}
-
-.signUp-safe-dialog>div>span {
+.signUp-safe-dialog>span {
     font-family: 'Inter';
     font-size: 20px;
     font-weight: 400;
     color: white;
-    text-align: center;
-    margin-block-start: 0;
-    margin-block-end: 0;
 }
 
 .safe-dialog-show {

@@ -15,10 +15,11 @@ class DueDateCheck {
      * @param {string} currentDueDate - The current due date value.
      * @param {Object} taskComponents - The task components for UI feedback.
      */
-    constructor(dueDateValue, currentDueDate, taskComponents) {
+    constructor(dueDateValue, currentDueDate, currentInputValue, taskComponents) {
         this.dueDateValue = dueDateValue;
         this.currentDueDate = currentDueDate;
         this.taskComponents = taskComponents;
+        this.currentInputValue = currentInputValue;
     }
 
     /**
@@ -105,43 +106,38 @@ class DueDateCheck {
     }
 
     /**
-     * The date format is iterated over and checked to see if the characters are numbers. 
-     * A '/' is inserted at the 2nd and 5th positions if one isn't already present.
+     * Check the character set of the date value string.
+     * This function checks if the date value string contains only valid characters (digits and slashes).
      * @param {string} dateValueString 
-     * @returns true or false
+     * @returns {void}
      */
     checkDateCharSet(dateValueString) {
 
-        for (let i = 0; i < dateValueString.length; i++) {
+        if(this.currentInputValue.length >= dateValueString.length){return;}
+        const dateValueClean = dateValueString.replace(/\D/g, "");
+        let constructedDate = "";
 
-            if (i == 2 || i == 5) {
-                if (dateValueString[i] !== "/") {
-                    break;
-                } else {
-                    continue;
-                }
-            }
-
-            if (!this.isNumeric(dateValueString[i])) { break; }
-
-            if (dateValueString.length == 2 || dateValueString.length == 5) {
-                this.concatDateValue(dateValueString);
-                break;
+        for (let i = 0; i < dateValueClean.length; i++){
+            if (i == 2 || i == 4){
+                constructedDate += `/${dateValueClean[i]}`;
+            }else{
+                constructedDate += `${dateValueClean[i]}`;
             }
         }
 
+        this.setConstructedDateIntoTheField(constructedDate);
+        
     }
 
     /**
-     * Insert the '/' after the user input.
-     * @param {string} dateValue 
+     * Sets the constructed date into the display field and updates the dueDate property.
+     * @param {string} cDate - The constructed date string to set.
      */
-    concatDateValue(dateValue) {
-        dateValue = dateValue + "/";
-        document.getElementById('due-date-display').value = dateValue;
-        this.dueDate = dateValue;
+    setConstructedDateIntoTheField(cDate){
+        document.getElementById('due-date-display').value = cDate;
+        this.dueDate = cDate;
     }
-
+    
     /**
      * Test whether the character is a number.
      * @param {string} n 
