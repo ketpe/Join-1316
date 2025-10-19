@@ -1,9 +1,32 @@
 .board-task-content {
-    /* width: 220px; */
     height: 212px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.board-category-and-swap {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.swap-menu {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    width: 106px;
+    height: 113px;
+    background: var(--bg-default);
+    border: 1.5px solid var(--bg-default);
+    border-radius: 0 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 6px 8px 16px 8px;
+    justify-content: center;
+    align-items: center;
 }
 
 .board-task-head-category {
@@ -23,6 +46,28 @@
         margin: 0;
         color: white;
     }
+}
+
+.swap-mobile-menu {
+    width: 40px;
+    height: 40px;
+    background: white;
+    border: 1.5px solid var(--bg-default);
+    border-radius: 6px;
+    display: flex;
+    padding: 2px 3px;
+    justify-content: center;
+    align-items: center;
+}
+
+.swap-mobile-icon {
+    width: 20px;
+    height: 20px;
+    background: url(../assets/swap-task-menu.svg) center/cover no-repeat;
+}
+
+.btn-swap-menu {
+    width: 48px;
 }
 
 .board-task-title {
