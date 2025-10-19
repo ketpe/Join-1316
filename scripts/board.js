@@ -15,6 +15,7 @@ async function getBoardTasks() {
     renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     addLeftPositionStyleassignedContacts();
     setNavigationButtonActive('board', "desktop");
+    hideAllDropzones();
 }
 
 /**
