@@ -1,4 +1,61 @@
 let boardTaskComponents = null;
+let currentView = "";
+const minDesktopHeight = 880;
+const minDesktopWidth = 880;
+const breakPointToDesktopSingle = 1180;
+
+async function onLoadBoard() {
+    checkUserOrGuestIsloggedIn();
+    const [height, width] = getCurrentBoardSize();
+    const head = document.getElementsByTagName('head');
+    if (width >= minDesktopWidth) {
+        await loadHtmlComponentsForDesktop(head);
+        setNavigationButtonActive('board', "desktop");
+
+    } else {
+        await loadHtmlComponentsForMobile(head);
+        setNavigationButtonActive('board', "mobile");
+    }
+    getBoardTasks()
+}
+
+async function loadHtmlComponentsForDesktop(head) {
+    currentView = "desktop";
+    clearBoardHtmlBody();
+    await Promise.all([
+        includeHtmlForNode("body", "boardDesktop.html")
+    ]);
+
+    await Promise.all([
+        includeHtml("navbar", "navbarDesktop.html"),
+        includeHtml("header", "headerDesktop.html"),
+
+    ]);
+    getBoardTasks();
+}
+/*REVIEW - möglichweise in script.js*/
+function getCurrentBoardSize() {
+    return [height, width] = [window.innerHeight, window.innerWidth];
+}
+
+async function loadHtmlComponentsForMobile() {
+    currentView = "mobile"
+    clearBoardHtmlBody();
+
+    await Promise.all([
+        includeHtmlForNode("body", "boardMobile.html")
+    ]);
+
+    await Promise.all([
+        includeHtml("header", "headerMobile.html"),
+        includeHtml("navbar", "navbarMobile.html"),
+    ]);
+    getBoardTasks()
+}
+
+function clearBoardHtmlBody() {
+    document.querySelector('body').innerHTML = "";
+}
 
 /**
  * @description Fetches tasks from the database, processes them, and renders them on the Kanban board. Also updates the board size and styles assigned contacts.
@@ -11,24 +68,48 @@ async function getBoardTasks() {
     tasks = await getDatabaseTaskCategory(tasks);
     tasks = await getDatabaseTaskSubtasks(tasks);
     tasks = await getDatabaseTaskContact(tasks);
-    kanbanUpdateSize();
+    addBoardPageResize();
     renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     addLeftPositionStyleassignedContacts();
     setNavigationButtonActive('board', "desktop");
     hideAllDropzones();
 }
 
+async function addBoardPageResize() {
+    const [height, width] = getCurrentBoardSize();
+    if ((width <= minDesktopWidth) && currentView != "mobile") {
+        await loadHtmlComponentsForMobile();
+        setNavigationButtonActive('contacts', "mobile");
+        kanbanUpdateSizeMobile();
+
+    } else if (width >= minDesktopWidth + 1 && currentView != "desktop") {
+        await loadHtmlComponentsForDesktop();
+        setNavigationButtonActive('contacts', "desktop");
+        kanbanUpdateSizeDesktop();
+    }
+
+}
+
 /**
  * @description Updates the height of the Kanban board based on the window size and header heights.
  * This function calculates the available height for the Kanban board by subtracting the heights of the header and board header from the total window height, and then sets the height of the Kanban board element accordingly.
  */
-function kanbanUpdateSize() {
+function kanbanUpdateSizeDesktop() {
     const headerHeight = document.getElementById('header').offsetHeight;
     const boardHeaderHeight = document.querySelector('.board-header').offsetHeight;
     const windowsHeight = window.innerHeight;
 
     const kanbanHeight = windowsHeight - (headerHeight + boardHeaderHeight + 20);
     document.getElementById('board-kanban').style.height = kanbanHeight + "px";
+}
+
+function kanbanUpdateSizeMobile() {
+    const headerHeight = document.getElementById('header').offsetHeight;
+    const boardHeaderHeight = document.querySelector('.board-header-mobile').offsetHeight;
+    const windowsHeight = window.innerHeight;
+
+    const kanbanHeight = windowsHeight - (headerHeight + boardHeaderHeight + 20);
+    document.getElementById('board-kanban-mobile').style.height = kanbanHeight + "px";
 }
 
 /**

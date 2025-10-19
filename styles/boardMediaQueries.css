@@ -127,4 +127,22 @@
     .btn-small {
         width: 77px !important;
     }
+
+    .board-task-content {
+        width: 220px;
+    }
+
+    .board-task-title {
+        width: 220px;
+    }
+
+    .board-task-description {
+        width: 220px;
+    }
+}
+
+@media(max-width: 375px) {
+    .board-search-wrapper {
+        width: 100%;
+    }
 }

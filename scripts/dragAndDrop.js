@@ -11,12 +11,13 @@ function startDrag(event, task) {
 }
 
 function getCurrentColumnId(task) {
-    const currentColumn = task.closest('.kanban-column');
-    return currentColumn ? currentColumn.id : '';
+    // suche zuerst nach data-role, dann nach bekannten Klassen
+    const currentColumn = task.closest('[data-role="kanban-column"], .kanban-column, .kanban-column-mobile');
+    return currentColumn ? (currentColumn.id || currentColumn.dataset.column || '') : '';
 }
 
 function hideAllDropzones() {
-    document.querySelectorAll('.kanban-dropzone').forEach(dropzone => {
+    document.querySelectorAll('[data-role="kanban-dropzone"], .kanban-dropzone, .kanban-dropzone-mobile').forEach(dropzone => {
         dropzone.classList.remove('show-dropzone');
         dropzone.style.opacity = '0';
         dropzone.classList.add('d-none');
@@ -35,9 +36,10 @@ function getAllowedColumns(currentColumnId) {
 
 function showAllowedDropzones(allowedColumns) {
     allowedColumns.forEach(colId => {
-        const col = document.getElementById(colId);
+        // versuche zuerst per id, fallback auf data-column
+        const col = document.getElementById(colId) || document.querySelector(`[data-role="kanban-column"][data-column="${colId}"]`);
         if (col) {
-            const dropzone = col.querySelector('.kanban-dropzone');
+            const dropzone = col.querySelector('[data-role="kanban-dropzone"], .kanban-dropzone, .kanban-dropzone-mobile');
             if (dropzone) {
                 dropzone.style.opacity = '1';
                 dropzone.classList.remove('d-none');
@@ -49,7 +51,8 @@ function showAllowedDropzones(allowedColumns) {
 function endDrag(task) {
     task.classList.remove('dragging');
     draggedTask = null;
-    document.querySelectorAll('.kanban-dropzone').forEach(dropzone => {
+    // korrekt alle Dropzones auswählen
+    document.querySelectorAll('[data-role="kanban-dropzone"], .kanban-dropzone, .kanban-dropzone-mobile').forEach(dropzone => {
         dropzone.style.opacity = '0';
         dropzone.classList.add('d-none');
     });
@@ -58,13 +61,13 @@ function endDrag(task) {
 async function dropTask(event, column) {
     column.classList.remove('over');
     if (draggedTask) {
-        let dropzone = column.querySelector('.kanban-dropzone');
-        column.querySelector('.kanban-tasks').insertBefore(draggedTask, dropzone);
-        const newCategory = column.getAttribute('id');
-        const taskId = draggedTask.getAttribute('id');
+        let dropzone = column.querySelector('[data-role="kanban-dropzone"], .kanban-dropzone, .kanban-dropzone-mobile');
+        const tasksContainer = column.querySelector('[data-role="kanban-tasks"], .kanban-tasks, .kanban-tasks-mobile');
+        (tasksContainer || column).insertBefore(draggedTask, dropzone);
+        const newCategory = column.id || column.dataset.column;
+        const taskId = draggedTask.getAttribute('id') || draggedTask.dataset.taskId;
         const fb = new FirebaseDatabase();
         await fb.getFirebaseLogin(() => fb.updateData(`tasks/${taskId}`, { taskStateCategory: newCategory }));
-
     }
     toggleNoTaskVisible()
 }
