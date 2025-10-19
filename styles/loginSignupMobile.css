@@ -1,4 +1,4 @@
-@media (max-width: 1010px) {
+@media (max-width: 1090px) {
 
     .login-join-logo {
         top: calc(var(--logo-position-top) * 0.85);
@@ -11,21 +11,62 @@
         height: calc(var(--form-for-login-height) * 0.85);
         width: calc(var(--form-for-login-width) * 0.85);
     }
+
+    .form-for-signup {
+        width: calc(var(--form-for-signup-width) * 0.8);
+    }
+
+    .signup-logo {
+        top: calc(var(--logo-position-top) * 0.5);
+    }
+}
+
+@media(max-width: 880px) {
+    .signup-logo {
+        top: calc(var(--logo-position-top) * 0.5);
+        left: calc(var(--logo-position-left) * 0.5);
+        height: calc(var(--logo-height) * 0.7);
+        width: calc(var(--logo-width) * 0.7);
+    }
+
+    .login-signup-container {
+        margin-top: 70px;
+        padding: 0px 16px;
+    }
 }
 
 @media (max-width: 600px) {
-
-    .login-join-logo {
-        top: calc(var(--logo-position-top) * 0.75);
-        left: calc(var(--logo-position-left) * 0.75);
-        height: calc(var(--logo-height) * 0.75);
-        width: calc(var(--logo-width) * 0.75);
-    }
 
     .form-for-login {
         height: calc(var(--form-for-login-height) * 0.75);
         width: calc(var(--form-for-login-width) * 0.75);
     }
+
+    .login-signup-form {
+        margin: 0;
+        padding: 0 24px;
+    }
+
+    .form-for-signup {
+        width: 100%;
+    }
+
+
+    .login-signup-form h1 {
+        font-size: 47px;
+    }
+
+    .login-signup-container {
+        margin-top: 77px;
+        padding: 0px 16px;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
 }
 
 @media (max-width: 500px) {
@@ -65,7 +106,7 @@
     .login-signup-container {
         order: 1;
         width: 100%;
-        margin-top: 30%;
+        margin-top: 100px;
         padding: 0px 16px;
         display: flex;
         flex-direction: column;
@@ -75,7 +116,6 @@
 
     footer {
         order: 3;
-        display: flex;
     }
 
 
@@ -101,43 +141,45 @@
         width: 100%;
     }
 
-    .login-signup-form h1 {
-        font-size: 47px;
-    }
+
 
     .login-signup-input-field-container {
         width: 100%;
         padding: 0 16px;
+        margin-bottom: 32px;
     }
 
     .login-form-buttons {
         flex-direction: column;
         gap: 21px;
+
     }
 
-    .signup-title {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        width: 100%;
-        box-sizing: border-box;
-        padding: 24px 10px 0;
+    .signup-form-button {
+        margin-top: 32px;
     }
 
-    .signup-title .arrow-left {
-        position: relative;
-        left: auto;
-        top: auto;
-        background-position: right center;
-        flex: 0 0 33px;
+    #signup-button {
+        width: 180px;
     }
 
-    .signup-title .arrow-left:hover {
+    .arrow-left {
+        left: 31px;
+        top: 44px;
+        transform: scale(0.75);
+    }
+
+    .arrow-left:hover {
+        left: 31px;
+        width: 33px;
+        height: 32px;
+        background-image: url("../assets/arrow-left-default.svg");
+    }
+
+    .arrow-left:active {
+        left: 30px;
+        width: 38px;
         background-image: url("../assets/arrow-left-variant1.svg");
-    }
-
-    .fixed-height {
-        height: 50px;
     }
 
     .login-join-logo {
@@ -146,6 +188,10 @@
         transform: scale(0.82);
         height: calc(var(--logo-height) * 0.78);
         width: calc(var(--logo-width) * 0.78);
+    }
+
+    .login-signup-h1-line {
+        width: 88px;
     }
 
     @keyframes moveLogoMobile {
@@ -204,16 +250,35 @@
         left: 26px;
     }
 
+    .login-signup-form h1 {
+        font-size: 42px;
+    }
+
     .form-for-login {
         height: 427px;
     }
 
-    .login-signup-input{
+    .login-signup-input {
         font-size: 16px;
         padding: 11px 50px 11px 12px;
     }
 
-    .login-signup-input::placeholder{
+    .login-signup-input::placeholder {
         font-size: 16px;
+    }
+}
+
+@media(max-width: 350px) {
+    .arrow-left {
+        left: 24px;
+        transform: scale(0.6);
+    }
+
+    .arrow-left:hover {
+        left: 24px;
+    }
+
+    .arrow-left:active {
+        left: 20px;
     }
 }

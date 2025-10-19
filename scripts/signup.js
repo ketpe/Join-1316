@@ -10,10 +10,6 @@ async function signupinit() {
 }
 
 
-function signInFieldOnInput(input) {
-    if (!input) { return; }
-}
-
 function signInFieldOnBlur(input) {
     if (!input) { return; }
 
@@ -132,17 +128,18 @@ function validatePolicyAccept() {
     return confirmCheckbox.checked;
 }
 
+//TODO - Die Datenbankfunktion wieder freischalten!
 async function signUpForm(event) {
     event.preventDefault();
     let signUp = new FormData(event.target);
     if (!checkAllRequiredField()) { return; }
-    const { firstname, lastname, initial } = splitName(signUp);
+    const { firstname, lastname, initial } = splitNameToFirstLastAndInitial(signUp);
     const fb = new FirebaseDatabase();
     //if (!fb.createNewSignedUser(null, firstname, lastname, signUp.get('password'), signUp.get('email'), null, initial, null)) { return; }
     signInAfterSafe();
 }
 
-function splitName(signUp) {
+function splitNameToFirstLastAndInitial(signUp) {
     let fullName = signUp.get("fullname").trim();
     let parts = fullName.split(/\s+/);
     let lastname = parts.pop();
@@ -160,20 +157,28 @@ async function checkEmailInDatabase(email) {
     return found ? true : false;
 }
 
-function errorHandling(elementID = null, errorMessage) {
+/* function errorHandling(elementID = null, errorMessage) {
     showErrorMessage(errorMessage);
     toggleBorderColorByError(elementID);
     if (!elementID) document.getElementById(elementID).value = '';
     return;
-}
+} */
 
 
 function signupMouseUp(event) {
     const button = document.getElementById('signup-button');
     if (!button) { return; }
     if (event.target == button) {
+        leaveFocusOffAllFields();
         button.disabled = !(checkAllRequiredField());
     }
+}
+
+function leaveFocusOffAllFields() {
+    const inputElemets = document.querySelectorAll("input");
+    inputElemets.forEach((input) => {
+        input.blur();
+    });
 }
 
 function checkAllRequiredField() {

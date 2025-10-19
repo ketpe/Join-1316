@@ -81,7 +81,6 @@
 .login-signup-form {
     position: relative;
     background-color: white;
-    margin-bottom: 80px;
     border-radius: 30px;
     display: flex;
     flex-direction: column;
@@ -93,11 +92,12 @@
 .form-for-login {
     height: var(--form-for-login-height);
     width: var(--form-for-login-width);
+    margin-bottom: 80px;
 }
 
 .form-for-signup {
-    height: 598px;
-    width: 630px;
+    height: var(--form-for-signup-height);
+    width: var(--form-for-signup-width);
 }
 
 .login-signup-form h1 {
@@ -173,7 +173,7 @@
     z-index: 1;
 }
 
-.input-mail{
+.input-mail {
     background-image: url("../assets/mail-icon.svg");
 }
 
@@ -207,6 +207,7 @@
     transform: translateY(-50%);
     cursor: pointer;
     -webkit-user-select: none;
+    user-select: none;
 }
 
 .login-password-lock {
@@ -306,8 +307,8 @@
 
 .arrow-left {
     position: absolute;
-    left: 64px;
-    top: 120px;
+    left: 46px;
+    top: 66px;
     width: 33px;
     height: 32px;
     background-repeat: no-repeat;
@@ -315,10 +316,12 @@
     background-size: cover;
     cursor: pointer;
     background-image: url("../assets/arrow-left-default.svg");
+    transition: all 100ms ease-in-out;
+    transform: scale(0.8);
 }
 
 .arrow-left:hover {
-    left: 58px;
+    left: 40px;
     width: 38px;
     background-image: url("../assets/arrow-left-variant1.svg");
 }
