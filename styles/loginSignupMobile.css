@@ -1,45 +1,115 @@
+/* ===== Base / Tokens ===================================================== */
+:root {
+    /* Easing & Timing */
+    --ease-smooth: cubic-bezier(.22, .61, .36, 1);
+    --dur-fast: 200ms;
+    --dur: 320ms;
+    --dur-slow: 600ms;
+
+    /* Responsive scales (werden in Media Queries überschrieben) */
+    --logo-pos-scale: 1;
+    --logo-size-scale: 1;
+    --signup-logo-pos-scale: 1;
+    --signup-logo-size-scale: 1;
+    --form-login-scale: 1;
+    --form-signup-width-scale: 1;
+
+    /* Defaults für mobile Logo-Endposition (für Animation) */
+    --logo-mobile-top: 37px;
+    --logo-mobile-left: 37px;
+}
+
+/* ===== Global Resets ===================================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* ===== Smooth transitions on frequently changing elements ================ */
+.login-join-logo,
+.signup-logo {
+    transition:
+        top var(--dur) var(--ease-smooth),
+        left var(--dur) var(--ease-smooth),
+        height var(--dur) var(--ease-smooth),
+        width var(--dur) var(--ease-smooth),
+        transform var(--dur) var(--ease-smooth);
+    will-change: top, left, height, width, transform;
+}
+
+.form-for-login,
+.form-for-signup,
+.login-signup-form,
+.login-signup-header,
+.login-signup-container {
+    transition:
+        margin var(--dur-fast) var(--ease-smooth),
+        padding var(--dur-fast) var(--ease-smooth),
+        height var(--dur) var(--ease-smooth),
+        width var(--dur) var(--ease-smooth),
+        gap var(--dur-fast) var(--ease-smooth);
+}
+
+/* ===== Elementgrößen/Positionen über Variablen ========================== */
+.login-join-logo {
+    top: calc(var(--logo-position-top) * var(--logo-pos-scale));
+    left: calc(var(--logo-position-left) * var(--logo-pos-scale));
+    height: calc(var(--logo-height) * var(--logo-size-scale));
+    width: calc(var(--logo-width) * var(--logo-size-scale));
+}
+
+.signup-logo {
+    top: calc(var(--logo-position-top) * var(--signup-logo-pos-scale));
+    left: calc(var(--logo-position-left) * var(--signup-logo-pos-scale));
+    height: calc(var(--logo-height) * var(--signup-logo-size-scale));
+    width: calc(var(--logo-width) * var(--signup-logo-size-scale));
+}
+
+.form-for-login {
+    height: calc(var(--form-for-login-height) * var(--form-login-scale));
+    width: calc(var(--form-for-login-width) * var(--form-login-scale));
+}
+
+.form-for-signup {
+    width: calc(var(--form-for-signup-width) * var(--form-signup-width-scale));
+}
+
+/* ===== Breakpoints ======================================================= */
 @media (max-width: 1090px) {
-
-    .login-join-logo {
-        top: calc(var(--logo-position-top) * 0.85);
-        left: calc(var(--logo-position-left) * 0.85);
-        height: calc(var(--logo-height) * 0.85);
-        width: calc(var(--logo-width) * 0.85);
-    }
-
-    .form-for-login {
-        height: calc(var(--form-for-login-height) * 0.85);
-        width: calc(var(--form-for-login-width) * 0.85);
-    }
-
-    .form-for-signup {
-        width: calc(var(--form-for-signup-width) * 0.8);
-    }
-
-    .signup-logo {
-        top: calc(var(--logo-position-top) * 0.5);
+    :root {
+        --logo-pos-scale: .85;
+        --logo-size-scale: .85;
+        --form-login-scale: .85;
+        --form-signup-width-scale: .8;
+        --signup-logo-pos-scale: .5;
     }
 }
 
-@media(max-width: 880px) {
-    .signup-logo {
-        top: calc(var(--logo-position-top) * 0.5);
-        left: calc(var(--logo-position-left) * 0.5);
-        height: calc(var(--logo-height) * 0.7);
-        width: calc(var(--logo-width) * 0.7);
+@media (max-width: 880px) {
+    :root {
+        --signup-logo-pos-scale: .5;
+        --signup-logo-size-scale: .7;
     }
 
     .login-signup-container {
+        padding: 0 16px;
+    }
+
+    .form-for-signup {
         margin-top: 70px;
-        padding: 0px 16px;
     }
 }
 
 @media (max-width: 600px) {
-
-    .form-for-login {
-        height: calc(var(--form-for-login-height) * 0.75);
-        width: calc(var(--form-for-login-width) * 0.75);
+    :root {
+        --form-login-scale: .75;
     }
 
     .login-signup-form {
@@ -49,35 +119,21 @@
 
     .form-for-signup {
         width: 100%;
+        margin-top: 77px;
     }
-
 
     .login-signup-form h1 {
         font-size: 47px;
+        transition: font-size var(--dur-fast) var(--ease-smooth);
     }
 
-    .login-signup-container {
-        margin-top: 77px;
-        padding: 0px 16px;
+    .login-signup-h1-line {
+        width: 88px;
+        transition: width var(--dur-fast) var(--ease-smooth);
     }
-
-    *,
-    *::before,
-    *::after {
-        box-sizing: border-box;
-    }
-
 }
 
 @media (max-width: 500px) {
-
-    html,
-    body {
-        margin: 0;
-        box-sizing: border-box;
-        overflow-x: hidden;
-    }
-
     .login-section {
         display: flex;
         flex-direction: column;
@@ -93,7 +149,6 @@
         justify-content: center;
         align-items: center;
         width: 100%;
-        box-sizing: border-box;
         padding: 0 25px;
         min-height: 49px;
         margin-bottom: 75px;
@@ -107,7 +162,7 @@
         order: 1;
         width: 100%;
         margin-top: 100px;
-        padding: 0px 16px;
+        padding: 0 16px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -118,14 +173,12 @@
         order: 3;
     }
 
-
     .login-signup-footer {
         justify-content: center;
         align-items: center;
         gap: 16px;
         padding-bottom: 32px;
     }
-
 
     .login-signup-form {
         margin: 0;
@@ -141,8 +194,6 @@
         width: 100%;
     }
 
-
-
     .login-signup-input-field-container {
         width: 100%;
         padding: 0 16px;
@@ -152,7 +203,6 @@
     .login-form-buttons {
         flex-direction: column;
         gap: 21px;
-
     }
 
     .signup-form-button {
@@ -167,42 +217,31 @@
         left: 31px;
         top: 44px;
         transform: scale(0.75);
+        transition:
+            left var(--dur-fast) var(--ease-smooth),
+            transform var(--dur-fast) var(--ease-smooth),
+            background-image var(--dur-fast) linear;
     }
 
     .arrow-left:hover {
-        left: 31px;
-        width: 33px;
-        height: 32px;
         background-image: url("../assets/arrow-left-default.svg");
     }
 
     .arrow-left:active {
         left: 30px;
-        width: 38px;
         background-image: url("../assets/arrow-left-variant1.svg");
     }
 
     .login-join-logo {
-        top: 37px;
-        left: 37px;
+        top: var(--logo-mobile-top);
+        left: var(--logo-mobile-left);
         transform: scale(0.82);
         height: calc(var(--logo-height) * 0.78);
         width: calc(var(--logo-width) * 0.78);
     }
 
-    .login-signup-h1-line {
-        width: 88px;
-    }
-
     @keyframes moveLogoMobile {
-        0% {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(1.2);
-            background-image: url('../assets/join-logo.svg');
-        }
-
-        40% {
+        from {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(1.2);
@@ -213,19 +252,16 @@
             background-image: url('../assets/logo-for-Favicon.svg');
         }
 
-        100% {
-            top: 37px;
-            left: 37px;
+        to {
+            top: var(--logo-mobile-top);
+            left: var(--logo-mobile-left);
             transform: scale(0.82);
         }
     }
 
-
     @keyframes fadeBackground {
-        0% {
-            background-color: var(--bg-default);
-        }
 
+        0%,
         40% {
             background-color: var(--bg-default);
         }
@@ -234,17 +270,16 @@
             background-color: var(--default-bg-color);
         }
     }
-
-
-    *,
-    *::before,
-    *::after {
-        box-sizing: border-box;
-    }
-
 }
 
-@media(max-width: 400px) {
+@media(max-width: 430px) {
+    .login-signup-input {
+        font-size: 18px;
+        padding: 12px 50px 12px 12px;
+    }
+}
+
+@media (max-width: 400px) {
     .login-join-logo {
         top: 21px;
         left: 26px;
@@ -260,7 +295,7 @@
 
     .login-signup-input {
         font-size: 16px;
-        padding: 11px 50px 11px 12px;
+        padding: 12px 50px 12px 12px;
     }
 
     .login-signup-input::placeholder {
@@ -268,7 +303,7 @@
     }
 }
 
-@media(max-width: 350px) {
+@media (max-width: 350px) {
     .arrow-left {
         left: 24px;
         transform: scale(0.6);
@@ -280,5 +315,28 @@
 
     .arrow-left:active {
         left: 20px;
+    }
+
+    .login-signup-input {
+        font-size: 14px;
+        padding: 12px 31px 12px 5px;
+    }
+
+    .input-icons {
+        right: 8px;
+    }
+
+    .login-toggle-password{
+        right: 8px;
+    }
+}
+
+/* ===== Motion preferences ================================================= */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
     }
 }
