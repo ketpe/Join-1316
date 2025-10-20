@@ -1,6 +1,11 @@
-
+/**
+ * Set onclick event to document body to close submenu when clicking outside
+*/
 setOnClickEventToDocument();
 
+/**
+ * Initialize the webpage by including HTML components and rendering user initials.
+ */
 async function init() {
     await Promise.all([
         includeHtml("navbar", "navbarDesktop.html"),
@@ -11,6 +16,10 @@ async function init() {
     
 }
 
+/**
+ * Render the user's initial in the UI.
+ * @returns {Promise<void>}
+ */
 async function renderUserInitial() {
     let logInStatus = getLogStatus();
     let userinitial = "G";
@@ -52,10 +61,9 @@ function showSubmenu(id, event, desktopOrMobile) {
 };
 
 /**
- *
+ * Prevent event bubbling.
  * @param {*} event
  */
-
 function noBubbling(event) {
     event.stopPropagation()
 };
@@ -78,7 +86,11 @@ function subMenuClose(event){
     }
 }
 
-
+/**
+ * Show an error message for a specific element.
+ * @param {String} elementId
+ * @param {String} errorMessage
+ */
 function showErrorMessage(elementId, errorMessage="") {
     let errorText = document.getElementById(elementId);
     if(errorText.classList.contains('d-none')){
@@ -89,6 +101,10 @@ function showErrorMessage(elementId, errorMessage="") {
     }
 }
 
+/**
+ * Remove the error message for a specific element.
+ * @param {String} elementId
+ */
 function removeErrorMessage(elementId) {
     let errorText = document.getElementById(elementId);
     if(!errorText.classList.contains('d-none')) {
@@ -96,6 +112,10 @@ function removeErrorMessage(elementId) {
     };
 }
 
+/**
+ * Get a random color class from the predefined list.
+ * @returns {String} A random color class.
+ */
 function getRandomColor() {
     const colorClasses = [
         'orange', 'violet', 'coral', 'gold', 'lemon', 'red', 'blue',
@@ -113,6 +133,12 @@ function getNewUid() {
     return crypto.randomUUID();
 }
 
+/**
+ * Toggles the visibility of the password input field.
+ * @param {Number} toggleCounter 
+ * @param {String} passwortInputID 
+ * @param {String} toggleIconID 
+ */
 function togglePasswordVisibility(toggleCounter, passwortInputID, toggleIconID) {
     let passwordInput = document.getElementById(passwortInputID);
     let toggleIcon = document.getElementById(toggleIconID);
@@ -129,6 +155,11 @@ function togglePasswordVisibility(toggleCounter, passwortInputID, toggleIconID) 
     };
 }
 
+/**
+ * Toggles the border color of an element based on field has validation error.
+ * @param {String} elementId 
+ * @param {Boolean} loginErrorBorder 
+ */
 function toggleBorderColorByError(elementId = null, loginErrorBorder = false) {
     const elements = elementId
         ? [document.getElementById(elementId)].filter(Boolean)
@@ -148,6 +179,9 @@ function getCurrentWindowSize() {
     return [window.innerHeight, window.innerWidth];
 }
 
+/**
+ * Check if user or guest is logged in, if not navigate to login page.
+ */
 function checkUserOrGuestIsloggedIn() {
     let logInStatus = getLogStatus();
     if(logInStatus == "0"){

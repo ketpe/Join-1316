@@ -20,21 +20,9 @@
 
 .summary-title-mobile {
     margin: 0;
-    font-family: Inter;
-    font-weight: 700;
-    font-style: Bold;
-    font-size: 47px;
     white-space: nowrap;
 }
 
-.summary-subtitle-mobile {
-    margin: 0;
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 20px;
-    white-space: nowrap;
-}
 
 .summary-content-mobile {
     display: flex;

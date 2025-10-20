@@ -1,7 +1,8 @@
 <form id="add-task-form" class="" action="/post" method="post" aria-labelledby="add-task-title" novalidate>
     <header class="add-task-head">
         <h1 class="join-h1">Add Task</h1>
-        <button id="a-t-dialog-close-btn" class="btn-overlay-close" type="button" aria-label="Close dialog" onclick="addTaskDialogClose(event)">
+        <button id="a-t-dialog-close-btn" class="btn-overlay-close" type="button" aria-label="Close dialog"
+            onclick="addTaskDialogClose(event)">
             <div id="a-t-dialog-close-div" role="img" title="Close dialog icon" aria-hidden="true"></div>
         </button>
     </header>
@@ -10,25 +11,27 @@
     </div>
 
     <footer class="add-task-footer-board-single">
-        <button id="a-t-cancel-btn" class="btn btn-outline btn-clear-cancel" type="button" onclick="addTaskDialogClose(event)">
-                    <div>
-                        <span>Cancel</span>
-                        <div role="img" title="Clear-Icon" aria-hidden="true"></div>
-                    </div>
-                </button>
-            <button id="createTaskButton" type="submit" class="btn btn-fill btn-create-task" disabled = true>
-                <div>
-                    <span>Create Task</span>
-                    <div role="img" title="Check-Icon" aria-hidden="true"></div>
-                </div>
-            </button>
+        <button id="a-t-cancel-btn" class="btn btn-outline btn-clear-cancel" type="button"
+            onclick="addTaskDialogClose(event)">
+            <div>
+                <span>Cancel</span>
+                <div title="Clear-Icon" aria-hidden="true"></div>
+            </div>
+        </button>
+        <button id="createTaskButton" type="submit" class="btn btn-fill btn-create-task" disabled=true>
+            <div>
+                <span>Create Task</span>
+                <div title="Check-Icon" aria-hidden="true"></div>
+            </div>
+        </button>
     </footer>
 
 
-    <dialog id="add-task-safe-dialog" class="add-task-safe-dialog visually-hidden" aria-labelledby="safe-dialog-title" aria-modal="true">
+    <dialog id="add-task-safe-dialog" class="add-task-safe-dialog visually-hidden" aria-labelledby="safe-dialog-title"
+        aria-modal="true">
         <div>
-            <span>Task added to board</span>
-            <div role="img" title="board icon" aria-hidden="true"></div>
+            <span id="safe-dialog-title">Task added to board</span>
+            <div title="board icon" aria-hidden="true"></div>
         </div>
     </dialog>
 </form>

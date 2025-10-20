@@ -117,6 +117,14 @@
     background-image: url('../assets/done-icon.svg');
 }
 
+.quantity-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 8px;
+}
+
 .quantity-task {
     font-size: 64px;
     font-weight: 600;

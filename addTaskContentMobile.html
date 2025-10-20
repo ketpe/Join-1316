@@ -1,6 +1,6 @@
 <form id="add-task-form" action="/post" method="post" aria-labelledby="add-task-title" novalidate>
     <header class="add-task-head-mobile">
-        <h1 class="join-h1-mobile">Add Task</h1>
+        <h1 id="add-task-title" class="join-h1-mobile">Add Task</h1>
     </header>
     <div class="add-task-mobile-fields">
 
@@ -27,7 +27,7 @@
 
     <dialog id="add-task-safe-dialog" class="add-task-safe-dialog visually-hidden" aria-labelledby="safe-dialog-title" aria-modal="true">
         <div>
-            <span>Task added to board</span>
+            <span id="safe-dialog-title">Task added to board</span>
             <div role="img" title="board icon" aria-hidden="true"></div>
         </div>
     </dialog>
