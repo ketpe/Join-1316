@@ -7,12 +7,26 @@ function boardTasksTemplate(task, rendererdContacts) {
             <div class="board-task-head-category ${task.categoryData.categoryColor}">
                 <p>${task.categoryData.title}</p>
             </div>
-            <button type="button" class="swap-mobile-menu" id="swap-mobile-btn-${task.id}">
+             <button type="button" class="swap-mobile-menu" id="swap-mobile-btn-${task.id}" onclick="openSwapMobileMenu(event,'${task.id}')">
                 <div role="img" aria-label="swap Button icon" class="swap-mobile-icon"></div>
             </button>
 
         </div>
-
+        <section id="swap-mobile-menu-${task.id}" class="swap-menu " onclick="closeSwapMobileMenu(event,'${task.id}')">
+                <div class="swap-menu-options">
+                   <div id="subMenu" class="swap-menu-mobile-box" data-dOrM="mobile">
+                   <h3 class="swap-menu-title">Move to</h3>
+                    <button type="button" class="btn-swapmenu">
+                    <div role="img" aria-label="to do icon" class="swap-menu-icon swap-menu-icon-up"></div>
+                    <p>To Do</p>
+                    </button>
+                    <button type="button" class="btn-swapmenu">
+                    <div role="img" aria-label="review icon" class="swap-menu-icon swap-menu-icon-down"></div>
+                    <p>Review</p>
+                    </button>
+                    </div>
+                </div>
+            </section>
         <div class="board-task-title">
             <p>${task.title}</p>
         </div>
@@ -33,6 +47,7 @@ function boardTasksTemplate(task, rendererdContacts) {
             </div>
         </div>
     </div>
+    <div class="swap-overlay" id="swap-overlay-${task.id}" onclick="closeSwapMobileMenu(event,'${task.id}')"></div>
 </div>`
 }
 

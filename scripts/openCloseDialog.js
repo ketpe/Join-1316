@@ -99,4 +99,20 @@ function renderEditContactIntoDialogMobile(contactId) {
     includeHtml("add-contact-dialog-mobile", "editContactMobile.html");
     getContactData(contactId);
 }
+function openSwapMobileMenu(event, id) {
+    event.stopPropagation();
+    const overlay = document.getElementById(`swap-overlay-${id}`);
+    overlay.style.display = 'block';
+    const btn = document.getElementById(`swap-mobile-btn-${id}`);
+    const dialog = document.getElementById(`swap-mobile-menu-${id}`);
+    const parent = btn.closest('.kanban-task');
+    dialog.style.display = 'block';
+}
 
+function closeSwapMobileMenu(event, id) {
+    event.stopPropagation();
+    const overlay = document.getElementById(`swap-overlay-${id}`);
+    overlay.style.display = 'none';
+    const dialog = document.getElementById(`swap-mobile-menu-${id}`);
+    dialog.style.display = 'none';
+}
