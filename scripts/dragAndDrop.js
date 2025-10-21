@@ -36,7 +36,6 @@ function getAllowedColumns(currentColumnId) {
 
 function showAllowedDropzones(allowedColumns) {
     allowedColumns.forEach(colId => {
-        // versuche zuerst per id, fallback auf data-column
         const col = document.getElementById(colId) || document.querySelector(`[data-role="kanban-column"][data-column="${colId}"]`);
         if (col) {
             const dropzone = col.querySelector('[data-role="kanban-dropzone"], .kanban-dropzone, .kanban-dropzone-mobile');
@@ -51,7 +50,6 @@ function showAllowedDropzones(allowedColumns) {
 function endDrag(task) {
     task.classList.remove('dragging');
     draggedTask = null;
-    // korrekt alle Dropzones auswählen
     document.querySelectorAll('[data-role="kanban-dropzone"], .kanban-dropzone, .kanban-dropzone-mobile').forEach(dropzone => {
         dropzone.style.opacity = '0';
         dropzone.classList.add('d-none');
@@ -65,6 +63,8 @@ async function dropTask(event, column) {
         const tasksContainer = column.querySelector('[data-role="kanban-tasks"], .kanban-tasks, .kanban-tasks-mobile');
         (tasksContainer || column).insertBefore(draggedTask, dropzone);
         const newCategory = column.id || column.dataset.column;
+        console.log(newCategory);
+
         const taskId = draggedTask.getAttribute('id') || draggedTask.dataset.taskId;
         const fb = new FirebaseDatabase();
         await fb.getFirebaseLogin(() => fb.updateData(`tasks/${taskId}`, { taskStateCategory: newCategory }));
@@ -72,3 +72,23 @@ async function dropTask(event, column) {
     toggleNoTaskVisible()
 }
 
+async function moveTasktoCategory(taskId, newCategory) {
+    const taskElement = document.getElementById(taskId);
+    console.log(taskElement);
+    console.log(newCategory);
+
+    if (newCategory) {
+        newCategory === 'To-Do' ? newCategory = 'todo' :
+            newCategory === 'In progress' ? newCategory = 'inprogress' :
+                newCategory === 'Awaiting feedback' ? newCategory = 'awaiting' :
+                    newCategory === 'Done' ? newCategory = 'done' :
+                        newCategory;
+    }
+    console.log(newCategory);
+    if (taskId !== null) {
+        const fb = new FirebaseDatabase();
+        await fb.getFirebaseLogin(() => fb.updateData(`tasks/${taskId}`, { taskStateCategory: newCategory }));
+    } else {
+        console.error('Task ID is null or undefined.');
+    }
+}

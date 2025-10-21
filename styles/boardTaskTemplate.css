@@ -25,13 +25,13 @@
     padding: 6px 8px 16px 8px;
     justify-content: center;
     align-items: center;
-    width: 106px;
+    width: 140px;
     height: 113px;
     background: var(--bg-default);
     border: 1.5px solid var(--bg-default);
     border-radius: 0 20px 20px 20px;
     overflow: hidden;
-    /* verhindert Scrollbars */
+
 }
 
 .board-task-head-category {
@@ -55,17 +55,25 @@
 
 .swap-menu-options {
     position: fixed;
+    width: 100%;
+
     background-color: var(--bg-default);
     border-radius: 20px 0 20px 20px;
     color: var(--btn-menu-text-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    padding: 8px;
-    gap: 8px;
     z-index: 200;
 
+}
+
+.swap-menu-mobile-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 12px;
+    height: 100%;
+    width: 100%;
 }
 
 .swap-overlay {
@@ -104,13 +112,13 @@
 }
 
 .btn-swapmenu {
-    width: 90px;
+    width: 90%;
     height: 28px;
     background-color: transparent;
     border: unset;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: start;
     gap: 8px;
 
     p {
@@ -119,6 +127,9 @@
         font-style: Medium;
         font-size: 14px;
         color: #fff;
+        padding-left: 5px;
+        margin: 0;
+        text-align: start;
     }
 }
 
@@ -129,8 +140,8 @@
     font-size: 16px;
     color: white;
     margin: 0;
-    padding: 6px 8px 16px 8px;
-
+    padding: 6px 8px 16px 0;
+    text-align: start;
 }
 
 .swap-menu-icon-up {
@@ -138,7 +149,7 @@
 }
 
 .swap-menu-icon-down {
-    background: url(../assets/arrow_downward.svg) center/cover no-repeat;
+    background: url(../assets/arrow_upwarddown.svg) center/cover no-repeat;
 }
 
 .board-task-title {

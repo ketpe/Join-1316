@@ -1,5 +1,5 @@
 
-function boardTasksTemplate(task, rendererdContacts) {
+function boardTasksTemplate(task, rendererdContacts, prevCategory, nextCategory) {
     return `<div class="kanban-task" draggable="true" id="${task.id}" ondragstart="startDrag(event, this)" ondragend="endDrag(this)"
     onclick="getDetailViewTask('${task.id}')">
     <div class="board-task-content">
@@ -14,15 +14,15 @@ function boardTasksTemplate(task, rendererdContacts) {
         </div>
         <section id="swap-mobile-menu-${task.id}" class="swap-menu " onclick="closeSwapMobileMenu(event,'${task.id}')">
                 <div class="swap-menu-options">
-                   <div id="subMenu" class="swap-menu-mobile-box" data-dOrM="mobile">
-                   <h3 class="swap-menu-title">Move to</h3>
-                    <button type="button" class="btn-swapmenu">
+                <h3 class="swap-menu-title">Move to</h3>
+                <div id="subMenu" class="swap-menu-mobile-box" data-dOrM="mobile">
+                    <button type="button" class="btn-swapmenu" onclick="moveTasktoCategory('${task.id}','${prevCategory}')">
                     <div role="img" aria-label="to do icon" class="swap-menu-icon swap-menu-icon-up"></div>
-                    <p>To Do</p>
+                    <p>${prevCategory}</p>
                     </button>
-                    <button type="button" class="btn-swapmenu">
+                    <button type="button" class="btn-swapmenu" onclick="moveTasktoCategory('${task.id}','${nextCategory}')">
                     <div role="img" aria-label="review icon" class="swap-menu-icon swap-menu-icon-down"></div>
-                    <p>Review</p>
+                    <p>${nextCategory}</p>
                     </button>
                     </div>
                 </div>

@@ -124,10 +124,10 @@ function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback,
     tasks.forEach(task => {
         let renderedContacts = '';
         renderedContacts = renderAssignedContacts(task.assignedContacts);
-        task.taskStateCategory === 'todo' ? taskToDo.innerHTML += boardTasksTemplate(task, renderedContacts) :
-            task.taskStateCategory === 'inprogress' ? taskInProgress.innerHTML += boardTasksTemplate(task, renderedContacts) :
-                task.taskStateCategory === 'awaiting' ? taskAwaitingFeedback.innerHTML += boardTasksTemplate(task, renderedContacts) :
-                    task.taskStateCategory === 'done' ? taskDone.innerHTML += boardTasksTemplate(task, renderedContacts) : '';
+        task.taskStateCategory === 'todo' ? taskToDo.innerHTML += boardTasksTemplate(task, renderedContacts, '', 'In progress') :
+            task.taskStateCategory === 'inprogress' ? taskInProgress.innerHTML += boardTasksTemplate(task, renderedContacts, 'To-Do', 'Awaiting feedback') :
+                task.taskStateCategory === 'awaiting' ? taskAwaitingFeedback.innerHTML += boardTasksTemplate(task, renderedContacts, 'In progress', 'Done') :
+                    task.taskStateCategory === 'done' ? taskDone.innerHTML += boardTasksTemplate(task, renderedContacts, 'Awaiting feedback', '') : '';
     })
     let taskItems = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
     taskItems = addDropZones(taskItems);

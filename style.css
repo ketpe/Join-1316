@@ -18,6 +18,11 @@
     src: url("./fonts/OpenSans/OpenSans-VariableFont_wdth,wght.ttf");
 }
 
+@font-face {
+    font-family: "Mulish";
+    src: url("./fonts/Mulish/Mulish-VariableFont_wght.ttf");
+}
+
 body {
     margin: 0;
     box-sizing: border-box;
