@@ -54,16 +54,17 @@ async function onLoadContacts() {
 async function loadHtmlComponentsForDesktop(head) {
     currentView = "desktop";
     clearContactsHtmlBody();
-    await Promise.all([
-        includeHtmlForNode("body", "contactsDesktop.html")
-    ]);
+    await includeHtmlForNode("body", "contactsDesktop.html")
 
     await Promise.all([
         includeHtml("navbar", "navbarDesktop.html"),
         includeHtml("header", "headerDesktop.html"),
 
     ]);
-    renderContacts();
+
+    showLoadingAninmation();
+    await renderContacts();
+    hideLoadingAninmation();
 }
 /*REVIEW - möglichweise in script.js*/
 function getCurrentContactSize() {

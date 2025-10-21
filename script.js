@@ -13,7 +13,7 @@ async function init() {
     ]);
 
     renderUserInitial();
-    
+
 }
 
 /**
@@ -50,14 +50,14 @@ function showSubmenu(id, event, desktopOrMobile) {
     if (event) event.stopPropagation();
     const subMenu = document.getElementById(id);
 
-    if(desktopOrMobile == "desktop"){
+    if (desktopOrMobile == "desktop") {
         subMenu.classList.toggle('d-none');
     }
-    
-    if(desktopOrMobile == "mobile"){
+
+    if (desktopOrMobile == "mobile") {
         subMenu.classList.toggle('is-submenu-mobile-open');
     }
-    
+
 };
 
 /**
@@ -73,15 +73,15 @@ function noBubbling(event) {
  * @param {*} event
  * @returns
  */
-function subMenuClose(event){
+function subMenuClose(event) {
 
     let subMenu = document.getElementById('subMenu')
-    if(!subMenu){return;}
+    if (!subMenu) { return; }
     const desktopOrMobile = subMenu.getAttribute('data-dOrM');
 
     if (desktopOrMobile == "desktop" && !subMenu.classList.contains('d-none') && !subMenu.contains(event.target)) {
         subMenu.classList.add('d-none');
-    }else if(desktopOrMobile == "mobile" && subMenu.classList.contains('is-submenu-mobile-open') && !subMenu.contains(event.target)){
+    } else if (desktopOrMobile == "mobile" && subMenu.classList.contains('is-submenu-mobile-open') && !subMenu.contains(event.target)) {
         subMenu.classList.remove('is-submenu-mobile-open');
     }
 }
@@ -91,13 +91,13 @@ function subMenuClose(event){
  * @param {String} elementId
  * @param {String} errorMessage
  */
-function showErrorMessage(elementId, errorMessage="") {
+function showErrorMessage(elementId, errorMessage = "") {
     let errorText = document.getElementById(elementId);
-    if(errorText.classList.contains('d-none')){
+    if (errorText.classList.contains('d-none')) {
         errorText.classList.remove("d-none");
-        if(errorMessage.length > 0){
+        if (errorMessage.length > 0) {
             errorText.textContent = errorMessage;
-        }   
+        }
     }
 }
 
@@ -107,7 +107,7 @@ function showErrorMessage(elementId, errorMessage="") {
  */
 function removeErrorMessage(elementId) {
     let errorText = document.getElementById(elementId);
-    if(!errorText.classList.contains('d-none')) {
+    if (!errorText.classList.contains('d-none')) {
         errorText.classList.add("d-none")
     };
 }
@@ -184,8 +184,26 @@ function getCurrentWindowSize() {
  */
 function checkUserOrGuestIsloggedIn() {
     let logInStatus = getLogStatus();
-    if(logInStatus == "0"){
+    if (logInStatus == "0") {
         navigateToLogin();
     }
 }
 
+
+function showLoadingAninmation() {
+    const overlay = document.getElementById('loadingOverlay');
+    const loadingContainer = document.getElementById('loadingContainer');
+    if (!overlay || !loadingContainer) { return; }
+    overlay.classList.add('is-loading-visible');
+    loadingContainer.classList.remove('visually-hidden');
+}
+
+function hideLoadingAninmation() {
+    setTimeout(() => {
+        const overlay = document.getElementById('loadingOverlay');
+        const loadingContainer = document.getElementById('loadingContainer');
+        if (!overlay || !loadingContainer) { return; }
+        overlay.classList.remove('is-loading-visible');
+        loadingContainer.classList.add('visually-hidden');
+    }, 500);
+}

@@ -137,7 +137,7 @@ function checkDate(tasks) {
 }
 
 async function onLoadSummary() {
-    const [height, width] = getCurrentAddTaskSize();
+    const [height, width] = getCurrentWindowSize();
     const head = document.getElementsByTagName('head');
     if (width >= minDesktopWidth) {
         await loadHtmlComponentsForDesktop(head);
@@ -153,23 +153,18 @@ async function onLoadSummary() {
 async function loadHtmlComponentsForDesktop(head) {
     currentView = "desktop";
     clearAddTaskHtmlBody();
-    await Promise.all([
-        includeHtmlForNode("body", "summaryDesktop.html")
-    ]);
+    await includeHtmlForNode("body", "summaryDesktop.html");
 
     await Promise.all([
         includeHtml("navbar", "navbarDesktop.html"),
         includeHtml("header", "headerDesktop.html"),
-
     ]);
-    loadTasksforSummary();
+    showLoadingAninmation();
+    await loadTasksforSummary();
     renderGreetings();
+    hideLoadingAninmation();
+}
 
-}
-/*REVIEW - möglichweise in script.js*/
-function getCurrentAddTaskSize() {
-    return [height, width] = [window.innerHeight, window.innerWidth];
-}
 
 async function loadHtmlComponentsForMobile() {
     currentView = "mobile"
@@ -198,7 +193,7 @@ function clearAddTaskHtmlBody() {
 }
 
 async function addSummaryPageResize() {
-    const [height, width] = getCurrentAddTaskSize();
+    const [height, width] = getCurrentWindowSize();
     if ((width <= minDesktopWidth) && currentView != "mobile") {
         await loadHtmlComponentsForMobile();
         setNavigationButtonActive('summary', "mobile");

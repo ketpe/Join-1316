@@ -65,19 +65,19 @@ button {
     cursor: pointer;
 }
 
-.mb-8{
+.mb-8 {
     margin-bottom: 8px;
 }
 
-.mb-32{
+.mb-32 {
     margin-bottom: 32px;
 }
 
-.mb-26{
+.mb-26 {
     margin-bottom: 26px;
 }
 
-.margin-zero{
+.margin-zero {
     margin: 0;
 }
 
@@ -127,14 +127,14 @@ button {
     color: black;
 }
 
-.join-h2-normal{
+.join-h2-normal {
     font-family: 'Inter';
     font-size: 27px;
     font-weight: 400;
     color: black;
 }
 
-.join-h2-mobile{
+.join-h2-mobile {
     margin: 0;
     font-family: Inter;
     font-weight: 400;
@@ -178,6 +178,36 @@ a {
     animation: slide-Dialog-out 1000ms ease-in-out forwards;
 }
 
+.loading-animation-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    display: none;
+}
+
+.loading-animation-overlay.is-loading-visible {
+    display: block;
+}
+
+.loading-container {
+    box-sizing: border-box;
+    position: absolute;
+    transform: translateX(calc(100vw / 2)) translateY(calc(100vh / 2));
+    z-index: 10000;
+}
+
+.loading-container>div {
+    width: 48px;
+    height: 48px;
+    border: 8px solid var(--btn-bg-hover);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    animation: rotation 1s linear infinite;
+}
+
+
 @media (max-width: 880px) {
 
     html,
@@ -203,5 +233,15 @@ a {
 
     to {
         transform: translateX(500%);
+    }
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
     }
 }
