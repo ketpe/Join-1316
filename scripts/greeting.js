@@ -1,7 +1,7 @@
-function renderGreetings() {
+function renderGreetings(elementId) {
     let logInStatus = sessionStorage.getItem('logInStatus');
     renderGreetingTime(logInStatus);
-    renderGreetingName(logInStatus);
+    renderGreetingName(logInStatus, elementId);
 };
 
 function renderGreetingTime(logInStatus) {
@@ -22,8 +22,10 @@ function timeOfDay(logInStatus) {
     return greetBack;
 };
 
-async function renderGreetingName(logInStatus) {
-    let renderGreetingNameResultRef = document.getElementById("greetingName");
+async function renderGreetingName(logInStatus, elementId) {
+    const renderGreetingNameResultRef = document.getElementById(elementId);
+    if(!renderGreetingNameResultRef){return;}
+
     renderGreetingNameResultRef.innerHTML = "";
 
     if (logInStatus === "0") { return; }
