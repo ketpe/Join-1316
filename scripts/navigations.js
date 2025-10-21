@@ -13,13 +13,13 @@ function navigateToSignUp() {
  * @param {*} button
  * @returns {void}
  */
-function navigateToSummary(button) {
+function navigateToSummary(button, isFromLogin=false) {
 
     if (button) {
         if (button.getAttribute('data-active') == "true") { return; }
     }
 
-    window.location.href = './summary.html';
+    window.location.href =  isFromLogin ? './summary.html' : './summary.html?isNotStartup=true';
 }
 
 /**

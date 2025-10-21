@@ -304,3 +304,34 @@
     bottom: 0;
     left: 0;
 }
+
+.greeting-mobile-container{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    /* animation: fadeBackgroundGreeting 1600ms ease-in-out forwards; */
+}
+
+.greeting-mobile-container>span{
+    font-family: 'Inter';
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--bg-default);
+    transform: translateY(37%);
+}
+
+@keyframes fadeBackgroundGreeting {
+
+        0%,
+        75% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+            display: none;
+        }
+    }

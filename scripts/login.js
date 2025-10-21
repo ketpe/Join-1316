@@ -88,7 +88,7 @@ async function checkLogin(email, password) {
 
 function loginGuest() {
     setLogStatus('Guest');
-    navigateToSummary();
+    navigateToSummary(null, true);
 };
 
 
