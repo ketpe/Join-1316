@@ -173,7 +173,7 @@ async function loadHtmlComponentsForDesktop(head) {
     ]);
     showLoadingAninmation();
     await loadTasksforSummary();
-    renderGreetings("greetingName");
+    renderGreetings("greeting","greetingName");
     hideLoadingAninmation();
 }
 
@@ -197,7 +197,7 @@ async function loadingSummaryData() {
         removeMobileGrettingAnimation();
         showLoadingAninmation();
     }
-
+    renderGreetings('greeting-mobile-content', 'greeting-mobile-name');
     await loadTasksforSummary();
     setMobileGrettingAnimation();
 
@@ -210,10 +210,14 @@ function setMobileGrettingAnimation() {
     if (!isStartupSummary) {
         return; 
     }
-
+    showOverlay();
     const greetingContainer = document.querySelector('.greeting-mobile-container');
     if(!greetingContainer){return;}
-    greetingContainer.style.animation = "fadeBackgroundGreeting 1600ms ease-in-out forwards";
+
+    /* greetingContainer.style.animation = "fadeBackgroundGreeting 1600ms ease-in-out forwards";
+    setTimeout(()=>{
+        hideOverlay();
+    },1600); */
 }
 
 function removeMobileGrettingAnimation() {
@@ -239,6 +243,7 @@ async function addSummaryPageResize() {
     const [height, width] = getCurrentWindowSize();
     if ((width <= minDesktopWidth) && currentView != "mobile") {
         await loadHtmlComponentsForMobile();
+        removeMobileGrettingAnimation();
         setNavigationButtonActive('summary', "mobile");
 
     } else if (width >= minDesktopWidth + 1 && currentView != "desktop") {

@@ -311,8 +311,9 @@
     width: 100%;
     background-color: white;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    /* animation: fadeBackgroundGreeting 1600ms ease-in-out forwards; */
+    align-items: center;
 }
 
 .greeting-mobile-container>span{
@@ -320,7 +321,7 @@
     font-size: 36px;
     font-weight: 400;
     color: var(--bg-default);
-    transform: translateY(37%);
+    transform: translateY(-130%);
 }
 
 @keyframes fadeBackgroundGreeting {
