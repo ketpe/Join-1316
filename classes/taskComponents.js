@@ -884,9 +884,30 @@ class TaskComponents{
 
         const createNewTask = new CreateNewTask(currentTask, this.currentSubTasks, this.currentContactAssignList, this.currentUser);
         await createNewTask.start();
-        this.addTaskAfterSafe(event.target.classList[0] == "add-task-form-dialog", event);
+        this.addTaskAfterSafe(this.getIsDialog(), event);
     }
 
+    /**
+     * Checks if the add task form is in a dialog.
+     * @returns {boolean} True if the form is in a dialog, false otherwise.
+     */
+    getIsDialog(){
+        const forms = document.querySelectorAll('form');
+        if (!forms) { return false; }
+
+        let formAddTask;
+
+        forms.forEach((form) => {
+            if (form.hasAttribute('data-isDialog')) {
+                formAddTask = form;
+            }
+        });
+
+        if (!formAddTask) { return false; }
+
+        const isDialog = formAddTask.getAttribute('data-isDialog');
+        return isDialog === "true";
+    }
 
     /**
     * Shows a confirmation dialog after a task is successfully added.
@@ -901,7 +922,8 @@ class TaskComponents{
         dialog.showModal();
         setTimeout(function () {
             dialog.close();
-            !fromDialog ? navigateToBoard() : addTaskDialogClose(event);
+            //!fromDialog ? navigateToBoard() : addTaskDialogClose(event);
+            !fromDialog ? navigateToBoard() : closeTheDialog(null, 'add-task-dialog');
         }, 1800);
     }
 

@@ -35,7 +35,7 @@ class AddTaskUtils {
 
         if (!this.checkBodyIsNotEmpty()) { return; }
         const { titleElement, descriptionElement, dueDateElement } = this.captureInputFields();
-        const {category, assignedContacts, subTasks} = this.getTaskComponentVariablen;
+        const { category, assignedContacts, subTasks } = this.getTaskComponentVariablen;
 
         this.setAddTaskCache({
             formData: {
@@ -54,19 +54,19 @@ class AddTaskUtils {
      * Gets the current task component variables, falling back to cached values if necessary.
      * @returns {Object} An object containing the current category, assigned contacts, and subtasks.
      */
-    static get getTaskComponentVariablen(){
+    static get getTaskComponentVariablen() {
         const components = this.getTaskComponent;
         const category = components?.currentCategory?.id ? components.currentCategory : this._addTaskCache.category;
         const assignedContacts = components?.currentContactAssignList || this._addTaskCache.assignedContacts;
         const subTasks = components?.currentSubTasks || this._addTaskCache.subTasks;
-        return {category, assignedContacts, subTasks};
+        return { category, assignedContacts, subTasks };
     }
 
     /**
      * Gets the selected priority from the view or falls back to the cached priority.
      * @returns {string} The selected priority or the cached priority.
      */
-    static get getPrioDataForCache(){
+    static get getPrioDataForCache() {
         const prioButtonsContainer = document.getElementById('task-priority-button');
         const selectedPrioButton = prioButtonsContainer?.querySelector('.btn[data-selected="true"]');
         return selectedPrioButton?.getAttribute('name') || this._addTaskCache.formData.priority || "Medium";
@@ -76,7 +76,7 @@ class AddTaskUtils {
      * Gets the current task component instance from the global window object.
      * @returns {Object} The current task component instance.
      */
-    static get getTaskComponent(){
+    static get getTaskComponent() {
         return window.addTasktaskComponents || window.addTaskDialogTaskComponents;
     }
 
@@ -361,11 +361,11 @@ class AddTaskUtils {
      * Retrieves the necessary DOM elements for the board dialog layout.
      * @returns {Object|null} An object containing the header element, or null if it is missing.
      */
-    getElementsForBoardDialog(){
+    getElementsForBoardDialog() {
         const header = document.querySelector('.add-task-head');
 
-        if(header){
-            return {header};
+        if (header) {
+            return { header };
         }
 
         return null;
@@ -435,7 +435,7 @@ class AddTaskUtils {
      * @param {number} dialogHeight - The total available height of the dialog.
      * @returns {Promise<number>} A promise that resolves to the calculated space for input fields.
      */
-    measureTheRemainingSpaceOfFieldsForBoardSingle(dialogHeight){
+    measureTheRemainingSpaceOfFieldsForBoardSingle(dialogHeight) {
         return this.measureWithRetry(
             dialogHeight,
             (addTaskU) => addTaskU.getElementsForBoardDialog(),
@@ -475,6 +475,19 @@ class AddTaskUtils {
      */
     get getCurrentAddTaskSize() {
         return [window.innerHeight, window.innerWidth];
+    }
+
+    /**
+     * Sets the submit function for the add task form.
+     * @param {string} instanceName - The name of the instance.
+     * @param {boolean} isDialog - Indicates if the form is in a dialog.
+     * @returns {void}
+     */
+    setAddTaskFormSubmitFunction(instanceName = "addTasktaskComponents", isDialog) {
+        const form = document.getElementById('add-task-form');
+        if (!form) { return; }
+        form.setAttribute('onsubmit', `return ${instanceName}.addTaskCreateTask(event)`);
+        form.setAttribute('data-isDialog', isDialog);
     }
 }
 

@@ -316,13 +316,23 @@
     align-items: center;
 }
 
-.greeting-mobile-container>span{
+.greeting-mobile-timeofday{
     font-family: 'Inter';
     font-size: 36px;
     font-weight: 400;
     color: var(--bg-default);
+    transform: translateY(-158%);
+}
+
+.greeting-mobile-name{
+    font-family: 'Inter';
+    font-size: 47px;
+    font-weight: 700;
+    color: var(--btn-bg-hover);
     transform: translateY(-130%);
 }
+
+
 
 @keyframes fadeBackgroundGreeting {
 

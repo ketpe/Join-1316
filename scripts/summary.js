@@ -9,6 +9,137 @@ const breakPointToDesktopSingle = 1180;
 let isStartupSummary = false;
 
 /**
+ * Initializes the summary page based on the current window size and URL parameters.
+ * @async
+ * @function onLoadSummary
+ * @returns {Promise<void>}
+ */
+async function onLoadSummary() {
+
+    getURLParameter();
+
+    const [height, width] = getCurrentWindowSize();
+    //wird das noch gebraucht?
+    const head = document.getElementsByTagName('head');
+    if (width >= minDesktopWidth) {
+        await loadHtmlComponentsForDesktop(head);
+        setNavigationButtonActive('summary', "desktop");
+
+    } else {
+        await loadHtmlComponentsForMobile(head);
+        setNavigationButtonActive('summary', "mobile");
+    }
+
+}
+
+/**
+ * Parses URL parameters to determine if the summary page is being loaded at startup.
+ * @function getURLParameter
+ * @returns {void}
+ */
+function getURLParameter() {
+    let param = new URLSearchParams(document.location.search);
+    let pageParam = param.get('isNotStartup');
+
+    isStartupSummary = pageParam == null || pageParam.length == 0 || pageParam.startsWith('false') ? true : false;
+
+    if (pageParam != null && pageParam.length > 0) {
+        param.delete('isNotStartup');
+        window.history.replaceState({}, document.title, '/summary.html');
+    }
+}
+
+/**
+ * Loads HTML components for the desktop view.
+ * @async
+ * @function loadHtmlComponentsForDesktop
+ * @param {*} head 
+ */
+async function loadHtmlComponentsForDesktop(head) {
+    currentView = "desktop";
+    clearAddTaskHtmlBody();
+    await includeHtmlForNode("body", "summaryDesktop.html");
+
+    await Promise.all([
+        includeHtml("navbar", "navbarDesktop.html"),
+        includeHtml("header", "headerDesktop.html"),
+    ]);
+    showLoadingAninmation();
+    await loadTasksforSummary();
+    renderGreetings("greeting","greetingName");
+    hideLoadingAninmation();
+}
+
+/**
+ * Loads HTML components for the mobile view.
+ * @async
+ * @function loadHtmlComponentsForMobile
+ */
+async function loadHtmlComponentsForMobile() {
+    currentView = "mobile"
+    clearAddTaskHtmlBody();
+
+    await includeHtmlForNode("body", "summaryMobile.html")
+
+    await Promise.all([
+        includeHtml("header", "headerMobile.html"),
+        includeHtml("navbar", "navbarMobile.html"),
+    ]);
+
+    await loadingSummaryMobileData();
+}
+
+/**
+ * Handles loading data and animations for the mobile summary view.
+ * @async
+ * @function loadingSummaryMobileData
+ * @returns {Promise<void>}
+ */
+async function loadingSummaryMobileData() {
+    if(!isStartupSummary){
+        removeMobileGrettingAnimation();
+        showLoadingAninmation();
+    }
+    renderGreetings('greeting-mobile-content', 'greeting-mobile-name');
+    await loadTasksforSummary();
+    setMobileGrettingAnimation();
+
+    if(!isStartupSummary){
+        hideLoadingAninmation();
+    }
+}
+
+/**
+ * Sets the mobile greeting animation.
+ * @returns {void}
+ */
+function setMobileGrettingAnimation() {
+    if (!isStartupSummary) {
+        return; 
+    }
+    showOverlay();
+    const greetingContainer = document.querySelector('.greeting-mobile-container');
+    if(!greetingContainer){return;}
+
+    greetingContainer.style.animation = "fadeBackgroundGreeting 1600ms ease-in-out forwards";
+    setTimeout(()=>{
+        hideOverlay();
+    },1600);
+}
+
+/**
+ * Removes the mobile greeting animation.
+ * @returns {void}
+ */
+function removeMobileGrettingAnimation() {
+    const greetingContainer = document.querySelector('.greeting-mobile-container');
+    if(!greetingContainer){return;}
+    greetingContainer.classList.add("d-none");
+    greetingContainer.style.animation = "none";
+}
+
+
+/**
  * Loads tasks from Firebase, calculates summary statistics, and updates the UI.
  * @async
  * @function loadTasksforSummary
@@ -137,95 +268,9 @@ function checkDate(tasks) {
     return formatedDateString;
 }
 
-async function onLoadSummary() {
-
-    let param = new URLSearchParams(document.location.search);
-    let pageParam = param.get('isNotStartup');
-
-    isStartupSummary = pageParam == null || pageParam.length == 0 || pageParam.startsWith('false') ? true : false;
-
-    if (pageParam != null && pageParam.length > 0) {
-        param.delete('isNotStartup');
-        window.history.replaceState({}, document.title, '/summary.html');
-    }
-
-    const [height, width] = getCurrentWindowSize();
-    const head = document.getElementsByTagName('head');
-    if (width >= minDesktopWidth) {
-        await loadHtmlComponentsForDesktop(head);
-        setNavigationButtonActive('summary', "desktop");
-
-    } else {
-        await loadHtmlComponentsForMobile(head);
-        setNavigationButtonActive('summary', "mobile");
-    }
-
-}
-
-async function loadHtmlComponentsForDesktop(head) {
-    currentView = "desktop";
-    clearAddTaskHtmlBody();
-    await includeHtmlForNode("body", "summaryDesktop.html");
-
-    await Promise.all([
-        includeHtml("navbar", "navbarDesktop.html"),
-        includeHtml("header", "headerDesktop.html"),
-    ]);
-    showLoadingAninmation();
-    await loadTasksforSummary();
-    renderGreetings("greeting","greetingName");
-    hideLoadingAninmation();
-}
 
 
-async function loadHtmlComponentsForMobile() {
-    currentView = "mobile"
-    clearAddTaskHtmlBody();
 
-    await includeHtmlForNode("body", "summaryMobile.html")
-
-    await Promise.all([
-        includeHtml("header", "headerMobile.html"),
-        includeHtml("navbar", "navbarMobile.html"),
-    ]);
-
-    await loadingSummaryData();
-}
-
-async function loadingSummaryData() {
-    if(!isStartupSummary){
-        removeMobileGrettingAnimation();
-        showLoadingAninmation();
-    }
-    renderGreetings('greeting-mobile-content', 'greeting-mobile-name');
-    await loadTasksforSummary();
-    setMobileGrettingAnimation();
-
-    if(!isStartupSummary){
-        hideLoadingAninmation();
-    }
-}
-
-function setMobileGrettingAnimation() {
-    if (!isStartupSummary) {
-        return; 
-    }
-    showOverlay();
-    const greetingContainer = document.querySelector('.greeting-mobile-container');
-    if(!greetingContainer){return;}
-
-    /* greetingContainer.style.animation = "fadeBackgroundGreeting 1600ms ease-in-out forwards";
-    setTimeout(()=>{
-        hideOverlay();
-    },1600); */
-}
-
-function removeMobileGrettingAnimation() {
-    const greetingContainer = document.querySelector('.greeting-mobile-container');
-    if(!greetingContainer){return;}
-    greetingContainer.classList.add("d-none");
-    greetingContainer.style.animation = "none";
-}
 
 
 function includeCSSToHead(href) {

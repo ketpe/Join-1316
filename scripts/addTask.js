@@ -207,7 +207,7 @@ async function fillHtmlWithContent() {
     const taskElements = new TaskElements("addTasktaskComponents");
     taskElements.fillLeftContainerOnAddTask();
     taskElements.fillRightContainerOnAddTask();
-    setAddTaskFormSubmitFunction();
+    addTaskUtils.setAddTaskFormSubmitFunction("addTasktaskComponents", false);
     addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTasktaskComponents');
 }
 
@@ -220,18 +220,8 @@ async function fillHtmlWithContent() {
 async function fillMobileHtmlWithContent() {
     const taskMobileUtil = new AddTaskMobileUtil("addTasktaskComponents");
     await taskMobileUtil.startRenderAddTaskMobile();
-    setAddTaskFormSubmitFunction();
+    addTaskUtils.setAddTaskFormSubmitFunction("addTasktaskComponents", false);
     addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTasktaskComponents');
-}
-
-/**
- * Sets the form submission function for the Add Task view.
- * @returns {void}
- */
-function setAddTaskFormSubmitFunction() {
-    const form = document.getElementById('add-task-form');
-    if (!form) { return; }
-    form.setAttribute('onsubmit', "return addTasktaskComponents.addTaskCreateTask(event)");
 }
 
 

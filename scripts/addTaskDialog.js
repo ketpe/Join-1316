@@ -114,6 +114,7 @@ async function loadDataForAddTaskDialog() {
 
     addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTaskDialogTaskComponents');
     AddTaskUtils.applyAddTaskDataToView(addTaskDialogTaskComponents);
+    addTaskUtils.setAddTaskFormSubmitFunction("addTaskDialogTaskComponents", true);
 }
 
 /**
@@ -136,7 +137,7 @@ function giveFunctionsToBoardBody() {
 }
 
 /**
- * Closes the Add Task dialog.
+ * Check if can close the dialog.
  * This function is triggered when the user attempts to close the dialog.
  * It hides the dialog and resets any form fields as necessary.
  * @param {Event} event - The event that triggered the close action.
@@ -155,16 +156,29 @@ function addTaskDialogClose(event) {
         event.target.closest('.btn-clear-cancel') ||
         event.target.closest('.btn-create')
     ) {
-        addDialogHideClass('add-task-dialog');
-        setTimeout(function () {
-            dialog.close();
-            document.getElementsByTagName('body')[0].removeAttribute("onmouseup");
-            addTaskDialogtoggleScrollOnBody(false);
-            addTaskDialogTaskComponents = null;
-            navigateToBoard();
-        }, 1000);
 
+        closeTheDialog(dialog);
     }
+}
+
+
+/**
+ * Closes the specified dialog.
+ * @param {HTMLDialogElement} dialog - The dialog element to close.
+ * @param {string} dialogID - The ID of the dialog element.
+ */
+function closeTheDialog(dialog, dialogID="") {
+
+    const dialogAddTask = dialog ? dialog : document.getElementById(dialogID);
+
+    addDialogHideClass('add-task-dialog');
+    setTimeout(function () {
+        dialogAddTask.close();
+        document.getElementsByTagName('body')[0].removeAttribute("onmouseup");
+        addTaskDialogtoggleScrollOnBody(false);
+        addTaskDialogTaskComponents = null;
+        navigateToBoard();
+    }, 1000);
 }
 
 /**
