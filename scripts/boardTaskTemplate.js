@@ -16,11 +16,11 @@ function boardTasksTemplate(task, rendererdContacts, prevCategory, nextCategory)
                 <div class="swap-menu-options">
                 <h3 class="swap-menu-title">Move to</h3>
                 <div id="subMenu" class="swap-menu-mobile-box" data-dOrM="mobile">
-                    <button type="button" class="btn-swapmenu" onclick="moveTasktoCategory('${task.id}','${prevCategory}')">
+                    <button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${task.id}','${prevCategory}')">
                     <div role="img" aria-label="to do icon" class="swap-menu-icon swap-menu-icon-up"></div>
                     <p>${prevCategory}</p>
                     </button>
-                    <button type="button" class="btn-swapmenu" onclick="moveTasktoCategory('${task.id}','${nextCategory}')">
+                    <button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${task.id}','${nextCategory}')">
                     <div role="img" aria-label="review icon" class="swap-menu-icon swap-menu-icon-down"></div>
                     <p>${nextCategory}</p>
                     </button>
@@ -71,14 +71,14 @@ function getAllAssignedContactsTemplate(assignedContacts) {
                     </div>
                 </div>`
 }
-/* Mobile Swap Menu Template
-
-<div class="swap-menu">
-    <button type="button" class="btn-swap-menu" onclick=''>
-        <p>to-do</p>
-    </button>
-    <button type="button" class="btn-swap-menu" onclick='navigateToLegalNotice(event)'>
-        <p>Review</p>
-    </button>
-</div>
- */
+function getBtnTemplateAfterMovingTask(taskId, prevCategory, nextCategory) {
+    return `<button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${taskId}','${prevCategory}')">
+                    <div role="img" aria-label="to do icon" class="swap-menu-icon swap-menu-icon-up"></div>
+                    <p>${prevCategory}</p>
+                    </button>
+                    <button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${taskId}','${nextCategory}')">
+                    <div role="img" aria-label="review icon" class="swap-menu-icon swap-menu-icon-down"></div>
+                    <p>${nextCategory}</p>
+                    </button>
+                    </div>`
+}

@@ -16,7 +16,7 @@
 
 .swap-menu {
     position: absolute;
-    left: 77%;
+    left: 68%;
     top: 28%;
     transform: translate(-50%, -50%);
     z-index: 10;
@@ -94,7 +94,7 @@
     background: white;
     border: 1.5px solid var(--bg-default);
     border-radius: 6px;
-    display: flex;
+    display: none;
     padding: 2px 3px;
     justify-content: center;
     align-items: center;

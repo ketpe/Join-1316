@@ -16,7 +16,7 @@ async function onLoadBoard() {
         await loadHtmlComponentsForMobile(head);
         setNavigationButtonActive('board', "mobile");
     }
-    getBoardTasks()
+    hideLoadingAninmation();
 }
 
 async function loadHtmlComponentsForDesktop(head) {
@@ -105,11 +105,12 @@ function kanbanUpdateSizeDesktop() {
 
 function kanbanUpdateSizeMobile() {
     const headerHeight = document.getElementById('header').offsetHeight;
+    const navHeight = document.querySelector('.nav-mobile').offsetHeight;
     const boardHeaderHeight = document.querySelector('.board-header-mobile').offsetHeight;
     const windowsHeight = window.innerHeight;
 
-    const kanbanHeight = windowsHeight - (headerHeight + boardHeaderHeight + 20);
-    document.getElementById('board-kanban-mobile').style.height = kanbanHeight + "px";
+    const kanbanHeight = windowsHeight - (headerHeight + navHeight + boardHeaderHeight + 40);
+    document.querySelector('board-main-content-mobile').style.height = kanbanHeight + "px";
 }
 
 /**

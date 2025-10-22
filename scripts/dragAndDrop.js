@@ -11,7 +11,6 @@ function startDrag(event, task) {
 }
 
 function getCurrentColumnId(task) {
-    // suche zuerst nach data-role, dann nach bekannten Klassen
     const currentColumn = task.closest('[data-role="kanban-column"], .kanban-column, .kanban-column-mobile');
     return currentColumn ? (currentColumn.id || currentColumn.dataset.column || '') : '';
 }
@@ -64,31 +63,57 @@ async function dropTask(event, column) {
         (tasksContainer || column).insertBefore(draggedTask, dropzone);
         const newCategory = column.id || column.dataset.column;
         console.log(newCategory);
-
         const taskId = draggedTask.getAttribute('id') || draggedTask.dataset.taskId;
         const fb = new FirebaseDatabase();
         await fb.getFirebaseLogin(() => fb.updateData(`tasks/${taskId}`, { taskStateCategory: newCategory }));
+        console.log(newCategory);
+        console.log(taskId);
+
+        updateBtnAfterMovingTask(taskId, newCategory);
     }
-    toggleNoTaskVisible()
+    toggleNoTaskVisible();
 }
 
-async function moveTasktoCategory(taskId, newCategory) {
-    const taskElement = document.getElementById(taskId);
-    console.log(taskElement);
+async function moveTaskToCategory(taskId, newCategory) {
+    if (!taskId) return console.error('Task ID is null oder undefined.');
     console.log(newCategory);
+    newCategory = rewriteCategory(newCategory);
+    console.log(newCategory);
+    const fb = new FirebaseDatabase();
+    await fb.getFirebaseLogin(() => fb.updateData(`tasks/${taskId}`, { taskStateCategory: newCategory }));
+    moveTaskInDom(taskId, newCategory);
+    updateBtnAfterMovingTask(taskId, newCategory);
+    getBoardTasks();
 
-    if (newCategory) {
-        newCategory === 'To-Do' ? newCategory = 'todo' :
-            newCategory === 'In progress' ? newCategory = 'inprogress' :
-                newCategory === 'Awaiting feedback' ? newCategory = 'awaiting' :
-                    newCategory === 'Done' ? newCategory = 'done' :
-                        newCategory;
+}
+
+function rewriteCategory(cat) {
+    return cat === 'To-Do' ? 'todo' :
+        cat === 'In progress' ? 'inprogress' :
+            cat === 'Awaiting feedback' ? 'awaiting' :
+                cat === 'Done' ? 'done' : '';
+}
+
+function moveTaskInDom(taskId, newCategory) {
+    const task = document.getElementById(taskId);
+    const col = document.getElementById(newCategory) || document.querySelector(`[data-column="${newCategory}"]`);
+    if (task && col) {
+        const tasks = col.querySelector('[data-role="kanban-tasks"], .kanban-tasks, .kanban-tasks-mobile');
+        const dropzone = col.querySelector('[data-role="kanban-dropzone"], .kanban-dropzone, .kanban-dropzone-mobile');
+        if (tasks && dropzone) tasks.insertBefore(task, dropzone);
     }
-    console.log(newCategory);
-    if (taskId !== null) {
-        const fb = new FirebaseDatabase();
-        await fb.getFirebaseLogin(() => fb.updateData(`tasks/${taskId}`, { taskStateCategory: newCategory }));
-    } else {
-        console.error('Task ID is null or undefined.');
-    }
+}
+
+function updateBtnAfterMovingTask(taskId, newCategory) {
+    const swapMenu = document.getElementById(`swap-mobile-menu-${taskId}`);
+    const { prev: prevCategory, next: nextCategory } = getPrevAndNextCategory(newCategory);
+    swapMenu.innerHTML = '';
+    swapMenu.innerHTML += getBtnTemplateAfterMovingTask(taskId, prevCategory, nextCategory);
+}
+
+function getPrevAndNextCategory(category) {
+    return category === 'todo' ? { prev: '', next: ' In progress' } :
+        category === 'inprogress' ? { prev: 'To-Do', next: 'Awaiting feedback' } :
+            category === 'awaiting' ? { prev: 'In progress', next: 'Done' } :
+                category === 'done' ? { prev: 'Awaiting feedback', next: '' } : '';
 }
