@@ -1,16 +1,12 @@
-function renderGreetings(elementId) {
+async function renderGreetings(elementIdTimeOfDay, elementIdName) {
     let logInStatus = sessionStorage.getItem('logInStatus');
-    renderGreetingTime(logInStatus);
-    renderGreetingName(logInStatus, elementId);
+    const currentPartOfDay = getTimeOfDay();
+    const currentGreetingName = await getGreetingName(logInStatus);
+    renderGreetingInUI(elementIdTimeOfDay, elementIdName, currentPartOfDay, currentGreetingName);
 };
 
-function renderGreetingTime(logInStatus) {
-    let renderGreetingsResultRef = document.getElementById("greeting");
-    renderGreetingsResultRef.innerHTML = "";
-    renderGreetingsResultRef.innerHTML += timeOfDay(logInStatus);
-};
 
-function timeOfDay(logInStatus) {
+function getTimeOfDay(logInStatus) {
     let now = new Date();
     let hours = now.getHours();
     let greetBack = "";
@@ -22,22 +18,22 @@ function timeOfDay(logInStatus) {
     return greetBack;
 };
 
-async function renderGreetingName(logInStatus, elementId) {
-    const renderGreetingNameResultRef = document.getElementById(elementId);
-    if(!renderGreetingNameResultRef){return;}
+async function getGreetingName(logInStatus) {
 
-    renderGreetingNameResultRef.innerHTML = "";
-
-    if (logInStatus === "0") { return; }
-    if (logInStatus === "Guest") { return; }
+    if (logInStatus === "0") { return null; }
+    if (logInStatus === "Guest") { return null; }
 
     const fb = new FirebaseDatabase();
-    let logInUser = await fb.getFirebaseLogin(() => fb.getDataByKey("id", logInStatus, "contacts"));
-    if (logInUser) {
-        let firstname = logInUser.firstname;
-        let lastname = logInUser.lastname;
-        renderGreetingNameResultRef.innerHTML = `${firstname} ${lastname}`;
-    } else {
-        renderGreetingNameResultRef.innerHTML = "User not found";
-    }
+    const logInUser = await fb.getFirebaseLogin(() => fb.getDataByKey("id", logInStatus, "contacts"));
+    return logInUser ? `${logInUser.firstname} ${logInUser.lastname}` : null;
 };
+
+function renderGreetingInUI(timeOfDayElementID, greetingElementID, timeOfDayValue, greetingValue){
+    const timeOfDayElement = document.getElementById(timeOfDayElementID);
+    const greetingElement = document.getElementById(greetingElementID);
+
+    if(!timeOfDayElement || !greetingElement){return;}
+
+    timeOfDayElement.innerHTML = timeOfDayValue;
+    greetingElement.innerHTML = greetingValue;
+}

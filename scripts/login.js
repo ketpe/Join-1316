@@ -77,7 +77,7 @@ async function checkLogin(email, password) {
     const logInUser = await fb.getFirebaseLogin(() => fb.getDataByKey("email", email, "contacts"));
     if (logInUser && logInUser.password === password && logInUser.email === email) {
         setLogStatus(logInUser.id);
-        navigateToSummary();
+        navigateToSummary(null, true);
     } else {
         setLogStatus('0');
         toggleBorderColorByError();

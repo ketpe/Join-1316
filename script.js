@@ -189,11 +189,23 @@ function checkUserOrGuestIsloggedIn() {
     }
 }
 
+function showOverlay(){
+    const overlay = document.getElementById('loadingOverlay');
+    if(!overlay){return;}
+    overlay.classList.add('is-loading-visible');
+}
+
+function hideOverlay() {
+    const overlay = document.getElementById('loadingOverlay');
+    if(!overlay){return;}
+    overlay.classList.remove('is-loading-visible');
+}
 
 function showLoadingAninmation() {
     const overlay = document.getElementById('loadingOverlay');
     const loadingContainer = document.getElementById('loadingContainer');
     if (!overlay || !loadingContainer) { return; }
+    overlay.classList.add('loading-color');
     overlay.classList.add('is-loading-visible');
     loadingContainer.classList.remove('visually-hidden');
 }
