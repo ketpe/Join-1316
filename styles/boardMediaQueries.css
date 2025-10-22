@@ -132,6 +132,10 @@
         width: 220px;
     }
 
+    .empty-Search-Result-info {
+        top: 40%;
+    }
+
     .board-task-title {
         width: 220px;
     }
@@ -139,6 +143,11 @@
     .board-task-description {
         width: 220px;
     }
+
+    .swap-mobile-menu {
+        display: flex;
+    }
+
 }
 
 @media(max-width: 375px) {
