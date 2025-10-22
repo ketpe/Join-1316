@@ -1,41 +1,47 @@
+/**
+ * @fileoverview This script manages the Kanban board functionality, including loading components, fetching tasks from the database, rendering tasks, handling responsive design, and managing task interactions.
+ * It includes functions for loading HTML components based on screen size, retrieving and processing task data, rendering tasks on the board, and handling user interactions such as searching and editing tasks.
+ */
 let boardTaskComponents = null;
 let currentView = "";
 const minDesktopHeight = 880;
 const minDesktopWidth = 880;
 const breakPointToDesktopSingle = 1180;
 
+/**
+ * @description Initializes the Kanban board by checking user login status, determining the current board size, and loading appropriate HTML components for desktop or mobile view.
+ */
 async function onLoadBoard() {
     checkUserOrGuestIsloggedIn();
-    const [height, width] = getCurrentBoardSize();
+    const [height, width] = getCurrentWindowSize();
     const head = document.getElementsByTagName('head');
     if (width >= minDesktopWidth) {
         await loadHtmlComponentsForDesktop(head);
         setNavigationButtonActive('board', "desktop");
-
     } else {
         await loadHtmlComponentsForMobile(head);
         setNavigationButtonActive('board', "mobile");
     }
-    hideLoadingAninmation();
 }
-
+/**
+ * @description Loads HTML components for the desktop view of the Kanban board.
+ * It clears the existing HTML body, includes necessary HTML files for the desktop layout, shows a loading animation, fetches and renders board tasks, and then hides the loading animation.
+ * @param {HTMLCollection} head - The head element of the document.
+ */
 async function loadHtmlComponentsForDesktop(head) {
     currentView = "desktop";
     clearBoardHtmlBody();
     await Promise.all([
         includeHtmlForNode("body", "boardDesktop.html")
     ]);
-
     await Promise.all([
         includeHtml("navbar", "navbarDesktop.html"),
         includeHtml("header", "headerDesktop.html"),
 
     ]);
+    showLoadingAninmation();
     getBoardTasks();
-}
-/*REVIEW - möglichweise in script.js*/
-function getCurrentBoardSize() {
-    return [height, width] = [window.innerHeight, window.innerWidth];
+    hideLoadingAninmation();
 }
 
 async function loadHtmlComponentsForMobile() {
@@ -75,42 +81,43 @@ async function getBoardTasks() {
     hideAllDropzones();
 }
 
+/**
+ * @description Adjusts the Kanban board layout based on the current window size, loading either mobile or desktop components as needed.
+ */
 async function addBoardPageResize() {
-    const [height, width] = getCurrentBoardSize();
+    const [height, width] = getCurrentWindowSize();
     if ((width <= minDesktopWidth) && currentView != "mobile") {
         await loadHtmlComponentsForMobile();
         setNavigationButtonActive('contacts', "mobile");
         kanbanUpdateSizeMobile();
-
     } else if (width >= minDesktopWidth + 1 && currentView != "desktop") {
         await loadHtmlComponentsForDesktop();
         setNavigationButtonActive('contacts', "desktop");
         kanbanUpdateSizeDesktop();
     }
-
 }
 
 /**
- * @description Updates the height of the Kanban board based on the window size and header heights.
+ * @description Updates the height of the Kanban board for Desktop based on the window size and header heights.
  * This function calculates the available height for the Kanban board by subtracting the heights of the header and board header from the total window height, and then sets the height of the Kanban board element accordingly.
  */
 function kanbanUpdateSizeDesktop() {
     const headerHeight = document.getElementById('header').offsetHeight;
     const boardHeaderHeight = document.querySelector('.board-header').offsetHeight;
     const windowsHeight = window.innerHeight;
-
     const kanbanHeight = windowsHeight - (headerHeight + boardHeaderHeight + 20);
     document.getElementById('board-kanban').style.height = kanbanHeight + "px";
 }
-
+/**
+ * @description Updates the height of the Kanban board for mobile view based on the window size and header heights.
+ * This function calculates the available height for the Kanban board by subtracting the heights of the header and mobile navigation from the total window height, and then sets the height of the mobile Kanban board element accordingly.
+ */
 function kanbanUpdateSizeMobile() {
     const headerHeight = document.getElementById('header').offsetHeight;
     const navHeight = document.querySelector('.nav-mobile').offsetHeight;
-    const boardHeaderHeight = document.querySelector('.board-header-mobile').offsetHeight;
     const windowsHeight = window.innerHeight;
-
-    const kanbanHeight = windowsHeight - (headerHeight + navHeight + boardHeaderHeight + 40);
-    document.querySelector('board-main-content-mobile').style.height = kanbanHeight + "px";
+    const kanbanHeight = windowsHeight - (headerHeight + navHeight + 20);
+    document.querySelector('.board-main-content-mobile').style.height = kanbanHeight + "px";
 }
 
 /**
@@ -372,7 +379,7 @@ async function getTaskByTaskID(taskId) {
 }
 
 /**
- * @description Handles the submission of the edit task form
+ * @description Handles the submission of the edit task form. It retrieves the form data, updates the task using the EditTaskSafeUtil, and refreshes the detail view with the updated task information.
  * @param {Event} event - The submit event
  */
 async function editCurrentTaskSubmit(event) {
@@ -393,7 +400,7 @@ async function editCurrentTaskSubmit(event) {
 }
 /**
  * @description Searches for tasks on the board based on the input in the search bar.
- * It filters tasks by title and description, and toggles their visibility accordingly.
+ * It filters tasks by title and description, and toggles their visibility accordingly. It also manages the display of a "no search results" hint.
  */
 function searchTaskInBoard() {
     const { searchInput, taskTitles, taskDescriptions } = getRefsForSearch();

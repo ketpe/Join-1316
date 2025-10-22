@@ -1,4 +1,8 @@
 <div class="main-container-mobile">
+    <div id="loadingOverlay" class="loading-animation-overlay"></div>
+    <div id="loadingContainer" class="loading-container visually-hidden">
+        <div></div>
+    </div>
     <div class="right-container">
         <div class="header-section" id="header"></div>
         <main class="right-content" aria-labelledby="Board-title">
@@ -49,7 +53,8 @@
                             <p class="board-column-text">In progress</p>
                             <button type="button" title="Add Task In progress" class="btn-add-board-task"></button>
                         </div>
-                        <div class="kanban-tasks-mobile" id="kanban-tasks-inprogress" data-category="In Progress"></div>
+                        <div class="kanban-tasks-mobile" id="kanban-tasks-inprogress" data-category="In Progress">
+                        </div>
                     </div>
                     <div class="kanban-column-mobile" id="awaiting"
                         ondragover="event.preventDefault(); this.classList.add('over');"

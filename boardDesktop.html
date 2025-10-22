@@ -18,6 +18,10 @@
 <body onload="init(), getBoardTasks()" onresize="kanbanUpdateSize()">
 
     <div class="main-container">
+        <div id="loadingOverlay" class="loading-animation-overlay"></div>
+        <div id="loadingContainer" class="loading-container visually-hidden">
+            <div></div>
+        </div>
         <aside class="left-container">
             <nav id="navbar" aria-label="Mainnavigation"></nav>
         </aside>
@@ -70,7 +74,8 @@
                                 <p class="board-column-text">In progress</p>
                                 <button type="button" title="Add Task In progress" class="btn-add-board-task"></button>
                             </div>
-                            <div class="kanban-tasks" id="kanban-tasks-inprogress" data-category="In Progress"></div>
+                            <div class="kanban-tasks" id="kanban-tasks-inprogress" data-category="In Progress">
+                            </div>
                         </div>
                         <div class="kanban-column" id="awaiting"
                             ondragover="event.preventDefault(); this.classList.add('over');"
