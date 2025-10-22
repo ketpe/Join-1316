@@ -1,5 +1,5 @@
 body {
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .board-header {
@@ -181,10 +181,6 @@ body {
     flex-direction: column;
 }
 
-/* .kanban-column.over .kanban-dropzone {
-    opacity: 1;
-} */
-
 .kanban-dropzone-show {
     opacity: 1;
 
@@ -218,7 +214,6 @@ body {
 }
 
 .kanban-task-empty {
-
     background-color: var(--bg-light-gray);
     border-radius: 10px;
     padding: 16px;
