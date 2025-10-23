@@ -12,7 +12,7 @@
             <section class="board-main-content">
                 <header class="board-header">
                     <div class="board-headline">
-                        <p class="board-headline-text">Board</p>
+                        <h1 class="board-headline-text">Board</h1>
                         <aside class="board-right-headline-content">
                             <form action="">
                                 <label for="board-searchbar" class="visually-hidden"></label>
@@ -42,7 +42,7 @@
                         ondragover="event.preventDefault(); this.classList.add('over');"
                         ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
                         <div class="board-headline-column">
-                            <p class="board-column-text">To do</p>
+                            <h3 class="board-column-text">To do</h3>
                             <button type="button" onclick="onAddTaskDialogOpen()" title="Add Task To do"
                                 class="btn-add-board-task"></button>
                         </div>
@@ -53,7 +53,7 @@
                         ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
 
                         <div class="board-headline-column">
-                            <p class="board-column-text">In progress</p>
+                            <h3 class="board-column-text">In progress</h3>
                             <button type="button" onclick="onAddTaskDialogOpen()" title="Add Task In progress"
                                 class="btn-add-board-task"></button>
                         </div>
@@ -64,7 +64,7 @@
                         ondragover="event.preventDefault(); this.classList.add('over');"
                         ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
                         <div class="board-headline-column">
-                            <p class="board-column-text">Await feedback</p>
+                            <h3 class="board-column-text">Await feedback</h3>
                             <button type="button" onclick="onAddTaskDialogOpen()" title="Add Task Await feedback"
                                 class="btn-add-board-task"></button>
                         </div>
@@ -75,7 +75,7 @@
                         ondragover="event.preventDefault(); this.classList.add('over');"
                         ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
                         <div class="board-headline-column">
-                            <p class="board-column-text">Done</p>
+                            <h3 class="board-column-text">Done</h3>
                         </div>
                         <div class="kanban-tasks" id="kanban-tasks-done" data-category="Done"></div>
                     </div>
