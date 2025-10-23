@@ -286,6 +286,10 @@ body {
         left: 26px;
     }
 
+    .login-signup-form {
+        padding: 0px 20px;
+    }
+
     .login-signup-form h1 {
         font-size: 42px;
     }
@@ -318,9 +322,13 @@ body {
         left: 20px;
     }
 
+    .login-signup-form {
+        padding: 0px 5px;
+    }
+
     .login-signup-input {
         font-size: 14px;
-        padding: 12px 31px 12px 5px;
+        padding: 12px 31px 12px 10px;
     }
 
     .input-icons {

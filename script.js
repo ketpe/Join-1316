@@ -201,7 +201,7 @@ function hideOverlay() {
     overlay.classList.remove('is-loading-visible');
 }
 
-function showLoadingAninmation() {
+function showLoadingAnimation() {
     const overlay = document.getElementById('loadingOverlay');
     const loadingContainer = document.getElementById('loadingContainer');
     if (!overlay || !loadingContainer) { return; }
@@ -210,7 +210,7 @@ function showLoadingAninmation() {
     loadingContainer.classList.remove('visually-hidden');
 }
 
-function hideLoadingAninmation() {
+function hideLoadingAnimation() {
     setTimeout(() => {
         const overlay = document.getElementById('loadingOverlay');
         const loadingContainer = document.getElementById('loadingContainer');

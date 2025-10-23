@@ -1,4 +1,13 @@
+/**
+ * Login Page Script
+ * @author Join Development Team
+ */
 
+
+/**
+ * Function to be called when the login page is loaded.
+ * @returns 
+ */
 function loginLoaded() {
 
     let param = new URLSearchParams(document.location.search);
@@ -12,13 +21,14 @@ function loginLoaded() {
     }
 
     if (!isStartup) { return; }
-
     const [height, width] = getCurrentWindowSize();
-
     width <= 500 ? changeAnimationToMobileMode() : changeAnimationToDesktopMode();
 }
 
-
+/**
+ * Changes the login animation to mobile mode.
+ * @returns {void}
+ */
 function changeAnimationToMobileMode() {
     const loginLogo = document.querySelector('.login-join-logo');
     const loginSection = document.querySelector('.login-section');
@@ -28,6 +38,10 @@ function changeAnimationToMobileMode() {
     loginBody.style.animation = 'fadeBackground 600ms ease-in-out forwards';
 }
 
+/**
+ * Changes the login animation to desktop mode.
+ * @returns {void}
+ */
 function changeAnimationToDesktopMode() {
     const loginLogo = document.querySelector('.login-join-logo');
     const loginSection = document.querySelector('.login-section');
@@ -35,7 +49,10 @@ function changeAnimationToDesktopMode() {
     loginSection.style.animation = 'startup 500ms ease-in';
 }
 
-
+/**
+ * Function to be called on window resize event on login page.
+ * @returns {void}
+ */
 function loginResize() {
     const loginLogo = document.querySelector('.login-join-logo');
     const loginBody = document.querySelector('body');
@@ -45,7 +62,10 @@ function loginResize() {
     loginSection.style.animation = 'none';
 }
 
-
+/**
+ * Function to be called on login form submission.
+ * @param {*} event 
+ */
 function loginFormSubmit(event) {
     event.preventDefault();
     let signIn = new FormData(event.target);
@@ -54,7 +74,11 @@ function loginFormSubmit(event) {
     checkLogin(email, password);
 };
 
-
+/**
+ * Function to be called on login input fields.
+ * @param {HTMLElement} input 
+ * @returns 
+ */
 function loginInputFieldsOnInput(input) {
     if(!input){return;}
 
@@ -63,6 +87,11 @@ function loginInputFieldsOnInput(input) {
     }
 }
 
+/**
+ * Function to be called on login input fields.
+ * @param {HTMLElement} input 
+ * @returns 
+ */
 function loginInputFieldsOnBlur(input){
     if(!input){return;}
     if(input.value && input.value.length >= 3){
@@ -72,6 +101,14 @@ function loginInputFieldsOnBlur(input){
     }
 }
 
+/**
+ * Function to check login credentials.
+ * Redirects to summary page on success, shows error on failure.
+ * Reads user data from Firebase.
+ * @returns {Promise<void>}
+ * @param {string} email 
+ * @param {string} password 
+ */
 async function checkLogin(email, password) {
     const fb = new FirebaseDatabase();
     const logInUser = await fb.getFirebaseLogin(() => fb.getDataByKey("email", email, "contacts"));
@@ -86,6 +123,11 @@ async function checkLogin(email, password) {
     }
 };
 
+/**
+ * Function to login as guest.
+ * Sets log status to 'Guest' and navigates to summary page.
+ * @returns {void}
+ */
 function loginGuest() {
     setLogStatus('Guest');
     navigateToSummary(null, true);

@@ -42,13 +42,15 @@ async function onLoadContacts() {
     const head = document.getElementsByTagName('head');
     if (width >= minDesktopWidth) {
         await loadHtmlComponentsForDesktop(head);
-        setNavigationButtonActive('contacts', "desktop");
+        setNavigationButtonActive('contact', "desktop");
 
     } else {
         await loadHtmlComponentsForMobile(head);
-        setNavigationButtonActive('contacts', "mobile");
+        setNavigationButtonActive('contact', "mobile");
     }
-    renderContacts()
+    showLoadingAnimation();
+    await renderContacts();
+    hideLoadingAnimation();
 }
 
 async function loadHtmlComponentsForDesktop(head) {
@@ -62,9 +64,9 @@ async function loadHtmlComponentsForDesktop(head) {
 
     ]);
 
-    showLoadingAninmation();
+    showLoadingAnimation();
     await renderContacts();
-    hideLoadingAninmation();
+    hideLoadingAnimation();
 }
 /*REVIEW - möglichweise in script.js*/
 function getCurrentContactSize() {

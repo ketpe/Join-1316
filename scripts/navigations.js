@@ -19,7 +19,7 @@ function navigateToSummary(button, isFromLogin=false) {
         if (button.getAttribute('data-active') == "true") { return; }
     }
 
-    window.location.href =  isFromLogin ? './summary.html' : './summary.html?isNotStartup=true';
+    window.location.href =  isFromLogin ? './summary.html?isNotStartup=true' : './summary.html';
 }
 
 /**

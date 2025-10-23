@@ -31,32 +31,30 @@ async function onLoadBoard() {
 async function loadHtmlComponentsForDesktop(head) {
     currentView = "desktop";
     clearBoardHtmlBody();
-    await Promise.all([
-        includeHtmlForNode("body", "boardDesktop.html")
-    ]);
+    await includeHtmlForNode("body", "boardDesktop.html");
+
     await Promise.all([
         includeHtml("navbar", "navbarDesktop.html"),
         includeHtml("header", "headerDesktop.html"),
 
     ]);
-    showLoadingAninmation();
-    getBoardTasks();
-    hideLoadingAninmation();
+    showLoadingAnimation();
+    await getBoardTasks();
+    hideLoadingAnimation();
 }
 
 async function loadHtmlComponentsForMobile() {
     currentView = "mobile"
     clearBoardHtmlBody();
-
-    await Promise.all([
-        includeHtmlForNode("body", "boardMobile.html")
-    ]);
+    await includeHtmlForNode("body", "boardMobile.html");
 
     await Promise.all([
         includeHtml("header", "headerMobile.html"),
         includeHtml("navbar", "navbarMobile.html"),
     ]);
-    getBoardTasks()
+    showLoadingAnimation();
+    await getBoardTasks();
+    hideLoadingAnimation();
 }
 
 function clearBoardHtmlBody() {

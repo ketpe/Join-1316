@@ -88,12 +88,13 @@
 
     .a-t-priority-button-container {
         height: 41px;
+        margin-bottom: 39px;
     }
 
-    .btn-priority {
+    /* .btn-priority {
         width: 116px;
         padding: 7px 0px;
-    }
+    } */
 
     .task-main-scroll {
         padding-inline-end: 8px;
@@ -150,8 +151,29 @@
 
 }
 
+@media(max-width: 450px) {
+    .join-h1 {
+        font-size: 32px;
+    }
+
+    .task-section{
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+
 @media(max-width: 375px) {
+
+    .task-edit-fields{
+        width: 100%;
+    }
+
     .board-search-wrapper {
         width: 100%;
     }
+
+    .field-frame{
+        width: 100%;
+    } 
 }

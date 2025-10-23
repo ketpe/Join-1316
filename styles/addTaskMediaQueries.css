@@ -46,6 +46,12 @@
     }
 }
 
+@media(max-height: 880px) {
+    .add-task-fields {
+        overflow-y: scroll;
+    }
+}
+
 @media(max-width: 800px) {
     .add-task-footer-mobile {
         bottom: -10px;
@@ -202,7 +208,7 @@
     }
 
     .btn-priority {
-        width: 80px;
+        width: 75px;
 
         div>span {
             font-size: 12px;
@@ -233,8 +239,3 @@
 }
 
 
-@media(max-height: 880px) {
-    .add-task-fields {
-        overflow-y: scroll;
-    }
-}

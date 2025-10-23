@@ -76,6 +76,7 @@ class TaskComponents{
         this.setNewPriority(this.currentTask['priority']);
         this.currentContactAssignList = boardEditUtil.getCurrentAssignList();
         this.showOrHideBadgeContainer('show');
+        this.currentSubTasks = currentTask['subTasks'];
         this.renderSubtasks();
         document.getElementById('detail-edit-ok-btn').setAttribute('data-id', this.currentTaskId);
         document.querySelector('body').setAttribute("onmouseup", `${this.currentInstance}.addTaskWindowMouseClick(event)`);
