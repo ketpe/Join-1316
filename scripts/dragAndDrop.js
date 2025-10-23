@@ -62,13 +62,9 @@ async function dropTask(event, column) {
         const tasksContainer = column.querySelector('[data-role="kanban-tasks"], .kanban-tasks, .kanban-tasks-mobile');
         (tasksContainer || column).insertBefore(draggedTask, dropzone);
         const newCategory = column.id || column.dataset.column;
-        console.log(newCategory);
         const taskId = draggedTask.getAttribute('id') || draggedTask.dataset.taskId;
         const fb = new FirebaseDatabase();
         await fb.getFirebaseLogin(() => fb.updateData(`tasks/${taskId}`, { taskStateCategory: newCategory }));
-        console.log(newCategory);
-        console.log(taskId);
-
         updateBtnAfterMovingTask(taskId, newCategory);
     }
     toggleNoTaskVisible();
@@ -76,15 +72,12 @@ async function dropTask(event, column) {
 
 async function moveTaskToCategory(taskId, newCategory) {
     if (!taskId) return console.error('Task ID is null oder undefined.');
-    console.log(newCategory);
     newCategory = rewriteCategory(newCategory);
-    console.log(newCategory);
     const fb = new FirebaseDatabase();
     await fb.getFirebaseLogin(() => fb.updateData(`tasks/${taskId}`, { taskStateCategory: newCategory }));
     moveTaskInDom(taskId, newCategory);
     updateBtnAfterMovingTask(taskId, newCategory);
     getBoardTasks();
-
 }
 
 function rewriteCategory(cat) {

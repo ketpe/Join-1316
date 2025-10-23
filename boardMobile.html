@@ -41,7 +41,8 @@
                         ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
                         <div class="board-headline-column">
                             <p class="board-column-text">To do</p>
-                            <button type="button" title="Add Task To do" class="btn-add-board-task"></button>
+                            <button type="button" onclick="onAddTaskDialogOpen()" title="Add Task To do"
+                                class="btn-add-board-task"></button>
                         </div>
                         <div class="kanban-tasks-mobile" id="kanban-tasks-todo" data-category="Todo"></div>
                     </div>
@@ -51,7 +52,8 @@
 
                         <div class="board-headline-column">
                             <p class="board-column-text">In progress</p>
-                            <button type="button" title="Add Task In progress" class="btn-add-board-task"></button>
+                            <button type="button" onclick="onAddTaskDialogOpen()" title="Add Task In progress"
+                                class="btn-add-board-task"></button>
                         </div>
                         <div class="kanban-tasks-mobile" id="kanban-tasks-inprogress" data-category="In Progress">
                         </div>
@@ -61,7 +63,8 @@
                         ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
                         <div class="board-headline-column">
                             <p class="board-column-text">Await feedback</p>
-                            <button type="button" title="Add Task Await feedback" class="btn-add-board-task"></button>
+                            <button type="button" onclick="onAddTaskDialogOpen()" title="Add Task Await feedback"
+                                class="btn-add-board-task"></button>
                         </div>
                         <div class="kanban-tasks-mobile" id="kanban-tasks-awaiting" data-category="Awaiting Feedback">
                         </div>

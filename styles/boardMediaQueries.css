@@ -32,6 +32,10 @@
 }
 
 @media(max-width: 880px) {
+    .right-container {
+        width: 100%;
+    }
+
     .join-h1 {
         font-size: 36px;
     }
@@ -156,7 +160,7 @@
         font-size: 32px;
     }
 
-    .task-section{
+    .task-section {
         min-width: 0;
         width: 100%;
     }
@@ -165,7 +169,7 @@
 
 @media(max-width: 375px) {
 
-    .task-edit-fields{
+    .task-edit-fields {
         width: 100%;
     }
 
@@ -173,7 +177,7 @@
         width: 100%;
     }
 
-    .field-frame{
+    .field-frame {
         width: 100%;
-    } 
+    }
 }
