@@ -18,10 +18,13 @@ async function onLoadBoard() {
     if (width >= minDesktopWidth) {
         await loadHtmlComponentsForDesktop(head);
         setNavigationButtonActive('board', "desktop");
+        kanbanUpdateSizeDesktop();
     } else {
         await loadHtmlComponentsForMobile(head);
         setNavigationButtonActive('board', "mobile");
+        kanbanUpdateSizeMobile();
     }
+
 }
 /**
  * @description Loads HTML components for the desktop view of the Kanban board.

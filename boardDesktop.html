@@ -8,18 +8,17 @@
     </aside>
     <div class="right-container">
         <div class="header-section" id="header"></div>
-        <main class="right-content" aria-labelledby="Board-title">
+        <main class="right-content">
             <section class="board-main-content">
                 <header class="board-header">
                     <div class="board-headline">
                         <h1 class="board-headline-text">Board</h1>
                         <aside class="board-right-headline-content">
                             <form action="">
-                                <label for="board-searchbar" class="visually-hidden"></label>
+                                <label for="board-searchbar" class="visually-hidden" aria-hidden="true">Search</label>
                                 <div class="board-search-wrapper">
                                     <input oninput="searchTaskInBoard()" type="text" id="board-searchbar"
-                                        class="board-input-search" placeholder="Find Task"
-                                        aria-label="Searchbar for tasks">
+                                        class="board-input-search" placeholder="Find Task" aria-label="board-searchbar">
                                     <button type="submit" class="board-search-btn">
                                         <div class="search-seperator"></div>
                                         <img src="./assets/search-icon.svg" alt="Suchen">
@@ -28,7 +27,7 @@
                             </form>
                             <button type="button" class="btn btn-fill btn-lg btn-add-tasks"
                                 onclick="onAddTaskDialogOpen()">
-                                <p>Add new Task</p>
+                                <span>Add new Task</span>
                                 <img src="./assets/plus-icon.svg" alt="" srcset="">
                             </button>
                         </aside>
