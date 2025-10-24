@@ -147,7 +147,7 @@ class TaskElements{
     getContactComponents(){
         return `
             <aside class="field-frame">
-                <label class="task-mobile-label" for="task-assign-to">Assigned to</label>
+                <label class="task-mobile-label" for="task-assign-to" onclick="event.preventDefault(); event.stopPropagation();">Assigned to</label>
                 <div class="contact-select-container show-front">
                     <input class="a-t-input show-front a-t-contact-input" autocomplete="off" type="text" name="task-assign-to"
                         id="task-assign-to" value="Select contacts to assign" onclick="${this.currentInstance}.showAndHideContacts('show')"
@@ -187,7 +187,7 @@ class TaskElements{
     getCategoryComponents(){
         return `
             <aside class="field-frame">
-                <label for="task-category">Category<span class="required-label">*</span></label>
+                <label for="task-category" onclick="event.preventDefault(); event.stopPropagation();">Category<span class="required-label">*</span></label>
                 <div class="category-select-container show-front ">
                     <input class="a-t-input a-t-category-input" type="text" name="task-category" id="task-category"
                         value="Select task category" placeholder="Select task category" readonly aria-required="true"

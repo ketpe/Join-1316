@@ -175,10 +175,12 @@ class TaskComponents{
     addTaskWindowMouseClick(e) {
 
         if (!e.target.closest(".contact-select-container") && !e.target.closest(".contact-List-container") && this.isContactListOpen) {
+            this.isContactListOpen = false;
             this.showAndHideContacts("hide");
         }
 
         if (!e.target.closest('.category-select-container') && !e.target.closest('.category-list-container') && this.isCategoryListOpen) {
+            this.isCategoryListOpen = false;
             this.showAndHideCategories('hide');
         }
     }
