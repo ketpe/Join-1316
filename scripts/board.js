@@ -62,6 +62,13 @@ async function loadHtmlComponentsForMobile() {
     hideLoadingAnimation();
 }
 
+
+async function getBoardTaskWithLoadingAnimation() {
+    showLoadingAnimation();
+    await getBoardTasks();
+    hideLoadingAnimation();
+}
+
 function clearBoardHtmlBody() {
     document.querySelector('body').innerHTML = "";
 }
@@ -349,9 +356,7 @@ async function deleteCurrentTask(button) {
     const taskDelete = new BoardTaskDetailDeleteUtil(currentTaskID);
     if (await taskDelete.startDelete()) {
         closeDialog('detail-view-task-dialog');
-        showLoadingAnimation();
-        await getBoardTasks();
-        hideLoadingAnimation();
+        getBoardTaskWithLoadingAnimation();
     }
 
 }

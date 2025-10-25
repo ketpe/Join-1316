@@ -45,7 +45,7 @@ class EditTaskSafeUtil{
      * @returns {boolean} true if everything was successful, otherwise false
      */
     async startUpdate(){
-        /* const editTask = this.createUpdateTask();
+        const editTask = this.createUpdateTask();
         const [contactsDbList, taskContactDBList] = await this.getTaskContactAssignedList();
         const [subtaskDbList, taskToSubtaskDBList, maxPos] = await this.getTaskSubtaskList();
         const removeContactsFromTask = this.findNoLongerAssociatedContacts(contactsDbList);
@@ -58,7 +58,7 @@ class EditTaskSafeUtil{
         if(!await this.addContactsTaskAssociation(newContactsToTask)){return false;}
         if(!await this.removeSubtasksFromTask(removeSubtasksFromTask, taskToSubtaskDBList)){return false;}
         if(!await this.addNewSubtasksToTask(newSubtasksToTask, maxPos)){return false;}
-        if(!await this.updateCurrentSubtasks()){return false;} */
+        if(!await this.updateCurrentSubtasks()){return false;}
         return true;
     }
 
