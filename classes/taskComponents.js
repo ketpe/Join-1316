@@ -925,7 +925,6 @@ class TaskComponents{
         dialog.showModal();
         setTimeout(function () {
             dialog.close();
-            //!fromDialog ? navigateToBoard() : addTaskDialogClose(event);
             !fromDialog ? navigateToBoard() : closeTheDialog(null, 'add-task-dialog');
         }, 1800);
     }

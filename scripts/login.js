@@ -15,6 +15,8 @@ function loginLoaded() {
 
     const isStartup = pageParam == null || pageParam.length == 0 || pageParam.startsWith('false') ? true : false;
 
+    resetAllParameter();
+
     if (pageParam != null && pageParam.length > 0) {
         param.delete('isNotStartup');
         window.history.replaceState({}, document.title, '/index.html');
@@ -23,6 +25,19 @@ function loginLoaded() {
     if (!isStartup) { return; }
     const [height, width] = getCurrentWindowSize();
     width <= 500 ? changeAnimationToMobileMode() : changeAnimationToDesktopMode();
+}
+
+/**
+ * Resets all login parameters.
+ * Sets email and password input fields to empty and log status to '0'.
+ * @returns {void}
+ */
+function resetAllParameter() {
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    emailInput.value = '';
+    passwordInput.value = '';
+    setLogStatus('0');
 }
 
 /**

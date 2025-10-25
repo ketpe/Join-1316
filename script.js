@@ -189,18 +189,30 @@ function checkUserOrGuestIsloggedIn() {
     }
 }
 
+/**
+ * Shows a loading overlay.
+ * @returns {void}
+ */
 function showOverlay(){
     const overlay = document.getElementById('loadingOverlay');
     if(!overlay){return;}
     overlay.classList.add('is-loading-visible');
 }
 
+/**
+ * Hides the loading overlay.
+ * @returns {void}
+ */
 function hideOverlay() {
     const overlay = document.getElementById('loadingOverlay');
     if(!overlay){return;}
     overlay.classList.remove('is-loading-visible');
 }
 
+/**
+ * Shows a loading animation.
+ * @returns {void}
+ */
 function showLoadingAnimation() {
     const overlay = document.getElementById('loadingOverlay');
     const loadingContainer = document.getElementById('loadingContainer');
@@ -210,6 +222,10 @@ function showLoadingAnimation() {
     loadingContainer.classList.remove('visually-hidden');
 }
 
+/**
+ * Hides the loading animation after a short delay.
+ * @returns {void}
+ */
 function hideLoadingAnimation() {
     setTimeout(() => {
         const overlay = document.getElementById('loadingOverlay');

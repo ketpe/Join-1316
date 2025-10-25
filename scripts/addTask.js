@@ -186,7 +186,6 @@ async function loadHtmlComponentsForMobile() {
     ]);
 
     document.querySelector('header').classList.add('add-task-header-mobile');
-
     await fillMobileHtmlWithContent();
 }
 

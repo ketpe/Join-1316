@@ -43,6 +43,7 @@ async function loadHtmlComponentsForDesktop(head) {
     ]);
     showLoadingAnimation();
     await getBoardTasks();
+    renderUserInitial();
     hideLoadingAnimation();
 }
 
@@ -57,6 +58,7 @@ async function loadHtmlComponentsForMobile() {
     ]);
     showLoadingAnimation();
     await getBoardTasks();
+    renderUserInitial();
     hideLoadingAnimation();
 }
 
@@ -316,6 +318,8 @@ async function getDetailViewTask(taskId) {
     boardTaskComponents = null;
     let tasks = await getTaskByTaskID(taskId);
     await includeHtml("dialog-content-detail-view-task", "taskTemplate.html");
+    const editDialog = document.getElementById('detail-view-task-dialog');
+    editDialog.style.background = "white";
     const taskUtils = new AddTaskUtils();
     const currentUser = taskUtils.readCurrentUserID();
     const isGuest = taskUtils.isCurrentUserGuest();
@@ -345,7 +349,9 @@ async function deleteCurrentTask(button) {
     const taskDelete = new BoardTaskDetailDeleteUtil(currentTaskID);
     if (await taskDelete.startDelete()) {
         closeDialog('detail-view-task-dialog');
-        getBoardTasks();
+        showLoadingAnimation();
+        await getBoardTasks();
+        hideLoadingAnimation();
     }
 
 }
@@ -396,9 +402,27 @@ async function editCurrentTaskSubmit(event) {
     const resultUpdate = await editTaskUtil.startUpdate();
     if (resultUpdate) {
         document.getElementById('dialog-content-detail-view-task').innerHTML = "";
-        await getDetailViewTask(currentID);
+        const editDialog = document.getElementById('detail-view-task-dialog');
+        editDialog.style.background = "transparent";
+        await showChangesSavedToast(currentID);
     }
 }
+
+/**
+ * Shows a toast message indicating that changes have been saved.
+ * @param {*} currentID - The ID of the current task.
+ * @returns {Promise<void>}
+ */
+async function showChangesSavedToast(currentID) {
+    const toast = document.getElementById('addTaskSafeChangesToast');
+    if (!toast) { return; }
+    toast.classList.add('safe-changes-toast-open');
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    toast.classList.remove('safe-changes-toast-open');
+    await new Promise(resolve => setTimeout(resolve, 600));
+    getDetailViewTask(currentID);
+}
+
 /**
  * @description Searches for tasks on the board based on the input in the search bar.
  * It filters tasks by title and description, and toggles their visibility accordingly. It also manages the display of a "no search results" hint.

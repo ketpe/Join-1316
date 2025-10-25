@@ -65,12 +65,7 @@ async function onSummaryPageResize() {
 function getURLParameter() {
     let param = new URLSearchParams(document.location.search);
     let pageParam = param.get('isNotStartup');
-
-    console.log("pageParam:", pageParam);
-
     isStartupSummary = (pageParam == null || pageParam.length == 0 || pageParam.startsWith('false')) ? false : true;
-
-    console.log("isStartupSummary:", isStartupSummary);
 
     if (pageParam != null && pageParam.length > 0) {
         param.delete('isNotStartup');

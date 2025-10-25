@@ -320,12 +320,19 @@
     align-items: center;
 }
 
+.greeting-mobile-text-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-80%);
+}
+
 .greeting-mobile-timeofday{
     font-family: 'Inter';
     font-size: 36px;
     font-weight: 400;
     color: var(--bg-default);
-    transform: translateY(-158%);
 }
 
 .greeting-mobile-name{
@@ -333,7 +340,7 @@
     font-size: 47px;
     font-weight: 700;
     color: var(--btn-bg-hover);
-    transform: translateY(-130%);
+    text-align: center;
 }
 
 
