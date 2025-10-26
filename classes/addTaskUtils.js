@@ -2,7 +2,12 @@
  * Utility class for managing tasks, contacts, and subtasks.
  * Provides methods for handling user IDs, contact assignments, and subtask management.
  * Also includes caching functionality for task data in the add task view.
- */
+ * Dependencies:
+ * - db-functions.js: For database operations.
+ * - addTaskCreateTask.js: For task creation processes.
+ * Usage:
+ * const addTaskUtils = new AddTaskUtils();
+*/
 class AddTaskUtils {
 
     static _addTaskCache = {
@@ -30,6 +35,7 @@ class AddTaskUtils {
 
     /**
      * Captures the current data from the add task view and updates the cache.
+     * @returns {void}
      */
     static captureCurrentAddTaskDataFromView() {
 
@@ -91,6 +97,7 @@ class AddTaskUtils {
     /**
      * Applies the cached add task data to the view components.
      * @param {Object} components - The components to apply the data to.
+     * @returns {void}
      */
     static applyAddTaskDataToView(components) {
         if (!components) { return; }
@@ -116,6 +123,7 @@ class AddTaskUtils {
     /**
      * Applies form data into the input fields of the add task view.
      * @param {Object} formData - The form data to apply.
+     * @returns {void}
      */
     static applyFormDataIntoInputFields(formData) {
         const { titleElement, descriptionElement, dueDateElement } = this.captureInputFields();
@@ -128,6 +136,7 @@ class AddTaskUtils {
      * Applies the selected category to the view components.
      * @param {Object} category - The category to apply.
      * @param {Object} components - The components to apply the category to.
+     * @returns {void}
      */
     static applyCategoryToView(category, components) {
         if (category?.title) {

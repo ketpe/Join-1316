@@ -1,8 +1,18 @@
+/**
+ * @namespace app
+ * @fileoverview app.js
+ * Global application script
+ * Implements common functions and initializes Firebase
+ * Loaded by all pages
+ */
+
 
 import { auth, db, onAuthStateChanged } from "./scripts/firebase.js";
 import { ref, set, get, getDatabase, child, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 /**
+ * @function includeHtml
+ * @memberof app
  * Includes HTML content into a target element.
  * @param {string} targetId 
  * @param {string} file 
@@ -29,6 +39,8 @@ async function includeHtml(targetId, file) {
 }
 
 /**
+ * @function includeHtmlForNode
+ * @memberof app
  * Includes HTML content into a specified node.
  * @param {string} nodeName 
  * @param {string} file 
@@ -54,7 +66,10 @@ async function includeHtmlForNode(nodeName, file) {
 
 }
 
-/** Sets the login status in session storage.
+/** 
+ * @function setLogStatus
+ * @memberof app
+ * Sets the login status in session storage.
  * @param {string} setLogStatus 
  */
 function setLogStatus(setLogStatus) {
@@ -62,9 +77,11 @@ function setLogStatus(setLogStatus) {
 };
 
 /**
+ * @function getLogStatus
+ * @memberof app
  * Gets the current login status from session storage.
- * @returns {string}  The current login status from session storage.
  * Redirects to the login page if no status is found.
+ * @returns {string}  The current login status from session storage.
  */
 function getLogStatus() {
   let logInStatus = sessionStorage.getItem('logInStatus');

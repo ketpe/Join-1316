@@ -128,6 +128,7 @@ class TaskComponents{
     /**
     * Loads categories from the database.
     * Utilizes the getAllData function from db-functions.js.
+    * @returns {Promise<void>}
     */
     async loadCategoriesFromDB() {
         const fb = new FirebaseDatabase();
@@ -171,6 +172,7 @@ class TaskComponents{
     /**
     * Handles mouse click events within the Add Task window.
     * @param {MouseEvent} e - The mouse event object.
+    * @returns {void}
     */
     addTaskWindowMouseClick(e) {
 
@@ -187,6 +189,8 @@ class TaskComponents{
 
     /**
     * Checks if all required fields are filled and enables/disables the create button accordingly.
+    * @param {HTMLElement} createButton - The create button element.
+    * @return {void}
     */
     addTaskCheckRequiredField(createButton) {
 
@@ -205,6 +209,8 @@ class TaskComponents{
 
     /**
     * Handles the mouse click event on the Add Task form to validate required fields.
+    * @param {HTMLElement} button - The button element that was clicked.
+    * @return {void}
     */
     addTaskSubmitOnMouse(button) {
         document.getElementById('task-title').blur();
@@ -215,6 +221,7 @@ class TaskComponents{
     /**
     * Validates the task title.
     * @param {string} titleValue - The value of the task title.
+    * @return {void}
     */
     taskTitleValidation(titleValue = "") {
         const cleanTitleValue = (titleValue ?? "").trim();
@@ -233,6 +240,7 @@ class TaskComponents{
 
     /**
     * Validates the due date field.
+    * @return {void}
     */
     dateFieldOnChange() {
         let dateField = document.getElementById('due-date-display');
@@ -245,6 +253,7 @@ class TaskComponents{
 
     /**
      * Handles the click event on the date icon to show the date picker.
+     * @return {void}
      */
     onDateIconClick() {
         let datePicker = document.getElementById('due-date-hidden');
@@ -254,6 +263,7 @@ class TaskComponents{
     /**
      * Handles the change event on the date picker.
      * @param {Event} e - The change event object.
+     * @return {void}
      */
     datePickerSelectionChange(e) {
         let newDateArr = String(e.target.value).split('-');
@@ -276,6 +286,7 @@ class TaskComponents{
 
     /**
      * Resets all priority buttons to their default state (not selected).
+     * @returns {void}
      */
     allPriortyButtonsReset() {
         this.currentPriority = "";
@@ -292,6 +303,7 @@ class TaskComponents{
     /**
      * Sets a new priority for the task.
      * @param {string} priority - The name of the priority to set.
+     * @return {void}
      */
     setNewPriority(priority) {
         const btnContainer = document.getElementById('task-priority-button');
@@ -356,6 +368,7 @@ class TaskComponents{
     /**
      * Shows or hides the contact selection input field.
      * @param {string} showOrHide - Determines whether to show or hide the contact list.
+     * @return {void}
      */
     showAndHideContacts(showOrHide = "show") {
         this.setInputAndButtonOnclickFunctionForContacts(showOrHide);
@@ -444,6 +457,7 @@ class TaskComponents{
      * Side Effects:
      * - Modifies the DOM elements with IDs 'contact-List-container' and 'contact-List-for-task'.
      * - Sets the global variable `isContactListOpen` to `false`.
+     * @returns {void}
      */
     hideContactListForSelect() {
         const contactListContainer = document.getElementById('contact-List-container');
@@ -463,6 +477,7 @@ class TaskComponents{
      * Renders the contact options for selection.
      * Using TaskUtils to check if the contact is already assigned to the task.
      * @param {Array} contactList
+     * @return {void}
      */
     renderContactOptions(contactList) {
         let contactSelectElement = document.getElementById('contact-List-for-task');
@@ -494,8 +509,9 @@ class TaskComponents{
      * Adds the selected contact to the task and updates the UI accordingly.
      * Uses TaskUtils to manage the contact assignment list.
      * Changes the styling of the selected contact to indicate its selection.
-     * @param {*} currentContact
+     * @param {HTMLElement} currentContact
      * @param {string} contactID
+     * @returns {void}
      */
     checkInContact(currentContact, contactID) {
         this.currentContactAssignList = this.addTaskUtils.contactAddToTask(contactID, this.contactAllListFromDB, this.currentContactAssignList);
@@ -512,8 +528,9 @@ class TaskComponents{
      * Removes the selected contact from the task and updates the UI accordingly.
      * Uses TaskUtils to manage the contact assignment list.
      * Changes the styling of the selected contact to indicate its removal.
-     * @param {*} currentContact
+     * @param {HTMLElement} currentContact
      * @param {string} contactID
+     * @return {void}
      */
     checkOutContact(currentContact, contactID) {
         this.currentContactAssignList = this.addTaskUtils.contactRemoveFromTask(contactID, this.currentContactAssignList);
@@ -530,6 +547,7 @@ class TaskComponents{
      * Filters the contact list based on the input value.
      * Uses TaskUtils to filter contacts from the full contact list.
      * @param {string} inputValue
+     * @returns {void}
      */
     filterContactFromInputValue(inputValue) {
         this.showContactListForSelect(this.addTaskUtils.filterContacts(inputValue, this.contactAllListFromDB));
@@ -576,6 +594,7 @@ class TaskComponents{
     /**
      * Shows or hides the category list for selection.
      * @param {string} showOrHide
+     * @return {void}
      */
     showAndHideCategories(showOrHide = "show") {
         if (showOrHide == "show") {
@@ -650,6 +669,7 @@ class TaskComponents{
      * Hides the category list after selection and checks the category input value for validation.
      * Uses TaskUtils to find the index of the selected category in the categories array.
      * @param {HTMLElement} button - The button element representing the selected category.
+     * @return {void}
      */
     categoryButtonOnListSelect(button) {
         if (!button) { showCategoryError(); }
@@ -664,6 +684,7 @@ class TaskComponents{
     /**
      * Sets the value of the category input field.
      * @param {string} value - The value to set in the category input field.
+     * @return {void}
      */
     setCategoryInputfieldValue(value) {
         document.getElementById('task-category').value = value;
@@ -672,6 +693,7 @@ class TaskComponents{
     /**
      * Sets the onclick attribute for the show/hide button.
      * @param {string} showOrHide
+     * @return {void}
      */
     setCategoryShowOrHideButton(showOrHide) {
         const buttonShowOrHide = document.getElementById('show-and-hide-categories');
@@ -683,6 +705,7 @@ class TaskComponents{
      * If the category list is open, it blurs the input field, hides the category list, and checks the input value.
      * If the category list is closed, it shows the category list.
      * @param {HTMLElement} inputField - The input field element for the category.
+     * @return {void}
      */
     onclickCategoryInput(inputField) {
         if (this.isCategoryListOpen) {
@@ -727,6 +750,8 @@ class TaskComponents{
 
     /**
      * Toggles the visibility of the subtask writing buttons.
+     * @param {boolean} visibility - Indicates whether to show or hide the subtask writing buttons.
+     * @returns {void}
      */
     toggleSubWritingButtons(visibility) {
         let fieldButtons = document.getElementById('sub-writing-buttons');
@@ -737,6 +762,7 @@ class TaskComponents{
      * Handles the pressing of the Enter key in the subtask input field.
      * @param {KeyboardEvent} event - The keyboard event.
      * @param {HTMLElement} inputField - The subtask input field element.
+     * @returns {void}
      */
     subtaskInputfieldPressEnter(event, inputField) {
         if (event.code == "Enter" || event.code == "NumpadEnter") {
@@ -846,6 +872,7 @@ class TaskComponents{
     /**
     * Clears the Add Task form by reloading the page.
     * This effectively resets all form fields and local data.
+    * @returns {void}
     */
     addTaskFormClear() {
         location.reload();
@@ -858,6 +885,7 @@ class TaskComponents{
     * Uses the CreateNewTask class to handle the task creation process.
     * After the task is created, it shows a confirmation dialog and navigates to the board view.
     * @param {Event} event - The event object from the form submission.
+    * @returns {Promise<void>}
      */
     async addTaskCreateTask(event) {
 
@@ -905,8 +933,9 @@ class TaskComponents{
     * Closes the Add Task dialog if it was opened from a dialog view.
     * Navigates to the board view after the confirmation dialog is closed.
     * @param {boolean} fromDialog - Indicates if the call is from a dialog.
+    * @returns {void}
     */
-    addTaskAfterSafe(fromDialog = false, event) {
+    addTaskAfterSafe(fromDialog = false) {
         this.toggleDialogDisplay();
         const dialog = document.getElementById('add-task-safe-dialog');
         dialog.classList.add('safe-dialog-show');
@@ -919,6 +948,7 @@ class TaskComponents{
 
     /**
      * Toggles the display of the Add Task confirmation dialog.
+     * @return {void}
      */
     toggleDialogDisplay() {
         document.getElementById('add-task-safe-dialog').classList.toggle('visually-hidden');

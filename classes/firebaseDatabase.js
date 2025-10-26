@@ -1,6 +1,10 @@
 /**
  * Class for interacting with Firebase Realtime Database.
  * Provides methods for authentication, data retrieval, updating, and deletion.
+ * @class FirebaseDatabase
+ * @property {Object} constructor - The constructor for the FirebaseDatabase class.
+ * @example
+ * const firebaseDB = new FirebaseDatabase();
  */ 
 
 class FirebaseDatabase {

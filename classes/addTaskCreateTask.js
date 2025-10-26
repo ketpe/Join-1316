@@ -24,9 +24,20 @@
  * Note: This module does not handle user interface elements or event listeners.
  * It focuses solely on the logic and data management for task creation.
  * It is assumed that the necessary data validation and user input handling are performed elsewhere in the application.
+ * @property {Task} task - The main task object containing task details.
+ * @property {Array} subtasks - An array of subtask objects associated with the main task.
+ * @property {Array} contactAssignArray - An array of contact objects to be assigned to the task.
+ * @property {string} currentUserId - The ID of the current user creating the task.
  */
 
 class CreateNewTask {
+    /**
+     * Creates an instance of the CreateNewTask class.
+     * @param {Task} task - The main task object containing task details.
+     * @param {Array} subtasks - An array of subtask objects associated with the main task.
+     * @param {Array} contactAssignArray - An array of contact objects to be assigned to the task.
+     * @param {string} currentUserId - The ID of the current user creating the task.
+     */
     constructor(task, subtasks, contactAssignArray, currentUserId) {
         this.task = task;
         this.subtasks = subtasks;
@@ -49,8 +60,8 @@ class CreateNewTask {
      * Creates an array of subtasks for the current task.
      * This method iterates over the provided subtasks, creating a new Subtask object for each one.
      * It then calls the method to associate contacts with the task, passing along the current task and the array of subtasks.
-     * @returns {Promise<void>} A promise that resolves when the subtasks have been created and associated with contacts.
      * @param {*} currentTask
+     * @returns {Promise<void>} A promise that resolves when the subtasks have been created and associated with contacts.
      */
     async addTaskCreateSubtaskArray(currentTask) {
         let subTaskArray = [];
@@ -71,9 +82,6 @@ class CreateNewTask {
     async addTaskContactAssigned(currentTask, subTaskArray) {
 
         let newContactAssignedArray = [];
-
-        // newContactAssignedArray.push(new ContactAssigned(getNewUid(), currentTask.id, this.currentUserId));
-
         for (let i = 0; i < this.contactAssignArray.length; i++) {
             newContactAssignedArray.push(new ContactAssigned(getNewUid(), currentTask.id, this.contactAssignArray[i]['id']));
         }
@@ -85,10 +93,10 @@ class CreateNewTask {
      * Connects subtasks to the main task and assigns contacts to the task.
      * This method creates an array of SubtaskToTask objects to establish the relationship between the main task and its subtasks.
      * It then calls the method to write all collected data to the database.
-     * @returns {Promise<void>} A promise that resolves when the subtasks have been connected to the task and all data has been written to the database.
      * @param {Task} currentTask
      * @param {Array} subTaskArray
      * @param {Array} assignedContactArray
+     * @returns {Promise<void>} A promise that resolves when the subtasks have been connected to the task and all data has been written to the database.
      */
     async subtaskToTaskConnection(currentTask, subTaskArray, assignedContactArray) {
         let subtaskToTaskArray = [];

@@ -1,9 +1,19 @@
-let errorMessageArr = [];
-const namePattern = /\w{3,10}\s\w{3,10}/;
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+/**
+ * @fileoverview
+ * @namespace signup
+ * @description This script manages the sign-up page functionality, including form validation,
+ * user data handling, and navigation to the login page upon successful sign-up.
+ * It includes functions to validate input fields, handle form submission,
+ * and provide user feedback on errors.
+ * @file scripts/signup.js
+ */
+
 
 /**
+ * @function signupinit
+ * @memberof signup
  * Initialize the signup page.
+ * @returns {Promise<void>}
  */
 async function signupinit() {
     let logInStatus = getLogStatus();
@@ -14,9 +24,11 @@ async function signupinit() {
 }
 
 /**
+ * @function signInFieldOnBlur
+ * @memberof signup
  * Handle onBlur event for sign-in fields.
  * @param {HTMLInputElement} input 
- * @returns 
+ * @returns {void}
  */
 function signInFieldOnBlur(input) {
     if (!input) { return; }
@@ -27,6 +39,8 @@ function signInFieldOnBlur(input) {
 }
 
 /**
+ * @function validatefullname
+ * @memberof signup
  * Validate the full name field.
  * @returns {Boolean}
  */
@@ -44,6 +58,8 @@ function validatefullname() {
 }
 
 /**
+ * @function validateemail
+ * @memberof signup
  * Validate the email field.
  * @returns {Boolean}
  */
@@ -66,6 +82,8 @@ async function validateemail() {
 }
 
 /**
+ * @function validatepasswordConfirm
+ * @memberof signup
  * Validate the password confirmation field.
  * @returns {Boolean}
  */
@@ -85,6 +103,8 @@ function validatepasswordConfirm() {
 }
 
 /**
+ * @function validatepassword
+ * @memberof signup
  * Validate the password field.
  * @returns {Boolean}
  */
@@ -101,8 +121,10 @@ function validatepassword() {
 }
 
 /**
+ * @function validatePolicyAccept
+ * @memberof signup
  * Validate the policy acceptance checkbox.
- * @returns {Boolean}
+ * @returns {Boolean}      
  */
 function validatePolicyAccept() {
     const confirmCheckbox = document.getElementById('signupConfirm');
@@ -111,9 +133,11 @@ function validatePolicyAccept() {
 }
 
 /**
+ * @function splitNameToFirstLastAndInitial
+ * @memberof signup
  * Get first name, last name and initials from full name.
- * @param {*} signUp 
- * @returns 
+ * @param {FormData} signUp - The form data from the sign-up form.
+ * @returns {Object} - An object containing the first name, last name, and initials.
  */
 function splitNameToFirstLastAndInitial(signUp) {
     let fullName = signUp.get("fullname").trim();
@@ -128,9 +152,11 @@ function splitNameToFirstLastAndInitial(signUp) {
 }
 
 /**
+ * @function checkEmailInDatabase
+ * @memberof signup
  * Check if the email exists in the database.
  * @param {string} email 
- * @returns 
+ * @returns {Promise<boolean>}
  */
 async function checkEmailInDatabase(email) {
     let fb = new FirebaseDatabase();
@@ -139,8 +165,11 @@ async function checkEmailInDatabase(email) {
 }
 
 /**
+ * @function setInputFieldHasNoError
+ * @memberof signup
  * Set the input field to a valid state (no error).
  * @param {String} elementID 
+ * @returns {void}
  */
 function setInputFieldHasNoError(elementID) {
     toggleBorderColorByError(elementID, true);
@@ -149,9 +178,12 @@ function setInputFieldHasNoError(elementID) {
 }
 
 /**
+ * @function setInputFieldHasError
+ * @memberof signup
  * Set the input field to an invalid state (error).
  * @param {String} elementID 
  * @param {String} message 
+ * @returns {void}
  */
 function setInputFieldHasError(elementID, message) {
     toggleBorderColorByError(elementID, false);
@@ -159,9 +191,12 @@ function setInputFieldHasError(elementID, message) {
 }
 
 /**
+ * @function addErrorMessageToArray
+ * @memberof signup
  * Add an error message for a specific element to the array.
  * @param {String} elementID 
  * @param {String} message 
+ * @returns {void}
  */
 function addErrorMessageToArray(elementID, message) {
     if (!errorMessageArr.some(x => x.field === elementID)) {
@@ -171,9 +206,11 @@ function addErrorMessageToArray(elementID, message) {
 }
 
 /**
+ * @function removeErrorMessageFromArray
+ * @memberof signup
  * Remove an error message for a specific element from the array.
  * @param {String} elementID 
- * @returns 
+ * @returns {void}
  */
 function removeErrorMessageFromArray(elementID) {
     const errorMessageItem = errorMessageArr.find(x => x.field == elementID);
@@ -183,6 +220,8 @@ function removeErrorMessageFromArray(elementID) {
 }
 
 /**
+ * @function handleErrorMessage
+ * @memberof signup
  * Handle error messages display.
  * @returns {void}
  */
@@ -199,12 +238,14 @@ function handleErrorMessage() {
 }
 
 
-//TODO - Die Datenbankfunktion wieder freischalten!
+
 /**
+ * @function signUpForm
+ * @memberof signup
  * Handle the sign-up form submission.
  * Safes the user data to the database and signs in the user.
- * @param {*} event 
- * @returns 
+ * @param {Event} event 
+ * @returns {Promise<void>}
  */
 async function signUpForm(event) {
     event.preventDefault();
@@ -212,14 +253,16 @@ async function signUpForm(event) {
     if (!checkAllRequiredField()) { return; }
     const { firstname, lastname, initial } = splitNameToFirstLastAndInitial(signUp);
     const fb = new FirebaseDatabase();
-    //if (!fb.createNewSignedUser(null, firstname, lastname, signUp.get('password'), signUp.get('email'), null, initial, null)) { return; }
+    if (!fb.createNewSignedUser(null, firstname, lastname, signUp.get('password'), signUp.get('email'), null, initial, null)) { return; }
     signInAfterSafe();
 }
 
 /**
+ * @function signupMouseUp
+ * @memberof signup
  * Handle the mouse up event on the sign-up button.
- * @param {*} event 
- * @returns 
+ * @param {MouseEvent} event 
+ * @returns {void}
  */
 function signupMouseUp(event) {
     const button = document.getElementById('signup-button');
@@ -231,7 +274,10 @@ function signupMouseUp(event) {
 }
 
 /**
+ * @function leaveFocusOffAllFields
+ * @memberof signup
  * Remove focus from all input fields.
+ * @return {void}
  */
 function leaveFocusOffAllFields() {
     const inputElements = document.querySelectorAll("input");
@@ -241,6 +287,8 @@ function leaveFocusOffAllFields() {
 }
 
 /**
+ * @function checkAllRequiredField
+ * @memberof signup
  * Check all required fields for validity.
  * @returns {boolean}
  */
@@ -254,7 +302,10 @@ function checkAllRequiredField() {
 }
 
 /**
+ * @function signInAfterSafe
+ * @memberof signup
  * Show a dialog indicating successful sign-up and navigate to login page.
+ * @return {void}
  */
 function signInAfterSafe() {
     const dialog = document.getElementById('signUp-safe-dialog');

@@ -4,6 +4,7 @@
  * Designed to be used in conjunction with a task management application.
  * Example usage:
  * const taskElements = new TaskElements(currentInstance);
+ * @property {string} currentInstance - The current instance of the task management application.
  */
 
 class TaskElements{
@@ -96,6 +97,7 @@ class TaskElements{
 
     /**
      * Fills the left container with the task elements for adding a new task.
+     * @returns {void}
      */
     fillLeftContainerOnAddTask(){
         let leftContainer = document.querySelector(".a-t-f-i-left");
@@ -259,6 +261,7 @@ class TaskElements{
 
     /**
      * Fills the right container with the task elements for adding a new task.
+     * @returns {void}
      */
     fillRightContainerOnAddTask(){
         let rightContainer = document.querySelector('.a-t-f-i-right');

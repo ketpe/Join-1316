@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scripts/addTask.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scripts/addTask.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview
+ * @namespace addTask
+ * Script for managing the Add Task page layout and functionality.
+ * Adjusts the layout based on window size and handles user interactions.
+ * Utilizes helper classes for task management and UI rendering.
+ * Loaded by add task page.
+ * @file scripts/addTask.js
+ */
+
+
+const MOBILE = "mobile";
+const DESKTOP = "desktop";
+const DESKTOPSINGLE = "desktopSingle";
+const minDesktopHeight = 880;
+const breakPointToDesktopSingle = 1180;
+const breakPointToMobile = 800;
+
+let currentUser = "";
+let isGuest = false;
+let addTaskUtils = new AddTaskUtils();
+let addTasktaskComponents = null;
+let currentView = "";
+let resizeLock = false;
+
+
+/**
+ * Initializes the Add Task page on load.
+ * Sets up the layout based on the current window size and adjusts form field sizes.
+ * @function onLoadAddTask
+ * @memberof addTask
+ * @returns {Promise&lt;void>}
+ */
+async function onLoadAddTask() {
+    checkUserOrGuestIsloggedIn();
+    const [height, width] = addTaskUtils.getCurrentAddTaskSize;
+    if (width >= breakPointToDesktopSingle) {
+        await changeAddTaskToDesktop(height, width);
+    } else if (width &lt; breakPointToDesktopSingle &amp;&amp; width > breakPointToMobile) {
+        await changeAddTaskToDesktopSingle(height, width);
+    } else {
+        await changeAddTaskToMobile(height, width);
+    }
+
+    changeAddTaskFormFieldSize(height, width, currentView);
+}
+
+/** 
+ * Handles window resize events to adjust the Add Task page layout.
+ * Uses a lock to prevent multiple simultaneous executions.
+ * Adjusts the layout based on predefined breakpoints and resizes form fields accordingly.
+ * @function addTaskPageResize
+ * @memberof addTask
+ * @returns {Promise&lt;void>}
+ */
+async function addTaskPageResize() {
+    if (resizeLock) { return; }
+    resizeLock = true;
+
+    try {
+        const [height, width] = addTaskUtils.getCurrentAddTaskSize;
+        if (width &lt;= breakPointToMobile &amp;&amp; currentView !== MOBILE) {
+            AddTaskUtils.captureCurrentAddTaskDataFromView();
+            await changeAddTaskToMobile(height, width);
+        } else if (width >= breakPointToDesktopSingle &amp;&amp; currentView !== DESKTOP) {
+            AddTaskUtils.captureCurrentAddTaskDataFromView();
+            await changeAddTaskToDesktop(height, width);
+        } else if (width > breakPointToMobile &amp;&amp; width &lt;= breakPointToDesktopSingle &amp;&amp; currentView != DESKTOPSINGLE) {
+            AddTaskUtils.captureCurrentAddTaskDataFromView();
+            await changeAddTaskToDesktopSingle(height, width);
+        }
+
+        changeAddTaskFormFieldSize(height, width, currentView);
+    }finally{
+        resizeLock = false;
+    }
+}
+
+/**
+ * Changes the Add Task view to desktop mode.
+ * Loads the necessary HTML components and adjusts the view to standard mode.
+ * Also loads data for the Add Task view and sets the navigation button as active.
+ * @function changeAddTaskToDesktop
+ * @memberof addTask
+ * @returns {Promise&lt;void>}
+ */
+async function changeAddTaskToDesktop() {
+    currentView = DESKTOP;
+    await loadHtmlComponentsForDesktop();
+    changeAddTaskViewToStandard();
+    await loadDataForAddTask();
+    setNavigationButtonActive('addTask', "desktop");
+
+}
+
+/**
+ * Changes the Add Task view to desktop single-column mode.
+ * Loads the necessary HTML components and adjusts the view to standard mode.
+ * Also loads data for the Add Task view and sets the navigation button as active.
+ * @function changeAddTaskToDesktopSingle
+ * @memberof addTask
+ * @returns {Promise&lt;void>}
+ */
+async function changeAddTaskToDesktopSingle() {
+    currentView = DESKTOPSINGLE;
+    await loadHtmlComponentsForDesktopSingle();
+    await loadDataForAddTask();
+    setNavigationButtonActive('addTask', "desktop");
+    document.querySelector('body').setAttribute("onmouseup", "addTasktaskComponents.addTaskWindowMouseClick(event)");
+}
+
+/**
+ * Changes the Add Task view to mobile mode.
+ * Loads the necessary HTML components and loads data for the Add Task view.
+ * Also sets the navigation button as active.
+ * @function changeAddTaskToMobile
+ * @memberof addTask
+ * @returns {Promise&lt;void>}
+ */
+async function changeAddTaskToMobile() {
+    currentView = MOBILE;
+    await loadHtmlComponentsForMobile();
+    await loadDataForAddTask();
+    setNavigationButtonActive('addTask', "mobile");
+    document.querySelector('body').setAttribute("onmouseup", "addTasktaskComponents.addTaskWindowMouseClick(event)");
+}
+
+/**
+ * Changes the size of the form fields in the Add Task view based on the current layout.
+ * @function changeAddTaskFormFieldSize
+ * @memberof addTask
+ * @param {number} height The current height of the form fields.
+ * @param {number} width The current width of the form fields.
+ * @param {string} currentView The current view mode (mobile, desktop, etc.).
+ * @returns {void}
+ */
+function changeAddTaskFormFieldSize(height, width, currentView) {
+    if (currentView == MOBILE) {
+        addTaskUtils.measureTheRemainingSpaceOfFieldsForMobile(height)
+            .then((result) => {
+                document.querySelector(".add-task-mobile-fields").style.height = result + "px";
+            });
+    } else if (currentView == DESKTOP) {
+        addTaskUtils.measureTheRemainingSpaceOfFieldsForDesktop(height)
+            .then((result) => {
+                document.querySelector(".add-task-fields").style.height = result + "px";
+            });
+    }else if(currentView == DESKTOPSINGLE){
+        addTaskUtils.measureTheRemainingSpaceOfFieldsForDesktopSingle(height)
+            .then((result) => {
+                document.querySelector(".add-task-mobile-fields").style.height = result + "px";
+            });
+    }
+}
+
+/**
+ * Loads the HTML components for the Add Task view in desktop mode.
+ * Clears the current body content and includes necessary HTML files for the layout.
+ * Fills the HTML with content after loading the components.
+ * @function loadHtmlComponentsForDesktop
+ * @memberof addTask
+ * @returns {Promise&lt;void>}
+ */
+async function loadHtmlComponentsForDesktop() {
+    clearAddTaskHtmlBody();
+    await includeHtmlForNode("body", "addTaskDesktop.html");
+
+    await Promise.all([
+        includeHtml("navbar", "navbarDesktop.html"),
+        includeHtml("header", "headerDesktop.html"),
+        includeHtml("add-task-content", "addTaskContent.html")
+    ]);
+
+    await fillHtmlWithContent();
+}
+
+/**
+ * Loads the HTML components for the Add Task view in desktop single-column mode.
+ * Clears the current body content and includes necessary HTML files for the layout.
+ * Fills the HTML with content after loading the components.
+ * @function loadHtmlComponentsForDesktopSingle
+ * @memberof addTask
+ * @returns {Promise&lt;void>}
+ */
+async function loadHtmlComponentsForDesktopSingle() {
+    clearAddTaskHtmlBody();
+    await includeHtmlForNode("body", "addTaskDesktop.html");
+
+    await Promise.all([
+        includeHtml("navbar", "navbarDesktop.html"),
+        includeHtml("header", "headerDesktop.html"),
+        includeHtml("add-task-content", "addTaskContentMobile.html")
+    ]);
+
+    await fillMobileHtmlWithContent();
+
+}
+
+/**
+ * Loads the HTML components for the Add Task view in mobile mode.
+ * Clears the current body content and includes necessary HTML files for the layout.
+ * Fills the HTML with content after loading the components.
+ * @function loadHtmlComponentsForMobile
+ * @memberof addTask
+ * @returns {Promise&lt;void>}
+ */
+async function loadHtmlComponentsForMobile() {
+    clearAddTaskHtmlBody();
+
+    await includeHtmlForNode("body", "addTaskMobile.html");
+
+    await Promise.all([
+        includeHtml("header", "headerMobile.html"),
+        includeHtml("navbar", "navbarMobile.html"),
+        includeHtml("add-task-content-mobile", "addTaskContentMobile.html")
+    ]);
+
+    document.querySelector('header').classList.add('add-task-header-mobile');
+    await fillMobileHtmlWithContent();
+}
+
+/**
+ * Clears the current HTML body content.
+ * This is used before loading new HTML components for the Add Task view.
+ * @function clearAddTaskHtmlBody
+ * @memberof addTask
+ * @returns {void}
+ */
+function clearAddTaskHtmlBody() {
+    document.querySelector('body').innerHTML = "";
+}
+
+/** Fills the HTML with content for the Add Task view.
+ * Initializes the TaskElements class and populates the left and right containers.
+ * Sets up the form submission function and button click handlers.
+ * @function fillHtmlWithContent
+ * @memberof addTask
+ * @returns {Promise&lt;void>}
+ */
+async function fillHtmlWithContent() {
+    const taskElements = new TaskElements("addTasktaskComponents");
+    taskElements.fillLeftContainerOnAddTask();
+    taskElements.fillRightContainerOnAddTask();
+    addTaskUtils.setAddTaskFormSubmitFunction("addTasktaskComponents", false);
+    addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTasktaskComponents');
+}
+
+/**
+ * Fills the mobile HTML with content for the Add Task view.
+ * Initializes the AddTaskMobileUtil class and renders the mobile components.
+ * Sets up the form submission function.
+ * @function fillMobileHtmlWithContent
+ * @memberof addTask
+ * @returns {Promise&lt;void>}
+ */
+async function fillMobileHtmlWithContent() {
+    const taskMobileUtil = new AddTaskMobileUtil("addTasktaskComponents");
+    await taskMobileUtil.startRenderAddTaskMobile();
+    addTaskUtils.setAddTaskFormSubmitFunction("addTasktaskComponents", false);
+    addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTasktaskComponents');
+}
+
+
+/**
+ * Changes the Add Task view to standard (non-dialog) mode by adjusting classes and attributes.
+ * @function changeAddTaskViewToStandard
+ * @memberof addTask
+ * @returns {void}
+ */
+function changeAddTaskViewToStandard() {
+    document.getElementById('a-t-dialog-close-btn').classList.add('display-hidden');
+    document.getElementById('a-t-cancel-btn').classList.add('display-hidden');
+    document.getElementById('a-t-clear-btn').classList.remove('display-hidden');
+    document.getElementById('add-task-form').classList.add('add-task-form-desktop');
+    document.getElementById('add-task-form').classList.remove('add-task-form-dialog');
+    document.getElementById('a-t-middle-container').classList.remove('a-t-f-i-midle-dialog');
+    document.querySelector('body').setAttribute("onmouseup", "addTasktaskComponents.addTaskWindowMouseClick(event)");
+}
+
+
+/**
+ * Loads necessary data for the Add Task view, including contacts and categories.
+ * Renders the user's initial and reads the current user ID and guest status.
+ * Initializes the TaskComponents class if not already done and applies data to the view.
+ * @function loadDataForAddTask
+ * @memberof addTask
+ * @returns {Promise&lt;void>}
+ */
+async function loadDataForAddTask() {
+    renderUserInitial();
+    currentUser = addTaskUtils.readCurrentUserID();
+    isGuest = addTaskUtils.isCurrentUserGuest();
+
+    if (!addTasktaskComponents) {
+        addTasktaskComponents = new TaskComponents(currentUser, "addTasktaskComponents");
+        await addTasktaskComponents.run();
+        window.addTasktaskComponents = addTasktaskComponents;
+    }
+
+    AddTaskUtils.applyAddTaskDataToView(addTasktaskComponents);
+
+}
+
+
+
+
+
+
+
+
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 17:07:17 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

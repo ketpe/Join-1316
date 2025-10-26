@@ -8,6 +8,10 @@
 
 
 class BoardTaskDetailDeleteUtil {
+    /**
+     * Creates an instance of the BoardTaskDetailDeleteUtil class.
+     * @param {string} taskId - The ID of the task to be deleted.
+     */
     constructor(taskId){
         this.taskId = taskId;
     }

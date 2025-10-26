@@ -1,3 +1,18 @@
+/**
+ * @fileoverview
+ * Firebase configuration object for the Join-1316 project.
+ * This configuration is used to initialize the Firebase app and connect to the Firebase services.
+ * @constant {Object} firebaseConfig
+ * @property {string} apiKey - The API key for the Firebase project.
+ * @property {string} authDomain - The authentication domain for the Firebase project.
+ * @property {string} databaseURL - The URL of the Firebase Realtime Database.
+ * @property {string} projectId - The project ID for the Firebase project.
+ * @property {string} storageBucket - The storage bucket for the Firebase project.
+ * @property {string} messagingSenderId - The messaging sender ID for the Firebase project.
+ * @property {string} appId - The application ID for the Firebase project.
+ * @example
+ * import { firebaseConfig } from './config/firebaseConfig.js';
+ */
 export const firebaseConfig = {
   apiKey: "AIzaSyAaNsHOelfuAUtDxH-WGcarDf5HJEhRozk",
   authDomain: "join-1316.firebaseapp.com",

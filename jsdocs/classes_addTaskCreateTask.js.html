@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: classes/addTaskCreateTask.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: classes/addTaskCreateTask.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * addTaskCreateTask.js
+ *
+ * This module handles the creation of a new task, including its subtasks and assigned contacts.
+ * It utilizes helper classes to structure the data and interacts with the database to store the information.
+ * The main class, CreateNewTask, orchestrates the process of creating a task, adding subtasks,
+ * and associating contacts.
+ *
+ * The module also includes utility functions for generating unique IDs and managing database operations.
+ * It is designed to be used in conjunction with a user interface that collects task details from the user.
+ * The module ensures that all necessary data is properly formatted and stored in the database.
+ *
+ * Dependencies:
+ * - db-functions.js: For database operations such as PUT and DELETE.
+ * - addTaskUtils.js: For utility functions related to task management.
+ *
+ * Usage:
+ * const newTask = new CreateNewTask(taskData, subtaskData, contactData);
+ * await newTask.start();
+ *
+ * The above example creates a new task with the provided data and stores it in the database.
+ * The taskData, subtaskData, and contactData should be structured according to the expected formats.
+ *
+ * Note: This module does not handle user interface elements or event listeners.
+ * It focuses solely on the logic and data management for task creation.
+ * It is assumed that the necessary data validation and user input handling are performed elsewhere in the application.
+ * @property {Task} task - The main task object containing task details.
+ * @property {Array} subtasks - An array of subtask objects associated with the main task.
+ * @property {Array} contactAssignArray - An array of contact objects to be assigned to the task.
+ * @property {string} currentUserId - The ID of the current user creating the task.
+ */
+
+class CreateNewTask {
+    /**
+     * Creates an instance of the CreateNewTask class.
+     * @param {Task} task - The main task object containing task details.
+     * @param {Array} subtasks - An array of subtask objects associated with the main task.
+     * @param {Array} contactAssignArray - An array of contact objects to be assigned to the task.
+     * @param {string} currentUserId - The ID of the current user creating the task.
+     */
+    constructor(task, subtasks, contactAssignArray, currentUserId) {
+        this.task = task;
+        this.subtasks = subtasks;
+        this.contactAssignArray = contactAssignArray;
+        this.currentUserId = currentUserId;
+    }
+
+    /**
+     * Starts the task creation process by creating subtasks and associating contacts.
+     * This method orchestrates the sequence of operations needed to fully set up a new task.
+     * It first creates an array of subtasks, then associates contacts with the task,
+     * and finally connects the subtasks to the task before storing everything in the database.
+     * @returns {Promise&lt;void>} A promise that resolves when the task creation process is complete.
+     */
+    async start() {
+        await this.addTaskCreateSubtaskArray(this.task);
+    }
+
+    /**
+     * Creates an array of subtasks for the current task.
+     * This method iterates over the provided subtasks, creating a new Subtask object for each one.
+     * It then calls the method to associate contacts with the task, passing along the current task and the array of subtasks.
+     * @param {*} currentTask
+     * @returns {Promise&lt;void>} A promise that resolves when the subtasks have been created and associated with contacts.
+     */
+    async addTaskCreateSubtaskArray(currentTask) {
+        let subTaskArray = [];
+        for (let i = 0; i &lt; this.subtasks.length; i++) {
+            subTaskArray.push(new Subtask(getNewUid(), this.subtasks[i]['title'], false, this.subtasks[i]['position']));
+        }
+
+        await this.addTaskContactAssigned(currentTask, subTaskArray);
+    }
+
+    /**
+     * Associates contacts with the current task.
+     * This method creates an array of ContactAssigned objects, including any additional contacts.
+     * @param {Task} currentTask
+     * @param {Array} subTaskArray  Array of subtasks to be associated with the task.
+     * @returns {Promise&lt;void>} A promise that resolves when the contacts have been associated with the task.
+     */
+    async addTaskContactAssigned(currentTask, subTaskArray) {
+
+        let newContactAssignedArray = [];
+        for (let i = 0; i &lt; this.contactAssignArray.length; i++) {
+            newContactAssignedArray.push(new ContactAssigned(getNewUid(), currentTask.id, this.contactAssignArray[i]['id']));
+        }
+
+        await this.subtaskToTaskConnection(currentTask, subTaskArray, newContactAssignedArray);
+    }
+
+    /**
+     * Connects subtasks to the main task and assigns contacts to the task.
+     * This method creates an array of SubtaskToTask objects to establish the relationship between the main task and its subtasks.
+     * It then calls the method to write all collected data to the database.
+     * @param {Task} currentTask
+     * @param {Array} subTaskArray
+     * @param {Array} assignedContactArray
+     * @returns {Promise&lt;void>} A promise that resolves when the subtasks have been connected to the task and all data has been written to the database.
+     */
+    async subtaskToTaskConnection(currentTask, subTaskArray, assignedContactArray) {
+        let subtaskToTaskArray = [];
+
+        for (let i = 0; i &lt; subTaskArray.length; i++) {
+            subtaskToTaskArray.push(new SubtaskToTask(getNewUid(), currentTask.id, subTaskArray[i]['id']));
+        }
+
+        await this.addTaskCreateDBEntries(currentTask, subTaskArray, assignedContactArray, subtaskToTaskArray)
+    }
+
+    /**
+     * Writes the task, subtasks, assigned contacts, and subtask-to-task relationships to the database.
+     * This method performs the necessary database operations to store all relevant data for the new task.
+     * @param {Task} currentTask
+     * @param {Array} subTaskArray
+     * @param {Array} assignedContactArray
+     * @param {Array} subtaskToTaskArray
+     * @returns {Promise&lt;void>} A promise that resolves when all data has been written to the database.
+     */
+    async addTaskCreateDBEntries(currentTask, subTaskArray, assignedContactArray, subtaskToTaskArray) {
+        const fb = new FirebaseDatabase();
+        await fb.getFirebaseLogin(() => fb.putData(`/tasks/${currentTask.id}`, currentTask));
+
+        for (let subIndex = 0; subIndex &lt; subTaskArray.length; subIndex++) {
+            await fb.getFirebaseLogin(() => fb.putData(`/subTasks/${subTaskArray[subIndex].id}`, subTaskArray[subIndex]));
+        }
+
+        for (let contactIndex = 0; contactIndex &lt; assignedContactArray.length; contactIndex++) {
+            await fb.getFirebaseLogin(() => fb.putData(`/taskContactAssigned/${assignedContactArray[contactIndex].id}`, assignedContactArray[contactIndex]));
+        }
+
+        for (let subToTaskIndex = 0; subToTaskIndex &lt; subtaskToTaskArray.length; subToTaskIndex++) {
+            await fb.getFirebaseLogin(() => fb.putData(`/taskSubtask/${subtaskToTaskArray[subToTaskIndex].id}`, subtaskToTaskArray[subToTaskIndex]));
+        }
+
+    }
+
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 17:07:17 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

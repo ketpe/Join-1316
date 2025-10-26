@@ -1,9 +1,19 @@
+/**
+ * @namespace contacts
+ * @description Contact list page functions and helpers.
+ * Manages the loading and rendering of contacts in both mobile and desktop views.
+ * Handles contact detail view toggling and action buttons.
+ * Implements responsive design adjustments based on window size.
+ */
+
 let currentView = "";
 const minDesktopHeight = 880;
 const minDesktopWidth = 880;
 const breakPointToDesktopSingle = 1180;
 
 /**
+ * @function onLoadContacts
+ * @memberof contacts
  * Initializes the Contacts page on load.
  * Sets up the layout based on the current window size and renders the contact list.
  * @returns {Promise<void>}
@@ -25,6 +35,8 @@ async function onLoadContacts() {
 
 
 /**
+ * @function renderContacts
+ * @memberof contacts
  * Renders the contact list by fetching sorted contacts from the Firebase database.
  * Populates the contact list in the UI with headers for each starting letter.
  * @returns {Promise<void>}
@@ -39,10 +51,13 @@ async function renderContacts() {
 }
 
 /**
- * Creates the contact list
- * @param {*} currentLetter
- * @param {*} sortedContacts
- * @param {*} contactList
+ * @function createContactList
+ * @memberof contacts
+ * @description Creates the contact list in the UI.
+ * @param {string} currentLetter
+ * @param {Array} sortedContacts
+ * @param {HTMLElement} contactList
+ * 
  */
 function createContactList(currentLetter, sortedContacts, contactList) {
     for (const obj of sortedContacts) {
@@ -60,8 +75,11 @@ function createContactList(currentLetter, sortedContacts, contactList) {
 
 
 /**
+ * @function loadHtmlComponentsForDesktop
+ * @memberof contacts
  * Loads the HTML components for the Contacts page in desktop mode.
  * Adjusts the layout and renders the contact list.
+ * @returns {Promise<void>}
  */
 async function loadHtmlComponentsForDesktop() {
     currentView = "desktop";
@@ -82,11 +100,14 @@ async function loadHtmlComponentsForDesktop() {
 }
 
 /**
+ * @function loadHtmlComponentsForMobile
+ * @memberof contacts
  * Loads the HTML components for the Contacts page in mobile mode.
  * Adjusts the layout and renders the contact list.
+ * @returns {Promise<void>}
  */
 async function loadHtmlComponentsForMobile() {
-    currentView = "mobile"
+    currentView = "mobile";
     clearContactsHtmlBody();
 
     await Promise.all([
@@ -105,12 +126,21 @@ async function loadHtmlComponentsForMobile() {
 }
 
 /**
+ * @function clearContactsHtmlBody
+ * @memberof contacts
  * Clears the body content of the Contacts page.
+ * @returns {void}
  */
 function clearContactsHtmlBody() {
     document.querySelector('body').innerHTML = "";
 }
 
+/**
+ * @function addContactsPageResize
+ * @memberof contacts
+ * Adjusts the Contacts page layout on window resize.
+ * @returns {Promise<void>}
+ */
 async function addContactsPageResize() {
     const [height, width] = getCurrentWindowSize();
     if ((width <= minDesktopWidth) && currentView != "mobile") {
@@ -125,8 +155,11 @@ async function addContactsPageResize() {
 }
 
 /**
- * Opens the contact detail view for the selected contact.
+ * @function openContactDetail
+ * @memberof contacts
+ * @description Opens the contact detail view for the selected contact.
  * @param {HTMLElement} element
+ * @return {Promise<void>}
  */
 async function openContactDetail(element) {
     const [height, width] = getCurrentWindowSize();
@@ -141,8 +174,11 @@ async function openContactDetail(element) {
 }
 
 /**
+ * @function toggleActiveContactClass
+ * @memberof contacts
  * Toggles the active class for the selected contact.
  * @param {HTMLElement} activeContact
+ * @returns {void}
  */
 function toggleActiveContactClass(activeContact) {
     const contactItems = document.querySelectorAll('#contact-list .contact-item');
@@ -155,7 +191,10 @@ function toggleActiveContactClass(activeContact) {
 }
 
 /**
+ * @function clearActiveContactClass
+ * @memberof contacts
  * Clears the active contact class and resets the contact list.
+ * @return {void}
  */
 function clearActiveContactClass() {
     const detailContact = document.getElementById('contact-detail-content');
@@ -164,8 +203,11 @@ function clearActiveContactClass() {
 }
 
 /**
+ * @function onEditContactDialogOpen
+ * @memberof contacts
  * Opens the edit contact dialog for the selected contact.
  * @param {string} id
+ * @return {void}
  */
 function onEditContactDialogOpen(id) {
     toggleScrollOnBody(true);
@@ -175,8 +217,11 @@ function onEditContactDialogOpen(id) {
 }
 
 /**
+ * @function openContactDetailMobile
+ * @memberof contacts
  * Opens the contact detail view in mobile mode.
  * @param {Object} detailContact
+ * @returns {void}
  */
 function openContactDetailMobile(detailContact) {
     let renderDetailContact = document.getElementById('contact-detail-content');
@@ -189,8 +234,11 @@ function openContactDetailMobile(detailContact) {
 }
 
 /**
+ * @function openContactDetailDesktop
+ * @memberof contacts
  * Opens the contact detail view in desktop mode.
  * @param {Object} detailContact
+ * @return {void}
  */
 function openContactDetailDesktop(detailContact) {
     let renderDetailContact = document.getElementById('contact-detail-content');
@@ -203,8 +251,11 @@ function openContactDetailDesktop(detailContact) {
 }
 
 /**
+ * @function addNewActionBtns
+ * @memberof contacts
  * Adds new action buttons to the mobile contact detail view.
  * @param {Object} detailContact
+ * @return {void}
  */
 function addNewActionBtns(detailContact) {
     document.querySelector('.contacts-detailview-actions').classList.add('visually-hidden');
@@ -217,6 +268,8 @@ function addNewActionBtns(detailContact) {
 }
 
 /**
+ * @function backToContactList
+ * @memberof contacts
  * Navigates back to the contact list from the contact detail view in mobile mode.
  * @returns {void}
  */
@@ -232,7 +285,10 @@ function backToContactList() {
 }
 
 /**
+ * @function openActionMenuMobile
+ * @memberof contacts
  * Opens the action menu in the mobile contact detail view.
+ * @returns {void}
  */
 function openActionMenuMobile() {
     const actionMenu = document.querySelector('.detail-contact-actions-mobile');
@@ -244,7 +300,10 @@ function openActionMenuMobile() {
 }
 
 /**
+ * @function resetActionMenuMobile
+ * @memberof contacts
  * Resets the action menu in the mobile contact detail view.
+ * @return {void}
  */
 function resetActionMenuMobile() {
     document.getElementById('btn-add-contact-mobile').classList.remove('visually-hidden');

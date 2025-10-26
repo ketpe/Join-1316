@@ -1,12 +1,24 @@
 /**
- * Login Page Script
- * @author Join Development Team
+ * @fileoverview
+ * @namespace login
+ * @description Login Page Script
+ * Manages the login page functionality, including animations based on window size,
+ * and input validation.
+ * Handles login form submission and guest login.
+ * Resets login parameters on page load.
+ * Implements functions to change animations for mobile and desktop modes.
+ * Manages session storage for login status.
+ * Handles navigation to summary page upon successful login.
+ * Implements error handling for invalid login attempts.
+ * Manages input field behaviors for login form.
  */
 
 
 /**
+ * @function loginLoaded
+ * @memberof login
  * Function to be called when the login page is loaded.
- * @returns 
+ * @returns {void}
  */
 function loginLoaded() {
 
@@ -28,6 +40,8 @@ function loginLoaded() {
 }
 
 /**
+ * @function resetAllParameter
+ * @memberof login
  * Resets all login parameters.
  * Sets email and password input fields to empty and log status to '0'.
  * @returns {void}
@@ -41,6 +55,8 @@ function resetAllParameter() {
 }
 
 /**
+ * @function changeAnimationToMobileMode
+ * @memberof login
  * Changes the login animation to mobile mode.
  * @returns {void}
  */
@@ -54,6 +70,8 @@ function changeAnimationToMobileMode() {
 }
 
 /**
+ * @function changeAnimationToDesktopMode
+ * @memberof login
  * Changes the login animation to desktop mode.
  * @returns {void}
  */
@@ -65,6 +83,8 @@ function changeAnimationToDesktopMode() {
 }
 
 /**
+ * @function loginResize
+ * @memberof login
  * Function to be called on window resize event on login page.
  * @returns {void}
  */
@@ -78,8 +98,11 @@ function loginResize() {
 }
 
 /**
+ * @function loginFormSubmit
+ * @memberof login
  * Function to be called on login form submission.
- * @param {*} event 
+ * @param {Event} event
+ * @return {void}
  */
 function loginFormSubmit(event) {
     event.preventDefault();
@@ -90,9 +113,11 @@ function loginFormSubmit(event) {
 };
 
 /**
+ * @function loginInputFieldsOnInput
+ * @memberof login
  * Function to be called on login input fields.
  * @param {HTMLElement} input 
- * @returns 
+ * @returns {void}
  */
 function loginInputFieldsOnInput(input) {
     if(!input){return;}
@@ -103,9 +128,11 @@ function loginInputFieldsOnInput(input) {
 }
 
 /**
+ * @function loginInputFieldsOnBlur
+ * @memberof login
  * Function to be called on login input fields.
  * @param {HTMLElement} input 
- * @returns 
+ * @returns {void}
  */
 function loginInputFieldsOnBlur(input){
     if(!input){return;}
@@ -117,12 +144,14 @@ function loginInputFieldsOnBlur(input){
 }
 
 /**
+ * @function checkLogin
+ * @memberof login
  * Function to check login credentials.
  * Redirects to summary page on success, shows error on failure.
  * Reads user data from Firebase.
- * @returns {Promise<void>}
  * @param {string} email 
  * @param {string} password 
+ * @return {Promise<void>}
  */
 async function checkLogin(email, password) {
     const fb = new FirebaseDatabase();
@@ -139,6 +168,8 @@ async function checkLogin(email, password) {
 };
 
 /**
+ * @function loginGuest
+ * @memberof login
  * Function to login as guest.
  * Sets log status to 'Guest' and navigates to summary page.
  * @returns {void}
