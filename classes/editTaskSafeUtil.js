@@ -17,7 +17,16 @@
 
 class EditTaskSafeUtil{
 
-
+    /**
+     *  Creates an instance of the EditTaskSafeUtil class.
+     * @param {Array} task - The current task data from the database
+     * @param {string} currentTitle - The updated title for the task
+     * @param {string} currentDescription - The updated description for the task
+     * @param {string} currentDueDate - The updated due date for the task
+     * @param {string} currentPrio - The updated priority for the task
+     * @param {Array} currentContactList - The list of contacts currently assigned to the task  
+     * @param {Array} currentSubtasks - The list of subtasks currently associated with the task
+     */
     constructor(task, currentTitle, currentDescription, currentDueDate, currentPrio, currentContactList, currentSubtasks){
         this.task = task;
         this.currentTitle = currentTitle;

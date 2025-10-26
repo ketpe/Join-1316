@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: classes/dueDateCheck.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: classes/dueDateCheck.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Class for validating and managing due date input for tasks.
+ * Ensures the due date is in the correct format (DD/MM/YYYY) and not in the past.
+ * Provides feedback to the user through UI components.
+ * @class DueDateCheck
+ * @property {string} dueDateValue - The due date value to validate.
+ * @property {string} currentDueDate - The current due date value.
+ * @property {Object} taskComponents - The task components for UI feedback.
+ * @property {string} currentInputValue - The current input value in the due date field.
+ * @property {string} dueDate - The validated due date.
+ * @property {boolean} result - The result of the due date validation.
+ */
+
+class DueDateCheck {
+
+    dueDate = "";
+    result = false;
+
+    /**
+     * Creates an instance of the DueDateCheck class.
+     * @param {string} dueDateValue - The due date value to validate.
+     * @param {string} currentDueDate - The current due date value.
+     * @param {Object} taskComponents - The task components for UI feedback.
+     * @param {string} currentInputValue - The current input value in the due date field.
+     */
+    constructor(dueDateValue, currentDueDate, currentInputValue, taskComponents) {
+        this.dueDateValue = dueDateValue;
+        this.currentDueDate = currentDueDate;
+        this.taskComponents = taskComponents;
+        this.currentInputValue = currentInputValue;
+    }
+
+    /**
+     * Starts the due date validation process.
+     * @returns {Array} The validation result and the due date.
+     */
+    startDueDateValidation() {
+        if (this.dueDateValue) {
+            return [this.checkTheDateValue(this.dueDateValue), this.dueDate];
+        } else {
+            this.dueDateSetError();
+            return [this.result = false, ""];
+        }
+    }
+
+    /**
+     * Checks the validity of the provided date value.
+     * @param {string} dateValue - The date value to check.
+     * @returns {boolean} True if the date is valid, false otherwise.
+     */
+    checkTheDateValue(dateValue) {
+
+        const dateCleanValue = (dateValue ?? "").trim();
+
+        if (this.currentDueDate === dateCleanValue) {
+            this.dueDate = this.currentDueDate;
+            return true; 
+        }
+
+        if ((dateCleanValue.length == 10 &amp;&amp; !this.checkIsCorrectDate(dateCleanValue)) || dateCleanValue.length > 10) {
+            this.dueDateSetError();
+            return false;
+        } else if (dateCleanValue.length &lt; 10) {
+            this.checkDateCharSet(dateCleanValue)
+            this.dueDateSetError();
+            return false;
+        } else {
+            this.dueDate = dateCleanValue;
+            this.dueDateSetOk();
+            return true;
+        }
+
+        
+    }
+
+    /**
+     * Check whether the date value conforms to the format. 
+     * Split the string into its individual date components. 
+     * Then attempt to convert them to numbers. 
+     * Create a date from these numbers; this date cannot be in the past. 
+     * Finally, the date components from the created date are compared with the components of the passed date. 
+     * If they are equal, it returns true; otherwise, it returns false.
+     * @param {string} valueToCheck
+     * @returns {boolean}
+     */
+    checkIsCorrectDate(valueToCheck) {
+        const regexString = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+        const matchDateWithRegex = valueToCheck.match(regexString);
+        if (!matchDateWithRegex) { return false; }
+
+        const dateAsParts = this.getDatePartsOfDateValue(matchDateWithRegex);
+        const valueDate = new Date(dateAsParts[2], dateAsParts[1], dateAsParts[0]);
+
+        if (valueDate &lt; Date.now()) { return false; }
+
+        return (
+            valueDate.getFullYear() === dateAsParts[2] &amp;&amp;
+            valueDate.getMonth() === dateAsParts[1] &amp;&amp;
+            valueDate.getDate() === dateAsParts[0]
+        );
+
+    }
+
+    /**
+     * Convert date components from regex array to integers.
+     * @param {RegExpMatchArray} matchDateWithRegex
+     * @returns {number[]} day, month, year as numbers
+     */
+    getDatePartsOfDateValue(matchDateWithRegex) {
+        const day = parseInt(matchDateWithRegex[1], 10);
+        const month = parseInt(matchDateWithRegex[2], 10) - 1;
+        const year = parseInt(matchDateWithRegex[3], 10);
+        return [day, month, year];
+    }
+
+    /**
+     * Check the character set of the date value string.
+     * This function checks if the date value string contains only valid characters (digits and slashes).
+     * @param {string} dateValueString 
+     * @returns {void}
+     */
+    checkDateCharSet(dateValueString) {
+
+        if(this.currentInputValue.length >= dateValueString.length){return;}
+        const dateValueClean = dateValueString.replace(/\D/g, "");
+        let constructedDate = "";
+
+        for (let i = 0; i &lt; dateValueClean.length; i++){
+            if (i == 2 || i == 4){
+                constructedDate += `/${dateValueClean[i]}`;
+            }else{
+                constructedDate += `${dateValueClean[i]}`;
+            }
+        }
+
+        this.setConstructedDateIntoTheField(constructedDate);
+        
+    }
+
+    /**
+     * Sets the constructed date into the display field and updates the dueDate property.
+     * @param {string} cDate - The constructed date string to set.
+     * @return {void}
+     */
+    setConstructedDateIntoTheField(cDate){
+        document.getElementById('due-date-display').value = cDate;
+        this.dueDate = cDate;
+    }
+    
+    /**
+     * Test whether the character is a number.
+     * @param {string} n 
+     * @returns true or false
+     */
+    isNumeric(n) {
+        return !isNaN(parseFloat(n)) &amp;&amp; isFinite(n);
+    }
+
+    /**
+     * Highlight the date field so the user can see that their entry was invalid.
+     * The date is not correct. Display an error message and highlight the date field.
+     * @return {void}
+     */
+    dueDateSetError() {
+        this.taskComponents.showAndLeaveErrorMessage("a-t-due-date-required", true);
+        this.taskComponents.showAndLeaveErrorBorder("due-date-display", true);
+        this.result = false;
+    }
+
+    /**
+     * The date is correct. Display the date field with normal formatting.
+     * @return {void}
+     */
+    dueDateSetOk() {
+        this.taskComponents.showAndLeaveErrorMessage("a-t-due-date-required", false);
+        this.taskComponents.showAndLeaveErrorBorder("due-date-display", false);
+        this.result = true;
+    }
+
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 17:05:01 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,13 +1,23 @@
-let currentSource = "";
+/**
+ * @fileoverview
+ * @namespace help
+ * @description Manages the Help page functionality, including loading content based on window size
+ * and navigating back to the source page.
+ * Handles responsive design for mobile and desktop views.
+ * Implements functions to load HTML content dynamically.
+ * Manages the visibility of the Help button in the UI.
+ */
+
 let resizeLockHelp = false;
 
 /**
+ * @function onHelpLoad
+ * @memberof help
  * Initializes the Help page on load.
  * Determines the appropriate layout based on the current window size.
  * @returns {Promise<void>}
  */
 async function onHelpLoad() {
-    getCurrentSource();
     const [height, width] = getCurrentWindowSize();
 
     if(width <= 880){
@@ -19,6 +29,8 @@ async function onHelpLoad() {
 }
 
 /**
+ * @function resizeHelp
+ * @memberof help
  * Resizes the Help dialog based on the current window size.
  * @returns {Promise<void>} 
  */
@@ -38,6 +50,8 @@ async function resizeHelp() {
 }
 
 /**
+ * @function loadHelpInDesktopMode
+ * @memberof help
  * Loads the Help content in desktop mode.
  * @returns {Promise<void>}
  */
@@ -52,6 +66,8 @@ async function loadHelpInDesktopMode(){
 }
 
 /**
+ * @function loadHelpInMobileMode
+ * @memberof help
  * Loads the Help content in mobile mode.
  * @returns {Promise<void>}
  */
@@ -65,33 +81,34 @@ async function loadHelpInMobileMode() {
 }
 
 /**
+ * @function clearHelpBody
+ * @memberof help
  * Clears the content of the Help page body.
  * This function removes all HTML content from the body element.
+ * @returns {void}
  */
 function clearHelpBody() {
     document.querySelector('body').innerHTML = "";
 }
 
-/**
- * Retrieves the current source parameter from the URL.
- * This parameter is used to determine where to navigate back to.
- */
-function getCurrentSource() {
-    const param = new URLSearchParams(document.location.search);
-    currentSource = param !== null ? param.get('source') : "";
-}
 
 /**
+ * @function navigateBackToSource
+ * @memberof help
  * Navigates back to the source page.
  * Uses the browser's history to go back to the previous page.
+ * @return {void}
  */
 function navigateBackToSource() {
    history.back();
 }
 
 /**
+ * @function hideHelpButton
+ * @memberof help
  * Hides the Help button in the UI.
  * This is typically used when the Help page is already being viewed.
+ * @return {void}
  */
 function hideHelpButton() {
     document.getElementById('help-button').classList.add('visually-hidden');

@@ -1,10 +1,20 @@
+/**
+ * @fileoverview
+ * @namespace greeting
+ * @description Renders greeting messages based on the time of day and user information.
+ * Fetches user data from Firebase if logged in.
+ */
+
+
 
 /**
  * Renders the greeting message based on the time of day and user name. 
  * @async
  * @function renderGreetings
- * @param {*} elementIdTimeOfDay 
- * @param {*} elementIdName 
+ * @memberof greeting
+ * @param {string} elementIdTimeOfDay 
+ * @param {string} elementIdName 
+ * @return {Promise<void>}
  */
 async function renderGreetings(elementIdTimeOfDay, elementIdName) {
     let logInStatus = sessionStorage.getItem('logInStatus');
@@ -14,6 +24,8 @@ async function renderGreetings(elementIdTimeOfDay, elementIdName) {
 };
 
 /**
+ * @function getTimeOfDay
+ * @memberof greeting
  * Determines the time of day greeting based on the current hour.  
  * @param {string} logInStatus 
  * @returns {string} The appropriate greeting message.
@@ -31,6 +43,8 @@ function getTimeOfDay(logInStatus) {
 };
 
 /**
+ * @function getGreetingName
+ * @memberof greeting
  * Fetches the user's name based on their login status.
  * @param {String} logInStatus 
  * @returns {Promise<string|null>} The user's full name or null if not logged in.
@@ -46,6 +60,8 @@ async function getGreetingName(logInStatus) {
 };
 
 /**
+ * @function renderGreetingInUI
+ * @memberof greeting
  * Renders the greeting message in the UI.
  * @param {string} timeOfDayElementID 
  * @param {string} greetingElementID 

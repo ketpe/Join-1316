@@ -1,7 +1,11 @@
 /**
+ * @fileoverview
+ * @namespace addTaskDialog
  * Handles the opening and closing of the Add Task dialog.
  * Manages the rendering of content within the dialog and adjusts the view for dialog presentation.
  * Also includes utility functions for creating test data and defining data models.
+ * Loaded by board detail view page
+ * @file scripts/addTaskDialog.js
  */
 
 const DIALOGINDESKTOP_WIDTH = 1071;
@@ -17,6 +21,8 @@ let currentDialogView = "desktop";
 /**
  * Opens the Add Task dialog, renders the content, and adjusts the view for dialog presentation.
  * This function is asynchronous to accommodate data loading and rendering processes.
+ * @function onAddTaskDialogOpen
+ * @memberof addTaskDialog
  * @returns {Promise<void>} A promise that resolves when the dialog is fully opened and rendered.
  */
 async function onAddTaskDialogOpen() {
@@ -39,6 +45,8 @@ async function onAddTaskDialogOpen() {
 
 /**
  * Handles the resizing of the Add Task dialog.
+ * @function resizeAddTaskBoardDialog
+ * @memberof addTaskDialog
  * @param {Event} event - The resize event.
  * @returns {Promise<void>}
  */
@@ -69,6 +77,8 @@ async function resizeAddTaskBoardDialog(event) {
  * Displays the Add Task dialog in desktop mode.
  * Captures current form data, clears dialog content, and renders the Add Task components.
  * Adjusts the dialog view for desktop presentation.
+ * @function showAddTaskAsDialog
+ * @memberof addTaskDialog
  * @returns {Promise<void>}
  */
 async function showAddTaskAsDialog() {
@@ -86,6 +96,8 @@ async function showAddTaskAsDialog() {
  * Displays the Add Task dialog in desktop single-column mode.
  * Captures current form data, clears dialog content, and renders the Add Task components.
  * Adjusts the dialog view for single-column presentation.
+ * @function showAddTaskAsDialogSingle
+ * @memberof addTaskDialog
  * @returns {Promise<void>}
  */
 async function showAddTaskAsDialogSingle() {
@@ -101,6 +113,8 @@ async function showAddTaskAsDialogSingle() {
 /**
  * Loads data for the Add Task dialog.
  * Initializes the TaskComponents class if not already done, sets up button functions, and applies data to the view.
+ * @function loadDataForAddTaskDialog
+ * @memberof addTaskDialog
  * @returns {Promise<void>}
  */
 async function loadDataForAddTaskDialog() {
@@ -120,6 +134,9 @@ async function loadDataForAddTaskDialog() {
 /**
  * Clears the content of the Add Task dialog.
  * This function removes all HTML content from the dialog's content area.
+ * @function clearDialogContent
+ * @memberof addTaskDialog
+ * @returns {void}
  */
 function clearDialogContent() {
     document.getElementById('dialog-content').innerHTML = "";
@@ -127,6 +144,8 @@ function clearDialogContent() {
 
 /**
  * Gives necessary functions to the board body element.
+ * @function giveFunctionsToBoardBody
+ * @memberof addTaskDialog
  * @returns {void}      
  */
 function giveFunctionsToBoardBody() {
@@ -140,7 +159,10 @@ function giveFunctionsToBoardBody() {
  * Check if can close the dialog.
  * This function is triggered when the user attempts to close the dialog.
  * It hides the dialog and resets any form fields as necessary.
+ * @function addTaskDialogClose
+ * @memberof addTaskDialog
  * @param {Event} event - The event that triggered the close action.
+ * @return {void}
  */
 function addTaskDialogClose(event) {
     const dialog = document.getElementById('add-task-dialog');
@@ -164,8 +186,11 @@ function addTaskDialogClose(event) {
 
 /**
  * Closes the specified dialog.
+ * @function closeTheDialog
+ * @memberof addTaskDialog
  * @param {HTMLDialogElement} dialog - The dialog element to close.
  * @param {string} dialogID - The ID of the dialog element.
+ * @returns {void}
  */
 function closeTheDialog(dialog, dialogID="") {
 
@@ -185,6 +210,10 @@ function closeTheDialog(dialog, dialogID="") {
  * Toggles the scroll on the body element.
  * This function adds or removes the 'dialog-open' class on the body element,
  * which controls the scrolling behavior when a dialog is open.
+ * @function addTaskDialogtoggleScrollOnBody
+ * @memberof addTaskDialog
+ * @param {boolean} addClass - If true, adds the 'dialog-open' class; if false, removes it.
+ * @returns {void}
  */
 function addTaskDialogtoggleScrollOnBody(addClass) {
     let bodyElement = document.getElementsByTagName('body')[0];
@@ -195,6 +224,8 @@ function addTaskDialogtoggleScrollOnBody(addClass) {
  * Renders the Add Task content into the dialog.
  * This function is asynchronous to accommodate the loading of HTML content.
  * It uses the includeHtml function to load the 'addTaskContent.html' file into the dialog's content area.
+ * @function renderAddTaskIntoDialog
+ * @memberof addTaskDialog
  * @returns {Promise<void>} A promise that resolves when the content is fully rendered.
  */
 async function renderAddTaskIntoDialog() {
@@ -210,6 +241,10 @@ async function renderAddTaskIntoDialog() {
  * Renders the Add Task content into the dialog in single-column mode.
  * This function is asynchronous to accommodate the loading of HTML content.
  * It uses the includeHtml function to load the 'addTaskContentSingle.html' file into the dialog's content area.
+ * It also initializes and starts rendering the Add Task Mobile utilities.
+ * @function renderAddTaskIntoDialogSingle
+ * @memberof addTaskDialog
+ * @returns {Promise<void>} A promise that resolves when the content is fully rendered.
  */
 async function renderAddTaskIntoDialogSingle() {
     await Promise.all([
@@ -227,6 +262,9 @@ async function renderAddTaskIntoDialogSingle() {
  * Adjusts the form field sizes for the Add Task dialog in single-column mode.
  * This function calculates the appropriate heights for the dialog and its fields based on the current window size.
  * It ensures that the form fields are displayed correctly within the dialog.
+ * @function changeAddTaskFormFieldSizeBoardDialogSingle
+ * @memberof addTaskDialog
+ * @returns {void}
  */
 function changeAddTaskFormFieldSizeBoardDialogSingle() {
 
@@ -244,7 +282,10 @@ function changeAddTaskFormFieldSizeBoardDialogSingle() {
  * Adjusts the form field sizes for the Add Task dialog in board mode.
  * This function calculates the appropriate heights for the dialog and its fields based on the current window size.
  * It ensures that the form fields are displayed correctly within the dialog.   
+ * @function changeAddTaskFormFieldSizeBoardDialog
+ * @memberof addTaskDialog
  * @param {*} params 
+ * @returns {void}
  */
 function changeAddTaskFormFieldSizeBoardDialog(params) {
     const [height, width] = addTaskUtils.getCurrentAddTaskSize;
@@ -255,6 +296,8 @@ function changeAddTaskFormFieldSizeBoardDialog(params) {
 
 /**
  * Changes the dialog style to single-column mode.
+ * @function changeDialogStyleToSingle
+ * @memberof addTaskDialog
  * @returns {void}
  */
 function changeDialogStyleToSingle() {
@@ -275,6 +318,9 @@ function changeDialogStyleToSingle() {
 /** Changes the view of the Add Task form to be suitable for dialog presentation.
  * This function adjusts various elements' classes to ensure the form is displayed correctly within a dialog.
  * It modifies visibility, layout, and styling to enhance user experience in the dialog context.
+ * @function changeAddTaskViewToDialog
+ * @memberof addTaskDialog
+ * @return {void}
  */
 function changeAddTaskViewToDialog() {
     document.getElementById('a-t-dialog-close-btn').classList.remove('display-hidden');
@@ -290,6 +336,9 @@ function changeAddTaskViewToDialog() {
 
 /** Adds the show class to the Add Task dialog.
  * This function modifies the dialog's classes to make it visible with appropriate styling.
+ * @function addDialogShowClass
+ * @memberof addTaskDialog
+ * @return {void}
  */
 function addDialogShowClass() {
     let dialog = document.getElementById('add-task-dialog');
@@ -299,6 +348,9 @@ function addDialogShowClass() {
 
 /** Adds the hide class to the Add Task dialog.
  * This function modifies the dialog's classes to hide it with appropriate styling.
+ * @function addDialogHideClass
+ * @memberof addTaskDialog
+ * @return {void}
  */
 function addDialogHideClass() {
     let dialog = document.getElementById('add-task-dialog');

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: classes/taskElements.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: classes/taskElements.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Class representing task elements for a task management interface.
+ * Provides methods to generate HTML components for task attributes such as title, description, due date, priority, contacts, categories, and subtasks.
+ * Designed to be used in conjunction with a task management application.
+ * Example usage:
+ * const taskElements = new TaskElements(currentInstance);
+ * @property {string} currentInstance - The current instance of the task management application.
+ */
+
+class TaskElements{
+
+    /**
+     * Creates an instance of the TaskElements class.
+     * @param {*} currentInstance - The current instance of the task management application.
+     */
+    constructor(currentInstance){
+        this.currentInstance = currentInstance;
+    }
+
+    /**
+     * Gets the title component for the task.
+     * @param {boolean} isrequired - Indicates if the title is required.
+     * @param {string} title - The title text.
+     * @returns {string} - The HTML string for the title component.
+     */
+    getTitleComponent(isrequired = true, title = ""){
+        return `
+           &lt;aside class="field-frame">
+                &lt;label class="task-mobile-label" for="task-title">Title ${isrequired ? '&lt;span class="required-label" aria-hidden="true">*&lt;/span>' : ''} &lt;/label>
+                &lt;input 
+                    class="a-t-input" 
+                    id="task-title" 
+                    name="task-title" 
+                    type="text" 
+                    placeholder="Enter a title"
+                    aria-required="true"
+                    aria-describedby="a-t-title-required"
+                    oninput="${this.currentInstance}.addTaskTitleOnInput()" 
+                    onblur="${this.currentInstance}.taskTitleValidation(this.value)"
+                    value="${title}"
+                    >
+                &lt;div class="a-t-error-text-container">
+                    &lt;p id="a-t-title-required" class="error-text-hidden" role="alert">This field is required&lt;/p>
+                &lt;/div>
+            &lt;/aside>
+        `;
+    }
+
+    /**
+     * Gets the description component for the task.
+     * @param {string} description - The description text.
+     * @param {boolean} isTaskEdit - Indicates if the task is being edited.
+     * @returns {string} - The HTML string for the description component.
+     */
+    getDescriptionComponents(description = "", isTaskEdit = false){
+        return `
+            &lt;aside class="field-frame">
+                &lt;label class="task-mobile-label" for="task-description">Description&lt;/label>
+                &lt;textarea class="a-t-text-area ${isTaskEdit ? 'a-t-text-area-task-edit' : ''}" name="task-description" id="task-description"
+                    placeholder="Enter a Description">${description}&lt;/textarea>
+            &lt;/aside>
+        `;
+    }
+
+    /**
+     * Gets the due date component for the task.
+     * @param {boolean} isrequired - Indicates if the due date is required.
+     * @param {string} dueDateValue - The due date value.
+     * @returns {string} - The HTML string for the due date component.
+     */
+    getDueDateComponents(isrequired = true, dueDateValue = ""){
+        return `
+            &lt;aside class="field-frame field-frame-due-date">
+                &lt;label class="task-mobile-label" for="due-date-display">Due date ${isrequired ? '&lt;span class="required-label">*&lt;/span>' : ''}&lt;/label>
+                &lt;div class="date-field">
+                    &lt;input class="a-t-input date-input" id="due-date-display" type="text" maxlength="10" placeholder="dd/mm/yyyy" name="due-date" aria-required="true" aria-describedby="a-t-due-date-required"
+                        inputmode="numeric" onblur="${this.currentInstance}.dateFieldOnChange()"
+                        oninput="${this.currentInstance}.dateFieldOnChange()"
+                        value="${dueDateValue}"
+                        >
+
+                    &lt;label for="due-date-hidden" class="visually-hidden">Due date picker&lt;/label>
+                    &lt;input type="date" id="due-date-hidden" placeholder="Date" class="date-input-hidden"
+                        onchange="${this.currentInstance}.datePickerSelectionChange(event)">
+                    &lt;button type="button" class="date-trigger" aria-label="Kalender öffnen"
+                        onclick="${this.currentInstance}.onDateIconClick()">
+                        &lt;div role="img" title="Claendar Icon">&lt;/div>
+                    &lt;/button>
+                &lt;/div>
+
+                &lt;div class="a-t-error-text-container">
+                    &lt;p id="a-t-due-date-required" class="error-text-hidden" role="alert">This field is required&lt;/p>
+                &lt;/div>
+            &lt;/aside>
+        `;
+    }
+
+    /**
+     * Fills the left container with the task elements for adding a new task.
+     * @returns {void}
+     */
+    fillLeftContainerOnAddTask(){
+        let leftContainer = document.querySelector(".a-t-f-i-left");
+        if(!leftContainer){return;}
+        leftContainer.innerHTML += this.getTitleComponent();
+        leftContainer.innerHTML += this.getDescriptionComponents();
+        leftContainer.innerHTML += this.getDueDateComponents();
+    }
+
+    /**
+     * Gets the priority button components for the task.
+     * @returns {string} - The HTML string for the priority button components.
+     */
+    getPrioButtonComponents(){
+        return `
+            &lt;fieldset id="task-priority-button" class="a-t-priority-button-container">
+
+                &lt;legend class="task-mobile-label" for="task-priority-button">Priority&lt;/legend>
+
+                &lt;button id="btn-priority-alta" class="btn btn-priority prio-alta" type="button" name="Urgent" data-selected="false" data-name="alta"
+                    onclick="${this.currentInstance}.addTaskPrioritySelect(this)">
+                    &lt;div>
+                        &lt;span>Urgent&lt;/span>
+                        &lt;div aria-hidden="true" title="Urgent-Icon">&lt;/div>
+                    &lt;/div>
+                &lt;/button>
+                &lt;button id="btn-priority-media" class="btn btn-priority prio-media" type="button" name="Medium" data-selected="false" data-name="media"
+                    onclick="${this.currentInstance}.addTaskPrioritySelect(this)">
+                    &lt;div>
+                        &lt;span>Medium&lt;/span>
+                        &lt;div aria-hidden="true" title="Medium-Icon">&lt;/div>
+                    &lt;/div>
+                &lt;/button>
+                &lt;button id="btn-priority-baja" class="btn btn-priority prio-baja" type="button" name="Low" data-selected="false" data-name="baja"
+                    onclick="${this.currentInstance}.addTaskPrioritySelect(this)">
+                    &lt;div>
+                        &lt;span>Low&lt;/span>
+                        &lt;div aria-hidden="true" title="Low-Icon">&lt;/div>
+                    &lt;/div>
+                &lt;/button>
+            &lt;/fieldset>
+        `;
+    }
+
+    /**
+     * Gets the contact components for the task.
+     * @returns {string} - The HTML string for the contact components.
+     */
+    getContactComponents(){
+        return `
+            &lt;aside class="field-frame">
+                &lt;label class="task-mobile-label" for="task-assign-to" onclick="event.preventDefault(); event.stopPropagation();">Assigned to&lt;/label>
+                &lt;div class="contact-select-container show-front">
+                    &lt;input class="a-t-input show-front a-t-contact-input" autocomplete="off" type="text" name="task-assign-to"
+                        id="task-assign-to" value="Select contacts to assign" onclick="${this.currentInstance}.showAndHideContacts('show')"
+                        oninput="${this.currentInstance}.filterContactFromInputValue(this.value)">
+
+                    &lt;button id="show-and-hide-contacts" class="btn-show-hide-contact-list" type="button"
+                        title="show and hide button for contactlist" onclick="${this.currentInstance}.showAndHideContacts('show')">
+                        &lt;div id="show-hide-icon-contacts" class="icon-show-list" role="img" title="show or hide icon">
+                        &lt;/div>
+                    &lt;/button>
+                &lt;/div>
+            &lt;/aside>
+
+            &lt;div id="contact-List-container" class="contact-List-container">
+                &lt;div id="contact-List-for-task" class="contact-List-for-task">
+                &lt;/div>
+            &lt;/div>
+        
+        `;
+    }
+
+    /**
+     * Gets the assigned badges for the task.
+     * @returns {string} - The HTML string for the assigned badges.
+     */
+    getAssignedBadges(){
+        return `
+            &lt;div id="contact-assigned-badge" class="contact-assigned-badge">
+            &lt;/div>
+        `;
+    }
+
+    /**
+     * Gets the category components for the task.
+     * @returns {string} - The HTML string for the category components.
+     */
+    getCategoryComponents(){
+        return `
+            &lt;aside class="field-frame">
+                &lt;label for="task-category" onclick="event.preventDefault(); event.stopPropagation();">Category&lt;span class="required-label">*&lt;/span>&lt;/label>
+                &lt;div class="category-select-container show-front ">
+                    &lt;input class="a-t-input a-t-category-input" type="text" name="task-category" id="task-category"
+                        value="Select task category" placeholder="Select task category" readonly aria-required="true"
+                        onclick="${this.currentInstance}.onclickCategoryInput(this)">
+
+                    &lt;button id="show-and-hide-categories" class="btn-show-hide-category-list" type="button"
+                        title="show and hide button for categories" onclick="${this.currentInstance}.showAndHideCategories('show')">
+                        &lt;div id="show-hide-icon-category" class="icon-show-list" role="img" title="show or hide icon">
+                        &lt;/div>
+                    &lt;/button>
+                &lt;/div>
+            &lt;/aside>
+
+            &lt;div class="a-t-error-text-container">
+                &lt;p id="a-t-category-required" class="error-text-hidden" role="alert">This field is required&lt;/p>
+            &lt;/div>
+        
+        `;
+    }
+
+    /**
+     * Gets the category list container for the task.
+     * @returns {string} - The HTML string for the category list container.
+     */
+    getCategoryListContainer(){
+        return `
+            &lt;div id="category-list-container" class="category-list-container">
+                &lt;div id="category-list-for-task" class="category-list-for-task">
+                &lt;/div>
+            &lt;/div>
+        `;
+    }
+
+    /**
+     * Gets the subtask components for the task.
+     * @returns {string} - The HTML string for the subtask components.
+     */
+    getSubTaskComponents(){
+        return `
+            &lt;aside class="field-frame">
+                &lt;label class="task-mobile-label" for="task-sub-task">Subtasks&lt;/label>
+                &lt;div class="sub-input-container">
+                    &lt;input class="a-t-input a-t-sub-input" type="text" name="task-sub-task" id="task-sub-task"
+                        onclick="${this.currentInstance}.onclickSubtaskInput(this)" placeholder="Add new subtask" onkeydown="${this.currentInstance}.subtaskInputfieldPressEnter(event, this)">
+                    &lt;div id="sub-writing-buttons" class="sub-input-writing-btn-container d-none">
+                        &lt;button type="button" title="delete current entry button" aria-label="Delete current entry" onclick="${this.currentInstance}.clearSubInputField()">
+                            &lt;div role="img" title="delete icon" aria-hidden="true">&lt;/div>
+                        &lt;/button>
+                        &lt;div>&lt;/div>
+                        &lt;button type="button" title="adopt current entry" aria-label="Adopt current entry" onclick="${this.currentInstance}.adoptCurrentSubEntry()">
+                            &lt;div role="img" title="check icon" aria-hidden="true">&lt;/div>
+                        &lt;/button>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/aside>
+        `;
+    }
+
+    /**
+     * Gets the subtask list container for the task.
+     * @returns {string} - The HTML string for the subtask list container.
+     */
+    getSubtaskListContainer(){
+        return `
+            &lt;ul class="sub-task-list" aria-live="polite" aria-relevant="additions removals">
+            &lt;/ul>
+        `;
+    }
+
+    /**
+     * Fills the right container with the task elements for adding a new task.
+     * @returns {void}
+     */
+    fillRightContainerOnAddTask(){
+        let rightContainer = document.querySelector('.a-t-f-i-right');
+        rightContainer.innerHTML += this.getPrioButtonComponents();
+        rightContainer.innerHTML += this.getContactComponents();
+        rightContainer.innerHTML += this.getAssignedBadges();
+        rightContainer.innerHTML += this.getCategoryComponents();
+        rightContainer.innerHTML += this.getCategoryListContainer();
+        rightContainer.innerHTML += this.getSubTaskComponents();
+        rightContainer.innerHTML += this.getSubtaskListContainer();
+    }
+
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 17:05:01 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

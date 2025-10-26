@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scripts/addTaskTemplate.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scripts/addTaskTemplate.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @namespace addTaskTemplate
+ * @description Template functions for generating AddTask HTML elements.
+ * Provides reusable HTML snippets for contact lists, category lists, and subtask lists.
+ * These functions facilitate the dynamic creation of UI components in the task management application.
+ */
+
+/**
+ * Generates the HTML for a contact list element.
+ * @function getContactListElement
+ * @memberof addTaskTemplate
+ * @param {Object} contact - The contact information.
+ * @param {boolean} isAssinged - Indicates if the contact is assigned.
+ * @param {boolean} isdetailView - Indicates if the detail view is active.
+ * @param {Object} taskInstance - The task instance.
+ * @returns {string} The HTML string for the contact list element.
+ */
+
+function getContactListElement(contact, isAssinged, isdetailView = false, taskInstance){
+    return `
+        &lt;button id="${contact['id']}" type="button" class="contact-list-btn ${(isAssinged ? 'contact-selected' : '')}" data-active="${(isAssinged ? 'true' : 'false')}" onclick="${taskInstance}.contactButtonOnListSelect(this)">
+            &lt;div class="contact-profil-container">
+                &lt;div class="contact-ellipse ${contact['initialColor']}">&lt;span>${contact['initial']}&lt;/span>&lt;/div>
+                &lt;p class="${(isAssinged ? 'white' : '')}" >${contact['firstname']} ${contact['lastname']}&lt;/p>
+            &lt;/div>
+            &lt;div class="contact-check-icon ${(isAssinged ? 'contact-checked' : 'contact-unchecked')} ${isdetailView ? "d-none" : ""} " role="img" title="Check or uncheck Icon">&lt;/div>
+        &lt;/button>
+    `;
+}
+
+/**
+ * Generates the HTML for an assigned contact badge.
+ * @function getAssignedContactBadge
+ * @memberof addTaskTemplate
+ * @param {Object} contact - The contact information.
+ * @returns {string} The HTML string for the assigned contact badge.
+ */
+function getAssignedContactBadge(contact) {
+    return `
+        &lt;div class="contact-ellipse ${contact['initialColor']}">&lt;span>${contact['initial']}&lt;/span>&lt;/div>
+    `;
+}
+
+/**
+ * Generates the HTML for a category list element.
+ * @function getCategoryListElement
+ * @memberof addTaskTemplate
+ * @param {Object} category - The category information.
+ * @param {Object} taskInstance - The task instance.
+ * @returns {string} The HTML string for the category list element.
+ */
+function getCategoryListElement(category, taskInstance) {
+    return `
+        &lt;button type="button" id="${category['id']}" class="category-list-btn" onclick="${taskInstance}.categoryButtonOnListSelect(this)">
+            &lt;p>${category['title']}&lt;/p>
+        &lt;/button>
+    `;
+}
+
+/**
+ * Generates the HTML for a read-only subtask list element.
+ * @function getSubtaskListElementReadOnly
+ * @memberof addTaskTemplate
+ * @param {Object} subTask - The subtask information.
+ * @param {Object} taskInstance - The task instance.
+ * @returns {string} The HTML string for the read-only subtask list element.
+ */
+function getSubtaskListElementReadOnly(subTask, taskInstance) {
+    return `
+        &lt;li class="li-readonly" id="${subTask['id']}" ondblclick="${taskInstance}.editCurrentSelectedSubTask('${subTask['id']}')">
+            &lt;div class="subtask-list-input-container">
+                &lt;input class="sub-task-list-input-readonly" type="text" title="subtask list inputfield" value="${subTask['title']}" readonly>
+                &lt;div class="sub-list-edit-btn-container">
+                    &lt;button type="button" title="edit current entry button" onclick="${taskInstance}.editCurrentSelectedSubTask('${subTask['id']}')">
+                        &lt;div role="img" title="edit icon">&lt;/div>
+                    &lt;/button>
+                    &lt;div>&lt;/div>
+                    &lt;button type="button" title="delete current entry" onclick="${taskInstance}.deleteCurrentSelectedSubTask('${subTask['id']}')">
+                        &lt;div role="img" title="delete icon">&lt;/div>
+                    &lt;/button>
+                &lt;/div>
+            &lt;/div>
+
+        &lt;/li>
+    `;
+}
+
+/**
+ * Generates the HTML for a subtask list element in edit mode.
+ * @function getSubtaskListElementForChanging
+ * @memberof addTaskTemplate
+ * @param {Object} subTask - The subtask information.
+ * @param {Object} taskInstance - The task instance.
+ * @returns {string} The HTML string for the subtask list element in edit mode.
+ */
+function getSubtaskListElementForChanging(subTask, taskInstance) {
+
+    return `
+        &lt;li class="li-edit">
+            &lt;div class="subtask-list-input-container">
+                &lt;input id="subTaskEdit-${subTask['id']}" class="sub-task-list-input-edit" type="text" title="subtask list inputfield"
+                    value="${subTask['title']}">
+                &lt;div class="sub-list-writing-btn-container">
+                    &lt;button type="button" title="delete current entry" onclick="${taskInstance}.deleteCurrentSelectedSubTask('${subTask['id']}')">
+                        &lt;div role="img" title="delete icon">&lt;/div>
+                    &lt;/button>
+                    &lt;div>&lt;/div>
+                        &lt;button type="button" title="accept current entry button" onclick="${taskInstance}.safeChangesOnCurrentSelectedSubtask('${subTask['id']}')">
+                        &lt;div role="img" title="accept icon">&lt;/div>
+                    &lt;/button>
+                &lt;/div>
+            &lt;/div>
+        &lt;/li>
+    `;
+    
+}
+
+/**
+ * Generates the HTML for a subtask detail view.
+ * @function getSubtaskForDetailView
+ * @memberof addTaskTemplate
+ * @param {Object} currentSubtask - The current subtask information.
+ * @returns {string} The HTML string for the subtask detail view.
+ */
+function getSubtaskForDetailView(currentSubtask) {
+    return `
+        &lt;div class="subtask-content">
+            &lt;button onclick="detailViewChangeSubtaskChecked(this)" type="button" data-id="${currentSubtask['id']}" data-checked="${currentSubtask['taskChecked']}"
+                title="Check if the subtask is finished" class="checkbox-btn ${currentSubtask['taskChecked'] ? 'checkbox-btn-default-hover' : 'checkbox-btn-default'}">&lt;/button>
+            &lt;span id="subtask-text" class="subtask-text">${currentSubtask['title']}&lt;/span>
+        &lt;/div>
+    `;
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 17:05:01 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,23 +1,35 @@
 /**
+ * @fileoverview
+ * @namespace openCloseDialog
+ * @description Opens and closes dialogs with specific content rendering functions.
+ */
+
+
+
+/**
+ * @function openDialog
+ * @memberof openCloseDialog
  * Opens a dialog and renders specific content
  * @param {string} dialogId - The ID of the dialog to open
  * @param {Function} renderSpecificFunction - The function to call to render specific content
+ * @returns {void}
  */
-//NOTE - Allgemeine Dialogfunktion.
 function openDialog(dialogId, renderSpecificFunction) {
     toggleScrollOnBody(true);
     addDialogShowClass(dialogId);
     document.getElementById(dialogId).showModal();
     if (renderSpecificFunction) renderSpecificFunction();
 }
-/** * Closes a dialog based on an event
+
+/**
+ * @function closeDialogByEvent
+ * @memberof openCloseDialog
+ * Closes the dialog if the event target is the dialog background, close button, cancel button, or create button
  * @param {Event} event - The event that triggered the close
  * @param {string} dialogId - The ID of the dialog to close
- * @description Closes the dialog if the event target is the dialog background, close button, cancel button, or create button
+ * @returns {void}
  */
 function closeDialogByEvent(event, dialogId) {
-    //resetAddTaskVariables();
-
     const dialog = document.getElementById(dialogId);
     const closeDiv = document.getElementById('btn-overlay-close-div');
     if (
@@ -31,8 +43,11 @@ function closeDialogByEvent(event, dialogId) {
 }
 
 /**
+ * @function closeDialog
+ * @memberof openCloseDialog
  * Closes a dialog
  * @param {string} dialogId - The ID of the dialog to close
+ * @return {void}
  */
 function closeDialog(dialogId) {
     addDialogHideClass(dialogId);
@@ -42,7 +57,11 @@ function closeDialog(dialogId) {
     }, 1000);
 }
 /**
+ * @function toggleScrollOnBody
+ * @memberof openCloseDialog
  * Toggles the scroll on the body element
+ * @param {boolean} open - Whether to open or close the scroll
+ * @returns {void}
  */
 function toggleScrollOnBody(open) {
     const bodyElement = document.getElementsByTagName('body')[0];
@@ -50,8 +69,11 @@ function toggleScrollOnBody(open) {
 }
 
 /**
+ * @function addDialogShowClass
+ * @memberof openCloseDialog
  * Adds the show class to a dialog
  * @param {string} dialogId - The ID of the dialog to show
+ * @return {void}
  */
 function addDialogShowClass(dialogId) {
     let dialog = document.getElementById(dialogId);
@@ -61,33 +83,45 @@ function addDialogShowClass(dialogId) {
 }
 
 /**
-
- * Closes the dialog
-
- * @param {string} dialogId - The ID of the dialog to close
-
+ * @function addDialogHideClass
+ * @memberof openCloseDialog
+ * Adds the hide class to a dialog
+ * @param {string} dialogId - The ID of the dialog to hide
  */
-
 function addDialogHideClass(dialogId) {
     let dialog = document.getElementById(dialogId);
     dialog.classList.add('dialog-hide');
     dialog.classList.remove('dialog-show');
 }
 
-
-//NOTE Spezifische Dialogfunktionen. Kann in renderSpecificFunction übergeben werden.
-
 /**
+ * @function renderAddContactIntoDialog
+ * @memberof openCloseDialog
  * Renders the add contact form into the dialog
+ * @return {void}
  */
 function renderAddContactIntoDialog() {
     includeHtml("dialog-content-contacts", "addContact.html");
 }
+
+/**
+ * @function renderDetailViewTemplate
+ * @memberof openCloseDialog
+ * Renders the detail view template into the dialog and fetches the task data
+ * @param {string} taskId - The ID of the task to display
+ * @return {Promise<void>}
+ */
 async function renderDetailViewTemplate(taskId) {
     await includeHtml("dialog-content-detail-view-task", "taskTemplate.html");
     getDetailViewTask(taskId);
 }
 
+/**
+ * @function renderAddContactIntoDialogMobile
+ * @memberof openCloseDialog
+ * Renders the add contact form into the dialog for mobile devices
+ * @return {void}
+ */
 function renderAddContactIntoDialogMobile() {
     includeHtml("add-contact-dialog-mobile", "addContactMobile.html");
 }
@@ -95,10 +129,25 @@ function renderEditContactIntoDialog(contactId) {
     includeHtml("dialog-content-contacts", "editContact.html")
     getContactData(contactId);
 }
+
+/**
+ * @function renderEditContactIntoDialogMobile
+ * @memberof openCloseDialog
+ * Renders the edit contact form into the dialog for mobile devices
+ * @param {string} contactId - The ID of the contact to edit
+ */
 function renderEditContactIntoDialogMobile(contactId) {
     includeHtml("add-contact-dialog-mobile", "editContactMobile.html");
     getContactData(contactId);
 }
+
+/**
+ * @function openSwapMobileMenu
+ * @memberof openCloseDialog
+ * Opens the swap mobile menu
+ * @param {Event} event - The event that triggered the menu opening
+ * @param {string} id - The ID of the task
+ */
 function openSwapMobileMenu(event, id) {
     event.stopPropagation();
     const overlay = document.getElementById(`swap-overlay-${id}`);
@@ -109,6 +158,13 @@ function openSwapMobileMenu(event, id) {
     dialog.style.display = 'block';
 }
 
+/**
+ * @function closeSwapMobileMenu
+ * @memberof openCloseDialog
+ * Closes the swap mobile menu
+ * @param {Event} event - The event that triggered the menu closing
+ * @param {string} id - The ID of the task
+ */
 function closeSwapMobileMenu(event, id) {
     event.stopPropagation();
     const overlay = document.getElementById(`swap-overlay-${id}`);

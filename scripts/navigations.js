@@ -1,16 +1,21 @@
 /**
- * Navigations between pages
- * This function handles the navigation to the sign-up page.
- * It changes the current window location to the sign-up page URL.
- * @returns {void}
+ * @fileoverview
+ * @namespace navigations
+ * @description This script contains functions for navigating between different pages of the application.
+ * It includes functions to navigate to the sign-up page, summary page, contact page, privacy policy,
+ * legal notice page, and help page. It also includes functions to navigate to the add task page and board page,
+ * as well as setting the active state of navigation buttons based on the current view.
  */
 function navigateToSignUp() {
     window.location.href = './signup.html';
 }
 
 /**
+ * @function navigateToSummary
+ * @memberof navigations
  * Navigates to the summary page.
- * @param {*} button
+ * @param {HTMLElement} button
+ * @param {boolean} isFromLogin
  * @returns {void}
  */
 function navigateToSummary(button, isFromLogin=false) {
@@ -23,8 +28,10 @@ function navigateToSummary(button, isFromLogin=false) {
 }
 
 /**
+ * @function navigateToContact
+ * @memberof navigations
  * Navigates to the contact page.
- * @param {*} button
+ * @param {HTMLElement} button
  * @returns {void}
  */
 function navigateToContact(button) {
@@ -33,9 +40,12 @@ function navigateToContact(button) {
 }
 
 /**
+ * @function navigateToPrivacy
+ * @memberof navigations
  * Navigates to the privacy policy page.
- * @param {*} event
- * @param {*} login
+ * @param {Event} event
+ * @param {string} login
+ * @return {void}
  */
 function navigateToPrivacy(event, login = "") {
 
@@ -48,9 +58,12 @@ function navigateToPrivacy(event, login = "") {
 }
 
 /**
+ * @function navigateToLegalNotice
+ * @memberof navigations
  *  Navigates to the legal notice page.
- * @param {*} event
- * @param {*} loginOrSignin
+ * @param {Event} event
+ * @param {string} loginOrSignin
+ * @return {void}
  */
 function navigateToLegalNotice(event, loginOrSignin = "") {
 
@@ -62,6 +75,8 @@ function navigateToLegalNotice(event, loginOrSignin = "") {
 }
 
 /**
+ * @function navigateToLogin
+ * @memberof navigations
  * Navigates to the login page and sets the log status to '0'.
  * This function changes the current window location to the login page URL.
  * It also updates the log status in local storage to indicate that the user is logged out.
@@ -73,6 +88,8 @@ function navigateToLogin() {
 }
 
 /**
+ * @function navigateToHelp
+ * @memberof navigations
  * Navigates to the help page.
  * @returns {void}
  */
@@ -81,8 +98,10 @@ function navigateToHelp() {
 }
 
 /**
+ * @function navigateToAddTask
+ * @memberof navigations
  * Navigates to the add task page.
- * @param {*} button
+ * @param {HTMLElement} button
  * @returns {void}
  */
 function navigateToAddTask(button) {
@@ -94,8 +113,10 @@ function navigateToAddTask(button) {
 }
 
 /**
+ * @function navigateToBoard
+ * @memberof navigations
  * Navigates to the board page.
- * @param {*} button
+ * @param {HTMLElement} button
  * @returns {void}
  */
 function navigateToBoard(button) {
@@ -107,11 +128,13 @@ function navigateToBoard(button) {
 }
 
 /**
+ * @function setNavigationButtonActive
+ * @memberof navigations
  * Sets the active state of the navigation button based on the current view.
  * This function updates the button's appearance and state to reflect the active view.
- * @param {*} viewName
- * @param {*} desktopOrMobile
- * @returns
+ * @param {string} viewName
+ * @param {string} desktopOrMobile
+ * @returns {void}
  */
 function setNavigationButtonActive(viewName, desktopOrMobile) {
     if (desktopOrMobile.length == 0 || viewName.length == 0) { return; }
@@ -132,9 +155,12 @@ function setNavigationButtonActive(viewName, desktopOrMobile) {
 }
 
 /**
+ * @function resetNavButtonsOnDesktop
+ * @memberof navigations
  * Resets the active state of the navigation buttons on the desktop.
  * @param {Element[]} buttons
  * @param {string} activeClass
+ * @returns {void}
  */
 function resetNavButtonsOnDesktop(buttons, activeClass) {
     buttons.forEach(btn => {
@@ -144,6 +170,8 @@ function resetNavButtonsOnDesktop(buttons, activeClass) {
 }
 
 /**
+ * @function getNavButtons
+ * @memberof navigations
  * Gets the navigation buttons within a specific container.
  * @param {string} containerClass
  * @returns {Element[] | null}

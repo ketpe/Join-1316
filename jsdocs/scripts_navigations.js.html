@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scripts/navigations.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scripts/navigations.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview
+ * @namespace navigations
+ * @description This script contains functions for navigating between different pages of the application.
+ * It includes functions to navigate to the sign-up page, summary page, contact page, privacy policy,
+ * legal notice page, and help page. It also includes functions to navigate to the add task page and board page,
+ * as well as setting the active state of navigation buttons based on the current view.
+ */
+function navigateToSignUp() {
+    window.location.href = './signup.html';
+}
+
+/**
+ * @function navigateToSummary
+ * @memberof navigations
+ * Navigates to the summary page.
+ * @param {HTMLElement} button
+ * @param {boolean} isFromLogin
+ * @returns {void}
+ */
+function navigateToSummary(button, isFromLogin=false) {
+
+    if (button) {
+        if (button.getAttribute('data-active') == "true") { return; }
+    }
+
+    window.location.href =  isFromLogin ? './summary.html?isNotStartup=true' : './summary.html';
+}
+
+/**
+ * @function navigateToContact
+ * @memberof navigations
+ * Navigates to the contact page.
+ * @param {HTMLElement} button
+ * @returns {void}
+ */
+function navigateToContact(button) {
+    if (button.getAttribute('data-active') == "true") { return; }
+    window.location.href = './contacts.html';
+}
+
+/**
+ * @function navigateToPrivacy
+ * @memberof navigations
+ * Navigates to the privacy policy page.
+ * @param {Event} event
+ * @param {string} login
+ * @return {void}
+ */
+function navigateToPrivacy(event, login = "") {
+
+    if (login == "login") {
+        window.location.href = `./privacyPolicy.html?backToLogin=true`;
+    } else {
+        window.location.href = `./privacyPolicy.html?backToLogin=false`;
+    }
+
+}
+
+/**
+ * @function navigateToLegalNotice
+ * @memberof navigations
+ *  Navigates to the legal notice page.
+ * @param {Event} event
+ * @param {string} loginOrSignin
+ * @return {void}
+ */
+function navigateToLegalNotice(event, loginOrSignin = "") {
+
+    if (loginOrSignin == "login" || loginOrSignin == "signin") {
+        window.location.href = `./legalNotice.html?backToLogin=true`;
+    } else {
+        window.location.href = `./legalNotice.html?backToLogin=false`;
+    }
+}
+
+/**
+ * @function navigateToLogin
+ * @memberof navigations
+ * Navigates to the login page and sets the log status to '0'.
+ * This function changes the current window location to the login page URL.
+ * It also updates the log status in local storage to indicate that the user is logged out.
+ * @returns {void}
+ */
+function navigateToLogin() {
+    setLogStatus('0');
+    window.location.href = './index.html?isNotStartup=true';
+}
+
+/**
+ * @function navigateToHelp
+ * @memberof navigations
+ * Navigates to the help page.
+ * @returns {void}
+ */
+function navigateToHelp() {
+    window.location.href = './help.html';
+}
+
+/**
+ * @function navigateToAddTask
+ * @memberof navigations
+ * Navigates to the add task page.
+ * @param {HTMLElement} button
+ * @returns {void}
+ */
+function navigateToAddTask(button) {
+    if (button) {
+        if (button.getAttribute('data-active') == "true") { return; }
+    }
+
+    window.location.href = './addTask.html';
+}
+
+/**
+ * @function navigateToBoard
+ * @memberof navigations
+ * Navigates to the board page.
+ * @param {HTMLElement} button
+ * @returns {void}
+ */
+function navigateToBoard(button) {
+    if (button) {
+        if (button.getAttribute('data-active') == "true") { return; }
+    }
+
+    window.location.href = './board.html';
+}
+
+/**
+ * @function setNavigationButtonActive
+ * @memberof navigations
+ * Sets the active state of the navigation button based on the current view.
+ * This function updates the button's appearance and state to reflect the active view.
+ * @param {string} viewName
+ * @param {string} desktopOrMobile
+ * @returns {void}
+ */
+function setNavigationButtonActive(viewName, desktopOrMobile) {
+    if (desktopOrMobile.length == 0 || viewName.length == 0) { return; }
+    const activeClass = desktopOrMobile == "desktop" ? 'nav-desktop-btn-active' : 'nav-mobile-btn-active';
+    const btnContainer = desktopOrMobile == 'desktop' ? '.nav-desktop-menu' : '.nav-mobile-menu';
+
+    const buttons = getNavButtons(btnContainer);
+    if (!buttons) { return; }
+
+    resetNavButtonsOnDesktop(buttons, activeClass);
+    buttons.forEach(btn => {
+        const btnName = btn.getAttribute('data-nav-name');
+        if (btnName == viewName) {
+            btn.classList.add(activeClass);
+            btn.setAttribute('data-active', 'true');
+        }
+    });
+}
+
+/**
+ * @function resetNavButtonsOnDesktop
+ * @memberof navigations
+ * Resets the active state of the navigation buttons on the desktop.
+ * @param {Element[]} buttons
+ * @param {string} activeClass
+ * @returns {void}
+ */
+function resetNavButtonsOnDesktop(buttons, activeClass) {
+    buttons.forEach(btn => {
+        btn.classList.remove(activeClass);
+        btn.setAttribute('data-active', 'false');
+    });
+}
+
+/**
+ * @function getNavButtons
+ * @memberof navigations
+ * Gets the navigation buttons within a specific container.
+ * @param {string} containerClass
+ * @returns {Element[] | null}
+ */
+function getNavButtons(containerClass) {
+    const btnContainer = document.querySelector(containerClass);
+    if (!btnContainer) { return null; }
+    return btnContainer.querySelectorAll('button');
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 17:05:01 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

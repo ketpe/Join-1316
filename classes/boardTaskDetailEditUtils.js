@@ -1,6 +1,10 @@
 /**
  * Class for rendering and managing the edit view of a task in the board detail view.
  * Handles loading the edit HTML, rendering components, and setting up event listeners.
+ * @class BoardTaskDetailEditUtils
+ * @property {string} currentTaskID - The ID of the current task.
+ * @property {Object} currentTask - The current task object.
+ * @property {Object} currentInstance - The current instance of the task.
  */
 
 class BoardTaskDetailEditUtils{
@@ -20,6 +24,7 @@ class BoardTaskDetailEditUtils{
     /**
      * Initiates the rendering process for the task edit view.
      * Cleans the dialog, loads the edit HTML, renders components, and sets up onclick events.
+     * @return {Promise<void>}
      */
     async startRenderTaskEdit(){
         this.cleanDialog();
@@ -32,6 +37,7 @@ class BoardTaskDetailEditUtils{
 
     /**
      * Cleans the dialog content area.
+     * @return {void}
      */
     cleanDialog(){
         document.getElementById('dialog-content-detail-view-task').innerHTML = "";
@@ -39,6 +45,7 @@ class BoardTaskDetailEditUtils{
 
     /**
      * Loads the HTML template for the task edit view into the dialog content area.
+     * @return {Promise<void>}
      */
     async loadEditHtmlIntoDialog(){
         await includeHtml("dialog-content-detail-view-task", "taskEditTemplate.html");
@@ -46,6 +53,7 @@ class BoardTaskDetailEditUtils{
 
     /**
      * Renders the edit components for the task.
+     * @return {void}
      */
     renderEditComponents(){
         let mainConatiner = document.querySelector('.task-edit-fields');

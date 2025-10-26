@@ -1,4 +1,5 @@
 /**
+ * @namespace addEditContacts
  * @variable {boolean} validateName - Validate status for the name field
  * @variable {boolean} validateEmail - Validate status for the email field
  * @variable {boolean} validatePhone - Validate status for the phone field
@@ -9,6 +10,8 @@ let validateEmail = false;
 let validatePhone = false;
 
 /**
+ * @function newContact
+ * @memberof addEditContacts
  * @description - Create a new contact and save it to the database. After saving, it renders the updated contact list and selects the newly created contact.
  * @param {Event} event - The event object from the form submission.
  *
@@ -25,6 +28,8 @@ async function newContact(event) {
 }
 
 /**
+ * @function selectNewContact
+ * @memberof addEditContacts
  * @description - Select the newly created contact and open its details.
  * @param {string} uid - The unique identifier of the new contact.
  */
@@ -35,6 +40,8 @@ function selectNewContact(uid) {
 }
 
 /**
+ * @function createContactObject
+ * @memberof addEditContacts
  * @description - Create a new contact object. This function gathers data from the contact form and constructs a contact object with a default password and random initial color.
  * @param {string} uid - The unique identifier of the new contact.
  * @returns {Object} - The new contact object.
@@ -52,7 +59,10 @@ function createContactObject(uid) {
         'initialColor': getRandomColor(),
     };
 }
+
 /**
+ * @function getContactFormData
+ * @memberof addEditContacts
  * @description - Get the contact form data. This function retrieves the values from the contact form fields and splits the full name into first and last names.
  * @returns {Object} - An object containing the first name, last name, email, and phone number from the contact form.
  */
@@ -65,6 +75,8 @@ function getContactFormData() {
 }
 
 /**
+ * @function getInitials
+ * @memberof addEditContacts
  * @description - Get the initials from the first and last name. This function takes the first character of the first name and the first character of the last name, converts them to uppercase, and concatenates them to form the initials.
  * @param {string} firstname - The first name of the contact.
  * @param {string} lastname - The last name of the contact.
@@ -75,6 +87,8 @@ function getInitials(firstname, lastname) {
 }
 
 /**
+ * @function editContact
+ * @memberof addEditContacts
  * @description - Edit an existing contact. This function gathers the updated contact data from the form and sends it to the database. After updating, it closes the dialog, clears the active contact class, and renders the updated contact list.
  * @param {Event} event - The event object from the form submission.
  */
@@ -90,6 +104,12 @@ async function editContact(event) {
 
 }
 
+/**
+ * @function editContactMobile
+ * @memberof addEditContacts
+ * @description - Edit an existing contact in mobile view. This function gathers the updated contact data from the form and sends it to the database. After updating, it closes the dialog and renders the updated contact list.
+ * @param {Event} event - The event object from the form submission.
+ */
 async function editContactMobile(event) {
     if (event) event.preventDefault();
     const buttonID = event.submitter.id;
@@ -104,7 +124,8 @@ async function editContactMobile(event) {
 }
 
 /**
- *
+ * @function createUpdateContactObject
+ * @memberof addEditContacts
  * @returns {Object} - The updated contact object.
  * @description - Create an updated contact object. This function gathers the updated data from the contact form and constructs an object with the new values.
  */
@@ -118,7 +139,10 @@ function createUpdateContactObject() {
         'initial': getInitials(firstname, lastname)
     };
 }
+
 /**
+ * @function onDeleteContact
+ * @memberof addEditContacts
  * @description - Delete a contact. This function is triggered when the user confirms the deletion of a contact. It sends a request to the database to delete the contact and updates the UI accordingly.
  * @param {Event} event - The event object from the form submission.
  * @param {HTMLElement} element - The HTML element representing the contact to be deleted.
@@ -138,6 +162,8 @@ async function onDeleteContact(event, element) {
 //REVIEW - Validierung der Kontaktdaten, könnte zusammengelegt werden mit Validierung in add-task
 
 /**
+ * @function showAndLeaveErrorMessage
+ * @memberof addEditContacts
  * @description - Show or hide an error message. This function displays an error message for a specific form field by changing its visibility.
  * @param {string} messageTarget - The ID of the error message element.
  * @param {boolean} visibility - Whether to show or hide the error message.
@@ -156,6 +182,8 @@ function showAndLeaveErrorMessage(messageTarget, visibilty = true) {
 }
 
 /**
+ * @function showAndLeaveErrorBorder
+ * @memberof addEditContacts
  * @description - Show or hide an error border around an input field. This function adds or removes a CSS class to indicate an error state for a specific input field.
  * @param {string} inputTarget - The ID of the input field to show/hide the error border.
  * @param {boolean} visibility - Whether to show or hide the error border.
@@ -167,6 +195,8 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
     visibilty ? inputField.classList.add('input-has-error') : inputField.classList.remove('input-has-error');
 }
 /**
+ * @function contactNameValidation  
+ * @memberof addEditContacts
  * @description - Validate the name field in the contact form. This function checks if the name field is filled out correctly and updates the validation status and error messages accordingly.
  */
 function contactNameValidation() {
@@ -185,6 +215,8 @@ function contactNameValidation() {
 }
 
 /**
+ * @function contactEmailValidation  
+ * @memberof addEditContacts
  * @description - Validate the email field in the contact form. This function checks if the email field is filled out correctly and updates the validation status and error messages accordingly.
  *
  *  */
@@ -204,6 +236,8 @@ function contactEmailValidation() {
 }
 
 /**
+ * @function contactPhoneValidation  
+ * @memberof addEditContacts
  * @description - Validate the phone field in the contact form. This function checks if the phone field is filled out correctly and updates the validation status and error messages accordingly.
  */
 function contactPhoneValidation() {
@@ -222,6 +256,8 @@ function contactPhoneValidation() {
 
 }
 /**
+ * @function toggleBtnCreateContact
+ * @memberof addEditContacts
  * @description - Toggle the state of the "Create Contact" button based on the validation status of the contact form fields. If all fields are valid, the button is enabled; otherwise, it is disabled.
  */
 function toggleBtnCreateContact() {
@@ -236,8 +272,10 @@ function toggleBtnCreateContact() {
     }
 }
 /**
+ * @function toggleBtnEditContact
+ * @memberof addEditContacts
  * @description - Toggle the state of the "Edit Contact" button based on the validation status of the contact form fields. If all fields are valid, the button is enabled; otherwise, it is disabled.
- * @param {*} element
+ * @param {HTMLElement} element - The "Edit Contact" button element.
  */
 function toggleBtnEditContact(element) {
     let btn = element;
@@ -252,8 +290,10 @@ function toggleBtnEditContact(element) {
 }
 
 /**
+ * @function renderEditContactIntoDialog
+ * @memberof addEditContacts
  * @description - Render the contact data into the edit dialog. This function fetches the contact data from the database using the provided ID and populates the edit contact dialog with the retrieved information.
- * @param {*} id
+ * @param {string} id - The ID of the contact to edit.
  */
 function renderEditContactIntoDialog(id) {
     const fb = new FirebaseDatabase();
@@ -270,6 +310,12 @@ function renderEditContactIntoDialog(id) {
     });
 }
 
+/**
+ * @function renderEditContactIntoDialogMobile
+ * @memberof addEditContacts
+ * @description - Render the contact data into the edit dialog for mobile view. This function fetches the contact data from the database using the provided ID and populates the edit contact dialog with the retrieved information.
+ * @param {string} id - The ID of the contact to edit.
+ */
 function renderEditContactIntoDialogMobile(id) {
     closeDialog('btns-action-menu-mobile');
     const fb = new FirebaseDatabase();
@@ -287,13 +333,22 @@ function renderEditContactIntoDialogMobile(id) {
 }
 
 /**
+ * @function cancelAddContact
+ * @memberof addEditContacts
  * @description - Cancel the addition of a new contact. This function resets the validation status of the contact form fields.
- * @param {*} event
+ * @param {Event} event - The event object.
  */
 function cancelAddContact(event) {
     validateName, validateEmail, validatePhone = false;
 }
 
+/**
+ * @function onDeleteContactMobile
+ * @memberof addEditContacts
+ * @description - Handle the deletion of a contact in mobile view.
+ * @param {Event} event - The event object.
+ * @param {HTMLElement} element - The "Delete Contact" button element.
+ */
 function onDeleteContactMobile(event, element) {
     onDeleteContact(event, element);
     backToContactList();

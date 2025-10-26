@@ -1,3 +1,14 @@
+/**
+ * @fileoverview
+ * @namespace addTask
+ * Script for managing the Add Task page layout and functionality.
+ * Adjusts the layout based on window size and handles user interactions.
+ * Utilizes helper classes for task management and UI rendering.
+ * Loaded by add task page.
+ * @file scripts/addTask.js
+ */
+
+
 const MOBILE = "mobile";
 const DESKTOP = "desktop";
 const DESKTOPSINGLE = "desktopSingle";
@@ -16,6 +27,8 @@ let resizeLock = false;
 /**
  * Initializes the Add Task page on load.
  * Sets up the layout based on the current window size and adjusts form field sizes.
+ * @function onLoadAddTask
+ * @memberof addTask
  * @returns {Promise<void>}
  */
 async function onLoadAddTask() {
@@ -36,6 +49,8 @@ async function onLoadAddTask() {
  * Handles window resize events to adjust the Add Task page layout.
  * Uses a lock to prevent multiple simultaneous executions.
  * Adjusts the layout based on predefined breakpoints and resizes form fields accordingly.
+ * @function addTaskPageResize
+ * @memberof addTask
  * @returns {Promise<void>}
  */
 async function addTaskPageResize() {
@@ -65,6 +80,8 @@ async function addTaskPageResize() {
  * Changes the Add Task view to desktop mode.
  * Loads the necessary HTML components and adjusts the view to standard mode.
  * Also loads data for the Add Task view and sets the navigation button as active.
+ * @function changeAddTaskToDesktop
+ * @memberof addTask
  * @returns {Promise<void>}
  */
 async function changeAddTaskToDesktop() {
@@ -80,6 +97,8 @@ async function changeAddTaskToDesktop() {
  * Changes the Add Task view to desktop single-column mode.
  * Loads the necessary HTML components and adjusts the view to standard mode.
  * Also loads data for the Add Task view and sets the navigation button as active.
+ * @function changeAddTaskToDesktopSingle
+ * @memberof addTask
  * @returns {Promise<void>}
  */
 async function changeAddTaskToDesktopSingle() {
@@ -94,6 +113,8 @@ async function changeAddTaskToDesktopSingle() {
  * Changes the Add Task view to mobile mode.
  * Loads the necessary HTML components and loads data for the Add Task view.
  * Also sets the navigation button as active.
+ * @function changeAddTaskToMobile
+ * @memberof addTask
  * @returns {Promise<void>}
  */
 async function changeAddTaskToMobile() {
@@ -106,9 +127,12 @@ async function changeAddTaskToMobile() {
 
 /**
  * Changes the size of the form fields in the Add Task view based on the current layout.
+ * @function changeAddTaskFormFieldSize
+ * @memberof addTask
  * @param {number} height The current height of the form fields.
  * @param {number} width The current width of the form fields.
  * @param {string} currentView The current view mode (mobile, desktop, etc.).
+ * @returns {void}
  */
 function changeAddTaskFormFieldSize(height, width, currentView) {
     if (currentView == MOBILE) {
@@ -133,6 +157,8 @@ function changeAddTaskFormFieldSize(height, width, currentView) {
  * Loads the HTML components for the Add Task view in desktop mode.
  * Clears the current body content and includes necessary HTML files for the layout.
  * Fills the HTML with content after loading the components.
+ * @function loadHtmlComponentsForDesktop
+ * @memberof addTask
  * @returns {Promise<void>}
  */
 async function loadHtmlComponentsForDesktop() {
@@ -152,6 +178,8 @@ async function loadHtmlComponentsForDesktop() {
  * Loads the HTML components for the Add Task view in desktop single-column mode.
  * Clears the current body content and includes necessary HTML files for the layout.
  * Fills the HTML with content after loading the components.
+ * @function loadHtmlComponentsForDesktopSingle
+ * @memberof addTask
  * @returns {Promise<void>}
  */
 async function loadHtmlComponentsForDesktopSingle() {
@@ -172,6 +200,8 @@ async function loadHtmlComponentsForDesktopSingle() {
  * Loads the HTML components for the Add Task view in mobile mode.
  * Clears the current body content and includes necessary HTML files for the layout.
  * Fills the HTML with content after loading the components.
+ * @function loadHtmlComponentsForMobile
+ * @memberof addTask
  * @returns {Promise<void>}
  */
 async function loadHtmlComponentsForMobile() {
@@ -192,6 +222,9 @@ async function loadHtmlComponentsForMobile() {
 /**
  * Clears the current HTML body content.
  * This is used before loading new HTML components for the Add Task view.
+ * @function clearAddTaskHtmlBody
+ * @memberof addTask
+ * @returns {void}
  */
 function clearAddTaskHtmlBody() {
     document.querySelector('body').innerHTML = "";
@@ -200,6 +233,8 @@ function clearAddTaskHtmlBody() {
 /** Fills the HTML with content for the Add Task view.
  * Initializes the TaskElements class and populates the left and right containers.
  * Sets up the form submission function and button click handlers.
+ * @function fillHtmlWithContent
+ * @memberof addTask
  * @returns {Promise<void>}
  */
 async function fillHtmlWithContent() {
@@ -214,6 +249,8 @@ async function fillHtmlWithContent() {
  * Fills the mobile HTML with content for the Add Task view.
  * Initializes the AddTaskMobileUtil class and renders the mobile components.
  * Sets up the form submission function.
+ * @function fillMobileHtmlWithContent
+ * @memberof addTask
  * @returns {Promise<void>}
  */
 async function fillMobileHtmlWithContent() {
@@ -226,6 +263,9 @@ async function fillMobileHtmlWithContent() {
 
 /**
  * Changes the Add Task view to standard (non-dialog) mode by adjusting classes and attributes.
+ * @function changeAddTaskViewToStandard
+ * @memberof addTask
+ * @returns {void}
  */
 function changeAddTaskViewToStandard() {
     document.getElementById('a-t-dialog-close-btn').classList.add('display-hidden');
@@ -240,6 +280,11 @@ function changeAddTaskViewToStandard() {
 
 /**
  * Loads necessary data for the Add Task view, including contacts and categories.
+ * Renders the user's initial and reads the current user ID and guest status.
+ * Initializes the TaskComponents class if not already done and applies data to the view.
+ * @function loadDataForAddTask
+ * @memberof addTask
+ * @returns {Promise<void>}
  */
 async function loadDataForAddTask() {
     renderUserInitial();

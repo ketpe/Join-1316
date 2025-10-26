@@ -1,10 +1,16 @@
-
 /**
  * Class for rendering the add task components on mobile devices.
+ * Handles the rendering of input fields and components needed to create a new task.
+ * @class AddTaskMobileUtil
+ * @property {Object} currentInstance - The current instance of the task.
  */
 
 class AddTaskMobileUtil{
 
+    /**
+     * Creates an instance of the AddTaskMobileUtil class.
+     * @param {Object} currentInstance - The current instance of the task.
+     */
     constructor(currentInstance){
         this.currentInstance = currentInstance;
     }

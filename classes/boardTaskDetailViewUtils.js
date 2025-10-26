@@ -3,6 +3,11 @@
  * It includes methods to display task information, handle assigned contacts, and manage subtasks.
  * It also includes helper functions to generate HTML elements for contacts, categories, and subtasks.
  * The class is designed to work with a task management application, facilitating the display and interaction with task details in a user-friendly manner.
+ * Loaded by board detail view page
+ * @class BoardTaskDetailViewUtils
+ * @property {string} currentTaskID - The ID of the current task.
+ * @property {Object} currentTask - The current task object.
+ * @property {Object} currentInstance - The current instance of the task.
  */
 
 class BoardTaskDetailViewUtils {

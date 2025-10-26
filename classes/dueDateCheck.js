@@ -2,6 +2,13 @@
  * Class for validating and managing due date input for tasks.
  * Ensures the due date is in the correct format (DD/MM/YYYY) and not in the past.
  * Provides feedback to the user through UI components.
+ * @class DueDateCheck
+ * @property {string} dueDateValue - The due date value to validate.
+ * @property {string} currentDueDate - The current due date value.
+ * @property {Object} taskComponents - The task components for UI feedback.
+ * @property {string} currentInputValue - The current input value in the due date field.
+ * @property {string} dueDate - The validated due date.
+ * @property {boolean} result - The result of the due date validation.
  */
 
 class DueDateCheck {
@@ -14,6 +21,7 @@ class DueDateCheck {
      * @param {string} dueDateValue - The due date value to validate.
      * @param {string} currentDueDate - The current due date value.
      * @param {Object} taskComponents - The task components for UI feedback.
+     * @param {string} currentInputValue - The current input value in the due date field.
      */
     constructor(dueDateValue, currentDueDate, currentInputValue, taskComponents) {
         this.dueDateValue = dueDateValue;
@@ -72,8 +80,8 @@ class DueDateCheck {
      * Create a date from these numbers; this date cannot be in the past. 
      * Finally, the date components from the created date are compared with the components of the passed date. 
      * If they are equal, it returns true; otherwise, it returns false.
-     * @param {string} valueToCheck 
-     * @returns 
+     * @param {string} valueToCheck
+     * @returns {boolean}
      */
     checkIsCorrectDate(valueToCheck) {
         const regexString = /^(\d{2})\/(\d{2})\/(\d{4})$/;
@@ -95,8 +103,8 @@ class DueDateCheck {
 
     /**
      * Convert date components from regex array to integers.
-     * @param {RegExpMatchArray} matchDateWithRegex 
-     * @returns day, month, year as number
+     * @param {RegExpMatchArray} matchDateWithRegex
+     * @returns {number[]} day, month, year as numbers
      */
     getDatePartsOfDateValue(matchDateWithRegex) {
         const day = parseInt(matchDateWithRegex[1], 10);
@@ -132,6 +140,7 @@ class DueDateCheck {
     /**
      * Sets the constructed date into the display field and updates the dueDate property.
      * @param {string} cDate - The constructed date string to set.
+     * @return {void}
      */
     setConstructedDateIntoTheField(cDate){
         document.getElementById('due-date-display').value = cDate;
@@ -149,6 +158,8 @@ class DueDateCheck {
 
     /**
      * Highlight the date field so the user can see that their entry was invalid.
+     * The date is not correct. Display an error message and highlight the date field.
+     * @return {void}
      */
     dueDateSetError() {
         this.taskComponents.showAndLeaveErrorMessage("a-t-due-date-required", true);
@@ -158,6 +169,7 @@ class DueDateCheck {
 
     /**
      * The date is correct. Display the date field with normal formatting.
+     * @return {void}
      */
     dueDateSetOk() {
         this.taskComponents.showAndLeaveErrorMessage("a-t-due-date-required", false);

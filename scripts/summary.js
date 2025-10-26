@@ -1,5 +1,11 @@
 /**
- * @fileoverview summary.js - Handles loading and displaying task summaries.
+ * @fileoverview
+ * @namespace summary
+ * @description summary.js - Handles loading and displaying task summaries.
+ * Manages responsive design for mobile and desktop views.
+ * Loads HTML components dynamically based on window size.
+ * Fetches task data from Firebase and computes summary statistics.
+ * Updates the UI with summary information.
  */
 
 let currentView = "";
@@ -9,9 +15,10 @@ const breakPointToDesktopSingle = 1180;
 let isStartupSummary = false;
 
 /**
+ * @function onLoadSummary
+ * @memberof summary
  * Initializes the summary page based on the current window size and URL parameters.
  * @async
- * @function onLoadSummary
  * @returns {Promise<void>}
  */
 async function onLoadSummary() {
@@ -19,20 +26,20 @@ async function onLoadSummary() {
     getURLParameter();
 
     const [height, width] = getCurrentWindowSize();
-    //wird das noch gebraucht?
-    const head = document.getElementsByTagName('head');
     if (width >= minDesktopWidth) {
-        await loadHtmlComponentsForDesktop(head);
+        await loadHtmlComponentsForDesktop();
         setNavigationButtonActive('summary', "desktop");
 
     } else {
-        await loadHtmlComponentsForMobile(head);
+        await loadHtmlComponentsForMobile();
         setNavigationButtonActive('summary', "mobile");
     }
 
 }
 
 /**
+ * @function onSummaryPageResize
+ * @memberof summary
  * Handles window resize events to switch between mobile and desktop views.
  * @async
  * @function onSummaryPageResize
@@ -58,6 +65,8 @@ async function onSummaryPageResize() {
 }
 
 /**
+ * @function getURLParameter
+ * @memberof summary
  * Parses URL parameters to determine if the summary page is being loaded at startup.
  * @function getURLParameter
  * @returns {void}
@@ -74,12 +83,14 @@ function getURLParameter() {
 }
 
 /**
+ * @function loadHtmlComponentsForDesktop   
+ * @memberof summary
  * Loads HTML components for the desktop view.
  * @async
  * @function loadHtmlComponentsForDesktop
- * @param {*} head 
+ * @returns {Promise<void>}
  */
-async function loadHtmlComponentsForDesktop(head) {
+async function loadHtmlComponentsForDesktop() {
     currentView = "desktop";
     clearAddTaskHtmlBody();
     await includeHtmlForNode("body", "summaryDesktop.html");
@@ -95,9 +106,12 @@ async function loadHtmlComponentsForDesktop(head) {
 }
 
 /**
+ * @function loadHtmlComponentsForMobile
+ * @memberof summary
  * Loads HTML components for the mobile view.
  * @async
  * @function loadHtmlComponentsForMobile
+ * @returns {Promise<void>}
  */
 async function loadHtmlComponentsForMobile() {
     currentView = "mobile"
@@ -114,6 +128,8 @@ async function loadHtmlComponentsForMobile() {
 }
 
 /**
+ * @function loadingSummaryMobileData
+ * @memberof summary
  * Handles loading data and animations for the mobile summary view.
  * @async
  * @function loadingSummaryMobileData
@@ -134,8 +150,11 @@ async function loadingSummaryMobileData() {
 }
 
 /**
+ * @function includeCSSToHead
+ * @memberof summary
  * Includes a CSS file in the document head.
- * @param {*} href - The path to the CSS file.
+ * @param {string} href - The path to the CSS file.
+ * @return {void}
  */
 function includeCSSToHead(href) {
     const link = document.createElement('link');
@@ -146,6 +165,8 @@ function includeCSSToHead(href) {
 
 
 /**
+ * @function clearAddTaskHtmlBody
+ * @memberof summary
  * Clears the current HTML body content.
  * @returns {void}
  */
@@ -155,6 +176,8 @@ function clearAddTaskHtmlBody() {
 
 
 /**
+ * @function setMobileGreetingAnimation
+ * @memberof summary
  * Sets the mobile greeting animation.
  * @returns {void}
  */
@@ -173,6 +196,8 @@ function setMobileGreetingAnimation() {
 }
 
 /**
+ * @function removeMobileGreetingAnimation
+ * @memberof summary
  * Removes the mobile greeting animation.
  * @returns {void}
  */
@@ -184,6 +209,8 @@ function removeMobileGreetingAnimation() {
 }
 
 /**
+ * @function setHeightInMobileMode
+ * @memberof summary
  * Sets the height for the mobile view.
  * @returns {void}
  */
@@ -205,6 +232,8 @@ function setHeightInMobileMode() {
 
 
 /**
+ * @function loadTasksforSummary
+ * @memberof summary
  * Loads tasks from Firebase, calculates summary statistics, and updates the UI.
  * @async
  * @function loadTasksforSummary
@@ -216,20 +245,22 @@ async function loadTasksforSummary() {
     const fb = new FirebaseDatabase();
     let tasks = await fb.getFirebaseLogin(() => fb.getAllData("tasks"));
     let summaryVariables = getVariablesForSummary();
-    summaryVariables = getSummeryCounts(tasks, summaryVariables);
+    summaryVariables = getSummaryCounts(tasks, summaryVariables);
     let nextDueDate = checkDate(tasks);
-    renderNewSummery(tasks, summaryVariables, nextDueDate);
+    renderNewSummary(tasks, summaryVariables, nextDueDate);
     renderUserInitial();
 }
 
 /**
+ * @function getSummaryCounts
+ * @memberof summary
  * Updates the summaryVariables object based on the current tasks.
- * @param {*} tasks
- * @param {*} summaryVariables
- * @returns summaryVariables
+ * @param {Array} tasks
+ * @param {Object} summaryVariables
+ * @returns {Object} summaryVariables
  * @description This function iterates through the list of tasks and updates the summaryVariables object with counts of tasks in different states and priorities.
  */
-function getSummeryCounts(tasks, summaryVariables) {
+function getSummaryCounts(tasks, summaryVariables) {
     tasks.forEach(task => {
         summaryVariables.numberOfTodo += task.taskStateCategory === 'todo' ? 1 : 0;
         summaryVariables.numberOfInProgress += task.taskStateCategory === 'inprogress' ? 1 : 0;
@@ -241,9 +272,11 @@ function getSummeryCounts(tasks, summaryVariables) {
 }
 
 /**
- *
- * @returns summaryVariables
- * @description This function initializes and returns an object to hold summary statistics.
+ * @function getVariablesForSummary
+ * @memberof summary
+ * This function initializes and returns an object to hold summary statistics.
+ * @returns {Object} summaryVariables
+ * @description The returned object contains properties for counting tasks in various states and priorities, all initialized to zero.
  */
 function getVariablesForSummary() {
     const summaryVariables = {
@@ -256,13 +289,16 @@ function getVariablesForSummary() {
     return summaryVariables;
 }
 /**
+ * @function renderNewSummary
+ * @memberof summary
  * Renders the summary information on the UI.
- * @param {*} tasks
- * @param {*} summaryVariables
- * @param {*} nextDueDate
+ * @param {Array} tasks
+ * @param {Object} summaryVariables
+ * @param {Date} nextDueDate
  * @description This function updates the HTML elements with the calculated summary statistics and the next due date.
+ * @returns {void}
  */
-function renderNewSummery(tasks, summaryVariables, nextDueDate) {
+function renderNewSummary(tasks, summaryVariables, nextDueDate) {
     document.getElementById('summary-todo').innerHTML = summaryVariables.numberOfTodo;
     document.getElementById('summary-inprogress').innerText = summaryVariables.numberOfInProgress;
     document.getElementById('summary-awaiting').innerText = summaryVariables.numberOfAwaitingFeedback;
@@ -273,8 +309,10 @@ function renderNewSummery(tasks, summaryVariables, nextDueDate) {
 }
 
 /**
+ * @function parseDueDate
+ * @memberof summary
  * Parses a due date string in the format "DD/MM/YYYY" and returns a Date object.
- * @param {*} dueDateStr
+ * @param {string} dueDateStr
  * @returns {Date}  A Date object representing the parsed due date.
  * @description This function splits the input string by '/' to extract the day, month, and year, then constructs a Date object in the format "YYYY-MM-DD".
  */
@@ -284,8 +322,10 @@ function parseDueDate(dueDateStr) {
 }
 
 /**
+ * @function getFutureDueDates
+ * @memberof summary
  * Gets the future due dates from the list of tasks.
- * @param {*} tasks
+ * @param {Array} tasks
  * @returns {Array<Date>} An array of Date objects representing the future due dates.
  * @description This function maps over the tasks to parse their due dates, then filters out any dates that are in the past or invalid.
  */
@@ -297,8 +337,10 @@ function getFutureDueDates(tasks) {
 }
 
 /**
+ * @function getNextDueDate
+ * @memberof summary
  * Gets the next due date from the list of future due dates.
- * @param {*} futureDates
+ * @param {Array<Date>} futureDates
  * @returns {Date|null} The next due date or null if there are no future dates.
  * @description This function finds the earliest date in the array of future dates using Math.min and returns it as a Date object. If there are no future dates, it returns null.
  */
@@ -307,8 +349,10 @@ function getNextDueDate(futureDates) {
     return new Date(Math.min(...futureDates));
 }
 /**
+ * @function formatDate
+ * @memberof summary
  * Formats a date object into a human-readable string.
- * @param {*} date
+ * @param {Date} date
  * @returns {string} A formatted date string.
  * @description This function extracts the day, month, and year from the Date object and returns a string in the format "Month Day, Year". If the date is null or undefined, it returns an empty string.
  */
@@ -321,8 +365,10 @@ function formatDate(date) {
 }
 
 /**
+ * @function checkDate
+ * @memberof summary
  * Checks and returns the next due date in a formatted string.
- * @param {*} tasks
+ * @param {Array} tasks
  * @returns {string} A formatted date string representing the next due date.
  * @description This function retrieves future due dates from the tasks, determines the next due date, formats it, and returns the formatted string.
  */

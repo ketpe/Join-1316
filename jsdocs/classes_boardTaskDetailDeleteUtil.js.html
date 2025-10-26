@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: classes/boardTaskDetailDeleteUtil.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: classes/boardTaskDetailDeleteUtil.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Utility class for deleting a task and its associated data from the database
+ * @class BoardTaskDetailDeleteUtil
+ * @property {string} taskId - The ID of the task to be deleted
+ * @example
+ * const taskDeleter = new BoardTaskDetailDeleteUtil(taskId);
+ */
+
+
+class BoardTaskDetailDeleteUtil {
+    /**
+     * Creates an instance of the BoardTaskDetailDeleteUtil class.
+     * @param {string} taskId - The ID of the task to be deleted.
+     */
+    constructor(taskId){
+        this.taskId = taskId;
+    }
+
+    /**
+     *  Starts the deletion process for the task and its associated data
+     * @returns {boolean} - Returns true if the deletion was successful, otherwise false
+     */
+    async startDelete(){
+        const task = new Task(this.taskId, "", "", "", "", "", "");
+        const editTask = new EditTaskSafeUtil(task, "", "", "", "", [], []);
+        const [contactsDbList, taskContactDBList] = await editTask.getTaskContactAssignedList();
+        const [subtaskDbList, taskToSubtaskDBList, maxPos] = await editTask.getTaskSubtaskList();
+
+        if(!this.removeDataInArrayFromDB(taskContactDBList, 'taskContactAssigned')){return false;}
+        if(!this.removeDataInArrayFromDB(taskToSubtaskDBList, 'taskSubtask')){return false;}
+        if(!this.removeDataInArrayFromDB(subtaskDbList, 'subTasks')){return false;}
+        if(!this.removeTaskFromDb(this.taskId)){return false;}
+
+        return true;
+    }
+
+
+    /**
+     * Removes data from a specific table in the database
+     * @param {Array} dataArray - The array of data to remove
+     * @param {string} tablename - The name of the table to remove data from
+     * @returns {boolean} - Returns true if the removal was successful, otherwise false
+     */
+    async removeDataInArrayFromDB(dataArray, tablename){
+        const fb = new FirebaseDatabase();
+        for(let i = 0; i &lt; dataArray.length; i++){
+            const resultDelete = await fb.getFirebaseLogin(() => fb.deleteData(`${tablename}/${dataArray[i]['id']}`));
+            if(!resultDelete){return false;}
+        }
+        return true;
+    }
+
+    /**
+     * Removes a task from the database
+     * @param {string} taskId - The ID of the task to remove
+     * @returns {boolean} - Returns true if the removal was successful, otherwise false
+     */
+    async removeTaskFromDb(taskId){
+        const fb = new FirebaseDatabase();
+        const resultDelete = await fb.getFirebaseLogin(() => fb.deleteData(`tasks/${taskId}`));
+        return resultDelete;
+    } 
+
+    
+
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 17:05:01 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

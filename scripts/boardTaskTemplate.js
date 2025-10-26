@@ -1,4 +1,20 @@
+/**
+ * @description Template functions for board tasks.
+ * @namespace boardTaskTemplate
+ */
 
+
+/**
+ * @function boardTasksTemplate
+ * @memberof boardTaskTemplate
+ * @description Generates the HTML template for a board task.
+ * @param {Task} task - The task object containing task details.
+ * @param {string} rendererdContacts - The rendered contacts assigned to the task.
+ * @param {string} prevCategory - The previous category of the task.
+ * @param {string} nextCategory - The next category of the task.
+ * @returns {string} The HTML template for the board task.
+ */
+ 
 function boardTasksTemplate(task, rendererdContacts, prevCategory, nextCategory) {
     return `<div class="kanban-task" draggable="true" id="${task.id}" ondragstart="startDrag(event, this)" ondragend="endDrag(this)"
     onclick="getDetailViewTask('${task.id}')">
@@ -51,17 +67,37 @@ function boardTasksTemplate(task, rendererdContacts, prevCategory, nextCategory)
 </div>`
 }
 
+/**
+ * @function boardTaskEmptyTemplate
+ * @memberof boardTaskTemplate
+ * Generates the HTML template for an empty board task.
+ * @param {string} category - The category of the task.
+ * @returns {string} The HTML template for the empty board task.
+ */
 function boardTaskEmptyTemplate(category) {
     return `<div class="kanban-task-empty visually-hidden">
     <p>No Task ${category}</p>
 </div>`
 }
 
+/**
+ * @function boardTaskEmptyDropTemplate
+ * @memberof boardTaskTemplate
+ * Generates the HTML template for an empty drop zone in the Kanban board.
+ * @returns {string} The HTML template for the empty drop zone.
+ */
 function boardTaskEmptyDropTemplate() {
     return `<div id="kanban-dropzone" class="kanban-dropzone" >
     </div>`
 }
 
+/**
+ * @function getAllAssignedContactsTemplate
+ * @memberof boardTaskTemplate
+ * Generates the HTML template for all assigned contacts in a board task.
+ * @param {Array} assignedContacts - The array of assigned contacts.
+ * @returns {string} The HTML template for all assigned contacts.
+ */
 function getAllAssignedContactsTemplate(assignedContacts) {
     return `<div class="board-task-assigned" id="${assignedContacts.id}">
                     <div class="assigned-contact-board">
@@ -71,6 +107,16 @@ function getAllAssignedContactsTemplate(assignedContacts) {
                     </div>
                 </div>`
 }
+
+/**
+ * @function getBtnTemplateAfterMovingTask
+ * @memberof boardTaskTemplate
+ * Generates the HTML template for the buttons after moving a task.
+ * @param {string} taskId - The ID of the task being moved.
+ * @param {string} prevCategory - The previous category of the task.
+ * @param {string} nextCategory - The next category of the task.
+ * @returns {string} The HTML template for the buttons after moving a task.
+ */
 function getBtnTemplateAfterMovingTask(taskId, prevCategory, nextCategory) {
     return `<button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${taskId}','${prevCategory}')">
                     <div role="img" aria-label="to do icon" class="swap-menu-icon swap-menu-icon-up"></div>
