@@ -8,6 +8,9 @@
  * @file scripts/signup.js
  */
 
+let errorMessageArr = [];
+const namePattern = /\w{3,10}\s\w{3,10}/;
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 /**
  * @function signupinit
@@ -27,7 +30,7 @@ async function signupinit() {
  * @function signInFieldOnBlur
  * @memberof signup
  * Handle onBlur event for sign-in fields.
- * @param {HTMLInputElement} input 
+ * @param {HTMLInputElement} input
  * @returns {void}
  */
 function signInFieldOnBlur(input) {
@@ -124,7 +127,7 @@ function validatepassword() {
  * @function validatePolicyAccept
  * @memberof signup
  * Validate the policy acceptance checkbox.
- * @returns {Boolean}      
+ * @returns {Boolean}
  */
 function validatePolicyAccept() {
     const confirmCheckbox = document.getElementById('signupConfirm');
@@ -155,7 +158,7 @@ function splitNameToFirstLastAndInitial(signUp) {
  * @function checkEmailInDatabase
  * @memberof signup
  * Check if the email exists in the database.
- * @param {string} email 
+ * @param {string} email
  * @returns {Promise<boolean>}
  */
 async function checkEmailInDatabase(email) {
@@ -168,7 +171,7 @@ async function checkEmailInDatabase(email) {
  * @function setInputFieldHasNoError
  * @memberof signup
  * Set the input field to a valid state (no error).
- * @param {String} elementID 
+ * @param {String} elementID
  * @returns {void}
  */
 function setInputFieldHasNoError(elementID) {
@@ -181,8 +184,8 @@ function setInputFieldHasNoError(elementID) {
  * @function setInputFieldHasError
  * @memberof signup
  * Set the input field to an invalid state (error).
- * @param {String} elementID 
- * @param {String} message 
+ * @param {String} elementID
+ * @param {String} message
  * @returns {void}
  */
 function setInputFieldHasError(elementID, message) {
@@ -194,8 +197,8 @@ function setInputFieldHasError(elementID, message) {
  * @function addErrorMessageToArray
  * @memberof signup
  * Add an error message for a specific element to the array.
- * @param {String} elementID 
- * @param {String} message 
+ * @param {String} elementID
+ * @param {String} message
  * @returns {void}
  */
 function addErrorMessageToArray(elementID, message) {
@@ -209,7 +212,7 @@ function addErrorMessageToArray(elementID, message) {
  * @function removeErrorMessageFromArray
  * @memberof signup
  * Remove an error message for a specific element from the array.
- * @param {String} elementID 
+ * @param {String} elementID
  * @returns {void}
  */
 function removeErrorMessageFromArray(elementID) {
@@ -244,7 +247,7 @@ function handleErrorMessage() {
  * @memberof signup
  * Handle the sign-up form submission.
  * Safes the user data to the database and signs in the user.
- * @param {Event} event 
+ * @param {Event} event
  * @returns {Promise<void>}
  */
 async function signUpForm(event) {
@@ -261,7 +264,7 @@ async function signUpForm(event) {
  * @function signupMouseUp
  * @memberof signup
  * Handle the mouse up event on the sign-up button.
- * @param {MouseEvent} event 
+ * @param {MouseEvent} event
  * @returns {void}
  */
 function signupMouseUp(event) {
