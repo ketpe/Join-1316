@@ -314,3 +314,4 @@ function resetActionMenuMobile() {
         btnToRemove.remove();
     }
 }
+

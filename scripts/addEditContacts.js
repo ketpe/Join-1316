@@ -22,9 +22,16 @@ async function newContact(event) {
     const contact = createContactObject(uid);
     const fb = new FirebaseDatabase();
     const data = await fb.getFirebaseLogin(() => fb.putData(`/contacts/${uid}`, contact));
+    showSavedToast('new');
     await renderContacts();
     selectNewContact(uid);
     validateName, validateEmail, validatePhone = false;
+}
+
+function resetContactForm() {
+    document.getElementById('contact-name').value = '';
+    document.getElementById('contact-email').value = '';
+    document.getElementById('contact-phone').value = '';
 }
 
 /**
@@ -101,6 +108,7 @@ async function editContact(event) {
     closeDialogByEvent(event, 'add-contact-dialog');
     clearActiveContactClass();
     renderContacts();
+    showSavedToast('edit');
 
 }
 
@@ -157,6 +165,7 @@ async function onDeleteContact(event, element) {
     } else {
         console.warn("Keine gültige ID übergeben!");
     }
+    showSavedToast('delete');
 }
 
 //REVIEW - Validierung der Kontaktdaten, könnte zusammengelegt werden mit Validierung in add-task
@@ -354,5 +363,18 @@ function onDeleteContactMobile(event, element) {
     backToContactList();
     const dialog = document.getElementById('btns-action-menu-mobile');
     if (dialog && dialog.open) dialog.close();
+}
+
+async function showSavedToast(actionType) {
+    const toast = document.getElementById('addContactSafeChangesToast');
+    if (!toast) { return; }
+    const span = toast.querySelector('span');
+    span.innerText = actionType === 'edit' ? 'Changes saved!' : actionType === 'new' ? 'New Contact created!' : actionType === 'delete' ? 'Contact deleted!' : '';
+    toast.style.display = 'flex';
+    toast.classList.add('safe-changes-toast-open');
+    await new Promise(resolve => setTimeout(resolve, 500));
+    toast.classList.remove('safe-changes-toast-open');
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    toast.style.display = 'none';
 }
 

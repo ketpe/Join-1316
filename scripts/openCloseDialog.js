@@ -102,6 +102,7 @@ function addDialogHideClass(dialogId) {
  */
 function renderAddContactIntoDialog() {
     includeHtml("dialog-content-contacts", "addContact.html");
+    resetContactForm();
 }
 
 /**
@@ -124,6 +125,7 @@ async function renderDetailViewTemplate(taskId) {
  */
 function renderAddContactIntoDialogMobile() {
     includeHtml("add-contact-dialog-mobile", "addContactMobile.html");
+    resetContactForm();
 }
 function renderEditContactIntoDialog(contactId) {
     includeHtml("dialog-content-contacts", "editContact.html")
