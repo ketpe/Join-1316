@@ -78,7 +78,7 @@ function clearBoardHtmlBody() {
  * @returns {Promise<void>} - A promise that resolves when the tasks have been fetched and rendered.
 */
 async function getBoardTasks() {
-    const { taskContentelements } = getHtmlTasksContent();
+    const { taskContentElements } = getHtmlTasksContent();
     const fb = new FirebaseDatabase();
     let tasks = await fb.getFirebaseLogin(() => fb.getAllData("tasks"));
     tasks = await getDatabaseTaskCategory(tasks);

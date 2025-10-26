@@ -1,7 +1,7 @@
 
 function boardTasksTemplate(task, rendererdContacts, prevCategory, nextCategory) {
     return `<div class="kanban-task" draggable="true" id="${task.id}" ondragstart="startDrag(event, this)" ondragend="endDrag(this)"
-    onclick="getDetailViewTask('${task.id}')">
+    onclick="getDetailViewTask('${task.id}')"  data-task-id="${task.id}">
     <div class="board-task-content">
         <div class="board-category-and-swap">
             <div class="board-task-head-category ${task.categoryData.categoryColor}">
