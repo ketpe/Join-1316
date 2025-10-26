@@ -45,7 +45,7 @@ let isStartupSummary = false;
 /**
  * @function onLoadSummary
  * @memberof summary
- * Initializes the summary page based on the current window size and URL parameters.
+ * @description Initializes the summary page based on the current window size and URL parameters.
  * @async
  * @returns {Promise&lt;void>}
  */
@@ -68,7 +68,7 @@ async function onLoadSummary() {
 /**
  * @function onSummaryPageResize
  * @memberof summary
- * Handles window resize events to switch between mobile and desktop views.
+ * @description Handles window resize events to switch between mobile and desktop views.
  * @async
  * @function onSummaryPageResize
  * @returns {Promise&lt;void>}
@@ -95,7 +95,7 @@ async function onSummaryPageResize() {
 /**
  * @function getURLParameter
  * @memberof summary
- * Parses URL parameters to determine if the summary page is being loaded at startup.
+ * @description Parses URL parameters to determine if the summary page is being loaded at startup.
  * @function getURLParameter
  * @returns {void}
  */
@@ -113,7 +113,7 @@ function getURLParameter() {
 /**
  * @function loadHtmlComponentsForDesktop   
  * @memberof summary
- * Loads HTML components for the desktop view.
+ * @description Loads HTML components for the desktop view.
  * @async
  * @function loadHtmlComponentsForDesktop
  * @returns {Promise&lt;void>}
@@ -136,7 +136,7 @@ async function loadHtmlComponentsForDesktop() {
 /**
  * @function loadHtmlComponentsForMobile
  * @memberof summary
- * Loads HTML components for the mobile view.
+ * @description Loads HTML components for the mobile view.
  * @async
  * @function loadHtmlComponentsForMobile
  * @returns {Promise&lt;void>}
@@ -158,7 +158,7 @@ async function loadHtmlComponentsForMobile() {
 /**
  * @function loadingSummaryMobileData
  * @memberof summary
- * Handles loading data and animations for the mobile summary view.
+ * @description Handles loading data and animations for the mobile summary view.
  * @async
  * @function loadingSummaryMobileData
  * @returns {Promise&lt;void>}
@@ -180,7 +180,7 @@ async function loadingSummaryMobileData() {
 /**
  * @function includeCSSToHead
  * @memberof summary
- * Includes a CSS file in the document head.
+ * @description Includes a CSS file in the document head.
  * @param {string} href - The path to the CSS file.
  * @return {void}
  */
@@ -195,7 +195,7 @@ function includeCSSToHead(href) {
 /**
  * @function clearAddTaskHtmlBody
  * @memberof summary
- * Clears the current HTML body content.
+ * @description Clears the current HTML body content.
  * @returns {void}
  */
 function clearAddTaskHtmlBody() {
@@ -422,13 +422,13 @@ function checkDate(tasks) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 17:07:17 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 18:35:47 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

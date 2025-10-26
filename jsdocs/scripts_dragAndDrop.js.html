@@ -39,7 +39,7 @@ let draggedTask = null;
 /**
  * @function startDrag
  * @memberof dragAndDrop
- * Initiates the drag operation for a task.
+ * @description Initiates the drag operation for a task.
  * @param {*} event 
  * @param {Task} task 
  * @return {void}
@@ -57,7 +57,7 @@ function startDrag(event, task) {
 /**
  * @function getCurrentColumnId
  * @memberof dragAndDrop
- * Gets the ID of the current column for a task.
+ * @description Gets the ID of the current column for a task.
  * @param {Task} task 
  * @returns {string} The ID of the current column.
  */
@@ -69,7 +69,7 @@ function getCurrentColumnId(task) {
 /**
  * @function hideAllDropzones
  * @memberof dragAndDrop
- * Hides all drop zones in the Kanban board.
+ * @description Hides all drop zones in the Kanban board.
  * @return {void}
  */
 function hideAllDropzones() {
@@ -83,7 +83,7 @@ function hideAllDropzones() {
 /**
  * @function getAllowedColumns
  * @memberof dragAndDrop
- * Gets the allowed columns for a task based on its current column.
+ * @description Gets the allowed columns for a task based on its current column.
  * @param {string} currentColumnId - The ID of the current column.
  * @returns {Array&lt;string>} The array of allowed column IDs.
  */
@@ -100,7 +100,7 @@ function getAllowedColumns(currentColumnId) {
 /**
  * @function showAllowedDropzones
  * @memberof dragAndDrop
- * Shows the allowed dropzones for a task being dragged.
+ * @description Shows the allowed dropzones for a task being dragged.
  * @param {Array&lt;string>} allowedColumns - The array of allowed column IDs.
  * @return {void}
  */
@@ -120,7 +120,7 @@ function showAllowedDropzones(allowedColumns) {
 /**
  * @function endDrag
  * @memberof dragAndDrop
- * Ends the drag operation for a task.
+ * @description Ends the drag operation for a task.
  * @param {Task} task - The task being dragged.
  * @return {void}
  */
@@ -136,7 +136,7 @@ function endDrag(task) {
 /**
  * @function dropTask
  * @memberof dragAndDrop
- * Handles the drop event for a task.
+ * @description Handles the drop event for a task.
  * @param {DragEvent} event - The drag event.
  * @param {HTMLElement} column - The column element where the task is dropped.
  * @return {Promise&lt;void>}
@@ -159,7 +159,7 @@ async function dropTask(event, column) {
 /**
  * @function moveTaskToCategory
  * @memberof dragAndDrop
- * Moves a task to a new category.
+ * @description Moves a task to a new category.
  * @param {string} taskId - The ID of the task to move.
  * @param {string} newCategory - The new category to move the task to.
  * @returns {Promise&lt;void>}
@@ -177,7 +177,7 @@ async function moveTaskToCategory(taskId, newCategory) {
 /**
  * @function rewriteCategory
  * @memberof dragAndDrop
- * Rewrites the category name to a standardized format.
+ * @description Rewrites the category name to a standardized format.
  * @param {string} cat - The category name to rewrite.
  * @returns {string} The rewritten category name.
  */
@@ -191,7 +191,7 @@ function rewriteCategory(cat) {
 /**
  * @function moveTaskInDom
  * @memberof dragAndDrop
- * Moves a task in the DOM to a new category.
+ * @description Moves a task in the DOM to a new category.
  * @param {string} taskId - The ID of the task to move.
  * @param {string} newCategory - The new category to move the task to.
  * @return {void}
@@ -209,7 +209,7 @@ function moveTaskInDom(taskId, newCategory) {
 /**
  * @function updateBtnAfterMovingTask
  * @memberof dragAndDrop
- * Updates the button states after moving a task.
+ * @description Updates the button states after moving a task.
  * @param {string} taskId - The ID of the task that was moved.
  * @param {string} newCategory - The new category of the task.
  * @return {void}
@@ -224,7 +224,7 @@ function updateBtnAfterMovingTask(taskId, newCategory) {
 /**
  * @function getPrevAndNextCategory
  * @memberof dragAndDrop
- * Gets the previous and next category for a given category.
+ * @description Gets the previous and next category for a given category.
  * @param {string} category - The current category.
  * @returns {{ prev: string, next: string }} The previous and next categories.
  */
@@ -243,13 +243,13 @@ function getPrevAndNextCategory(category) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 17:07:17 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 18:35:47 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

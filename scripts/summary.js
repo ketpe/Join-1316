@@ -17,7 +17,7 @@ let isStartupSummary = false;
 /**
  * @function onLoadSummary
  * @memberof summary
- * Initializes the summary page based on the current window size and URL parameters.
+ * @description Initializes the summary page based on the current window size and URL parameters.
  * @async
  * @returns {Promise<void>}
  */
@@ -40,7 +40,7 @@ async function onLoadSummary() {
 /**
  * @function onSummaryPageResize
  * @memberof summary
- * Handles window resize events to switch between mobile and desktop views.
+ * @description Handles window resize events to switch between mobile and desktop views.
  * @async
  * @function onSummaryPageResize
  * @returns {Promise<void>}
@@ -67,7 +67,7 @@ async function onSummaryPageResize() {
 /**
  * @function getURLParameter
  * @memberof summary
- * Parses URL parameters to determine if the summary page is being loaded at startup.
+ * @description Parses URL parameters to determine if the summary page is being loaded at startup.
  * @function getURLParameter
  * @returns {void}
  */
@@ -85,7 +85,7 @@ function getURLParameter() {
 /**
  * @function loadHtmlComponentsForDesktop   
  * @memberof summary
- * Loads HTML components for the desktop view.
+ * @description Loads HTML components for the desktop view.
  * @async
  * @function loadHtmlComponentsForDesktop
  * @returns {Promise<void>}
@@ -108,7 +108,7 @@ async function loadHtmlComponentsForDesktop() {
 /**
  * @function loadHtmlComponentsForMobile
  * @memberof summary
- * Loads HTML components for the mobile view.
+ * @description Loads HTML components for the mobile view.
  * @async
  * @function loadHtmlComponentsForMobile
  * @returns {Promise<void>}
@@ -130,7 +130,7 @@ async function loadHtmlComponentsForMobile() {
 /**
  * @function loadingSummaryMobileData
  * @memberof summary
- * Handles loading data and animations for the mobile summary view.
+ * @description Handles loading data and animations for the mobile summary view.
  * @async
  * @function loadingSummaryMobileData
  * @returns {Promise<void>}
@@ -152,7 +152,7 @@ async function loadingSummaryMobileData() {
 /**
  * @function includeCSSToHead
  * @memberof summary
- * Includes a CSS file in the document head.
+ * @description Includes a CSS file in the document head.
  * @param {string} href - The path to the CSS file.
  * @return {void}
  */
@@ -167,7 +167,7 @@ function includeCSSToHead(href) {
 /**
  * @function clearAddTaskHtmlBody
  * @memberof summary
- * Clears the current HTML body content.
+ * @description Clears the current HTML body content.
  * @returns {void}
  */
 function clearAddTaskHtmlBody() {

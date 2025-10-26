@@ -9,7 +9,7 @@
 /**
  * @function openDialog
  * @memberof openCloseDialog
- * Opens a dialog and renders specific content
+ * @description Opens a dialog and renders specific content
  * @param {string} dialogId - The ID of the dialog to open
  * @param {Function} renderSpecificFunction - The function to call to render specific content
  * @returns {void}
@@ -24,7 +24,7 @@ function openDialog(dialogId, renderSpecificFunction) {
 /**
  * @function closeDialogByEvent
  * @memberof openCloseDialog
- * Closes the dialog if the event target is the dialog background, close button, cancel button, or create button
+ * @description Closes the dialog if the event target is the dialog background, close button, cancel button, or create button
  * @param {Event} event - The event that triggered the close
  * @param {string} dialogId - The ID of the dialog to close
  * @returns {void}
@@ -45,7 +45,7 @@ function closeDialogByEvent(event, dialogId) {
 /**
  * @function closeDialog
  * @memberof openCloseDialog
- * Closes a dialog
+ * @description Closes a dialog
  * @param {string} dialogId - The ID of the dialog to close
  * @return {void}
  */
@@ -59,7 +59,7 @@ function closeDialog(dialogId) {
 /**
  * @function toggleScrollOnBody
  * @memberof openCloseDialog
- * Toggles the scroll on the body element
+ * @description Toggles the scroll on the body element
  * @param {boolean} open - Whether to open or close the scroll
  * @returns {void}
  */
@@ -71,7 +71,7 @@ function toggleScrollOnBody(open) {
 /**
  * @function addDialogShowClass
  * @memberof openCloseDialog
- * Adds the show class to a dialog
+ * @description Adds the show class to a dialog
  * @param {string} dialogId - The ID of the dialog to show
  * @return {void}
  */
@@ -85,7 +85,7 @@ function addDialogShowClass(dialogId) {
 /**
  * @function addDialogHideClass
  * @memberof openCloseDialog
- * Adds the hide class to a dialog
+ * @description Adds the hide class to a dialog
  * @param {string} dialogId - The ID of the dialog to hide
  */
 function addDialogHideClass(dialogId) {
@@ -97,7 +97,7 @@ function addDialogHideClass(dialogId) {
 /**
  * @function renderAddContactIntoDialog
  * @memberof openCloseDialog
- * Renders the add contact form into the dialog
+ * @description Renders the add contact form into the dialog
  * @return {void}
  */
 function renderAddContactIntoDialog() {
@@ -108,7 +108,7 @@ function renderAddContactIntoDialog() {
 /**
  * @function renderDetailViewTemplate
  * @memberof openCloseDialog
- * Renders the detail view template into the dialog and fetches the task data
+ * @description Renders the detail view template into the dialog and fetches the task data
  * @param {string} taskId - The ID of the task to display
  * @return {Promise<void>}
  */
@@ -120,7 +120,7 @@ async function renderDetailViewTemplate(taskId) {
 /**
  * @function renderAddContactIntoDialogMobile
  * @memberof openCloseDialog
- * Renders the add contact form into the dialog for mobile devices
+ * @description Renders the add contact form into the dialog for mobile devices
  * @return {void}
  */
 function renderAddContactIntoDialogMobile() {
@@ -135,7 +135,7 @@ function renderEditContactIntoDialog(contactId) {
 /**
  * @function renderEditContactIntoDialogMobile
  * @memberof openCloseDialog
- * Renders the edit contact form into the dialog for mobile devices
+ * @description Renders the edit contact form into the dialog for mobile devices
  * @param {string} contactId - The ID of the contact to edit
  */
 function renderEditContactIntoDialogMobile(contactId) {
@@ -146,7 +146,7 @@ function renderEditContactIntoDialogMobile(contactId) {
 /**
  * @function openSwapMobileMenu
  * @memberof openCloseDialog
- * Opens the swap mobile menu
+ * @description Opens the swap mobile menu
  * @param {Event} event - The event that triggered the menu opening
  * @param {string} id - The ID of the task
  */
@@ -163,7 +163,7 @@ function openSwapMobileMenu(event, id) {
 /**
  * @function closeSwapMobileMenu
  * @memberof openCloseDialog
- * Closes the swap mobile menu
+ * @description Closes the swap mobile menu
  * @param {Event} event - The event that triggered the menu closing
  * @param {string} id - The ID of the task
  */

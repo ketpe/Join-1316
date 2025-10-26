@@ -4,14 +4,13 @@
  * Designed to be used in conjunction with a task management application.
  * Example usage:
  * const taskElements = new TaskElements(currentInstance);
- * @property {string} currentInstance - The current instance of the task management application.
  */
 
 class TaskElements{
 
     /**
      * Creates an instance of the TaskElements class.
-     * @param {*} currentInstance - The current instance of the task management application.
+     * @param {string} currentInstance - The current instance name of the task management application.
      */
     constructor(currentInstance){
         this.currentInstance = currentInstance;

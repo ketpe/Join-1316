@@ -17,7 +17,7 @@
 /**
  * @function loginLoaded
  * @memberof login
- * Function to be called when the login page is loaded.
+ * @description Function to be called when the login page is loaded.
  * @returns {void}
  */
 function loginLoaded() {
@@ -42,7 +42,7 @@ function loginLoaded() {
 /**
  * @function resetAllParameter
  * @memberof login
- * Resets all login parameters.
+ * @description Resets all login parameters.
  * Sets email and password input fields to empty and log status to '0'.
  * @returns {void}
  */
@@ -57,7 +57,7 @@ function resetAllParameter() {
 /**
  * @function changeAnimationToMobileMode
  * @memberof login
- * Changes the login animation to mobile mode.
+ * @description Changes the login animation to mobile mode.
  * @returns {void}
  */
 function changeAnimationToMobileMode() {
@@ -72,7 +72,7 @@ function changeAnimationToMobileMode() {
 /**
  * @function changeAnimationToDesktopMode
  * @memberof login
- * Changes the login animation to desktop mode.
+ * @description Changes the login animation to desktop mode.
  * @returns {void}
  */
 function changeAnimationToDesktopMode() {
@@ -85,7 +85,7 @@ function changeAnimationToDesktopMode() {
 /**
  * @function loginResize
  * @memberof login
- * Function to be called on window resize event on login page.
+ * @description Function to be called on window resize event on login page.
  * @returns {void}
  */
 function loginResize() {
@@ -100,7 +100,7 @@ function loginResize() {
 /**
  * @function loginFormSubmit
  * @memberof login
- * Function to be called on login form submission.
+ * @description Function to be called on login form submission.
  * @param {Event} event
  * @return {void}
  */
@@ -115,14 +115,14 @@ function loginFormSubmit(event) {
 /**
  * @function loginInputFieldsOnInput
  * @memberof login
- * Function to be called on login input fields.
+ * @description Function to be called on login input fields.
  * @param {HTMLElement} input 
  * @returns {void}
  */
 function loginInputFieldsOnInput(input) {
-    if(!input){return;}
+    if (!input) { return; }
 
-    if(input.value && input.value.length >= 3){
+    if (input.value && input.value.length >= 3) {
         removeErrorMessage('login-error-text');
     }
 }
@@ -130,15 +130,15 @@ function loginInputFieldsOnInput(input) {
 /**
  * @function loginInputFieldsOnBlur
  * @memberof login
- * Function to be called on login input fields.
+ * @description Function to be called on login input fields.
  * @param {HTMLElement} input 
  * @returns {void}
  */
-function loginInputFieldsOnBlur(input){
-    if(!input){return;}
-    if(input.value && input.value.length >= 3){
+function loginInputFieldsOnBlur(input) {
+    if (!input) { return; }
+    if (input.value && input.value.length >= 3) {
         toggleBorderColorByError(input.id, true);
-    }else{
+    } else {
         toggleBorderColorByError(input.id, false);
     }
 }
@@ -146,7 +146,7 @@ function loginInputFieldsOnBlur(input){
 /**
  * @function checkLogin
  * @memberof login
- * Function to check login credentials.
+ * @description Function to check login credentials.
  * Redirects to summary page on success, shows error on failure.
  * Reads user data from Firebase.
  * @param {string} email 
@@ -170,7 +170,7 @@ async function checkLogin(email, password) {
 /**
  * @function loginGuest
  * @memberof login
- * Function to login as guest.
+ * @description Function to login as guest.
  * Sets log status to 'Guest' and navigates to summary page.
  * @returns {void}
  */

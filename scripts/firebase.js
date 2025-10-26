@@ -28,7 +28,9 @@ signInAnonymously(auth).catch(err => console.error("Login-Fehler:", err));
 
 /**
  * @function onAuthStateChanged
- * Monitors authentication state changes.
+ * @description Monitors authentication state changes.
  * @param {function} callback - The callback function to execute on auth state change.
+ * @returns {void}
  */
+
 export { auth, db, onAuthStateChanged };

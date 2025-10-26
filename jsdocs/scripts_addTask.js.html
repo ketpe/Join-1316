@@ -27,16 +27,18 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @fileoverview
  * @namespace addTask
- * Script for managing the Add Task page layout and functionality.
+ * @description Script for managing the Add Task page layout and functionality.
  * Adjusts the layout based on window size and handles user interactions.
  * Utilizes helper classes for task management and UI rendering.
  * Loaded by add task page.
  * @file scripts/addTask.js
  */
 
-
+/**
+ * @memberof addTask
+ * @description Constants for different device types and breakpoints.
+ */
 const MOBILE = "mobile";
 const DESKTOP = "desktop";
 const DESKTOPSINGLE = "desktopSingle";
@@ -53,7 +55,7 @@ let resizeLock = false;
 
 
 /**
- * Initializes the Add Task page on load.
+ * @description Initializes the Add Task page on load.
  * Sets up the layout based on the current window size and adjusts form field sizes.
  * @function onLoadAddTask
  * @memberof addTask
@@ -74,7 +76,7 @@ async function onLoadAddTask() {
 }
 
 /** 
- * Handles window resize events to adjust the Add Task page layout.
+ * @description Handles window resize events to adjust the Add Task page layout.
  * Uses a lock to prevent multiple simultaneous executions.
  * Adjusts the layout based on predefined breakpoints and resizes form fields accordingly.
  * @function addTaskPageResize
@@ -105,7 +107,7 @@ async function addTaskPageResize() {
 }
 
 /**
- * Changes the Add Task view to desktop mode.
+ * @description Changes the Add Task view to desktop mode.
  * Loads the necessary HTML components and adjusts the view to standard mode.
  * Also loads data for the Add Task view and sets the navigation button as active.
  * @function changeAddTaskToDesktop
@@ -122,13 +124,14 @@ async function changeAddTaskToDesktop() {
 }
 
 /**
- * Changes the Add Task view to desktop single-column mode.
+ * @description Changes the Add Task view to desktop single-column mode.
  * Loads the necessary HTML components and adjusts the view to standard mode.
  * Also loads data for the Add Task view and sets the navigation button as active.
  * @function changeAddTaskToDesktopSingle
  * @memberof addTask
  * @returns {Promise&lt;void>}
  */
+ 
 async function changeAddTaskToDesktopSingle() {
     currentView = DESKTOPSINGLE;
     await loadHtmlComponentsForDesktopSingle();
@@ -138,7 +141,7 @@ async function changeAddTaskToDesktopSingle() {
 }
 
 /**
- * Changes the Add Task view to mobile mode.
+ * @description Changes the Add Task view to mobile mode.
  * Loads the necessary HTML components and loads data for the Add Task view.
  * Also sets the navigation button as active.
  * @function changeAddTaskToMobile
@@ -154,7 +157,7 @@ async function changeAddTaskToMobile() {
 }
 
 /**
- * Changes the size of the form fields in the Add Task view based on the current layout.
+ * @description Changes the size of the form fields in the Add Task view based on the current layout.
  * @function changeAddTaskFormFieldSize
  * @memberof addTask
  * @param {number} height The current height of the form fields.
@@ -182,7 +185,7 @@ function changeAddTaskFormFieldSize(height, width, currentView) {
 }
 
 /**
- * Loads the HTML components for the Add Task view in desktop mode.
+ * @description Loads the HTML components for the Add Task view in desktop mode.
  * Clears the current body content and includes necessary HTML files for the layout.
  * Fills the HTML with content after loading the components.
  * @function loadHtmlComponentsForDesktop
@@ -203,13 +206,14 @@ async function loadHtmlComponentsForDesktop() {
 }
 
 /**
- * Loads the HTML components for the Add Task view in desktop single-column mode.
+ * @description Loads the HTML components for the Add Task view in desktop single-column mode.
  * Clears the current body content and includes necessary HTML files for the layout.
  * Fills the HTML with content after loading the components.
  * @function loadHtmlComponentsForDesktopSingle
  * @memberof addTask
  * @returns {Promise&lt;void>}
  */
+ 
 async function loadHtmlComponentsForDesktopSingle() {
     clearAddTaskHtmlBody();
     await includeHtmlForNode("body", "addTaskDesktop.html");
@@ -225,7 +229,7 @@ async function loadHtmlComponentsForDesktopSingle() {
 }
 
 /**
- * Loads the HTML components for the Add Task view in mobile mode.
+ * @description Loads the HTML components for the Add Task view in mobile mode.
  * Clears the current body content and includes necessary HTML files for the layout.
  * Fills the HTML with content after loading the components.
  * @function loadHtmlComponentsForMobile
@@ -248,7 +252,7 @@ async function loadHtmlComponentsForMobile() {
 }
 
 /**
- * Clears the current HTML body content.
+ * @description Clears the current HTML body content.
  * This is used before loading new HTML components for the Add Task view.
  * @function clearAddTaskHtmlBody
  * @memberof addTask
@@ -258,7 +262,8 @@ function clearAddTaskHtmlBody() {
     document.querySelector('body').innerHTML = "";
 }
 
-/** Fills the HTML with content for the Add Task view.
+/** 
+ * @description Fills the HTML with content for the Add Task view.
  * Initializes the TaskElements class and populates the left and right containers.
  * Sets up the form submission function and button click handlers.
  * @function fillHtmlWithContent
@@ -274,7 +279,7 @@ async function fillHtmlWithContent() {
 }
 
 /**
- * Fills the mobile HTML with content for the Add Task view.
+ * @description Fills the mobile HTML with content for the Add Task view.
  * Initializes the AddTaskMobileUtil class and renders the mobile components.
  * Sets up the form submission function.
  * @function fillMobileHtmlWithContent
@@ -290,7 +295,7 @@ async function fillMobileHtmlWithContent() {
 
 
 /**
- * Changes the Add Task view to standard (non-dialog) mode by adjusting classes and attributes.
+ * @description Changes the Add Task view to standard (non-dialog) mode by adjusting classes and attributes.
  * @function changeAddTaskViewToStandard
  * @memberof addTask
  * @returns {void}
@@ -307,7 +312,7 @@ function changeAddTaskViewToStandard() {
 
 
 /**
- * Loads necessary data for the Add Task view, including contacts and categories.
+ * @description Loads necessary data for the Add Task view, including contacts and categories.
  * Renders the user's initial and reads the current user ID and guest status.
  * Initializes the TaskComponents class if not already done and applies data to the view.
  * @function loadDataForAddTask
@@ -348,13 +353,13 @@ async function loadDataForAddTask() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 17:07:17 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 18:35:47 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

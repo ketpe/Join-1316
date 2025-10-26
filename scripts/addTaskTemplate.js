@@ -6,7 +6,7 @@
  */
 
 /**
- * Generates the HTML for a contact list element.
+ * @description Generates the HTML for a contact list element.
  * @function getContactListElement
  * @memberof addTaskTemplate
  * @param {Object} contact - The contact information.
@@ -29,7 +29,7 @@ function getContactListElement(contact, isAssinged, isdetailView = false, taskIn
 }
 
 /**
- * Generates the HTML for an assigned contact badge.
+ * @description Generates the HTML for an assigned contact badge.
  * @function getAssignedContactBadge
  * @memberof addTaskTemplate
  * @param {Object} contact - The contact information.
@@ -42,7 +42,7 @@ function getAssignedContactBadge(contact) {
 }
 
 /**
- * Generates the HTML for a category list element.
+ * @description Generates the HTML for a category list element.
  * @function getCategoryListElement
  * @memberof addTaskTemplate
  * @param {Object} category - The category information.
@@ -58,7 +58,7 @@ function getCategoryListElement(category, taskInstance) {
 }
 
 /**
- * Generates the HTML for a read-only subtask list element.
+ * @description Generates the HTML for a read-only subtask list element.
  * @function getSubtaskListElementReadOnly
  * @memberof addTaskTemplate
  * @param {Object} subTask - The subtask information.
@@ -86,7 +86,7 @@ function getSubtaskListElementReadOnly(subTask, taskInstance) {
 }
 
 /**
- * Generates the HTML for a subtask list element in edit mode.
+ * @description Generates the HTML for a subtask list element in edit mode.
  * @function getSubtaskListElementForChanging
  * @memberof addTaskTemplate
  * @param {Object} subTask - The subtask information.
@@ -116,7 +116,7 @@ function getSubtaskListElementForChanging(subTask, taskInstance) {
 }
 
 /**
- * Generates the HTML for a subtask detail view.
+ * @description Generates the HTML for a subtask detail view.
  * @function getSubtaskForDetailView
  * @memberof addTaskTemplate
  * @param {Object} currentSubtask - The current subtask information.

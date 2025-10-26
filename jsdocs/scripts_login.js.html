@@ -45,7 +45,7 @@
 /**
  * @function loginLoaded
  * @memberof login
- * Function to be called when the login page is loaded.
+ * @description Function to be called when the login page is loaded.
  * @returns {void}
  */
 function loginLoaded() {
@@ -70,7 +70,7 @@ function loginLoaded() {
 /**
  * @function resetAllParameter
  * @memberof login
- * Resets all login parameters.
+ * @description Resets all login parameters.
  * Sets email and password input fields to empty and log status to '0'.
  * @returns {void}
  */
@@ -85,7 +85,7 @@ function resetAllParameter() {
 /**
  * @function changeAnimationToMobileMode
  * @memberof login
- * Changes the login animation to mobile mode.
+ * @description Changes the login animation to mobile mode.
  * @returns {void}
  */
 function changeAnimationToMobileMode() {
@@ -100,7 +100,7 @@ function changeAnimationToMobileMode() {
 /**
  * @function changeAnimationToDesktopMode
  * @memberof login
- * Changes the login animation to desktop mode.
+ * @description Changes the login animation to desktop mode.
  * @returns {void}
  */
 function changeAnimationToDesktopMode() {
@@ -113,7 +113,7 @@ function changeAnimationToDesktopMode() {
 /**
  * @function loginResize
  * @memberof login
- * Function to be called on window resize event on login page.
+ * @description Function to be called on window resize event on login page.
  * @returns {void}
  */
 function loginResize() {
@@ -128,7 +128,7 @@ function loginResize() {
 /**
  * @function loginFormSubmit
  * @memberof login
- * Function to be called on login form submission.
+ * @description Function to be called on login form submission.
  * @param {Event} event
  * @return {void}
  */
@@ -143,14 +143,14 @@ function loginFormSubmit(event) {
 /**
  * @function loginInputFieldsOnInput
  * @memberof login
- * Function to be called on login input fields.
+ * @description Function to be called on login input fields.
  * @param {HTMLElement} input 
  * @returns {void}
  */
 function loginInputFieldsOnInput(input) {
-    if(!input){return;}
+    if (!input) { return; }
 
-    if(input.value &amp;&amp; input.value.length >= 3){
+    if (input.value &amp;&amp; input.value.length >= 3) {
         removeErrorMessage('login-error-text');
     }
 }
@@ -158,15 +158,15 @@ function loginInputFieldsOnInput(input) {
 /**
  * @function loginInputFieldsOnBlur
  * @memberof login
- * Function to be called on login input fields.
+ * @description Function to be called on login input fields.
  * @param {HTMLElement} input 
  * @returns {void}
  */
-function loginInputFieldsOnBlur(input){
-    if(!input){return;}
-    if(input.value &amp;&amp; input.value.length >= 3){
+function loginInputFieldsOnBlur(input) {
+    if (!input) { return; }
+    if (input.value &amp;&amp; input.value.length >= 3) {
         toggleBorderColorByError(input.id, true);
-    }else{
+    } else {
         toggleBorderColorByError(input.id, false);
     }
 }
@@ -174,7 +174,7 @@ function loginInputFieldsOnBlur(input){
 /**
  * @function checkLogin
  * @memberof login
- * Function to check login credentials.
+ * @description Function to check login credentials.
  * Redirects to summary page on success, shows error on failure.
  * Reads user data from Firebase.
  * @param {string} email 
@@ -198,7 +198,7 @@ async function checkLogin(email, password) {
 /**
  * @function loginGuest
  * @memberof login
- * Function to login as guest.
+ * @description Function to login as guest.
  * Sets log status to 'Guest' and navigates to summary page.
  * @returns {void}
  */
@@ -222,13 +222,13 @@ function loginGuest() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 17:07:17 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 18:35:47 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

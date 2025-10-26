@@ -42,7 +42,7 @@ const breakPointToDesktopSingle = 1180;
 /**
  * @function onLoadContacts
  * @memberof contacts
- * Initializes the Contacts page on load.
+ * @description Initializes the Contacts page on load.
  * Sets up the layout based on the current window size and renders the contact list.
  * @returns {Promise&lt;void>}
  */
@@ -65,7 +65,7 @@ async function onLoadContacts() {
 /**
  * @function renderContacts
  * @memberof contacts
- * Renders the contact list by fetching sorted contacts from the Firebase database.
+ * @description Renders the contact list by fetching sorted contacts from the Firebase database.
  * Populates the contact list in the UI with headers for each starting letter.
  * @returns {Promise&lt;void>}
  */
@@ -105,7 +105,7 @@ function createContactList(currentLetter, sortedContacts, contactList) {
 /**
  * @function loadHtmlComponentsForDesktop
  * @memberof contacts
- * Loads the HTML components for the Contacts page in desktop mode.
+ * @description Loads the HTML components for the Contacts page in desktop mode.
  * Adjusts the layout and renders the contact list.
  * @returns {Promise&lt;void>}
  */
@@ -130,7 +130,7 @@ async function loadHtmlComponentsForDesktop() {
 /**
  * @function loadHtmlComponentsForMobile
  * @memberof contacts
- * Loads the HTML components for the Contacts page in mobile mode.
+ * @description Loads the HTML components for the Contacts page in mobile mode.
  * Adjusts the layout and renders the contact list.
  * @returns {Promise&lt;void>}
  */
@@ -156,7 +156,7 @@ async function loadHtmlComponentsForMobile() {
 /**
  * @function clearContactsHtmlBody
  * @memberof contacts
- * Clears the body content of the Contacts page.
+ * @description Clears the body content of the Contacts page.
  * @returns {void}
  */
 function clearContactsHtmlBody() {
@@ -166,7 +166,7 @@ function clearContactsHtmlBody() {
 /**
  * @function addContactsPageResize
  * @memberof contacts
- * Adjusts the Contacts page layout on window resize.
+ * @description Adjusts the Contacts page layout on window resize.
  * @returns {Promise&lt;void>}
  */
 async function addContactsPageResize() {
@@ -204,7 +204,7 @@ async function openContactDetail(element) {
 /**
  * @function toggleActiveContactClass
  * @memberof contacts
- * Toggles the active class for the selected contact.
+ * @description Toggles the active class for the selected contact.
  * @param {HTMLElement} activeContact
  * @returns {void}
  */
@@ -221,7 +221,7 @@ function toggleActiveContactClass(activeContact) {
 /**
  * @function clearActiveContactClass
  * @memberof contacts
- * Clears the active contact class and resets the contact list.
+ * @description Clears the active contact class and resets the contact list.
  * @return {void}
  */
 function clearActiveContactClass() {
@@ -233,7 +233,7 @@ function clearActiveContactClass() {
 /**
  * @function onEditContactDialogOpen
  * @memberof contacts
- * Opens the edit contact dialog for the selected contact.
+ * @description Opens the edit contact dialog for the selected contact.
  * @param {string} id
  * @return {void}
  */
@@ -247,7 +247,7 @@ function onEditContactDialogOpen(id) {
 /**
  * @function openContactDetailMobile
  * @memberof contacts
- * Opens the contact detail view in mobile mode.
+ * @description Opens the contact detail view in mobile mode.
  * @param {Object} detailContact
  * @returns {void}
  */
@@ -264,7 +264,7 @@ function openContactDetailMobile(detailContact) {
 /**
  * @function openContactDetailDesktop
  * @memberof contacts
- * Opens the contact detail view in desktop mode.
+ * @description Opens the contact detail view in desktop mode.
  * @param {Object} detailContact
  * @return {void}
  */
@@ -281,7 +281,7 @@ function openContactDetailDesktop(detailContact) {
 /**
  * @function addNewActionBtns
  * @memberof contacts
- * Adds new action buttons to the mobile contact detail view.
+ * @description Adds new action buttons to the mobile contact detail view.
  * @param {Object} detailContact
  * @return {void}
  */
@@ -298,7 +298,7 @@ function addNewActionBtns(detailContact) {
 /**
  * @function backToContactList
  * @memberof contacts
- * Navigates back to the contact list from the contact detail view in mobile mode.
+ * @description Navigates back to the contact list from the contact detail view in mobile mode.
  * @returns {void}
  */
 function backToContactList() {
@@ -315,7 +315,7 @@ function backToContactList() {
 /**
  * @function openActionMenuMobile
  * @memberof contacts
- * Opens the action menu in the mobile contact detail view.
+ * @description Opens the action menu in the mobile contact detail view.
  * @returns {void}
  */
 function openActionMenuMobile() {
@@ -330,7 +330,7 @@ function openActionMenuMobile() {
 /**
  * @function resetActionMenuMobile
  * @memberof contacts
- * Resets the action menu in the mobile contact detail view.
+ * @description Resets the action menu in the mobile contact detail view.
  * @return {void}
  */
 function resetActionMenuMobile() {
@@ -341,7 +341,9 @@ function resetActionMenuMobile() {
     if (btnToRemove) {
         btnToRemove.remove();
     }
-}</code></pre>
+}
+
+</code></pre>
         </article>
     </section>
 
@@ -351,13 +353,13 @@ function resetActionMenuMobile() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 17:07:17 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 18:35:47 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

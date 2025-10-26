@@ -13,7 +13,7 @@ function navigateToSignUp() {
 /**
  * @function navigateToSummary
  * @memberof navigations
- * Navigates to the summary page.
+ * @description Navigates to the summary page.
  * @param {HTMLElement} button
  * @param {boolean} isFromLogin
  * @returns {void}
@@ -30,7 +30,7 @@ function navigateToSummary(button, isFromLogin=false) {
 /**
  * @function navigateToContact
  * @memberof navigations
- * Navigates to the contact page.
+ * @description Navigates to the contact page.
  * @param {HTMLElement} button
  * @returns {void}
  */
@@ -42,7 +42,7 @@ function navigateToContact(button) {
 /**
  * @function navigateToPrivacy
  * @memberof navigations
- * Navigates to the privacy policy page.
+ * @description Navigates to the privacy policy page.
  * @param {Event} event
  * @param {string} login
  * @return {void}
@@ -60,7 +60,7 @@ function navigateToPrivacy(event, login = "") {
 /**
  * @function navigateToLegalNotice
  * @memberof navigations
- *  Navigates to the legal notice page.
+ * @description Navigates to the legal notice page.
  * @param {Event} event
  * @param {string} loginOrSignin
  * @return {void}
@@ -77,7 +77,7 @@ function navigateToLegalNotice(event, loginOrSignin = "") {
 /**
  * @function navigateToLogin
  * @memberof navigations
- * Navigates to the login page and sets the log status to '0'.
+ * @description Navigates to the login page and sets the log status to '0'.
  * This function changes the current window location to the login page URL.
  * It also updates the log status in local storage to indicate that the user is logged out.
  * @returns {void}
@@ -90,7 +90,7 @@ function navigateToLogin() {
 /**
  * @function navigateToHelp
  * @memberof navigations
- * Navigates to the help page.
+ * @description Navigates to the help page.
  * @returns {void}
  */
 function navigateToHelp() {
@@ -100,7 +100,7 @@ function navigateToHelp() {
 /**
  * @function navigateToAddTask
  * @memberof navigations
- * Navigates to the add task page.
+ * @description Navigates to the add task page.
  * @param {HTMLElement} button
  * @returns {void}
  */
@@ -115,7 +115,7 @@ function navigateToAddTask(button) {
 /**
  * @function navigateToBoard
  * @memberof navigations
- * Navigates to the board page.
+ * @description Navigates to the board page.
  * @param {HTMLElement} button
  * @returns {void}
  */
@@ -130,7 +130,7 @@ function navigateToBoard(button) {
 /**
  * @function setNavigationButtonActive
  * @memberof navigations
- * Sets the active state of the navigation button based on the current view.
+ * @description Sets the active state of the navigation button based on the current view.
  * This function updates the button's appearance and state to reflect the active view.
  * @param {string} viewName
  * @param {string} desktopOrMobile
@@ -157,7 +157,7 @@ function setNavigationButtonActive(viewName, desktopOrMobile) {
 /**
  * @function resetNavButtonsOnDesktop
  * @memberof navigations
- * Resets the active state of the navigation buttons on the desktop.
+ * @description Resets the active state of the navigation buttons on the desktop.
  * @param {Element[]} buttons
  * @param {string} activeClass
  * @returns {void}
@@ -172,7 +172,7 @@ function resetNavButtonsOnDesktop(buttons, activeClass) {
 /**
  * @function getNavButtons
  * @memberof navigations
- * Gets the navigation buttons within a specific container.
+ * @description Gets the navigation buttons within a specific container.
  * @param {string} containerClass
  * @returns {Element[] | null}
  */

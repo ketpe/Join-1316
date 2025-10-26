@@ -11,7 +11,7 @@ let draggedTask = null;
 /**
  * @function startDrag
  * @memberof dragAndDrop
- * Initiates the drag operation for a task.
+ * @description Initiates the drag operation for a task.
  * @param {*} event 
  * @param {Task} task 
  * @return {void}
@@ -29,7 +29,7 @@ function startDrag(event, task) {
 /**
  * @function getCurrentColumnId
  * @memberof dragAndDrop
- * Gets the ID of the current column for a task.
+ * @description Gets the ID of the current column for a task.
  * @param {Task} task 
  * @returns {string} The ID of the current column.
  */
@@ -41,7 +41,7 @@ function getCurrentColumnId(task) {
 /**
  * @function hideAllDropzones
  * @memberof dragAndDrop
- * Hides all drop zones in the Kanban board.
+ * @description Hides all drop zones in the Kanban board.
  * @return {void}
  */
 function hideAllDropzones() {
@@ -55,7 +55,7 @@ function hideAllDropzones() {
 /**
  * @function getAllowedColumns
  * @memberof dragAndDrop
- * Gets the allowed columns for a task based on its current column.
+ * @description Gets the allowed columns for a task based on its current column.
  * @param {string} currentColumnId - The ID of the current column.
  * @returns {Array<string>} The array of allowed column IDs.
  */
@@ -72,7 +72,7 @@ function getAllowedColumns(currentColumnId) {
 /**
  * @function showAllowedDropzones
  * @memberof dragAndDrop
- * Shows the allowed dropzones for a task being dragged.
+ * @description Shows the allowed dropzones for a task being dragged.
  * @param {Array<string>} allowedColumns - The array of allowed column IDs.
  * @return {void}
  */
@@ -92,7 +92,7 @@ function showAllowedDropzones(allowedColumns) {
 /**
  * @function endDrag
  * @memberof dragAndDrop
- * Ends the drag operation for a task.
+ * @description Ends the drag operation for a task.
  * @param {Task} task - The task being dragged.
  * @return {void}
  */
@@ -108,7 +108,7 @@ function endDrag(task) {
 /**
  * @function dropTask
  * @memberof dragAndDrop
- * Handles the drop event for a task.
+ * @description Handles the drop event for a task.
  * @param {DragEvent} event - The drag event.
  * @param {HTMLElement} column - The column element where the task is dropped.
  * @return {Promise<void>}
@@ -131,7 +131,7 @@ async function dropTask(event, column) {
 /**
  * @function moveTaskToCategory
  * @memberof dragAndDrop
- * Moves a task to a new category.
+ * @description Moves a task to a new category.
  * @param {string} taskId - The ID of the task to move.
  * @param {string} newCategory - The new category to move the task to.
  * @returns {Promise<void>}
@@ -149,7 +149,7 @@ async function moveTaskToCategory(taskId, newCategory) {
 /**
  * @function rewriteCategory
  * @memberof dragAndDrop
- * Rewrites the category name to a standardized format.
+ * @description Rewrites the category name to a standardized format.
  * @param {string} cat - The category name to rewrite.
  * @returns {string} The rewritten category name.
  */
@@ -163,7 +163,7 @@ function rewriteCategory(cat) {
 /**
  * @function moveTaskInDom
  * @memberof dragAndDrop
- * Moves a task in the DOM to a new category.
+ * @description Moves a task in the DOM to a new category.
  * @param {string} taskId - The ID of the task to move.
  * @param {string} newCategory - The new category to move the task to.
  * @return {void}
@@ -181,7 +181,7 @@ function moveTaskInDom(taskId, newCategory) {
 /**
  * @function updateBtnAfterMovingTask
  * @memberof dragAndDrop
- * Updates the button states after moving a task.
+ * @description Updates the button states after moving a task.
  * @param {string} taskId - The ID of the task that was moved.
  * @param {string} newCategory - The new category of the task.
  * @return {void}
@@ -196,7 +196,7 @@ function updateBtnAfterMovingTask(taskId, newCategory) {
 /**
  * @function getPrevAndNextCategory
  * @memberof dragAndDrop
- * Gets the previous and next category for a given category.
+ * @description Gets the previous and next category for a given category.
  * @param {string} category - The current category.
  * @returns {{ prev: string, next: string }} The previous and next categories.
  */

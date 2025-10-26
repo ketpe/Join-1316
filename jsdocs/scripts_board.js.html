@@ -134,7 +134,7 @@ function clearBoardHtmlBody() {
  * @returns {Promise&lt;void>} - A promise that resolves when the tasks have been fetched and rendered.
 */
 async function getBoardTasks() {
-    const { taskContentelements } = getHtmlTasksContent();
+    const { taskContentElements } = getHtmlTasksContent();
     const fb = new FirebaseDatabase();
     let tasks = await fb.getFirebaseLogin(() => fb.getAllData("tasks"));
     tasks = await getDatabaseTaskCategory(tasks);
@@ -170,7 +170,7 @@ async function addBoardPageResize() {
  * @function kanbanUpdateSizeDesktop
  * @memberof board
  * @description Updates the height of the Kanban board for Desktop based on the window size and header heights.
- * This function calculates the available height for the Kanban board by subtracting the heights of the header and board header from the total window height, 
+ * This function calculates the available height for the Kanban board by subtracting the heights of the header and board header from the total window height,
  * and then sets the height of the Kanban board element accordingly.
  * @returns {void}
  */
@@ -185,7 +185,7 @@ function kanbanUpdateSizeDesktop() {
  * @function kanbanUpdateSizeMobile
  * @memberof board
  * @description Updates the height of the Kanban board for mobile view based on the window size and header heights.
- * This function calculates the available height for the Kanban board by subtracting the heights of the header and 
+ * This function calculates the available height for the Kanban board by subtracting the heights of the header and
  * mobile navigation from the total window height, and then sets the height of the mobile Kanban board element accordingly.
  * @return {void}
  */
@@ -309,7 +309,7 @@ function getSubTaskSumOfTrue(tasks) {
  * @function getDatabaseTaskContact
  * @memberof board
  * @description Retrieves the assigned contacts from the database for the given tasks.
- * @param {Array} tasks - The list of tasks to retrieve assigned contacts for.
+ * @param {Array} tasks - The list of tasks del retrieve assigned contacts for.
  * @returns {Promise&lt;Array>} - The updated list of tasks with assigned contact data.
  */
 async function getDatabaseTaskContact(tasks) {
@@ -399,7 +399,7 @@ function getBoardTaskref() {
     taskContentElements = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
     return taskContentElements;
 }
-/** 
+/**
  * @function addLeftPositionStyleassignedContacts
  * @memberof board
  * @description Adds left position styles to assigned contact elements within task cards to ensure proper overlapping display.
@@ -416,7 +416,7 @@ function addLeftPositionStyleassignedContacts() {
 }
 
 /**
- * @function getDetailViewTask  
+ * @function getDetailViewTask
  * @memberof board
  * @description Fetches task details and renders them in the detail view dialog
  * @param {string} taskId - The ID of the task to fetch details for
@@ -463,7 +463,7 @@ async function deleteCurrentTask(button) {
     const taskDelete = new BoardTaskDetailDeleteUtil(currentTaskID);
     if (await taskDelete.startDelete()) {
         closeDialog('detail-view-task-dialog');
-        getBoardTaskWithLoadingAnimation();
+        navigateToBoard();
     }
 
 }
@@ -647,13 +647,13 @@ function getRefsForSearch() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 17:07:17 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 18:35:47 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

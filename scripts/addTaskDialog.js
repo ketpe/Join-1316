@@ -1,7 +1,6 @@
 /**
- * @fileoverview
  * @namespace addTaskDialog
- * Handles the opening and closing of the Add Task dialog.
+ * @description Handles the opening and closing of the Add Task dialog.
  * Manages the rendering of content within the dialog and adjusts the view for dialog presentation.
  * Also includes utility functions for creating test data and defining data models.
  * Loaded by board detail view page
@@ -19,7 +18,7 @@ let resizeLockDialog = false;
 let currentDialogView = "desktop";
 
 /**
- * Opens the Add Task dialog, renders the content, and adjusts the view for dialog presentation.
+ * @description Opens the Add Task dialog, renders the content, and adjusts the view for dialog presentation.
  * This function is asynchronous to accommodate data loading and rendering processes.
  * @function onAddTaskDialogOpen
  * @memberof addTaskDialog
@@ -44,7 +43,7 @@ async function onAddTaskDialogOpen() {
 }
 
 /**
- * Handles the resizing of the Add Task dialog.
+ * @description Handles the resizing of the Add Task dialog.
  * @function resizeAddTaskBoardDialog
  * @memberof addTaskDialog
  * @param {Event} event - The resize event.
@@ -74,7 +73,7 @@ async function resizeAddTaskBoardDialog(event) {
 }
 
 /**
- * Displays the Add Task dialog in desktop mode.
+ * @description Displays the Add Task dialog in desktop mode.
  * Captures current form data, clears dialog content, and renders the Add Task components.
  * Adjusts the dialog view for desktop presentation.
  * @function showAddTaskAsDialog
@@ -93,7 +92,7 @@ async function showAddTaskAsDialog() {
 }
 
 /**
- * Displays the Add Task dialog in desktop single-column mode.
+ * @description Displays the Add Task dialog in desktop single-column mode.
  * Captures current form data, clears dialog content, and renders the Add Task components.
  * Adjusts the dialog view for single-column presentation.
  * @function showAddTaskAsDialogSingle
@@ -111,7 +110,7 @@ async function showAddTaskAsDialogSingle() {
 }
 
 /**
- * Loads data for the Add Task dialog.
+ * @description Loads data for the Add Task dialog.
  * Initializes the TaskComponents class if not already done, sets up button functions, and applies data to the view.
  * @function loadDataForAddTaskDialog
  * @memberof addTaskDialog
@@ -132,7 +131,7 @@ async function loadDataForAddTaskDialog() {
 }
 
 /**
- * Clears the content of the Add Task dialog.
+ * @description Clears the content of the Add Task dialog.
  * This function removes all HTML content from the dialog's content area.
  * @function clearDialogContent
  * @memberof addTaskDialog
@@ -143,7 +142,7 @@ function clearDialogContent() {
 }
 
 /**
- * Gives necessary functions to the board body element.
+ * @description Gives necessary functions to the board body element.
  * @function giveFunctionsToBoardBody
  * @memberof addTaskDialog
  * @returns {void}      
@@ -156,7 +155,7 @@ function giveFunctionsToBoardBody() {
 }
 
 /**
- * Check if can close the dialog.
+ * @description Check if can close the dialog.
  * This function is triggered when the user attempts to close the dialog.
  * It hides the dialog and resets any form fields as necessary.
  * @function addTaskDialogClose
@@ -185,7 +184,7 @@ function addTaskDialogClose(event) {
 
 
 /**
- * Closes the specified dialog.
+ * @description Closes the specified dialog.
  * @function closeTheDialog
  * @memberof addTaskDialog
  * @param {HTMLDialogElement} dialog - The dialog element to close.
@@ -207,7 +206,7 @@ function closeTheDialog(dialog, dialogID="") {
 }
 
 /**
- * Toggles the scroll on the body element.
+ * @description Toggles the scroll on the body element.
  * This function adds or removes the 'dialog-open' class on the body element,
  * which controls the scrolling behavior when a dialog is open.
  * @function addTaskDialogtoggleScrollOnBody
@@ -221,7 +220,7 @@ function addTaskDialogtoggleScrollOnBody(addClass) {
 }
 
 /**
- * Renders the Add Task content into the dialog.
+ * @description Renders the Add Task content into the dialog.
  * This function is asynchronous to accommodate the loading of HTML content.
  * It uses the includeHtml function to load the 'addTaskContent.html' file into the dialog's content area.
  * @function renderAddTaskIntoDialog
@@ -238,7 +237,7 @@ async function renderAddTaskIntoDialog() {
 }
 
 /**
- * Renders the Add Task content into the dialog in single-column mode.
+ * @description Renders the Add Task content into the dialog in single-column mode.
  * This function is asynchronous to accommodate the loading of HTML content.
  * It uses the includeHtml function to load the 'addTaskContentSingle.html' file into the dialog's content area.
  * It also initializes and starts rendering the Add Task Mobile utilities.
@@ -259,7 +258,7 @@ async function renderAddTaskIntoDialogSingle() {
 }
 
 /**
- * Adjusts the form field sizes for the Add Task dialog in single-column mode.
+ * @description Adjusts the form field sizes for the Add Task dialog in single-column mode.
  * This function calculates the appropriate heights for the dialog and its fields based on the current window size.
  * It ensures that the form fields are displayed correctly within the dialog.
  * @function changeAddTaskFormFieldSizeBoardDialogSingle
@@ -279,7 +278,7 @@ function changeAddTaskFormFieldSizeBoardDialogSingle() {
 }
 
 /**
- * Adjusts the form field sizes for the Add Task dialog in board mode.
+ * @description Adjusts the form field sizes for the Add Task dialog in board mode.
  * This function calculates the appropriate heights for the dialog and its fields based on the current window size.
  * It ensures that the form fields are displayed correctly within the dialog.   
  * @function changeAddTaskFormFieldSizeBoardDialog
@@ -295,7 +294,7 @@ function changeAddTaskFormFieldSizeBoardDialog(params) {
 }
 
 /**
- * Changes the dialog style to single-column mode.
+ * @description Changes the dialog style to single-column mode.
  * @function changeDialogStyleToSingle
  * @memberof addTaskDialog
  * @returns {void}
@@ -315,7 +314,8 @@ function changeDialogStyleToSingle() {
 }
 
 
-/** Changes the view of the Add Task form to be suitable for dialog presentation.
+/** 
+ * @description Changes the view of the Add Task form to be suitable for dialog presentation.
  * This function adjusts various elements' classes to ensure the form is displayed correctly within a dialog.
  * It modifies visibility, layout, and styling to enhance user experience in the dialog context.
  * @function changeAddTaskViewToDialog
@@ -334,7 +334,8 @@ function changeAddTaskViewToDialog() {
     document.querySelector('.add-task-head').classList.add('mb-24');
 }
 
-/** Adds the show class to the Add Task dialog.
+/** 
+ * @description Adds the show class to the Add Task dialog.
  * This function modifies the dialog's classes to make it visible with appropriate styling.
  * @function addDialogShowClass
  * @memberof addTaskDialog
@@ -346,7 +347,8 @@ function addDialogShowClass() {
     dialog.classList.add('dialog-show');
 }
 
-/** Adds the hide class to the Add Task dialog.
+/** 
+ * @description Adds the hide class to the Add Task dialog.
  * This function modifies the dialog's classes to hide it with appropriate styling.
  * @function addDialogHideClass
  * @memberof addTaskDialog

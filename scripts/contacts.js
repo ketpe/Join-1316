@@ -14,7 +14,7 @@ const breakPointToDesktopSingle = 1180;
 /**
  * @function onLoadContacts
  * @memberof contacts
- * Initializes the Contacts page on load.
+ * @description Initializes the Contacts page on load.
  * Sets up the layout based on the current window size and renders the contact list.
  * @returns {Promise<void>}
  */
@@ -37,7 +37,7 @@ async function onLoadContacts() {
 /**
  * @function renderContacts
  * @memberof contacts
- * Renders the contact list by fetching sorted contacts from the Firebase database.
+ * @description Renders the contact list by fetching sorted contacts from the Firebase database.
  * Populates the contact list in the UI with headers for each starting letter.
  * @returns {Promise<void>}
  */
@@ -77,7 +77,7 @@ function createContactList(currentLetter, sortedContacts, contactList) {
 /**
  * @function loadHtmlComponentsForDesktop
  * @memberof contacts
- * Loads the HTML components for the Contacts page in desktop mode.
+ * @description Loads the HTML components for the Contacts page in desktop mode.
  * Adjusts the layout and renders the contact list.
  * @returns {Promise<void>}
  */
@@ -102,7 +102,7 @@ async function loadHtmlComponentsForDesktop() {
 /**
  * @function loadHtmlComponentsForMobile
  * @memberof contacts
- * Loads the HTML components for the Contacts page in mobile mode.
+ * @description Loads the HTML components for the Contacts page in mobile mode.
  * Adjusts the layout and renders the contact list.
  * @returns {Promise<void>}
  */
@@ -128,7 +128,7 @@ async function loadHtmlComponentsForMobile() {
 /**
  * @function clearContactsHtmlBody
  * @memberof contacts
- * Clears the body content of the Contacts page.
+ * @description Clears the body content of the Contacts page.
  * @returns {void}
  */
 function clearContactsHtmlBody() {
@@ -138,7 +138,7 @@ function clearContactsHtmlBody() {
 /**
  * @function addContactsPageResize
  * @memberof contacts
- * Adjusts the Contacts page layout on window resize.
+ * @description Adjusts the Contacts page layout on window resize.
  * @returns {Promise<void>}
  */
 async function addContactsPageResize() {
@@ -176,7 +176,7 @@ async function openContactDetail(element) {
 /**
  * @function toggleActiveContactClass
  * @memberof contacts
- * Toggles the active class for the selected contact.
+ * @description Toggles the active class for the selected contact.
  * @param {HTMLElement} activeContact
  * @returns {void}
  */
@@ -193,7 +193,7 @@ function toggleActiveContactClass(activeContact) {
 /**
  * @function clearActiveContactClass
  * @memberof contacts
- * Clears the active contact class and resets the contact list.
+ * @description Clears the active contact class and resets the contact list.
  * @return {void}
  */
 function clearActiveContactClass() {
@@ -205,7 +205,7 @@ function clearActiveContactClass() {
 /**
  * @function onEditContactDialogOpen
  * @memberof contacts
- * Opens the edit contact dialog for the selected contact.
+ * @description Opens the edit contact dialog for the selected contact.
  * @param {string} id
  * @return {void}
  */
@@ -219,7 +219,7 @@ function onEditContactDialogOpen(id) {
 /**
  * @function openContactDetailMobile
  * @memberof contacts
- * Opens the contact detail view in mobile mode.
+ * @description Opens the contact detail view in mobile mode.
  * @param {Object} detailContact
  * @returns {void}
  */
@@ -236,7 +236,7 @@ function openContactDetailMobile(detailContact) {
 /**
  * @function openContactDetailDesktop
  * @memberof contacts
- * Opens the contact detail view in desktop mode.
+ * @description Opens the contact detail view in desktop mode.
  * @param {Object} detailContact
  * @return {void}
  */
@@ -253,7 +253,7 @@ function openContactDetailDesktop(detailContact) {
 /**
  * @function addNewActionBtns
  * @memberof contacts
- * Adds new action buttons to the mobile contact detail view.
+ * @description Adds new action buttons to the mobile contact detail view.
  * @param {Object} detailContact
  * @return {void}
  */
@@ -270,7 +270,7 @@ function addNewActionBtns(detailContact) {
 /**
  * @function backToContactList
  * @memberof contacts
- * Navigates back to the contact list from the contact detail view in mobile mode.
+ * @description Navigates back to the contact list from the contact detail view in mobile mode.
  * @returns {void}
  */
 function backToContactList() {
@@ -287,7 +287,7 @@ function backToContactList() {
 /**
  * @function openActionMenuMobile
  * @memberof contacts
- * Opens the action menu in the mobile contact detail view.
+ * @description Opens the action menu in the mobile contact detail view.
  * @returns {void}
  */
 function openActionMenuMobile() {
@@ -302,7 +302,7 @@ function openActionMenuMobile() {
 /**
  * @function resetActionMenuMobile
  * @memberof contacts
- * Resets the action menu in the mobile contact detail view.
+ * @description Resets the action menu in the mobile contact detail view.
  * @return {void}
  */
 function resetActionMenuMobile() {

@@ -13,7 +13,7 @@ let resizeLockHelp = false;
 /**
  * @function onHelpLoad
  * @memberof help
- * Initializes the Help page on load.
+ * @description Initializes the Help page on load.
  * Determines the appropriate layout based on the current window size.
  * @returns {Promise<void>}
  */
@@ -31,7 +31,7 @@ async function onHelpLoad() {
 /**
  * @function resizeHelp
  * @memberof help
- * Resizes the Help dialog based on the current window size.
+ * @description Resizes the Help dialog based on the current window size.
  * @returns {Promise<void>} 
  */
 async function resizeHelp() {
@@ -52,7 +52,7 @@ async function resizeHelp() {
 /**
  * @function loadHelpInDesktopMode
  * @memberof help
- * Loads the Help content in desktop mode.
+ * @description Loads the Help content in desktop mode.
  * @returns {Promise<void>}
  */
 async function loadHelpInDesktopMode(){
@@ -68,7 +68,7 @@ async function loadHelpInDesktopMode(){
 /**
  * @function loadHelpInMobileMode
  * @memberof help
- * Loads the Help content in mobile mode.
+ * @description Loads the Help content in mobile mode.
  * @returns {Promise<void>}
  */
 async function loadHelpInMobileMode() {
@@ -83,7 +83,7 @@ async function loadHelpInMobileMode() {
 /**
  * @function clearHelpBody
  * @memberof help
- * Clears the content of the Help page body.
+ * @description Clears the content of the Help page body.
  * This function removes all HTML content from the body element.
  * @returns {void}
  */
@@ -95,7 +95,7 @@ function clearHelpBody() {
 /**
  * @function navigateBackToSource
  * @memberof help
- * Navigates back to the source page.
+ * @description Navigates back to the source page.
  * Uses the browser's history to go back to the previous page.
  * @return {void}
  */
@@ -106,7 +106,7 @@ function navigateBackToSource() {
 /**
  * @function hideHelpButton
  * @memberof help
- * Hides the Help button in the UI.
+ * @description Hides the Help button in the UI.
  * This is typically used when the Help page is already being viewed.
  * @return {void}
  */

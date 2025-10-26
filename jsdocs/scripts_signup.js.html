@@ -36,11 +36,14 @@
  * @file scripts/signup.js
  */
 
+let errorMessageArr = [];
+const namePattern = /\w{3,10}\s\w{3,10}/;
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 /**
  * @function signupinit
  * @memberof signup
- * Initialize the signup page.
+ * @description Initialize the signup page.
  * @returns {Promise&lt;void>}
  */
 async function signupinit() {
@@ -54,8 +57,8 @@ async function signupinit() {
 /**
  * @function signInFieldOnBlur
  * @memberof signup
- * Handle onBlur event for sign-in fields.
- * @param {HTMLInputElement} input 
+ * @description Handle onBlur event for sign-in fields.
+ * @param {HTMLInputElement} input
  * @returns {void}
  */
 function signInFieldOnBlur(input) {
@@ -69,7 +72,7 @@ function signInFieldOnBlur(input) {
 /**
  * @function validatefullname
  * @memberof signup
- * Validate the full name field.
+ * @description Validate the full name field.
  * @returns {Boolean}
  */
 function validatefullname() {
@@ -88,7 +91,7 @@ function validatefullname() {
 /**
  * @function validateemail
  * @memberof signup
- * Validate the email field.
+ * @description Validate the email field.
  * @returns {Boolean}
  */
 async function validateemail() {
@@ -112,7 +115,7 @@ async function validateemail() {
 /**
  * @function validatepasswordConfirm
  * @memberof signup
- * Validate the password confirmation field.
+ * @description Validate the password confirmation field.
  * @returns {Boolean}
  */
 function validatepasswordConfirm() {
@@ -133,7 +136,7 @@ function validatepasswordConfirm() {
 /**
  * @function validatepassword
  * @memberof signup
- * Validate the password field.
+ * @description Validate the password field.
  * @returns {Boolean}
  */
 function validatepassword() {
@@ -151,8 +154,8 @@ function validatepassword() {
 /**
  * @function validatePolicyAccept
  * @memberof signup
- * Validate the policy acceptance checkbox.
- * @returns {Boolean}      
+ * @description Validate the policy acceptance checkbox.
+ * @returns {Boolean}
  */
 function validatePolicyAccept() {
     const confirmCheckbox = document.getElementById('signupConfirm');
@@ -163,7 +166,7 @@ function validatePolicyAccept() {
 /**
  * @function splitNameToFirstLastAndInitial
  * @memberof signup
- * Get first name, last name and initials from full name.
+ * @description Get first name, last name and initials from full name.
  * @param {FormData} signUp - The form data from the sign-up form.
  * @returns {Object} - An object containing the first name, last name, and initials.
  */
@@ -182,8 +185,8 @@ function splitNameToFirstLastAndInitial(signUp) {
 /**
  * @function checkEmailInDatabase
  * @memberof signup
- * Check if the email exists in the database.
- * @param {string} email 
+ * @description Check if the email exists in the database.
+ * @param {string} email
  * @returns {Promise&lt;boolean>}
  */
 async function checkEmailInDatabase(email) {
@@ -195,8 +198,8 @@ async function checkEmailInDatabase(email) {
 /**
  * @function setInputFieldHasNoError
  * @memberof signup
- * Set the input field to a valid state (no error).
- * @param {String} elementID 
+ * @description Set the input field to a valid state (no error).
+ * @param {String} elementID
  * @returns {void}
  */
 function setInputFieldHasNoError(elementID) {
@@ -208,9 +211,9 @@ function setInputFieldHasNoError(elementID) {
 /**
  * @function setInputFieldHasError
  * @memberof signup
- * Set the input field to an invalid state (error).
- * @param {String} elementID 
- * @param {String} message 
+ * @description Set the input field to an invalid state (error).
+ * @param {String} elementID
+ * @param {String} message
  * @returns {void}
  */
 function setInputFieldHasError(elementID, message) {
@@ -221,9 +224,9 @@ function setInputFieldHasError(elementID, message) {
 /**
  * @function addErrorMessageToArray
  * @memberof signup
- * Add an error message for a specific element to the array.
- * @param {String} elementID 
- * @param {String} message 
+ * @description Add an error message for a specific element to the array.
+ * @param {String} elementID
+ * @param {String} message
  * @returns {void}
  */
 function addErrorMessageToArray(elementID, message) {
@@ -236,8 +239,8 @@ function addErrorMessageToArray(elementID, message) {
 /**
  * @function removeErrorMessageFromArray
  * @memberof signup
- * Remove an error message for a specific element from the array.
- * @param {String} elementID 
+ * @description Remove an error message for a specific element from the array.
+ * @param {String} elementID
  * @returns {void}
  */
 function removeErrorMessageFromArray(elementID) {
@@ -250,7 +253,7 @@ function removeErrorMessageFromArray(elementID) {
 /**
  * @function handleErrorMessage
  * @memberof signup
- * Handle error messages display.
+ * @description Handle error messages display.
  * @returns {void}
  */
 function handleErrorMessage() {
@@ -270,9 +273,9 @@ function handleErrorMessage() {
 /**
  * @function signUpForm
  * @memberof signup
- * Handle the sign-up form submission.
+ * @description Handle the sign-up form submission.
  * Safes the user data to the database and signs in the user.
- * @param {Event} event 
+ * @param {Event} event
  * @returns {Promise&lt;void>}
  */
 async function signUpForm(event) {
@@ -288,8 +291,8 @@ async function signUpForm(event) {
 /**
  * @function signupMouseUp
  * @memberof signup
- * Handle the mouse up event on the sign-up button.
- * @param {MouseEvent} event 
+ * @description Handle the mouse up event on the sign-up button.
+ * @param {MouseEvent} event
  * @returns {void}
  */
 function signupMouseUp(event) {
@@ -304,7 +307,7 @@ function signupMouseUp(event) {
 /**
  * @function leaveFocusOffAllFields
  * @memberof signup
- * Remove focus from all input fields.
+ * @description Remove focus from all input fields.
  * @return {void}
  */
 function leaveFocusOffAllFields() {
@@ -317,7 +320,7 @@ function leaveFocusOffAllFields() {
 /**
  * @function checkAllRequiredField
  * @memberof signup
- * Check all required fields for validity.
+ * @description Check all required fields for validity.
  * @returns {boolean}
  */
 function checkAllRequiredField() {
@@ -332,7 +335,7 @@ function checkAllRequiredField() {
 /**
  * @function signInAfterSafe
  * @memberof signup
- * Show a dialog indicating successful sign-up and navigate to login page.
+ * @description Show a dialog indicating successful sign-up and navigate to login page.
  * @return {void}
  */
 function signInAfterSafe() {
@@ -354,13 +357,13 @@ function signInAfterSafe() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 17:07:17 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 18:35:47 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

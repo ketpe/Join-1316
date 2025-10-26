@@ -1,6 +1,6 @@
 /**
  * @namespace app
- * @fileoverview app.js
+ * @description app.js
  * Global application script
  * Implements common functions and initializes Firebase
  * Loaded by all pages
@@ -13,7 +13,7 @@ import { ref, set, get, getDatabase, child, update, remove } from "https://www.g
 /**
  * @function includeHtml
  * @memberof app
- * Includes HTML content into a target element.
+ * @description Includes HTML content into a target element.
  * @param {string} targetId 
  * @param {string} file 
  * @returns {Promise<Element|string>}
@@ -41,7 +41,7 @@ async function includeHtml(targetId, file) {
 /**
  * @function includeHtmlForNode
  * @memberof app
- * Includes HTML content into a specified node.
+ * @description Includes HTML content into a specified node.
  * @param {string} nodeName 
  * @param {string} file 
  * @returns {Promise<Element|string>}     
@@ -69,7 +69,7 @@ async function includeHtmlForNode(nodeName, file) {
 /** 
  * @function setLogStatus
  * @memberof app
- * Sets the login status in session storage.
+ * @description Sets the login status in session storage.
  * @param {string} setLogStatus 
  */
 function setLogStatus(setLogStatus) {
@@ -79,7 +79,7 @@ function setLogStatus(setLogStatus) {
 /**
  * @function getLogStatus
  * @memberof app
- * Gets the current login status from session storage.
+ * @description Gets the current login status from session storage.
  * Redirects to the login page if no status is found.
  * @returns {string}  The current login status from session storage.
  */

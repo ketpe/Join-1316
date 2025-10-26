@@ -15,7 +15,7 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 /**
  * @function signupinit
  * @memberof signup
- * Initialize the signup page.
+ * @description Initialize the signup page.
  * @returns {Promise<void>}
  */
 async function signupinit() {
@@ -29,7 +29,7 @@ async function signupinit() {
 /**
  * @function signInFieldOnBlur
  * @memberof signup
- * Handle onBlur event for sign-in fields.
+ * @description Handle onBlur event for sign-in fields.
  * @param {HTMLInputElement} input
  * @returns {void}
  */
@@ -44,7 +44,7 @@ function signInFieldOnBlur(input) {
 /**
  * @function validatefullname
  * @memberof signup
- * Validate the full name field.
+ * @description Validate the full name field.
  * @returns {Boolean}
  */
 function validatefullname() {
@@ -63,7 +63,7 @@ function validatefullname() {
 /**
  * @function validateemail
  * @memberof signup
- * Validate the email field.
+ * @description Validate the email field.
  * @returns {Boolean}
  */
 async function validateemail() {
@@ -87,7 +87,7 @@ async function validateemail() {
 /**
  * @function validatepasswordConfirm
  * @memberof signup
- * Validate the password confirmation field.
+ * @description Validate the password confirmation field.
  * @returns {Boolean}
  */
 function validatepasswordConfirm() {
@@ -108,7 +108,7 @@ function validatepasswordConfirm() {
 /**
  * @function validatepassword
  * @memberof signup
- * Validate the password field.
+ * @description Validate the password field.
  * @returns {Boolean}
  */
 function validatepassword() {
@@ -126,7 +126,7 @@ function validatepassword() {
 /**
  * @function validatePolicyAccept
  * @memberof signup
- * Validate the policy acceptance checkbox.
+ * @description Validate the policy acceptance checkbox.
  * @returns {Boolean}
  */
 function validatePolicyAccept() {
@@ -138,7 +138,7 @@ function validatePolicyAccept() {
 /**
  * @function splitNameToFirstLastAndInitial
  * @memberof signup
- * Get first name, last name and initials from full name.
+ * @description Get first name, last name and initials from full name.
  * @param {FormData} signUp - The form data from the sign-up form.
  * @returns {Object} - An object containing the first name, last name, and initials.
  */
@@ -157,7 +157,7 @@ function splitNameToFirstLastAndInitial(signUp) {
 /**
  * @function checkEmailInDatabase
  * @memberof signup
- * Check if the email exists in the database.
+ * @description Check if the email exists in the database.
  * @param {string} email
  * @returns {Promise<boolean>}
  */
@@ -170,7 +170,7 @@ async function checkEmailInDatabase(email) {
 /**
  * @function setInputFieldHasNoError
  * @memberof signup
- * Set the input field to a valid state (no error).
+ * @description Set the input field to a valid state (no error).
  * @param {String} elementID
  * @returns {void}
  */
@@ -183,7 +183,7 @@ function setInputFieldHasNoError(elementID) {
 /**
  * @function setInputFieldHasError
  * @memberof signup
- * Set the input field to an invalid state (error).
+ * @description Set the input field to an invalid state (error).
  * @param {String} elementID
  * @param {String} message
  * @returns {void}
@@ -196,7 +196,7 @@ function setInputFieldHasError(elementID, message) {
 /**
  * @function addErrorMessageToArray
  * @memberof signup
- * Add an error message for a specific element to the array.
+ * @description Add an error message for a specific element to the array.
  * @param {String} elementID
  * @param {String} message
  * @returns {void}
@@ -211,7 +211,7 @@ function addErrorMessageToArray(elementID, message) {
 /**
  * @function removeErrorMessageFromArray
  * @memberof signup
- * Remove an error message for a specific element from the array.
+ * @description Remove an error message for a specific element from the array.
  * @param {String} elementID
  * @returns {void}
  */
@@ -225,7 +225,7 @@ function removeErrorMessageFromArray(elementID) {
 /**
  * @function handleErrorMessage
  * @memberof signup
- * Handle error messages display.
+ * @description Handle error messages display.
  * @returns {void}
  */
 function handleErrorMessage() {
@@ -245,7 +245,7 @@ function handleErrorMessage() {
 /**
  * @function signUpForm
  * @memberof signup
- * Handle the sign-up form submission.
+ * @description Handle the sign-up form submission.
  * Safes the user data to the database and signs in the user.
  * @param {Event} event
  * @returns {Promise<void>}
@@ -263,7 +263,7 @@ async function signUpForm(event) {
 /**
  * @function signupMouseUp
  * @memberof signup
- * Handle the mouse up event on the sign-up button.
+ * @description Handle the mouse up event on the sign-up button.
  * @param {MouseEvent} event
  * @returns {void}
  */
@@ -279,7 +279,7 @@ function signupMouseUp(event) {
 /**
  * @function leaveFocusOffAllFields
  * @memberof signup
- * Remove focus from all input fields.
+ * @description Remove focus from all input fields.
  * @return {void}
  */
 function leaveFocusOffAllFields() {
@@ -292,7 +292,7 @@ function leaveFocusOffAllFields() {
 /**
  * @function checkAllRequiredField
  * @memberof signup
- * Check all required fields for validity.
+ * @description Check all required fields for validity.
  * @returns {boolean}
  */
 function checkAllRequiredField() {
@@ -307,7 +307,7 @@ function checkAllRequiredField() {
 /**
  * @function signInAfterSafe
  * @memberof signup
- * Show a dialog indicating successful sign-up and navigate to login page.
+ * @description Show a dialog indicating successful sign-up and navigate to login page.
  * @return {void}
  */
 function signInAfterSafe() {

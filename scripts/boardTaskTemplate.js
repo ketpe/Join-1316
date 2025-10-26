@@ -70,7 +70,7 @@ function boardTasksTemplate(task, rendererdContacts, prevCategory, nextCategory)
 /**
  * @function boardTaskEmptyTemplate
  * @memberof boardTaskTemplate
- * Generates the HTML template for an empty board task.
+ * @description Generates the HTML template for an empty board task.
  * @param {string} category - The category of the task.
  * @returns {string} The HTML template for the empty board task.
  */
@@ -83,18 +83,18 @@ function boardTaskEmptyTemplate(category) {
 /**
  * @function boardTaskEmptyDropTemplate
  * @memberof boardTaskTemplate
- * Generates the HTML template for an empty drop zone in the Kanban board.
+ * @description Generates the HTML template for an empty drop zone in the Kanban board.
  * @returns {string} The HTML template for the empty drop zone.
  */
 function boardTaskEmptyDropTemplate() {
     return `<div id="kanban-dropzone" class="kanban-dropzone" >
-    </div>`
+    </div>`;
 }
 
 /**
  * @function getAllAssignedContactsTemplate
  * @memberof boardTaskTemplate
- * Generates the HTML template for all assigned contacts in a board task.
+ * @description Generates the HTML template for all assigned contacts in a board task.
  * @param {Array} assignedContacts - The array of assigned contacts.
  * @returns {string} The HTML template for all assigned contacts.
  */
@@ -111,7 +111,7 @@ function getAllAssignedContactsTemplate(assignedContacts) {
 /**
  * @function getBtnTemplateAfterMovingTask
  * @memberof boardTaskTemplate
- * Generates the HTML template for the buttons after moving a task.
+ * @description Generates the HTML template for the buttons after moving a task.
  * @param {string} taskId - The ID of the task being moved.
  * @param {string} prevCategory - The previous category of the task.
  * @param {string} nextCategory - The next category of the task.

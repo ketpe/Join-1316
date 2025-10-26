@@ -13,7 +13,7 @@ let resizeLockPandL = false;
 /**
  * @function privacyOrLegalLoad
  * @memberof privacyLegal
- *  Initializes the Privacy Policy or Legal Notice page on load.    
+ * @description Initializes the Privacy Policy or Legal Notice page on load.
  * @param {string} privacyOrLegal 
  * @returns {Promise<void>}
  */
@@ -35,7 +35,7 @@ async function privacyOrLegalLoad(privacyOrLegal) {
 /**
  * @function privacyOrLegalResize
  * @memberof privacyLegal
- * Handles window resize events to adjust the Privacy Policy or Legal Notice page layout.
+ * @description Handles window resize events to adjust the Privacy Policy or Legal Notice page layout.
  * Uses a lock to prevent multiple simultaneous executions.
  * @param {string} privacyOrLegal 
  * @returns {void}
@@ -57,7 +57,7 @@ async function privacyOrLegalResize(privacyOrLegal){
 /**
  * @function loadInDesktopMode
  * @memberof privacyLegal
- * Loads the Privacy Policy or Legal Notice content in desktop mode.
+ * @description Loads the Privacy Policy or Legal Notice content in desktop mode.
  * @param {string} pOrL - The type of content to load ("privacy" or "legal")
  * @return {Promise<void>}
  */
@@ -85,7 +85,7 @@ async function loadInDesktopMode(pOrL) {
 /**
  * @function loadInMobileMode
  * @memberof privacyLegal
- * Loads the Privacy Policy or Legal Notice content in mobile mode.
+ * @description Loads the Privacy Policy or Legal Notice content in mobile mode.
  * @param {string} pOrL - The type of content to load ("privacy" or "legal")
  * @return {Promise<void>}
  */
@@ -114,7 +114,7 @@ async function loadInMobileMode(pOrL) {
 /**
  * @function setPrivacyOrLegalButtonActiv
  * @memberof privacyLegal
- * Sets the active state of the compliance button based on the current view.
+ * @description Sets the active state of the compliance button based on the current view.
  * @param {string} pOrL - The type of content ("privacy" or "legal")
  * @param {string} desktopOrMobile - The current view ("desktop" or "mobile")
  * @returns {void}
@@ -138,7 +138,7 @@ function setPrivacyOrLegalButtonActiv(pOrL, desktopOrMobile){
 /**
  * @function clearPorLBody
  * @memberof privacyLegal
- * Clears the body content of the Privacy Policy or Legal Notice page.
+ * @description Clears the body content of the Privacy Policy or Legal Notice page.
  * @returns {void}
  */
 function clearPorLBody() {
@@ -148,7 +148,7 @@ function clearPorLBody() {
 /**
  * @function backToSourcePage
  * @memberof privacyLegal
- * Navigates back to the source page, either the login page or the previous page in history.
+ * @description Navigates back to the source page, either the login page or the previous page in history.
  * @returns {void}
  */
 function backToSourcePage(){
