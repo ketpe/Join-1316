@@ -14,15 +14,11 @@ async function onLoadContacts() {
     const head = document.getElementsByTagName('head');
     if (width >= minDesktopWidth) {
         await loadHtmlComponentsForDesktop();
-        setNavigationButtonActive('contact', "desktop");
-
     } else {
         await loadHtmlComponentsForMobile(head);
-        setNavigationButtonActive('contact', "mobile");
     }
     showLoadingAnimation();
     await renderContacts();
-    renderUserInitial();
     hideLoadingAnimation();
 }
 
@@ -78,8 +74,10 @@ async function loadHtmlComponentsForDesktop() {
 
     ]);
 
+    setNavigationButtonActive('contact', "desktop");
     showLoadingAnimation();
     await renderContacts();
+    renderUserInitial();
     hideLoadingAnimation();
 }
 
@@ -99,7 +97,11 @@ async function loadHtmlComponentsForMobile() {
         includeHtml("header", "headerMobile.html"),
         includeHtml("navbar", "navbarMobile.html"),
     ]);
-    renderContacts()
+    setNavigationButtonActive('contact', "mobile");
+    showLoadingAnimation();
+    await renderContacts();
+    renderUserInitial();
+    hideLoadingAnimation();
 }
 
 /**
