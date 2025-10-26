@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: board.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: board.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview This script manages the Kanban board functionality, including loading components, fetching tasks from the database, rendering tasks, handling responsive design, and managing task interactions.
  * It includes functions for loading HTML components based on screen size, retrieving and processing task data, rendering tasks on the board, and handling user interactions such as searching and editing tasks.
  */
@@ -75,7 +103,7 @@ function clearBoardHtmlBody() {
 
 /**
  * @description Fetches tasks from the database, processes them, and renders them on the Kanban board. Also updates the board size and styles assigned contacts.
- * @returns {Promise<void>} - A promise that resolves when the tasks have been fetched and rendered.
+ * @returns {Promise&lt;void>} - A promise that resolves when the tasks have been fetched and rendered.
 */
 async function getBoardTasks() {
     const { taskContentelements } = getHtmlTasksContent();
@@ -96,11 +124,11 @@ async function getBoardTasks() {
  */
 async function addBoardPageResize() {
     const [height, width] = getCurrentWindowSize();
-    if ((width <= minDesktopWidth) && currentView != "mobile") {
+    if ((width &lt;= minDesktopWidth) &amp;&amp; currentView != "mobile") {
         await loadHtmlComponentsForMobile();
         setNavigationButtonActive('contacts', "mobile");
         kanbanUpdateSizeMobile();
-    } else if (width >= minDesktopWidth + 1 && currentView != "desktop") {
+    } else if (width >= minDesktopWidth + 1 &amp;&amp; currentView != "desktop") {
         await loadHtmlComponentsForDesktop();
         setNavigationButtonActive('contacts', "desktop");
         kanbanUpdateSizeDesktop();
@@ -320,8 +348,7 @@ function addLeftPositionStyleassignedContacts() {
 /**
  * @description Fetches task details and renders them in the detail view dialog
  * @param {string} taskId - The ID of the task to fetch details for
- * @returns {Promise<void>} - A promise that resolves when the task details have been rendered
- *
+ * @returns {Promise&lt;void>} - A promise that resolves when the task details have been rendered
  */
 async function getDetailViewTask(taskId) {
     addLoadingFunctionToDialog();
@@ -403,7 +430,7 @@ function addLoadingFunctionToDialog() {
 /**
  * @description Fetches a task by its ID.
  * @param {string} taskId - The ID of the task to fetch
- * @returns {Promise<Array>} - A promise that resolves to an array of task objects
+ * @returns {Promise&lt;Array>} - A promise that resolves to an array of task objects
  */
 async function getTaskByTaskID(taskId) {
     const fb = new FirebaseDatabase();
@@ -441,7 +468,7 @@ async function editCurrentTaskSubmit(event) {
 /**
  * Shows a toast message indicating that changes have been saved.
  * @param {*} currentID - The ID of the current task.
- * @returns {Promise<void>}
+ * @returns {Promise&lt;void>}
  */
 async function showChangesSavedToast(currentID) {
     removeLoadingFunctionFromDialog();
@@ -464,10 +491,10 @@ function searchTaskInBoard() {
     taskTitles.forEach((titleP, i) => {
         const descP = taskDescriptions[i];
         const match = [titleP, descP].some(
-            el => el && el.textContent.toLowerCase().includes(searchInput)
+            el => el &amp;&amp; el.textContent.toLowerCase().includes(searchInput)
         );
         const card = titleP.parentElement.parentElement.parentElement;
-        card.classList.toggle('visually-hidden', !match && searchInput);
+        card.classList.toggle('visually-hidden', !match &amp;&amp; searchInput);
         if (!card.classList.contains('visually-hidden')) visibleCount++;
     });
     toggleNoSearchResultHint(visibleCount, searchInput);
@@ -480,7 +507,7 @@ function searchTaskInBoard() {
 function toggleNoSearchResultHint(visibleCount, searchInput) {
     const noResultHint = document.getElementById('empty-Search-Result-info');
     if (noResultHint) {
-        if (visibleCount === 0 && searchInput) {
+        if (visibleCount === 0 &amp;&amp; searchInput) {
             noResultHint.style.display = 'block';
         } else {
             noResultHint.style.display = 'none';
@@ -510,4 +537,26 @@ function getRefsForSearch() {
     let taskTitles = document.querySelectorAll('.board-task-title p');
     let taskDescriptions = document.querySelectorAll('.board-task-description p');
     return { searchInput, taskTitles, taskDescriptions };
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addBoardPageResize">addBoardPageResize</a></li><li><a href="global.html#addDropZones">addDropZones</a></li><li><a href="global.html#addLeftPositionStyleassignedContacts">addLeftPositionStyleassignedContacts</a></li><li><a href="global.html#addLoadingFunctionToDialog">addLoadingFunctionToDialog</a></li><li><a href="global.html#deleteCurrentTask">deleteCurrentTask</a></li><li><a href="global.html#detailViewChangeSubtaskChecked">detailViewChangeSubtaskChecked</a></li><li><a href="global.html#editCurrentTask">editCurrentTask</a></li><li><a href="global.html#editCurrentTaskSubmit">editCurrentTaskSubmit</a></li><li><a href="global.html#emptySearchBar">emptySearchBar</a></li><li><a href="global.html#getBoardTaskref">getBoardTaskref</a></li><li><a href="global.html#getBoardTasks">getBoardTasks</a></li><li><a href="global.html#getDatabaseTaskCategory">getDatabaseTaskCategory</a></li><li><a href="global.html#getDatabaseTaskContact">getDatabaseTaskContact</a></li><li><a href="global.html#getDatabaseTaskSubtasks">getDatabaseTaskSubtasks</a></li><li><a href="global.html#getDetailViewTask">getDetailViewTask</a></li><li><a href="global.html#getHtmlTasksContent">getHtmlTasksContent</a></li><li><a href="global.html#getRefsForSearch">getRefsForSearch</a></li><li><a href="global.html#getSubTaskSumOfTrue">getSubTaskSumOfTrue</a></li><li><a href="global.html#getTaskByTaskID">getTaskByTaskID</a></li><li><a href="global.html#kanbanUpdateSizeDesktop">kanbanUpdateSizeDesktop</a></li><li><a href="global.html#kanbanUpdateSizeMobile">kanbanUpdateSizeMobile</a></li><li><a href="global.html#loadHtmlComponentsForDesktop">loadHtmlComponentsForDesktop</a></li><li><a href="global.html#onLoadBoard">onLoadBoard</a></li><li><a href="global.html#removeLoadingFunctionFromDialog">removeLoadingFunctionFromDialog</a></li><li><a href="global.html#renderAssignedContacts">renderAssignedContacts</a></li><li><a href="global.html#renderBoardtasks">renderBoardtasks</a></li><li><a href="global.html#searchTaskInBoard">searchTaskInBoard</a></li><li><a href="global.html#showChangesSavedToast">showChangesSavedToast</a></li><li><a href="global.html#toggleNoSearchResultHint">toggleNoSearchResultHint</a></li><li><a href="global.html#toggleNoTaskVisible">toggleNoTaskVisible</a></li><li><a href="global.html#toggleSubtaskCheckbox">toggleSubtaskCheckbox</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 10:59:15 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
