@@ -255,3 +255,4 @@ function resetActionMenuMobile() {
         btnToRemove.remove();
     }
 }
+
