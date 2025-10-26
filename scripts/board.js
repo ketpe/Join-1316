@@ -142,7 +142,7 @@ async function addBoardPageResize() {
  * @function kanbanUpdateSizeDesktop
  * @memberof board
  * @description Updates the height of the Kanban board for Desktop based on the window size and header heights.
- * This function calculates the available height for the Kanban board by subtracting the heights of the header and board header from the total window height, 
+ * This function calculates the available height for the Kanban board by subtracting the heights of the header and board header from the total window height,
  * and then sets the height of the Kanban board element accordingly.
  * @returns {void}
  */
@@ -157,7 +157,7 @@ function kanbanUpdateSizeDesktop() {
  * @function kanbanUpdateSizeMobile
  * @memberof board
  * @description Updates the height of the Kanban board for mobile view based on the window size and header heights.
- * This function calculates the available height for the Kanban board by subtracting the heights of the header and 
+ * This function calculates the available height for the Kanban board by subtracting the heights of the header and
  * mobile navigation from the total window height, and then sets the height of the mobile Kanban board element accordingly.
  * @return {void}
  */
@@ -281,7 +281,7 @@ function getSubTaskSumOfTrue(tasks) {
  * @function getDatabaseTaskContact
  * @memberof board
  * @description Retrieves the assigned contacts from the database for the given tasks.
- * @param {Array} tasks - The list of tasks to retrieve assigned contacts for.
+ * @param {Array} tasks - The list of tasks del retrieve assigned contacts for.
  * @returns {Promise<Array>} - The updated list of tasks with assigned contact data.
  */
 async function getDatabaseTaskContact(tasks) {
@@ -371,7 +371,7 @@ function getBoardTaskref() {
     taskContentElements = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
     return taskContentElements;
 }
-/** 
+/**
  * @function addLeftPositionStyleassignedContacts
  * @memberof board
  * @description Adds left position styles to assigned contact elements within task cards to ensure proper overlapping display.
@@ -388,7 +388,7 @@ function addLeftPositionStyleassignedContacts() {
 }
 
 /**
- * @function getDetailViewTask  
+ * @function getDetailViewTask
  * @memberof board
  * @description Fetches task details and renders them in the detail view dialog
  * @param {string} taskId - The ID of the task to fetch details for
@@ -435,7 +435,7 @@ async function deleteCurrentTask(button) {
     const taskDelete = new BoardTaskDetailDeleteUtil(currentTaskID);
     if (await taskDelete.startDelete()) {
         closeDialog('detail-view-task-dialog');
-        getBoardTaskWithLoadingAnimation();
+        navigateToBoard();
     }
 
 }
