@@ -322,6 +322,7 @@ function addLeftPositionStyleassignedContacts() {
  * @param {string} taskId - The ID of the task to fetch details for
  */
 async function getDetailViewTask(taskId) {
+    addLoadingFunctionToDialog();
     boardTaskComponents = null;
     let tasks = await getTaskByTaskID(taskId);
     await includeHtml("dialog-content-detail-view-task", "taskTemplate.html");
@@ -366,6 +367,7 @@ async function deleteCurrentTask(button) {
  * @param {HTMLElement} button - The button element that was clicked
  */
 async function editCurrentTask(button) {
+    removeLoadingFunctionFromDialog();
     boardTaskComponents = null;
     const currentTaskID = button.getAttribute('data-id');
     const task = await getTaskByTaskID(currentTaskID);
@@ -374,6 +376,26 @@ async function editCurrentTask(button) {
     const isGuest = taskUtils.isCurrentUserGuest();
     boardTaskComponents = new TaskComponents(currentUser, "boardTaskComponents");
     await boardTaskComponents.runWithDataAsEdit(task[0]);
+}
+
+/**
+ * @description Removes the loading function from the detail view dialog
+ * @returns {void}
+ */
+function removeLoadingFunctionFromDialog() {
+    const editDialog = document.getElementById('detail-view-task-dialog');
+    if(!editDialog){return;}
+    editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog")');
+}
+
+/**
+ * @description Adds the loading function to the detail view dialog
+ * @returns {void}
+ */
+function addLoadingFunctionToDialog() {
+    const editDialog = document.getElementById('detail-view-task-dialog');
+    if(!editDialog){return;}
+    editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog"), getBoardTaskWithLoadingAnimation()');
 }
 
 /**
@@ -396,6 +418,7 @@ async function getTaskByTaskID(taskId) {
  */
 async function editCurrentTaskSubmit(event) {
     if (event) event.preventDefault();
+    removeLoadingFunctionFromDialog();
     const currentID = event.submitter.getAttribute('data-id');
     const editTaskFormData = new FormData(event.currentTarget);
     const currentTitle = editTaskFormData.get('task-title');
@@ -408,7 +431,7 @@ async function editCurrentTaskSubmit(event) {
     if (resultUpdate) {
         document.getElementById('dialog-content-detail-view-task').innerHTML = "";
         const editDialog = document.getElementById('detail-view-task-dialog');
-        editDialog.style.background = "transparent";
+        editDialog.style.background = "rgba(0, 0, 0, .005)";
         await showChangesSavedToast(currentID);
     }
 }
@@ -419,6 +442,7 @@ async function editCurrentTaskSubmit(event) {
  * @returns {Promise<void>}
  */
 async function showChangesSavedToast(currentID) {
+    removeLoadingFunctionFromDialog();
     const toast = document.getElementById('addTaskSafeChangesToast');
     if (!toast) { return; }
     toast.classList.add('safe-changes-toast-open');

@@ -237,15 +237,10 @@ class TaskComponents{
     dateFieldOnChange() {
         let dateField = document.getElementById('due-date-display');
         if (!dateField) { return; }
-
-        
-
         const dueDateCheck = new DueDateCheck(dateField.value, this.currentDueDate, this.currentDueDateInputValue, this);
         const [result, dueDate] = dueDateCheck.startDueDateValidation();
-
         this.currentDueDate = result ? dueDate : "";
         this.currentDueDateInputValue = dateField.value;
-
     }
 
     /**
@@ -274,16 +269,9 @@ class TaskComponents{
      */
     addTaskPrioritySelect(button) {
         if (!button) { return; }
-
         const buttonName = button.getAttribute('name');
         const isActiv = button.getAttribute('data-selected') == "true";
-
-        if (this.currentPriority == buttonName && isActiv) {
-            this.allPriortyButtonsReset();
-        } else {
-            this.setNewPriority(buttonName);
-        }
-
+        this.currentPriority == buttonName && isActiv ? this.allPriortyButtonsReset() : this.setNewPriority(buttonName);
     }
 
     /**
