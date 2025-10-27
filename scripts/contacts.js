@@ -30,6 +30,7 @@ async function onLoadContacts() {
     showLoadingAnimation();
     await renderContacts();
     hideLoadingAnimation();
+    window.addEventListener('resize', addContactsPageResize);
 }
 
 
@@ -84,7 +85,7 @@ function createContactList(currentLetter, sortedContacts, contactList) {
 async function loadHtmlComponentsForDesktop() {
     currentView = "desktop";
     clearContactsHtmlBody();
-    await includeHtmlForNode("body", "contactsDesktop.html")
+    await includeHtmlForNode("body", "contactsDesktop.html");
 
     await Promise.all([
         includeHtml("navbar", "navbarDesktop.html"),
@@ -109,10 +110,7 @@ async function loadHtmlComponentsForDesktop() {
 async function loadHtmlComponentsForMobile() {
     currentView = "mobile";
     clearContactsHtmlBody();
-
-    await Promise.all([
-        includeHtmlForNode("body", "contactsMobile.html")
-    ]);
+    await includeHtmlForNode("body", "contactsMobile.html");
 
     await Promise.all([
         includeHtml("header", "headerMobile.html"),
@@ -134,6 +132,8 @@ async function loadHtmlComponentsForMobile() {
 function clearContactsHtmlBody() {
     document.querySelector('body').innerHTML = "";
 }
+
+
 
 /**
  * @function addContactsPageResize
@@ -199,7 +199,7 @@ function toggleActiveContactClass(activeContact) {
 function clearActiveContactClass() {
     const detailContact = document.getElementById('contact-detail-content');
     detailContact.innerHTML = "";
-    renderContacts(); /*TODO - neue funktion zum zurücksetzen des Aktiven Kontakts*/
+    renderContacts();
 }
 
 /**

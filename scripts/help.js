@@ -25,7 +25,7 @@ async function onHelpLoad() {
     }else{
         await loadHelpInDesktopMode();
     }
-   
+    window.addEventListener('resize', resizeHelp);
 }
 
 /**

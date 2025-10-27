@@ -24,6 +24,7 @@ async function signupinit() {
         navigateToLogin();
     }
     errorMessageArr = [];
+
 }
 
 /**

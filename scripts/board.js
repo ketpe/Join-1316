@@ -29,6 +29,7 @@ async function onLoadBoard() {
         setNavigationButtonActive('board', "mobile");
         kanbanUpdateSizeMobile();
     }
+    window.addEventListener('resize', onBoardPageResize);
 
 }
 /**
@@ -112,7 +113,7 @@ async function getBoardTasks() {
     tasks = await getDatabaseTaskCategory(tasks);
     tasks = await getDatabaseTaskSubtasks(tasks);
     tasks = await getDatabaseTaskContact(tasks);
-    addBoardPageResize();
+    onBoardPageResize();
     renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     addLeftPositionStyleassignedContacts();
     setNavigationButtonActive('board', "desktop");
@@ -120,12 +121,12 @@ async function getBoardTasks() {
 }
 
 /**
- * @function addBoardPageResize
+ * @function onBoardPageResize
  * @memberof board
  * @description Adjusts the Kanban board layout based on the current window size, loading either mobile or desktop components as needed.
  * @returns {Promise<void>}
  */
-async function addBoardPageResize() {
+async function onBoardPageResize() {
     const [height, width] = getCurrentWindowSize();
     if ((width <= minDesktopWidth) && currentView != "mobile") {
         await loadHtmlComponentsForMobile();

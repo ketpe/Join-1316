@@ -29,7 +29,7 @@ async function privacyOrLegalLoad(privacyOrLegal) {
     }else{
         await loadInDesktopMode(privacyOrLegal);
     }
-    
+    window.addEventListener('resize', () => privacyOrLegalResize(privacyOrLegal));
 }
 
 /**

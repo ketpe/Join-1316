@@ -91,14 +91,9 @@
     }
 
     .a-t-priority-button-container {
-        height: 41px;
-        margin-bottom: 39px;
+        margin-bottom: 26px;
     }
 
-    /* .btn-priority {
-        width: 116px;
-        padding: 7px 0px;
-    } */
 
     .task-main-scroll {
         padding-inline-end: 8px;

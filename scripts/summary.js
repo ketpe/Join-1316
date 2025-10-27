@@ -35,6 +35,7 @@ async function onLoadSummary() {
         setNavigationButtonActive('summary', "mobile");
     }
 
+    window.addEventListener('resize', onSummaryPageResize);
 }
 
 /**
@@ -51,17 +52,14 @@ async function onSummaryPageResize() {
         await loadHtmlComponentsForMobile();
         removeMobileGreetingAnimation();
         setNavigationButtonActive('summary', "mobile");
-
     } else if (width >= minDesktopWidth + 1 && currentView != "desktop") {
         await loadHtmlComponentsForDesktop();
         setNavigationButtonActive('summary', "desktop");
     }
-
     if (currentView === "mobile") {
         setHeightInMobileMode();
         removeMobileGreetingAnimation();
     }
-
 }
 
 /**

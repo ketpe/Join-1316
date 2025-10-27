@@ -45,8 +45,8 @@ async function onLoadAddTask() {
     } else {
         await changeAddTaskToMobile(height, width);
     }
-
     changeAddTaskFormFieldSize(height, width, currentView);
+    window.addEventListener('resize', addTaskPageResize);
 }
 
 /**

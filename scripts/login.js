@@ -37,6 +37,7 @@ function loginLoaded() {
     if (!isStartup) { return; }
     const [height, width] = getCurrentWindowSize();
     width <= 500 ? changeAnimationToMobileMode() : changeAnimationToDesktopMode();
+    window.addEventListener('resize', loginResize);
 }
 
 /**
