@@ -25,14 +25,17 @@ class TaskComponents{
     currentTask = null;
     currentTaskId = "";
 
+
     /**     
      * Constructor for the TaskComponents class.
      * @param {User} currentUser - The current user object.
      * @param {string} currentInstance - The current instance identifier.
+     * @param {string} currentStateCategory - The current state category for the task.
      */
-    constructor(currentUser, currentInstance) {
+    constructor(currentUser, currentInstance, currentStateCategory) {
         this.currentUser = currentUser;
         this.currentInstance = currentInstance;
+        this.currentStateCategory = currentStateCategory;
     }
 
     /**
@@ -891,6 +894,7 @@ class TaskComponents{
 
         if (event) event.preventDefault();
         const addTaskFormData = new FormData(event.currentTarget);
+        
         const currentTask = new Task(
             getNewUid(),
             addTaskFormData.get('task-title'),
@@ -898,7 +902,7 @@ class TaskComponents{
             addTaskFormData.get('due-date'),
             this.currentPriority,
             this.currentCategory['id'],
-            "todo"
+            this.currentStateCategory 
         );
 
         const createNewTask = new CreateNewTask(currentTask, this.currentSubTasks, this.currentContactAssignList, this.currentUser);

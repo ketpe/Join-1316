@@ -24,6 +24,7 @@ let addTaskUtils = new AddTaskUtils();
 let addTasktaskComponents = null;
 let currentView = "";
 let resizeLock = false;
+let currentStateCategory = "todo";
 
 
 /**
@@ -35,6 +36,7 @@ let resizeLock = false;
  */
 async function onLoadAddTask() {
     checkUserOrGuestIsloggedIn();
+    readUrlParameter();
     const [height, width] = addTaskUtils.getCurrentAddTaskSize;
     if (width >= breakPointToDesktopSingle) {
         await changeAddTaskToDesktop(height, width);
@@ -45,6 +47,23 @@ async function onLoadAddTask() {
     }
 
     changeAddTaskFormFieldSize(height, width, currentView);
+}
+
+/**
+ * @description Reads URL parameters to determine the current state category for the Add Task page.
+ * Sets the currentStateCategory variable based on the "stateCategory" parameter in the URL.
+ * Resets the URL to remove parameters after reading them.
+ * @function readUrlParameter
+ * @memberof addTask
+ * @returns {void}
+ */
+function readUrlParameter() {
+    let param = new URLSearchParams(document.location.search);
+    const stateCategory = param.get("stateCategory");
+    currentStateCategory = stateCategory ? stateCategory : "todo";
+    if(stateCategory && stateCategory.length > 0){
+        window.history.replaceState({}, document.title, '/addTask.html');
+    }
 }
 
 /** 
@@ -297,7 +316,7 @@ async function loadDataForAddTask() {
     isGuest = addTaskUtils.isCurrentUserGuest();
 
     if (!addTasktaskComponents) {
-        addTasktaskComponents = new TaskComponents(currentUser, "addTasktaskComponents");
+        addTasktaskComponents = new TaskComponents(currentUser, "addTasktaskComponents", currentStateCategory);
         await addTasktaskComponents.run();
         window.addTasktaskComponents = addTasktaskComponents;
     }

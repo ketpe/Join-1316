@@ -487,7 +487,7 @@ class AddTaskUtils {
     }
 
     /**
-     * Sets the submit function for the add task form.
+     * Sets the submit function for the add task form. And attaches necessary data attributes.
      * @param {string} instanceName - The name of the instance.
      * @param {boolean} isDialog - Indicates if the form is in a dialog.
      * @returns {void}

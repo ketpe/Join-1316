@@ -104,12 +104,12 @@ function navigateToHelp() {
  * @param {HTMLElement} button
  * @returns {void}
  */
-function navigateToAddTask(button) {
+function navigateToAddTask(button, stateCategory="todo") {
     if (button) {
         if (button.getAttribute('data-active') == "true") { return; }
     }
 
-    window.location.href = './addTask.html';
+    window.location.href = `./addTask.html?stateCategory=${stateCategory}`;
 }
 
 /**
