@@ -58,24 +58,9 @@
 }
 
 @media(max-width: 1180px) {
-    .add-contact {
-        width: auto;
-        padding-left: 0;
-        display: flex;
-        justify-content: center;
-    }
-
-    .btn-block {
-        width: auto;
-    }
 
     .first-line-detail-view {
         gap: calc(54px * 0.5);
-    }
-
-    .contact-letter {
-        width: auto;
-        font-size: calc(20px * 0.7);
     }
 
     .contact-item {
@@ -100,11 +85,6 @@
         max-width: 300px;
         padding: 0;
         ;
-    }
-
-    .contact-list-content {
-        padding-right: 12px;
-        padding-left: 12px;
     }
 
     .contacts-header {
