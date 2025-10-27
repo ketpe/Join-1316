@@ -100,7 +100,8 @@ class BoardTaskDetailViewUtils {
         contactSelectElement.innerHTML = "";
         for (let i = 0; i < this.currentTask.assignedContacts.length; i++) {
             if(this.currentTask.assignedContacts[i].length == 0){continue;}
-            contactSelectElement.innerHTML += getContactListElement(this.currentTask.assignedContacts[i][0], false, true, this.currentInstance);
+            contactSelectElement.innerHTML += getContactListElement(this.currentTask.assignedContacts[i][0], false, true, this.currentInstance, 
+                this.checkIfCurrentUserIsAssigned(this.currentTask.assignedContacts[i][0]['id']));
             counter++;
             if (counter >= 3) { break; }
         }
@@ -109,6 +110,20 @@ class BoardTaskDetailViewUtils {
             heightOfOneContact * this.currentTask.assignedContacts.length : heightOfOneContact * 3);
 
         contactSelectElement.style.height = (heightOfContainer) + "px";
+    }
+
+    /**
+     * @description Checks if the current user is assigned to the task.
+     * @function checkIfCurrentUserIsAssigned
+     * @memberof BoardTaskDetailViewUtils
+     * @param {string} contactID 
+     * @returns Boolean indicating if the current user is assigned to the task
+     */
+    checkIfCurrentUserIsAssigned(contactID){
+        const currentUser = getLogStatus();
+        if(!currentUser){ return false; }
+        if(currentUser == "guest"){ return false; }
+        return currentUser == contactID;
     }
 
     /**

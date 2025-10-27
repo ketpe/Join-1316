@@ -435,7 +435,7 @@ async function deleteCurrentTask(button) {
     const taskDelete = new BoardTaskDetailDeleteUtil(currentTaskID);
     if (await taskDelete.startDelete()) {
         closeDialog('detail-view-task-dialog');
-        navigateToBoard();
+        await showChangesSavedToast(currentTaskID, "Task deleted!");
     }
 
 }
@@ -521,26 +521,30 @@ async function editCurrentTaskSubmit(event) {
         document.getElementById('dialog-content-detail-view-task').innerHTML = "";
         const editDialog = document.getElementById('detail-view-task-dialog');
         editDialog.style.background = "rgba(0, 0, 0, .005)";
-        await showChangesSavedToast(currentID);
+        await showChangesSavedToast(currentID, "Changes saved!");
     }
 }
 
 /**
  * @function showChangesSavedToast
  * @memberof board
- * @description Shows a toast message indicating that changes have been saved.
- * @param {*} currentID - The ID of the current task.
+ * @description Shows a toast message indicating that changes have been saved or delete a Task.
+ * If the message indicates that changes were saved, it refreshes the detail view of the task; otherwise, it navigates back to the board.
+ * @param {string} currentID - The ID of the current task.
+ * @param {string} message - The message to display in the toast.
  * @returns {Promise<void>}
  */
-async function showChangesSavedToast(currentID) {
+async function showChangesSavedToast(currentID, message) {
     removeLoadingFunctionFromDialog();
     const toast = document.getElementById('addTaskSafeChangesToast');
-    if (!toast) { return; }
+    const toastText = document.getElementById('addTaskToastText');
+    if (!toast || !toastText) { return; }
+    toastText.textContent = message;
     toast.classList.add('safe-changes-toast-open');
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1200));
     toast.classList.remove('safe-changes-toast-open');
     await new Promise(resolve => setTimeout(resolve, 600));
-    getDetailViewTask(currentID);
+    message == "Changes saved!" ? getDetailViewTask(currentID) : navigateToBoard();
 }
 
 /**

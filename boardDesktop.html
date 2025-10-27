@@ -4,7 +4,7 @@
         <div></div>
     </div>
     <div id="addTaskSafeChangesToast" class="add-task-safe-changes">
-        <span>Changes saved!</span>
+        <span id="addTaskToastText">Changes saved!</span>
     </div>
     <aside class="left-container">
         <nav id="navbar" aria-label="Mainnavigation"></nav>
@@ -29,7 +29,7 @@
                                 </div>
                             </form>
                             <button type="button" class="btn btn-fill btn-lg btn-add-tasks"
-                                onclick="onAddTaskDialogOpen()">
+                                onclick="onAddTaskDialogOpen('todo')" title="Add new Task">
                                 <span>Add new Task</span>
                                 <img src="./assets/plus-icon.svg" alt="" srcset="">
                             </button>
@@ -45,7 +45,7 @@
                         ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
                         <div class="board-headline-column">
                             <h3 class="board-column-text">To do</h3>
-                            <button type="button" onclick="onAddTaskDialogOpen()" title="Add Task To do"
+                            <button type="button" onclick="onAddTaskDialogOpen('todo')" title="Add Task To do"
                                 class="btn-add-board-task"></button>
                         </div>
                         <div class="kanban-tasks" id="kanban-tasks-todo" data-category="Todo"></div>
@@ -56,7 +56,7 @@
 
                         <div class="board-headline-column">
                             <h3 class="board-column-text">In progress</h3>
-                            <button type="button" onclick="onAddTaskDialogOpen()" title="Add Task In progress"
+                            <button type="button" onclick="onAddTaskDialogOpen('inprogress')" title="Add Task In progress"
                                 class="btn-add-board-task"></button>
                         </div>
                         <div class="kanban-tasks" id="kanban-tasks-inprogress" data-category="In Progress">
@@ -67,7 +67,7 @@
                         ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
                         <div class="board-headline-column">
                             <h3 class="board-column-text">Await feedback</h3>
-                            <button type="button" onclick="onAddTaskDialogOpen()" title="Add Task Await feedback"
+                            <button type="button" onclick="onAddTaskDialogOpen('awaiting')" title="Add Task Await feedback"
                                 class="btn-add-board-task"></button>
                         </div>
                         <div class="kanban-tasks" id="kanban-tasks-awaiting" data-category="Awaiting Feedback">

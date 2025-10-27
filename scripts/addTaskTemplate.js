@@ -13,15 +13,16 @@
  * @param {boolean} isAssinged - Indicates if the contact is assigned.
  * @param {boolean} isdetailView - Indicates if the detail view is active.
  * @param {Object} taskInstance - The task instance.
+ * @param {boolean} isCurrentUser - Indicates if the contact is the current user.
  * @returns {string} The HTML string for the contact list element.
  */
 
-function getContactListElement(contact, isAssinged, isdetailView = false, taskInstance){
+function getContactListElement(contact, isAssinged, isdetailView = false, taskInstance, isCurrentUser = false) {
     return `
         <button id="${contact['id']}" type="button" class="contact-list-btn ${(isAssinged ? 'contact-selected' : '')}" data-active="${(isAssinged ? 'true' : 'false')}" onclick="${taskInstance}.contactButtonOnListSelect(this)">
             <div class="contact-profil-container">
                 <div class="contact-ellipse ${contact['initialColor']}"><span>${contact['initial']}</span></div>
-                <p class="${(isAssinged ? 'white' : '')}" >${contact['firstname']} ${contact['lastname']}</p>
+                <p class="${(isAssinged ? 'white' : '')}" >${contact['firstname']} ${contact['lastname']} ${isCurrentUser ? "(You)" : ""}</p>
             </div>
             <div class="contact-check-icon ${(isAssinged ? 'contact-checked' : 'contact-unchecked')} ${isdetailView ? "d-none" : ""} " role="img" title="Check or uncheck Icon"></div>
         </button>

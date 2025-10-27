@@ -16,19 +16,24 @@ let addTaskUtils = new AddTaskUtils();
 let addTaskDialogTaskComponents = null;
 let resizeLockDialog = false;
 let currentDialogView = "desktop";
+let currentStateCategory = "todo";
 
 /**
  * @description Opens the Add Task dialog, renders the content, and adjusts the view for dialog presentation.
  * This function is asynchronous to accommodate data loading and rendering processes.
+ * The dialog view is adjusted based on the current window size to ensure optimal user experience.
+ * The task state category can be specified to pre-select the appropriate column for the new task.
  * @function onAddTaskDialogOpen
  * @memberof addTaskDialog
+ * @param {string} stateCategory - The state category to which the new task will be added (e.g., "todo", "inprogress", "awaiting").
  * @returns {Promise<void>} A promise that resolves when the dialog is fully opened and rendered.
  */
-async function onAddTaskDialogOpen() {
+async function onAddTaskDialogOpen(stateCategory="todo") {
+    currentStateCategory = stateCategory;
     const [height, width] = addTaskUtils.getCurrentAddTaskSize;
 
     if (width <= 880) {
-        navigateToAddTask();
+        navigateToAddTask(null, currentStateCategory);
     } else if (height >= DIALOGINDESKTOP_HEIGHT && width >= DIALOGINDESKTOP_WIDTH) {
         currentDialogView = "desktop";
         await showAddTaskAsDialog();
@@ -59,7 +64,7 @@ async function resizeAddTaskBoardDialog(event) {
     const [height, width] = addTaskUtils.getCurrentAddTaskSize;
 
     if (width <= 880) {
-        navigateToAddTask();
+        navigateToAddTask(null, currentStateCategory);
     } else if (height >= DIALOGINDESKTOP_HEIGHT && width >= DIALOGINDESKTOP_WIDTH && currentDialogView != "desktop") {
         currentDialogView = "desktop";
         await showAddTaskAsDialog();
@@ -120,7 +125,7 @@ async function loadDataForAddTaskDialog() {
     currentUser = addTaskUtils.readCurrentUserID();
     isGuest = addTaskUtils.isCurrentUserGuest();
     if (!addTaskDialogTaskComponents) {
-        addTaskDialogTaskComponents = new TaskComponents(currentUser, "addTaskDialogTaskComponents");
+        addTaskDialogTaskComponents = new TaskComponents(currentUser, "addTaskDialogTaskComponents", currentStateCategory);
         addTaskDialogTaskComponents.run();
         window.addTaskDialogTaskComponents = addTaskDialogTaskComponents;
     }
