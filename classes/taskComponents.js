@@ -5,7 +5,7 @@
  * It also includes validation for task title and due date.
  * It is designed to be used in a task management application.
  * Example usage:
- * const taskComponents = new TaskComponents(currentUser, 'taskInstance');
+ * const taskComponents = new TaskComponents(currentUser, 'taskInstance', 'stateCategory');
  */
 
 class TaskComponents{
@@ -479,6 +479,7 @@ class TaskComponents{
     /**
      * Renders the contact options for selection.
      * Using TaskUtils to check if the contact is already assigned to the task.
+     * If the contact is the current user, it indicates that in the display.
      * @param {Array} contactList
      * @return {void}
      */
@@ -487,8 +488,9 @@ class TaskComponents{
         contactSelectElement.innerHTML = "";
 
         for (let i = 0; i < contactList.length; i++) {
+            const isCurrentUser = this.currentUser && (this.currentUser === contactList[i]['id']);
             const currentContactAssigned = this.addTaskUtils.findContactInAssignList(contactList[i], this.currentContactAssignList);
-            contactSelectElement.innerHTML += getContactListElement(contactList[i], currentContactAssigned, false, this.currentInstance);
+            contactSelectElement.innerHTML += getContactListElement(contactList[i], currentContactAssigned, false, this.currentInstance, isCurrentUser);
         }
     }
 
