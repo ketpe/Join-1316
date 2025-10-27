@@ -13,7 +13,6 @@
     flex-direction: column;
     gap: 16px;
     padding-top: 32px;
-    /* padding-right: 24px; */
     padding-bottom: 32px;
     padding-left: 24px;
     height: 100%;
@@ -37,16 +36,10 @@
 }
 
 .add-contact {
-    width: 352px;
-    height: 56px;
-    padding-top: 12px;
-    padding-right: 16px;
-    padding-bottom: 12px;
-    padding-left: 16px;
-    gap: 16px;
-    border-radius: 10px;
-    border-width: 1px;
-    position: static;
+    margin-right: 24px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
     z-index: 2;
 }
 
@@ -64,10 +57,8 @@
 }
 
 .contacts-scroll-wrapper {
-    flex: 1 1 auto;
+    height: 100%;
     overflow-y: auto;
-    max-height: calc(100vh - var(--header-height));
-
 }
 
 .contacts {
@@ -104,9 +95,8 @@
     width: 100%;
 }
 
-/*FIXME - Abstände noch anpassen und breite*/
+
 .contact-letter {
-    /* width: 352px; */
     height: 58px;
     padding-top: 17px;
     padding-right: 36px;
@@ -118,7 +108,6 @@
     font-style: Regular;
     font-size: 20px;
     vertical-align: middle;
-
 }
 
 .contact-item {
@@ -298,14 +287,12 @@
 
 }
 
-/**FIXME - apply .action-icons  funktioniert nicht*/
 .action-edit-icon {
-    /* @apply .action-icons; */
     background-image: url(../assets/edit-contacts-icon.svg);
 }
 
 .action-delete-icon {
-    /* @apply .action-icons; */
+
     background-image: url(../assets/delete-contacts-icon.svg);
 
 }
@@ -320,7 +307,6 @@
     height: 24px;
 }
 
-/*TODO - Btn sollten noch verschoben werden*/
 .btn-contact-action {
     display: flex;
     align-items: center;
