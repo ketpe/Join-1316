@@ -26,6 +26,7 @@ async function onHelpLoad() {
         await loadHelpInDesktopMode();
     }
     window.addEventListener('resize', resizeHelp);
+    window.addEventListener('resize', updateLandscapeBlock);
 }
 
 /**

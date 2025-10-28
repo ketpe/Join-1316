@@ -30,6 +30,7 @@ async function onLoadBoard() {
         kanbanUpdateSizeMobile();
     }
     window.addEventListener('resize', onBoardPageResize);
+    window.addEventListener('resize', updateLandscapeBlock);
 }
 
 /**

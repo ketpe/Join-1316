@@ -255,31 +255,20 @@ a {
 }
 
 
-@media screen and (orientation: landscape) and (max-width: 1000px) {
+.landscape-warning { display: none; }
 
-    main,
-    .main-container {
-        display: none;
-    }
 
-    .landscape-warning {
-        display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: var(--default-bg-color);
-        color: #000;
-        z-index: 9999;
-        font-size: 2rem;
-        text-align: center;
-        padding-top: 40vh;
-    }
-}
+html.landscape-blocked .main-container,
+html.landscape-blocked main { display: none !important; }
 
-@media screen and (orientation: portrait) and (max-width: 1000px) {
-    .landscape-warning {
-        display: none;
-    }
+html.landscape-blocked .landscape-warning {
+  display: block !important;
+  position: fixed;
+  inset: 0;
+  background: var(--default-bg-color);
+  color: #000;
+  z-index: 9999;
+  font-size: 2rem;
+  text-align: center;
+  padding-top: 40vh;
 }

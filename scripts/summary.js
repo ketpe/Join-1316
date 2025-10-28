@@ -29,13 +29,13 @@ async function onLoadSummary() {
     if (width >= minDesktopWidth) {
         await loadHtmlComponentsForDesktop();
         setNavigationButtonActive('summary', "desktop");
-
     } else {
         await loadHtmlComponentsForMobile();
         setNavigationButtonActive('summary', "mobile");
     }
 
     window.addEventListener('resize', onSummaryPageResize);
+    window.addEventListener('resize', updateLandscapeBlock);
 }
 
 /**

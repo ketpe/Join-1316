@@ -31,6 +31,7 @@ async function onLoadContacts() {
     await renderContacts();
     hideLoadingAnimation();
     window.addEventListener('resize', addContactsPageResize);
+    window.addEventListener('resize', updateLandscapeBlock);
 }
 
 

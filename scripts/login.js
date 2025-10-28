@@ -22,10 +22,12 @@ let isStartup = false;
  * @returns {void}
  */
 function loginLoaded() {
+    resetUrl();
     if (!isStartup) { return; }
     const [height, width] = getCurrentWindowSize();
     width <= 500 ? changeAnimationToMobileMode() : changeAnimationToDesktopMode();
     window.addEventListener('resize', loginResize);
+    window.addEventListener('resize', updateLandscapeBlock);
 }
 
 /**
@@ -37,7 +39,7 @@ function loginLoaded() {
 function resetUrl() {
     let param = new URLSearchParams(document.location.search);
     let pageParam = param.get('isNotStartup');
-    const isStartup = pageParam == null || pageParam.length == 0 || pageParam.startsWith('false') ? true : false;
+    isStartup = pageParam == null || pageParam.length == 0 || pageParam.startsWith('false') ? true : false;
     resetAllParameter();
     if (pageParam != null && pageParam.length > 0) {
         param.delete('isNotStartup');

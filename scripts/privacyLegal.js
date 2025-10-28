@@ -30,6 +30,7 @@ async function privacyOrLegalLoad(privacyOrLegal) {
         await loadInDesktopMode(privacyOrLegal);
     }
     window.addEventListener('resize', () => privacyOrLegalResize(privacyOrLegal));
+    window.addEventListener('resize', updateLandscapeBlock);
 }
 
 /**

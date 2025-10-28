@@ -47,6 +47,7 @@ async function onLoadAddTask() {
     }
     changeAddTaskFormFieldSize(height, width, currentView);
     window.addEventListener('resize', addTaskPageResize);
+    window.addEventListener('resize', updateLandscapeBlock);
 }
 
 /**
