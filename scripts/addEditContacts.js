@@ -24,6 +24,8 @@ let validateEmail = false;
  * @type {boolean}
  */
 let validatePhone = false;
+let contactTaskConnectionList = [];
+
 
 /**
  * @function newContact
@@ -183,18 +185,81 @@ function createUpdateContactObject() {
  */
 async function onDeleteContact(event, element) {
     if (event) event.preventDefault();
-    if (element.id !== "") {
-        const fb = new FirebaseDatabase();
-        const data = await fb.getFirebaseLogin(() => fb.deleteData(`/contacts/${element.id}`));
+
+    if (!element.id || element.id.length == 0) { return; }
+
+    const result = await startDeleteOneContact(element.id);
+    if (result) {
         clearActiveContactClass();
         renderContacts();
-    } else {
-        console.warn("Keine gültige ID übergeben!");
+        showSavedToast('delete');
     }
-    showSavedToast('delete');
 }
 
-//REVIEW - Validierung der Kontaktdaten, könnte zusammengelegt werden mit Validierung in add-task
+/**
+ * @function startDeleteOneContact
+ * @memberof addEditContacts
+ * @description - Start the deletion process for a contact. 
+ * This function checks for any task connections associated with the contact, removes those connections, and then deletes the contact from the database.
+ * @param {string} contactID
+ * @returns {Promise<boolean>}
+ */
+async function startDeleteOneContact(contactID) {
+    if (! await readContactTaskConnection(contactID)) { return false; }
+    if (! await removeContactTaskConnection()) { return false; }
+    if (! await removeContact(contactID)) { return false; }
+    return true;
+}
+
+/**
+ * @function readContactTaskConnection
+ * @memberof addEditContacts
+ * @description - Read the task connections for a specific contact.
+ * @param {string} contactID
+ * @returns {Promise<boolean>}
+ */
+async function readContactTaskConnection(contactID) {
+    const fb = new FirebaseDatabase();
+    const contactConnection = await fb.getFirebaseLogin(() => fb.getAllData('taskContactAssigned'));
+    const filterContact = contactConnection.filter(x => x['contactId'] == contactID);
+    contactTaskConnectionList = filterContact;
+    return filterContact != null;
+}
+
+/**
+ * @function removeContactTaskConnection
+ * @memberof addEditContacts
+ * @description - Remove the task connections for a specific contact.
+ * @returns {Promise<boolean>}
+ */
+async function removeContactTaskConnection() {
+    const fb = new FirebaseDatabase();
+
+    for (let i = 0; i < contactTaskConnectionList.length; i++) {
+        try {
+            await fb.getFirebaseLogin(() => fb.deleteData(`/taskContactAssigned/${contactTaskConnectionList[i].id}`));
+        } catch (error) { return false; }
+    }
+
+    return true;
+
+}
+
+/**
+ * @function removeContact
+ * @memberof addEditContacts
+ * @description - Remove a contact from the database.
+ * @param {string} contactID 
+ * @returns {Promise<boolean>}  
+ */
+async function removeContact(contactID) {
+    try {
+        const fb = new FirebaseDatabase();
+        await fb.getFirebaseLogin(() => fb.deleteData(`/contacts/${contactID}`));
+        return true
+    } catch (error) { return false; }
+}
+
 
 /**
  * @function showAndLeaveErrorMessage
