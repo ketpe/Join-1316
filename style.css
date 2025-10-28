@@ -174,7 +174,6 @@ a {
     overflow: hidden;
 }
 
-/**TODO - Am Ende anpassen */
 .dialog-show {
     animation: slide-Dialog-in 1000ms ease-in-out forwards;
 }
@@ -255,10 +254,9 @@ a {
     }
 }
 
-/*NOTE - Landscape mode warning for mobile devices */
 
 @media screen and (orientation: landscape) {
-    body {
+    main {
         display: none;
     }
 
@@ -269,7 +267,7 @@ a {
         left: 0;
         right: 0;
         bottom: 0;
-        background: #fff;
+        background: var(--default-bg-color);
         color: #000;
         z-index: 9999;
         font-size: 2rem;

@@ -104,6 +104,20 @@ body {
     }
 }
 
+@media(max-height: 800px) {
+    .form-for-signup {
+        height: 530px !important;
+    }
+
+    .login-signup-input-field-container {
+        margin-bottom: 0 !important;
+    }
+
+    .arrow-left {
+        top: 28px !important;
+    }
+}
+
 @media (max-width: 600px) {
     :root {
         --form-login-scale: .75;
@@ -237,7 +251,7 @@ body {
         width: calc(var(--logo-width) * 0.78);
     }
 
-    .signUp-safe-dialog{
+    .signUp-safe-dialog {
         width: 280px;
     }
 
@@ -335,7 +349,7 @@ body {
         right: 8px;
     }
 
-    .login-toggle-password{
+    .login-toggle-password {
         right: 8px;
     }
 }
