@@ -1,4 +1,3 @@
-/* ===== Base / Tokens ===================================================== */
 :root {
     --ease-smooth: cubic-bezier(.22, .61, .36, 1);
     --dur-fast: 200ms;
@@ -16,7 +15,6 @@
     --logo-mobile-left: 37px;
 }
 
-/* ===== Global Resets ===================================================== */
 *,
 *::before,
 *::after {
@@ -29,7 +27,7 @@ body {
     overflow-x: hidden;
 }
 
-/* ===== Smooth transitions on frequently changing elements ================ */
+
 .login-join-logo,
 .signup-logo {
     transition:
@@ -54,7 +52,7 @@ body {
         gap var(--dur-fast) var(--ease-smooth);
 }
 
-/* ===== Elementgrößen/Positionen über Variablen ========================== */
+
 .login-join-logo {
     top: calc(var(--logo-position-top) * var(--logo-pos-scale));
     left: calc(var(--logo-position-left) * var(--logo-pos-scale));
@@ -78,7 +76,7 @@ body {
     width: calc(var(--form-for-signup-width) * var(--form-signup-width-scale));
 }
 
-/* ===== Breakpoints ======================================================= */
+
 @media (max-width: 1090px) {
     :root {
         --logo-pos-scale: .85;
@@ -101,6 +99,20 @@ body {
 
     .form-for-signup {
         margin-top: 70px;
+    }
+}
+
+@media(max-height: 800px) {
+    .form-for-signup {
+        height: 530px !important;
+    }
+
+    .login-signup-input-field-container {
+        margin-bottom: 0 !important;
+    }
+
+    .arrow-left {
+        top: 28px !important;
     }
 }
 
@@ -237,7 +249,7 @@ body {
         width: calc(var(--logo-width) * 0.78);
     }
 
-    .signUp-safe-dialog{
+    .signUp-safe-dialog {
         width: 280px;
     }
 
@@ -335,12 +347,12 @@ body {
         right: 8px;
     }
 
-    .login-toggle-password{
+    .login-toggle-password {
         right: 8px;
     }
 }
 
-/* ===== Motion preferences ================================================= */
+
 @media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: 0.001ms !important;

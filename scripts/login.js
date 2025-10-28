@@ -13,6 +13,7 @@
  * Manages input field behaviors for login form.
  */
 
+let isStartup = false;
 
 /**
  * @function loginLoaded
@@ -21,23 +22,27 @@
  * @returns {void}
  */
 function loginLoaded() {
-
-    let param = new URLSearchParams(document.location.search);
-    let pageParam = param.get('isNotStartup');
-
-    const isStartup = pageParam == null || pageParam.length == 0 || pageParam.startsWith('false') ? true : false;
-
-    resetAllParameter();
-
-    if (pageParam != null && pageParam.length > 0) {
-        param.delete('isNotStartup');
-        window.history.replaceState({}, document.title, '/index.html');
-    }
-
     if (!isStartup) { return; }
     const [height, width] = getCurrentWindowSize();
     width <= 500 ? changeAnimationToMobileMode() : changeAnimationToDesktopMode();
     window.addEventListener('resize', loginResize);
+}
+
+/**
+ * @function resetUrl
+ * @memberof login
+ * @description Resets the URL parameters on page load.
+ * @return {void}
+ */
+function resetUrl() {
+    let param = new URLSearchParams(document.location.search);
+    let pageParam = param.get('isNotStartup');
+    const isStartup = pageParam == null || pageParam.length == 0 || pageParam.startsWith('false') ? true : false;
+    resetAllParameter();
+    if (pageParam != null && pageParam.length > 0) {
+        param.delete('isNotStartup');
+        window.history.replaceState({}, document.title, '/index.html');
+    }
 }
 
 /**

@@ -174,7 +174,6 @@ a {
     overflow: hidden;
 }
 
-/**TODO - Am Ende anpassen */
 .dialog-show {
     animation: slide-Dialog-in 1000ms ease-in-out forwards;
 }
@@ -255,7 +254,6 @@ a {
     }
 }
 
-/*NOTE - Landscape mode warning for mobile devices */
 
 @media screen and (orientation: landscape) and (max-width: 1000px) {
 

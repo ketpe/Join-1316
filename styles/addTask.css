@@ -283,9 +283,6 @@ legend {
     margin-bottom: 8px;
 }
 
-/*NOTE[192-241] - Validierung der Kontaktdaten Styles für anzeigen beginnen hier. Entnommen aus add-Task*/
-/*REVIEW - Könnte mit dem Styling aus add-Task zusammengelegt werden*/
-
 .a-t-error-text-container {
     height: 12px;
     margin-top: 4px;
@@ -305,7 +302,6 @@ legend {
 }
 
 .error-text-hidden {
-    /* color: var(--default-bg-color) !important; */
     color: transparent !important;
 }
 
@@ -314,7 +310,6 @@ legend {
 }
 
 .a-t-text-area {
-    /* max-width: calc(440px - (2 * 1px) - (2 * 18px)); */
     max-height: calc(120px - (2 * 1px) - (2 * 16px));
     border-radius: 10px;
     border: 1px solid var(--input-border-color);
@@ -359,7 +354,6 @@ legend {
     border-radius: 0px 0px 10px 10px;
     background-color: white;
     z-index: 1;
-    /* box-shadow: 0 0 14px 3px rgba(0, 0, 0, .2); */
     overflow: hidden;
     transition: height 0.3s ease;
 
@@ -425,7 +419,6 @@ legend {
 
 .a-t-sub-input {
     padding-right: 75px;
-    /* width: calc(440px - (2 * 1px) - 21px - 75px); */
 }
 
 .btn-show-hide-category-list,
