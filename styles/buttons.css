@@ -1,4 +1,3 @@
-/* Basis-Styling for all Buttons */
 .btn {
   display: inline-flex;
   justify-content: center;
@@ -11,7 +10,6 @@
   transition: all 100ms ease-in-out;
 }
 
-/* Sizes */
 .btn-sm {
   padding: 15px 16px;
   font-size: 14px;
@@ -45,8 +43,6 @@
 .btn-mobile-board-add-Task {
   height: 40px;
   width: 40px;
-
-
 }
 
 .btn-block {
@@ -57,7 +53,6 @@
   cursor: not-allowed;
 }
 
-/* Colors */
 .btn-fill {
   background-color: var(--bg-default);
   color: white;
@@ -91,7 +86,7 @@
   box-shadow: 0 4px 4px rgba(0, 0, 0, .25);
 }
 
-/* Cancel Button */
+
 .btn-clear-cancel {
   width: 126px;
   padding: 14.5px;
@@ -137,7 +132,7 @@
   background-image: url('../assets/cancel-clear-active.svg');
 }
 
-/* Create Task */
+
 .btn-create-task {
   width: 183px;
   padding: 16px;
@@ -162,7 +157,7 @@
   background: url('../assets/check-icon.svg') center/cover no-repeat;
 }
 
-/* Add Contact / Task */
+
 .btn-add-contacts,
 .btn-add-tasks {
   gap: 16px;
@@ -172,7 +167,7 @@
   width: 100%;
 }
 
-/* Priority Buttons */
+
 .btn-priority {
   width: 136px;
   padding: 16px 10px;
@@ -203,7 +198,7 @@
   background: center/cover no-repeat;
 }
 
-/* Icons + Active States */
+
 .prio-alta div>div {
   background-image: url('../assets/prio-alta-red.svg');
 }
@@ -273,7 +268,7 @@
   background-image: url('../assets/prio-baja-active.svg');
 }
 
-/* Board Task Add */
+
 .btn-add-board-task {
   width: 24px;
   height: 24px;
@@ -286,7 +281,6 @@
   background-image: url('../assets/plus-button-hover.svg');
 }
 
-/* Overlay Close */
 .btn-overlay-close {
   width: 32px;
   height: 32px;
@@ -313,7 +307,7 @@
   background-color: var(--bg-btn-hover-special);
 }
 
-/* Submenu */
+
 .btn-submenu {
   width: 130px;
   height: 46px;
