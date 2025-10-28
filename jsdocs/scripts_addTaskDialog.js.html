@@ -44,19 +44,24 @@ let addTaskUtils = new AddTaskUtils();
 let addTaskDialogTaskComponents = null;
 let resizeLockDialog = false;
 let currentDialogView = "desktop";
+let currentStateCategory = "todo";
 
 /**
  * @description Opens the Add Task dialog, renders the content, and adjusts the view for dialog presentation.
  * This function is asynchronous to accommodate data loading and rendering processes.
+ * The dialog view is adjusted based on the current window size to ensure optimal user experience.
+ * The task state category can be specified to pre-select the appropriate column for the new task.
  * @function onAddTaskDialogOpen
  * @memberof addTaskDialog
+ * @param {string} stateCategory - The state category to which the new task will be added (e.g., "todo", "inprogress", "awaiting").
  * @returns {Promise&lt;void>} A promise that resolves when the dialog is fully opened and rendered.
  */
-async function onAddTaskDialogOpen() {
+async function onAddTaskDialogOpen(stateCategory = "todo") {
+    currentStateCategory = stateCategory;
     const [height, width] = addTaskUtils.getCurrentAddTaskSize;
 
     if (width &lt;= 880) {
-        navigateToAddTask();
+        navigateToAddTask(null, currentStateCategory);
     } else if (height >= DIALOGINDESKTOP_HEIGHT &amp;&amp; width >= DIALOGINDESKTOP_WIDTH) {
         currentDialogView = "desktop";
         await showAddTaskAsDialog();
@@ -87,7 +92,7 @@ async function resizeAddTaskBoardDialog(event) {
     const [height, width] = addTaskUtils.getCurrentAddTaskSize;
 
     if (width &lt;= 880) {
-        navigateToAddTask();
+        navigateToAddTask(null, currentStateCategory);
     } else if (height >= DIALOGINDESKTOP_HEIGHT &amp;&amp; width >= DIALOGINDESKTOP_WIDTH &amp;&amp; currentDialogView != "desktop") {
         currentDialogView = "desktop";
         await showAddTaskAsDialog();
@@ -148,7 +153,7 @@ async function loadDataForAddTaskDialog() {
     currentUser = addTaskUtils.readCurrentUserID();
     isGuest = addTaskUtils.isCurrentUserGuest();
     if (!addTaskDialogTaskComponents) {
-        addTaskDialogTaskComponents = new TaskComponents(currentUser, "addTaskDialogTaskComponents");
+        addTaskDialogTaskComponents = new TaskComponents(currentUser, "addTaskDialogTaskComponents", currentStateCategory);
         addTaskDialogTaskComponents.run();
         window.addTaskDialogTaskComponents = addTaskDialogTaskComponents;
     }
@@ -173,7 +178,7 @@ function clearDialogContent() {
  * @description Gives necessary functions to the board body element.
  * @function giveFunctionsToBoardBody
  * @memberof addTaskDialog
- * @returns {void}      
+ * @returns {void}
  */
 function giveFunctionsToBoardBody() {
     const body = document.querySelector('body');
@@ -219,7 +224,7 @@ function addTaskDialogClose(event) {
  * @param {string} dialogID - The ID of the dialog element.
  * @returns {void}
  */
-function closeTheDialog(dialog, dialogID="") {
+function closeTheDialog(dialog, dialogID = "") {
 
     const dialogAddTask = dialog ? dialog : document.getElementById(dialogID);
 
@@ -282,7 +287,6 @@ async function renderAddTaskIntoDialogSingle() {
     }).then(() => {
         changeDialogStyleToSingle();
     });
-
 }
 
 /**
@@ -294,7 +298,6 @@ async function renderAddTaskIntoDialogSingle() {
  * @returns {void}
  */
 function changeAddTaskFormFieldSizeBoardDialogSingle() {
-
     const [height, width] = addTaskUtils.getCurrentAddTaskSize;
     const dialog = document.getElementById('add-task-dialog');
     const heightDialog = height - 100;
@@ -308,10 +311,10 @@ function changeAddTaskFormFieldSizeBoardDialogSingle() {
 /**
  * @description Adjusts the form field sizes for the Add Task dialog in board mode.
  * This function calculates the appropriate heights for the dialog and its fields based on the current window size.
- * It ensures that the form fields are displayed correctly within the dialog.   
+ * It ensures that the form fields are displayed correctly within the dialog.
  * @function changeAddTaskFormFieldSizeBoardDialog
  * @memberof addTaskDialog
- * @param {*} params 
+ * @param {*} params
  * @returns {void}
  */
 function changeAddTaskFormFieldSizeBoardDialog(params) {
@@ -342,7 +345,7 @@ function changeDialogStyleToSingle() {
 }
 
 
-/** 
+/**
  * @description Changes the view of the Add Task form to be suitable for dialog presentation.
  * This function adjusts various elements' classes to ensure the form is displayed correctly within a dialog.
  * It modifies visibility, layout, and styling to enhance user experience in the dialog context.
@@ -362,7 +365,7 @@ function changeAddTaskViewToDialog() {
     document.querySelector('.add-task-head').classList.add('mb-24');
 }
 
-/** 
+/**
  * @description Adds the show class to the Add Task dialog.
  * This function modifies the dialog's classes to make it visible with appropriate styling.
  * @function addDialogShowClass
@@ -375,7 +378,7 @@ function addDialogShowClass() {
     dialog.classList.add('dialog-show');
 }
 
-/** 
+/**
  * @description Adds the hide class to the Add Task dialog.
  * This function modifies the dialog's classes to hide it with appropriate styling.
  * @function addDialogHideClass
@@ -396,13 +399,13 @@ function addDialogHideClass() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 18:35:47 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Oct 28 2025 21:36:38 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -37,9 +37,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Template functions for generating AddTask HTML elements.
-Provides reusable HTML snippets for contact lists, category lists, and subtask lists.
-These functions facilitate the dynamic creation of UI components in the task management application.</div>
+            <div class="description">Template functions for generating AddTask HTML elements.Provides reusable HTML snippets for contact lists, category lists, and subtask lists.These functions facilitate the dynamic creation of UI components in the task management application.</div>
         
 
         
@@ -214,7 +212,7 @@ These functions facilitate the dynamic creation of UI components in the task man
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addTaskTemplate.js.html">scripts/addTaskTemplate.js</a>, <a href="scripts_addTaskTemplate.js.html#line31">line 31</a>
+        <a href="scripts_addTaskTemplate.js.html">scripts/addTaskTemplate.js</a>, <a href="scripts_addTaskTemplate.js.html#line32">line 32</a>
     </li></ul></dd>
     
 
@@ -396,7 +394,7 @@ These functions facilitate the dynamic creation of UI components in the task man
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addTaskTemplate.js.html">scripts/addTaskTemplate.js</a>, <a href="scripts_addTaskTemplate.js.html#line44">line 44</a>
+        <a href="scripts_addTaskTemplate.js.html">scripts/addTaskTemplate.js</a>, <a href="scripts_addTaskTemplate.js.html#line45">line 45</a>
     </li></ul></dd>
     
 
@@ -454,7 +452,7 @@ These functions facilitate the dynamic creation of UI components in the task man
     
 
     
-    <h4 class="name" id=".getContactListElement"><span class="type-signature">(static) </span>getContactListElement<span class="signature">(contact, isAssinged, isdetailView, taskInstance)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    <h4 class="name" id=".getContactListElement"><span class="type-signature">(static) </span>getContactListElement<span class="signature">(contact, isAssinged, isdetailView, taskInstance, isCurrentUser)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
     
@@ -584,6 +582,29 @@ These functions facilitate the dynamic creation of UI components in the task man
             
 
             <td class="description last">The task instance.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>isCurrentUser</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Indicates if the contact is the current user.</td>
         </tr>
 
     
@@ -783,7 +804,7 @@ These functions facilitate the dynamic creation of UI components in the task man
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addTaskTemplate.js.html">scripts/addTaskTemplate.js</a>, <a href="scripts_addTaskTemplate.js.html#line118">line 118</a>
+        <a href="scripts_addTaskTemplate.js.html">scripts/addTaskTemplate.js</a>, <a href="scripts_addTaskTemplate.js.html#line117">line 117</a>
     </li></ul></dd>
     
 
@@ -965,7 +986,7 @@ These functions facilitate the dynamic creation of UI components in the task man
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addTaskTemplate.js.html">scripts/addTaskTemplate.js</a>, <a href="scripts_addTaskTemplate.js.html#line88">line 88</a>
+        <a href="scripts_addTaskTemplate.js.html">scripts/addTaskTemplate.js</a>, <a href="scripts_addTaskTemplate.js.html#line89">line 89</a>
     </li></ul></dd>
     
 
@@ -1147,7 +1168,7 @@ These functions facilitate the dynamic creation of UI components in the task man
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addTaskTemplate.js.html">scripts/addTaskTemplate.js</a>, <a href="scripts_addTaskTemplate.js.html#line60">line 60</a>
+        <a href="scripts_addTaskTemplate.js.html">scripts/addTaskTemplate.js</a>, <a href="scripts_addTaskTemplate.js.html#line61">line 61</a>
     </li></ul></dd>
     
 
@@ -1215,13 +1236,13 @@ These functions facilitate the dynamic creation of UI components in the task man
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 18:35:47 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Oct 28 2025 21:36:38 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

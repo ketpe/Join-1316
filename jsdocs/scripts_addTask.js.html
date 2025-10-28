@@ -52,6 +52,7 @@ let addTaskUtils = new AddTaskUtils();
 let addTasktaskComponents = null;
 let currentView = "";
 let resizeLock = false;
+let currentStateCategory = "todo";
 
 
 /**
@@ -63,6 +64,7 @@ let resizeLock = false;
  */
 async function onLoadAddTask() {
     checkUserOrGuestIsloggedIn();
+    readUrlParameter();
     const [height, width] = addTaskUtils.getCurrentAddTaskSize;
     if (width >= breakPointToDesktopSingle) {
         await changeAddTaskToDesktop(height, width);
@@ -71,11 +73,29 @@ async function onLoadAddTask() {
     } else {
         await changeAddTaskToMobile(height, width);
     }
-
     changeAddTaskFormFieldSize(height, width, currentView);
+    window.addEventListener('resize', addTaskPageResize);
+    window.addEventListener('resize', updateLandscapeBlock);
 }
 
-/** 
+/**
+ * @description Reads URL parameters to determine the current state category for the Add Task page.
+ * Sets the currentStateCategory variable based on the "stateCategory" parameter in the URL.
+ * Resets the URL to remove parameters after reading them.
+ * @function readUrlParameter
+ * @memberof addTask
+ * @returns {void}
+ */
+function readUrlParameter() {
+    let param = new URLSearchParams(document.location.search);
+    const stateCategory = param.get("stateCategory");
+    currentStateCategory = stateCategory ? stateCategory : "todo";
+    if (stateCategory &amp;&amp; stateCategory.length > 0) {
+        window.history.replaceState({}, document.title, '/addTask.html');
+    }
+}
+
+/**
  * @description Handles window resize events to adjust the Add Task page layout.
  * Uses a lock to prevent multiple simultaneous executions.
  * Adjusts the layout based on predefined breakpoints and resizes form fields accordingly.
@@ -101,7 +121,7 @@ async function addTaskPageResize() {
         }
 
         changeAddTaskFormFieldSize(height, width, currentView);
-    }finally{
+    } finally {
         resizeLock = false;
     }
 }
@@ -131,7 +151,7 @@ async function changeAddTaskToDesktop() {
  * @memberof addTask
  * @returns {Promise&lt;void>}
  */
- 
+
 async function changeAddTaskToDesktopSingle() {
     currentView = DESKTOPSINGLE;
     await loadHtmlComponentsForDesktopSingle();
@@ -168,19 +188,13 @@ async function changeAddTaskToMobile() {
 function changeAddTaskFormFieldSize(height, width, currentView) {
     if (currentView == MOBILE) {
         addTaskUtils.measureTheRemainingSpaceOfFieldsForMobile(height)
-            .then((result) => {
-                document.querySelector(".add-task-mobile-fields").style.height = result + "px";
-            });
+            .then((result) => { document.querySelector(".add-task-mobile-fields").style.height = result + "px"; });
     } else if (currentView == DESKTOP) {
         addTaskUtils.measureTheRemainingSpaceOfFieldsForDesktop(height)
-            .then((result) => {
-                document.querySelector(".add-task-fields").style.height = result + "px";
-            });
-    }else if(currentView == DESKTOPSINGLE){
+            .then((result) => { document.querySelector(".add-task-fields").style.height = result + "px"; });
+    } else if (currentView == DESKTOPSINGLE) {
         addTaskUtils.measureTheRemainingSpaceOfFieldsForDesktopSingle(height)
-            .then((result) => {
-                document.querySelector(".add-task-mobile-fields").style.height = result + "px";
-            });
+            .then((result) => { document.querySelector(".add-task-mobile-fields").style.height = result + "px"; });
     }
 }
 
@@ -213,7 +227,7 @@ async function loadHtmlComponentsForDesktop() {
  * @memberof addTask
  * @returns {Promise&lt;void>}
  */
- 
+
 async function loadHtmlComponentsForDesktopSingle() {
     clearAddTaskHtmlBody();
     await includeHtmlForNode("body", "addTaskDesktop.html");
@@ -262,7 +276,7 @@ function clearAddTaskHtmlBody() {
     document.querySelector('body').innerHTML = "";
 }
 
-/** 
+/**
  * @description Fills the HTML with content for the Add Task view.
  * Initializes the TaskElements class and populates the left and right containers.
  * Sets up the form submission function and button click handlers.
@@ -325,7 +339,7 @@ async function loadDataForAddTask() {
     isGuest = addTaskUtils.isCurrentUserGuest();
 
     if (!addTasktaskComponents) {
-        addTasktaskComponents = new TaskComponents(currentUser, "addTasktaskComponents");
+        addTasktaskComponents = new TaskComponents(currentUser, "addTasktaskComponents", currentStateCategory);
         await addTasktaskComponents.run();
         window.addTasktaskComponents = addTasktaskComponents;
     }
@@ -353,13 +367,13 @@ async function loadDataForAddTask() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 18:35:47 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Oct 28 2025 21:36:38 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

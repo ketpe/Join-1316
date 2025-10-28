@@ -29,7 +29,7 @@
             <pre class="prettyprint source linenums"><code>/**
  * @namespace addEditContacts
  * @description Edits and adds contacts to the Firebase database.
- * 
+ *
  */
 
 /**
@@ -52,6 +52,8 @@ let validateEmail = false;
  * @type {boolean}
  */
 let validatePhone = false;
+let contactTaskConnectionList = [];
+
 
 /**
  * @function newContact
@@ -211,18 +213,80 @@ function createUpdateContactObject() {
  */
 async function onDeleteContact(event, element) {
     if (event) event.preventDefault();
-    if (element.id !== "") {
-        const fb = new FirebaseDatabase();
-        const data = await fb.getFirebaseLogin(() => fb.deleteData(`/contacts/${element.id}`));
+
+    if (!element.id || element.id.length == 0) { return; }
+
+    const result = await startDeleteOneContact(element.id);
+    if (result) {
         clearActiveContactClass();
         renderContacts();
-    } else {
-        console.warn("Keine gültige ID übergeben!");
+        showSavedToast('delete');
     }
-    showSavedToast('delete');
 }
 
-//REVIEW - Validierung der Kontaktdaten, könnte zusammengelegt werden mit Validierung in add-task
+/**
+ * @function startDeleteOneContact
+ * @memberof addEditContacts
+ * @description - Start the deletion process for a contact.
+ * This function checks for any task connections associated with the contact, removes those connections, and then deletes the contact from the database.
+ * @param {string} contactID
+ * @returns {Promise&lt;boolean>}
+ */
+async function startDeleteOneContact(contactID) {
+    if (! await readContactTaskConnection(contactID)) { return false; }
+    if (! await removeContactTaskConnection()) { return false; }
+    if (! await removeContact(contactID)) { return false; }
+    return true;
+}
+
+/**
+ * @function readContactTaskConnection
+ * @memberof addEditContacts
+ * @description - Read the task connections for a specific contact.
+ * @param {string} contactID
+ * @returns {Promise&lt;boolean>}
+ */
+async function readContactTaskConnection(contactID) {
+    const fb = new FirebaseDatabase();
+    const contactConnection = await fb.getFirebaseLogin(() => fb.getAllData('taskContactAssigned'));
+    const filterContact = contactConnection.filter(x => x['contactId'] == contactID);
+    contactTaskConnectionList = filterContact;
+    return filterContact != null;
+}
+
+/**
+ * @function removeContactTaskConnection
+ * @memberof addEditContacts
+ * @description - Remove the task connections for a specific contact.
+ * @returns {Promise&lt;boolean>}
+ */
+async function removeContactTaskConnection() {
+    const fb = new FirebaseDatabase();
+
+    for (let i = 0; i &lt; contactTaskConnectionList.length; i++) {
+        try {
+            await fb.getFirebaseLogin(() => fb.deleteData(`/taskContactAssigned/${contactTaskConnectionList[i].id}`));
+        } catch (error) { return false; }
+    }
+
+    return true;
+}
+
+/**
+ * @function removeContact
+ * @memberof addEditContacts
+ * @description - Remove a contact from the database.
+ * @param {string} contactID
+ * @returns {Promise&lt;boolean>}
+ */
+async function removeContact(contactID) {
+    try {
+        const fb = new FirebaseDatabase();
+        await fb.getFirebaseLogin(() => fb.deleteData(`/contacts/${contactID}`));
+        return true
+    } catch (error) { return false; }
+}
+
 
 /**
  * @function showAndLeaveErrorMessage
@@ -257,8 +321,9 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
     if (inputField == null) { return; }
     visibilty ? inputField.classList.add('input-has-error') : inputField.classList.remove('input-has-error');
 }
+
 /**
- * @function contactNameValidation  
+ * @function contactNameValidation
  * @memberof addEditContacts
  * @description - Validate the name field in the contact form. This function checks if the name field is filled out correctly and updates the validation status and error messages accordingly.
  * @returns {void}
@@ -279,7 +344,7 @@ function contactNameValidation() {
 }
 
 /**
- * @function contactEmailValidation  
+ * @function contactEmailValidation
  * @memberof addEditContacts
  * @description - Validate the email field in the contact form. This function checks if the email field is filled out correctly and updates the validation status and error messages accordingly.
  * @returns {void}
@@ -300,7 +365,7 @@ function contactEmailValidation() {
 }
 
 /**
- * @function contactPhoneValidation  
+ * @function contactPhoneValidation
  * @memberof addEditContacts
  * @description - Validate the phone field in the contact form. This function checks if the phone field is filled out correctly and updates the validation status and error messages accordingly.
  * @returns {void}
@@ -318,7 +383,6 @@ function contactPhoneValidation() {
         showAndLeaveErrorBorder("contact-phone", true);
         validatePhone = false;
     }
-
 }
 /**
  * @function toggleBtnCreateContact
@@ -433,7 +497,7 @@ function onDeleteContactMobile(event, element) {
  * @function showSavedToast
  * @memberof addEditContacts
  * @description - Show a toast notification indicating that changes have been saved. This function displays a toast message based on the type of action performed (edit, new, delete) and automatically hides it after a short duration.
- * @param {*} actionType 
+ * @param {*} actionType
  * @returns {Promise&lt;void>}
  */
 async function showSavedToast(actionType) {
@@ -459,13 +523,13 @@ async function showSavedToast(actionType) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 18:35:47 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Oct 28 2025 21:36:38 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

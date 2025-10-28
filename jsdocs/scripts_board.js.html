@@ -57,8 +57,10 @@ async function onLoadBoard() {
         setNavigationButtonActive('board', "mobile");
         kanbanUpdateSizeMobile();
     }
-
+    window.addEventListener('resize', onBoardPageResize);
+    window.addEventListener('resize', updateLandscapeBlock);
 }
+
 /**
  * @function loadHtmlComponentsForDesktop
  * @memberof board
@@ -140,7 +142,7 @@ async function getBoardTasks() {
     tasks = await getDatabaseTaskCategory(tasks);
     tasks = await getDatabaseTaskSubtasks(tasks);
     tasks = await getDatabaseTaskContact(tasks);
-    addBoardPageResize();
+    onBoardPageResize();
     renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     addLeftPositionStyleassignedContacts();
     setNavigationButtonActive('board', "desktop");
@@ -148,12 +150,12 @@ async function getBoardTasks() {
 }
 
 /**
- * @function addBoardPageResize
+ * @function onBoardPageResize
  * @memberof board
  * @description Adjusts the Kanban board layout based on the current window size, loading either mobile or desktop components as needed.
  * @returns {Promise&lt;void>}
  */
-async function addBoardPageResize() {
+async function onBoardPageResize() {
     const [height, width] = getCurrentWindowSize();
     if ((width &lt;= minDesktopWidth) &amp;&amp; currentView != "mobile") {
         await loadHtmlComponentsForMobile();
@@ -316,14 +318,12 @@ async function getDatabaseTaskContact(tasks) {
     const fb = new FirebaseDatabase();
     let getAllAssignedContacts = await fb.getFirebaseLogin(() => fb.getAllData('taskContactAssigned'));
     let getAllContacts = await fb.getFirebaseLogin(() => fb.getAllData('contacts'));
-
     tasks.forEach(task => {
         let assignedContacts = getAllAssignedContacts.filter(obj => obj.taskID === task.id)
         let contacts = [];
         assignedContacts.forEach(assContact => {
             let contact = getAllContacts.filter(obj => obj.id === assContact.contactId)
             if (contact) contacts.push(contact);
-
         })
         task.assignedContacts = contacts;
     })
@@ -343,14 +343,10 @@ function renderAssignedContacts(assignedContacts) {
     try {
         assignedContacts.forEach(contactArr => {
             if (counter >= 6) throw breakExecption;
-            contactArr.forEach(contact => {
-                assignedContactsTemplate += getAllAssignedContactsTemplate(contact);
-            });
+            contactArr.forEach(contact => { assignedContactsTemplate += getAllAssignedContactsTemplate(contact); });
             counter++;
         });
-    } catch (error) {
-        return assignedContactsTemplate;
-    }
+    } catch (error) { return assignedContactsTemplate; }
     return assignedContactsTemplate;
 }
 
@@ -409,9 +405,7 @@ function addLeftPositionStyleassignedContacts() {
     const taskCards = document.querySelectorAll('.board-task-content');
     taskCards.forEach(card => {
         const contacts = card.querySelectorAll('.assigned-contact-pos');
-        contacts.forEach((contact, i) => {
-            contact.style.left = `calc(${i * 25}px)`;
-        });
+        contacts.forEach((contact, i) => { contact.style.left = `calc(${i * 25}px)`; });
     });
 }
 
@@ -463,7 +457,7 @@ async function deleteCurrentTask(button) {
     const taskDelete = new BoardTaskDetailDeleteUtil(currentTaskID);
     if (await taskDelete.startDelete()) {
         closeDialog('detail-view-task-dialog');
-        navigateToBoard();
+        await showChangesSavedToast(currentTaskID, "Task deleted!");
     }
 
 }
@@ -507,7 +501,7 @@ function removeLoadingFunctionFromDialog() {
 function addLoadingFunctionToDialog() {
     const editDialog = document.getElementById('detail-view-task-dialog');
     if (!editDialog) { return; }
-    editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog"), getBoardTaskWithLoadingAnimation()');
+    editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog"), getBoardTaskWithLoadingAnimation(),navigateToBoard()');
 }
 
 /**
@@ -529,7 +523,7 @@ async function getTaskByTaskID(taskId) {
 /**
  * @function editCurrentTaskSubmit
  * @memberof board
- * @description Handles the submission of the edit task form. It retrieves the form data, updates the task using the EditTaskSafeUtil, and refreshes the detail view with the updated task information.
+ * @description Submits the edited task details and updates the task in the database.
  * @param {Event} event - The submit event
  * @returns {Promise&lt;void>}
  */
@@ -537,38 +531,52 @@ async function editCurrentTaskSubmit(event) {
     if (event) event.preventDefault();
     removeLoadingFunctionFromDialog();
     const currentID = event.submitter.getAttribute('data-id');
-    const editTaskFormData = new FormData(event.currentTarget);
-    const currentTitle = editTaskFormData.get('task-title');
-    const currentDescription = editTaskFormData.get('task-description');
-    const currentDate = editTaskFormData.get('due-date');
+    const { title, description, date } = getEditTaskFormValues(event.currentTarget);
     const tasks = await getTaskByTaskID(currentID);
     const [prio, category, subtaskArray, contactAssignedArray] = boardTaskComponents.getTaskDetails;
-    const editTaskUtil = new EditTaskSafeUtil(tasks[0], currentTitle, currentDescription, currentDate, prio, contactAssignedArray, subtaskArray);
-    const resultUpdate = await editTaskUtil.startUpdate();
-    if (resultUpdate) {
+    const editTaskUtil = new EditTaskSafeUtil(tasks[0], title, description, date, prio, contactAssignedArray, subtaskArray);
+    if (await editTaskUtil.startUpdate()) {
         document.getElementById('dialog-content-detail-view-task').innerHTML = "";
-        const editDialog = document.getElementById('detail-view-task-dialog');
-        editDialog.style.background = "rgba(0, 0, 0, .005)";
-        await showChangesSavedToast(currentID);
+        document.getElementById('detail-view-task-dialog').style.background = "rgba(0, 0, 0, .005)";
+        await showChangesSavedToast(currentID, "Changes saved!");
     }
+}
+/**
+ * @function getEditTaskFormValues
+ * @memberof board
+ * @description Extracts the values from the edit task form.
+ * @param {HTMLFormElement} form - The form element containing the task details.
+ * @returns {Object} - An object containing the title, description, and due date of the task.
+ */
+function getEditTaskFormValues(form) {
+    const data = new FormData(form);
+    return {
+        title: data.get('task-title'),
+        description: data.get('task-description'),
+        date: data.get('due-date')
+    };
 }
 
 /**
  * @function showChangesSavedToast
  * @memberof board
- * @description Shows a toast message indicating that changes have been saved.
- * @param {*} currentID - The ID of the current task.
+ * @description Shows a toast message indicating that changes have been saved or delete a Task.
+ * If the message indicates that changes were saved, it refreshes the detail view of the task; otherwise, it navigates back to the board.
+ * @param {string} currentID - The ID of the current task.
+ * @param {string} message - The message to display in the toast.
  * @returns {Promise&lt;void>}
  */
-async function showChangesSavedToast(currentID) {
+async function showChangesSavedToast(currentID, message) {
     removeLoadingFunctionFromDialog();
     const toast = document.getElementById('addTaskSafeChangesToast');
-    if (!toast) { return; }
+    const toastText = document.getElementById('addTaskToastText');
+    if (!toast || !toastText) { return; }
+    toastText.textContent = message;
     toast.classList.add('safe-changes-toast-open');
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1200));
     toast.classList.remove('safe-changes-toast-open');
     await new Promise(resolve => setTimeout(resolve, 600));
-    getDetailViewTask(currentID);
+    message == "Changes saved!" ? getDetailViewTask(currentID) : navigateToBoard();
 }
 
 /**
@@ -647,13 +655,13 @@ function getRefsForSearch() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Oct 26 2025 18:35:47 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Oct 28 2025 21:36:38 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

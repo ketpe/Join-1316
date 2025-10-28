@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: scripts/firebase</title>
+    <title>JSDoc: Namespace: landscapeBlock</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: scripts/firebase</h1>
+    <h1 class="page-title">Namespace: landscapeBlock</h1>
 
     
 
@@ -28,8 +28,7 @@
 
 <header>
     
-        
-            
+        <h2>landscapeBlock</h2>
         
     
 </header>
@@ -38,13 +37,90 @@
     <div class="container-overview">
     
         
-            <div class="description">Firebase initialization and authentication.This script initializes the Firebase app using the provided configurationand sets up anonymous authentication. It exports the authenticationand database instances for use in other parts of the application.</div>
+            <div class="description">Blocks landscape mode on touch devices with small screens</div>
         
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_landscapeBlock.js.html">scripts/landscapeBlock.js</a>, <a href="scripts_landscapeBlock.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
 
         
             
 
+    
 
+    
+    <h4 class="name" id=".isLandscape"><span class="type-signature">(static) </span>isLandscape<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Checks if the device is in landscape mode.
+</div>
 
 
 
@@ -87,7 +163,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_firebase.js.html">scripts/firebase.js</a>, <a href="scripts_firebase.js.html#line1">line 1</a>
+        <a href="scripts_landscapeBlock.js.html">scripts/landscapeBlock.js</a>, <a href="scripts_landscapeBlock.js.html#line17">line 17</a>
     </li></ul></dd>
     
 
@@ -112,43 +188,32 @@
 
 
 
-
-
-
-
+<h5>Returns:</h5>
 
         
-    
-    </div>
+<div class="param-desc">
+    True if the device is in landscape mode, false otherwise.
+</div>
 
-    
 
-    
-        <h3 class="subsection-title">Requires</h3>
 
-        <ul>
-            <li>module:config/firebaseConfig</li>
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
         
-            <li>module:firebase/app</li>
-        
-            <li>module:firebase/auth</li>
-        
-            <li>module:firebase/database</li>
-        </ul>
-    
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
 
     
 
-    
 
-    
 
-    
 
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
 
         
             
@@ -156,7 +221,7 @@
     
 
     
-    <h4 class="name" id="~onAuthStateChanged"><span class="type-signature">(inner) </span>onAuthStateChanged<span class="signature">(callback)</span><span class="type-signature"> &rarr; {void}</span></h4>
+    <h4 class="name" id=".isTouchDevice"><span class="type-signature">(static) </span>isTouchDevice<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
     
 
     
@@ -164,7 +229,223 @@
 
 
 <div class="description">
-    Monitors authentication state changes.
+    Checks if the device is a touch device.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_landscapeBlock.js.html">scripts/landscapeBlock.js</a>, <a href="scripts_landscapeBlock.js.html#line7">line 7</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    True if the device is a touch device, false otherwise.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".updateLandscapeBlock"><span class="type-signature">(static) </span>updateLandscapeBlock<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Updates the landscape block state based on device orientation and size.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_landscapeBlock.js.html">scripts/landscapeBlock.js</a>, <a href="scripts_landscapeBlock.js.html#line38">line 38</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".withinMaxWidth"><span class="type-signature">(static) </span>withinMaxWidth<span class="signature">(px)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Checks if the window width is within the specified maximum width.
 </div>
 
 
@@ -200,13 +481,13 @@
 
         <tr>
             
-                <td class="name"><code>callback</code></td>
+                <td class="name"><code>px</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type">number</span>
 
 
             
@@ -216,7 +497,7 @@
 
             
 
-            <td class="description last">The callback function to execute on auth state change.</td>
+            <td class="description last">The maximum width in pixels.</td>
         </tr>
 
     
@@ -257,7 +538,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_firebase.js.html">scripts/firebase.js</a>, <a href="scripts_firebase.js.html#line29">line 29</a>
+        <a href="scripts_landscapeBlock.js.html">scripts/landscapeBlock.js</a>, <a href="scripts_landscapeBlock.js.html#line27">line 27</a>
     </li></ul></dd>
     
 
@@ -285,6 +566,10 @@
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    True if the window width is within the maximum width, false otherwise.
+</div>
+
 
 
 <dl>
@@ -293,7 +578,7 @@
     </dt>
     <dd>
         
-<span class="param-type">void</span>
+<span class="param-type">boolean</span>
 
 
     </dd>

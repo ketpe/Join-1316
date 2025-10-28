@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: ContactAssigned</title>
+    <title>JSDoc: Source: scripts/landscapeBlock.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,240 +17,84 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: ContactAssigned</h1>
+    <h1 class="page-title">Source: scripts/landscapeBlock.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>ContactAssigned<span class="signature">()</span><span class="type-signature"></span></h2>
-        
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @description Blocks landscape mode on touch devices with small screens
+ * @namespace landscapeBlock
+ */
+
+
+/**
+ * @description Checks if the device is a touch device.
+ * @function isTouchDevice
+ * @memberof landscapeBlock
+ * @returns {boolean} True if the device is a touch device, false otherwise.
+ */
+function isTouchDevice() {
+    return matchMedia('(hover: none) and (pointer: coarse)').matches;
+}
+
+/**
+ * @description Checks if the device is in landscape mode.
+ * @function isLandscape
+ * @memberof landscapeBlock
+ * @returns {boolean} True if the device is in landscape mode, false otherwise.
+ */
+function isLandscape() {
+    return matchMedia('(orientation: landscape)').matches;
+}
+
+/**
+ * @description Checks if the window width is within the specified maximum width.
+ * @function withinMaxWidth
+ * @memberof landscapeBlock
+ * @param {number} px The maximum width in pixels.
+ * @returns {boolean} True if the window width is within the maximum width, false otherwise.
+ */
+function withinMaxWidth(px) {
+    return window.innerWidth &lt;= px;
+}
+
+/**
+ * @description Updates the landscape block state based on device orientation and size.
+ * @function updateLandscapeBlock
+ * @memberof landscapeBlock
+ * @returns {void}
+ */
+function updateLandscapeBlock() {
+    const active = isTouchDevice() &amp;&amp; isLandscape() &amp;&amp; withinMaxWidth(1100);
+
+    if(active){
+        document.documentElement.classList.add('landscape-blocked', active);
+        document.querySelector('.landscape-warning')?.setAttribute('hidden', !active);
+    }else{
+        document.documentElement.classList.remove('landscape-blocked', active);
+        document.querySelector('.landscape-warning')?.setAttribute('hidden', active);
+    }
     
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-    
-
-    
-    <h4 class="name" id="ContactAssigned"><span class="type-signature"></span>new ContactAssigned<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Represents a contact assigned to a task.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The unique identifier for the contact assignment.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>taskID</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The ID of the task to which the contact is assigned.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>contactId</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The ID of the contact assigned to the task.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="classes_models.js.html">classes/models.js</a>, <a href="classes_models.js.html#line46">line 46</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>const contactAssigned = new ContactAssigned(id, taskID, contactId);</code></pre>
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+}
+
+/** 
+ * @description Handles visibility change events to update the landscape block state.
+ * @memberof landscapeBlock
+ */ 
+document.addEventListener('visibilitychange', updateLandscapeBlock);
+
+/**
+ * @description Initial call to set the landscape block state on script load.
+ * @memberof landscapeBlock
+ */
+updateLandscapeBlock();</code></pre>
+        </article>
+    </section>
 
 
 
