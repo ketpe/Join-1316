@@ -480,7 +480,8 @@ function removeLoadingFunctionFromDialog() {
 function addLoadingFunctionToDialog() {
     const editDialog = document.getElementById('detail-view-task-dialog');
     if (!editDialog) { return; }
-    editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog"), getBoardTaskWithLoadingAnimation()');
+    editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog"), getBoardTaskWithLoadingAnimation(),navigateToBoard()');
+
 }
 
 /**

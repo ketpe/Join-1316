@@ -535,3 +535,11 @@ body,
     width: 116px;
     height: 100px;
 }
+
+#navbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 200;
+    width: 100%;
+}
