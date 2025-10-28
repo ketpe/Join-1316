@@ -257,8 +257,10 @@ a {
 
 /*NOTE - Landscape mode warning for mobile devices */
 
-@media screen and (orientation: landscape) {
-    body {
+@media screen and (orientation: landscape) and (max-width: 1000px) {
+
+    main,
+    .main-container {
         display: none;
     }
 
@@ -269,7 +271,7 @@ a {
         left: 0;
         right: 0;
         bottom: 0;
-        background: #fff;
+        background: var(--default-bg-color);
         color: #000;
         z-index: 9999;
         font-size: 2rem;
@@ -278,7 +280,7 @@ a {
     }
 }
 
-@media screen and (orientation: portrait) {
+@media screen and (orientation: portrait) and (max-width: 1000px) {
     .landscape-warning {
         display: none;
     }

@@ -30,8 +30,8 @@ async function onLoadBoard() {
         kanbanUpdateSizeMobile();
     }
     window.addEventListener('resize', onBoardPageResize);
-
 }
+
 /**
  * @function loadHtmlComponentsForDesktop
  * @memberof board
@@ -289,14 +289,12 @@ async function getDatabaseTaskContact(tasks) {
     const fb = new FirebaseDatabase();
     let getAllAssignedContacts = await fb.getFirebaseLogin(() => fb.getAllData('taskContactAssigned'));
     let getAllContacts = await fb.getFirebaseLogin(() => fb.getAllData('contacts'));
-
     tasks.forEach(task => {
         let assignedContacts = getAllAssignedContacts.filter(obj => obj.taskID === task.id)
         let contacts = [];
         assignedContacts.forEach(assContact => {
             let contact = getAllContacts.filter(obj => obj.id === assContact.contactId)
             if (contact) contacts.push(contact);
-
         })
         task.assignedContacts = contacts;
     })
@@ -316,14 +314,10 @@ function renderAssignedContacts(assignedContacts) {
     try {
         assignedContacts.forEach(contactArr => {
             if (counter >= 6) throw breakExecption;
-            contactArr.forEach(contact => {
-                assignedContactsTemplate += getAllAssignedContactsTemplate(contact);
-            });
+            contactArr.forEach(contact => { assignedContactsTemplate += getAllAssignedContactsTemplate(contact); });
             counter++;
         });
-    } catch (error) {
-        return assignedContactsTemplate;
-    }
+    } catch (error) { return assignedContactsTemplate; }
     return assignedContactsTemplate;
 }
 
@@ -382,9 +376,7 @@ function addLeftPositionStyleassignedContacts() {
     const taskCards = document.querySelectorAll('.board-task-content');
     taskCards.forEach(card => {
         const contacts = card.querySelectorAll('.assigned-contact-pos');
-        contacts.forEach((contact, i) => {
-            contact.style.left = `calc(${i * 25}px)`;
-        });
+        contacts.forEach((contact, i) => { contact.style.left = `calc(${i * 25}px)`; });
     });
 }
 
@@ -481,7 +473,6 @@ function addLoadingFunctionToDialog() {
     const editDialog = document.getElementById('detail-view-task-dialog');
     if (!editDialog) { return; }
     editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog"), getBoardTaskWithLoadingAnimation(),navigateToBoard()');
-
 }
 
 /**
@@ -503,7 +494,7 @@ async function getTaskByTaskID(taskId) {
 /**
  * @function editCurrentTaskSubmit
  * @memberof board
- * @description Handles the submission of the edit task form. It retrieves the form data, updates the task using the EditTaskSafeUtil, and refreshes the detail view with the updated task information.
+ * @description Submits the edited task details and updates the task in the database.
  * @param {Event} event - The submit event
  * @returns {Promise<void>}
  */
@@ -511,20 +502,30 @@ async function editCurrentTaskSubmit(event) {
     if (event) event.preventDefault();
     removeLoadingFunctionFromDialog();
     const currentID = event.submitter.getAttribute('data-id');
-    const editTaskFormData = new FormData(event.currentTarget);
-    const currentTitle = editTaskFormData.get('task-title');
-    const currentDescription = editTaskFormData.get('task-description');
-    const currentDate = editTaskFormData.get('due-date');
+    const { title, description, date } = getEditTaskFormValues(event.currentTarget);
     const tasks = await getTaskByTaskID(currentID);
     const [prio, category, subtaskArray, contactAssignedArray] = boardTaskComponents.getTaskDetails;
-    const editTaskUtil = new EditTaskSafeUtil(tasks[0], currentTitle, currentDescription, currentDate, prio, contactAssignedArray, subtaskArray);
-    const resultUpdate = await editTaskUtil.startUpdate();
-    if (resultUpdate) {
+    const editTaskUtil = new EditTaskSafeUtil(tasks[0], title, description, date, prio, contactAssignedArray, subtaskArray);
+    if (await editTaskUtil.startUpdate()) {
         document.getElementById('dialog-content-detail-view-task').innerHTML = "";
-        const editDialog = document.getElementById('detail-view-task-dialog');
-        editDialog.style.background = "rgba(0, 0, 0, .005)";
+        document.getElementById('detail-view-task-dialog').style.background = "rgba(0, 0, 0, .005)";
         await showChangesSavedToast(currentID, "Changes saved!");
     }
+}
+/**
+ * @function getEditTaskFormValues
+ * @memberof board
+ * @description Extracts the values from the edit task form.
+ * @param {HTMLFormElement} form - The form element containing the task details.
+ * @returns {Object} - An object containing the title, description, and due date of the task.
+ */
+function getEditTaskFormValues(form) {
+    const data = new FormData(form);
+    return {
+        title: data.get('task-title'),
+        description: data.get('task-description'),
+        date: data.get('due-date')
+    };
 }
 
 /**

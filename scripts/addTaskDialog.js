@@ -28,7 +28,7 @@ let currentStateCategory = "todo";
  * @param {string} stateCategory - The state category to which the new task will be added (e.g., "todo", "inprogress", "awaiting").
  * @returns {Promise<void>} A promise that resolves when the dialog is fully opened and rendered.
  */
-async function onAddTaskDialogOpen(stateCategory="todo") {
+async function onAddTaskDialogOpen(stateCategory = "todo") {
     currentStateCategory = stateCategory;
     const [height, width] = addTaskUtils.getCurrentAddTaskSize;
 
@@ -150,7 +150,7 @@ function clearDialogContent() {
  * @description Gives necessary functions to the board body element.
  * @function giveFunctionsToBoardBody
  * @memberof addTaskDialog
- * @returns {void}      
+ * @returns {void}
  */
 function giveFunctionsToBoardBody() {
     const body = document.querySelector('body');
@@ -196,7 +196,7 @@ function addTaskDialogClose(event) {
  * @param {string} dialogID - The ID of the dialog element.
  * @returns {void}
  */
-function closeTheDialog(dialog, dialogID="") {
+function closeTheDialog(dialog, dialogID = "") {
 
     const dialogAddTask = dialog ? dialog : document.getElementById(dialogID);
 
@@ -259,7 +259,6 @@ async function renderAddTaskIntoDialogSingle() {
     }).then(() => {
         changeDialogStyleToSingle();
     });
-
 }
 
 /**
@@ -271,7 +270,6 @@ async function renderAddTaskIntoDialogSingle() {
  * @returns {void}
  */
 function changeAddTaskFormFieldSizeBoardDialogSingle() {
-
     const [height, width] = addTaskUtils.getCurrentAddTaskSize;
     const dialog = document.getElementById('add-task-dialog');
     const heightDialog = height - 100;
@@ -285,10 +283,10 @@ function changeAddTaskFormFieldSizeBoardDialogSingle() {
 /**
  * @description Adjusts the form field sizes for the Add Task dialog in board mode.
  * This function calculates the appropriate heights for the dialog and its fields based on the current window size.
- * It ensures that the form fields are displayed correctly within the dialog.   
+ * It ensures that the form fields are displayed correctly within the dialog.
  * @function changeAddTaskFormFieldSizeBoardDialog
  * @memberof addTaskDialog
- * @param {*} params 
+ * @param {*} params
  * @returns {void}
  */
 function changeAddTaskFormFieldSizeBoardDialog(params) {
@@ -319,7 +317,7 @@ function changeDialogStyleToSingle() {
 }
 
 
-/** 
+/**
  * @description Changes the view of the Add Task form to be suitable for dialog presentation.
  * This function adjusts various elements' classes to ensure the form is displayed correctly within a dialog.
  * It modifies visibility, layout, and styling to enhance user experience in the dialog context.
@@ -339,7 +337,7 @@ function changeAddTaskViewToDialog() {
     document.querySelector('.add-task-head').classList.add('mb-24');
 }
 
-/** 
+/**
  * @description Adds the show class to the Add Task dialog.
  * This function modifies the dialog's classes to make it visible with appropriate styling.
  * @function addDialogShowClass
@@ -352,7 +350,7 @@ function addDialogShowClass() {
     dialog.classList.add('dialog-show');
 }
 
-/** 
+/**
  * @description Adds the hide class to the Add Task dialog.
  * This function modifies the dialog's classes to hide it with appropriate styling.
  * @function addDialogHideClass

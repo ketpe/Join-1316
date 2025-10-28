@@ -95,7 +95,6 @@ function getSubtaskListElementReadOnly(subTask, taskInstance) {
  * @returns {string} The HTML string for the subtask list element in edit mode.
  */
 function getSubtaskListElementForChanging(subTask, taskInstance) {
-
     return `
         <li class="li-edit">
             <div class="subtask-list-input-container">
@@ -113,7 +112,6 @@ function getSubtaskListElementForChanging(subTask, taskInstance) {
             </div>
         </li>
     `;
-    
 }
 
 /**

@@ -1,7 +1,7 @@
 /**
  * @namespace addEditContacts
  * @description Edits and adds contacts to the Firebase database.
- * 
+ *
  */
 
 /**
@@ -199,7 +199,7 @@ async function onDeleteContact(event, element) {
 /**
  * @function startDeleteOneContact
  * @memberof addEditContacts
- * @description - Start the deletion process for a contact. 
+ * @description - Start the deletion process for a contact.
  * This function checks for any task connections associated with the contact, removes those connections, and then deletes the contact from the database.
  * @param {string} contactID
  * @returns {Promise<boolean>}
@@ -242,15 +242,14 @@ async function removeContactTaskConnection() {
     }
 
     return true;
-
 }
 
 /**
  * @function removeContact
  * @memberof addEditContacts
  * @description - Remove a contact from the database.
- * @param {string} contactID 
- * @returns {Promise<boolean>}  
+ * @param {string} contactID
+ * @returns {Promise<boolean>}
  */
 async function removeContact(contactID) {
     try {
@@ -294,8 +293,9 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
     if (inputField == null) { return; }
     visibilty ? inputField.classList.add('input-has-error') : inputField.classList.remove('input-has-error');
 }
+
 /**
- * @function contactNameValidation  
+ * @function contactNameValidation
  * @memberof addEditContacts
  * @description - Validate the name field in the contact form. This function checks if the name field is filled out correctly and updates the validation status and error messages accordingly.
  * @returns {void}
@@ -316,7 +316,7 @@ function contactNameValidation() {
 }
 
 /**
- * @function contactEmailValidation  
+ * @function contactEmailValidation
  * @memberof addEditContacts
  * @description - Validate the email field in the contact form. This function checks if the email field is filled out correctly and updates the validation status and error messages accordingly.
  * @returns {void}
@@ -337,7 +337,7 @@ function contactEmailValidation() {
 }
 
 /**
- * @function contactPhoneValidation  
+ * @function contactPhoneValidation
  * @memberof addEditContacts
  * @description - Validate the phone field in the contact form. This function checks if the phone field is filled out correctly and updates the validation status and error messages accordingly.
  * @returns {void}
@@ -355,7 +355,6 @@ function contactPhoneValidation() {
         showAndLeaveErrorBorder("contact-phone", true);
         validatePhone = false;
     }
-
 }
 /**
  * @function toggleBtnCreateContact
@@ -470,7 +469,7 @@ function onDeleteContactMobile(event, element) {
  * @function showSavedToast
  * @memberof addEditContacts
  * @description - Show a toast notification indicating that changes have been saved. This function displays a toast message based on the type of action performed (edit, new, delete) and automatically hides it after a short duration.
- * @param {*} actionType 
+ * @param {*} actionType
  * @returns {Promise<void>}
  */
 async function showSavedToast(actionType) {

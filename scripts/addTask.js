@@ -61,12 +61,12 @@ function readUrlParameter() {
     let param = new URLSearchParams(document.location.search);
     const stateCategory = param.get("stateCategory");
     currentStateCategory = stateCategory ? stateCategory : "todo";
-    if(stateCategory && stateCategory.length > 0){
+    if (stateCategory && stateCategory.length > 0) {
         window.history.replaceState({}, document.title, '/addTask.html');
     }
 }
 
-/** 
+/**
  * @description Handles window resize events to adjust the Add Task page layout.
  * Uses a lock to prevent multiple simultaneous executions.
  * Adjusts the layout based on predefined breakpoints and resizes form fields accordingly.
@@ -92,7 +92,7 @@ async function addTaskPageResize() {
         }
 
         changeAddTaskFormFieldSize(height, width, currentView);
-    }finally{
+    } finally {
         resizeLock = false;
     }
 }
@@ -122,7 +122,7 @@ async function changeAddTaskToDesktop() {
  * @memberof addTask
  * @returns {Promise<void>}
  */
- 
+
 async function changeAddTaskToDesktopSingle() {
     currentView = DESKTOPSINGLE;
     await loadHtmlComponentsForDesktopSingle();
@@ -159,19 +159,13 @@ async function changeAddTaskToMobile() {
 function changeAddTaskFormFieldSize(height, width, currentView) {
     if (currentView == MOBILE) {
         addTaskUtils.measureTheRemainingSpaceOfFieldsForMobile(height)
-            .then((result) => {
-                document.querySelector(".add-task-mobile-fields").style.height = result + "px";
-            });
+            .then((result) => { document.querySelector(".add-task-mobile-fields").style.height = result + "px"; });
     } else if (currentView == DESKTOP) {
         addTaskUtils.measureTheRemainingSpaceOfFieldsForDesktop(height)
-            .then((result) => {
-                document.querySelector(".add-task-fields").style.height = result + "px";
-            });
-    }else if(currentView == DESKTOPSINGLE){
+            .then((result) => { document.querySelector(".add-task-fields").style.height = result + "px"; });
+    } else if (currentView == DESKTOPSINGLE) {
         addTaskUtils.measureTheRemainingSpaceOfFieldsForDesktopSingle(height)
-            .then((result) => {
-                document.querySelector(".add-task-mobile-fields").style.height = result + "px";
-            });
+            .then((result) => { document.querySelector(".add-task-mobile-fields").style.height = result + "px"; });
     }
 }
 
@@ -204,7 +198,7 @@ async function loadHtmlComponentsForDesktop() {
  * @memberof addTask
  * @returns {Promise<void>}
  */
- 
+
 async function loadHtmlComponentsForDesktopSingle() {
     clearAddTaskHtmlBody();
     await includeHtmlForNode("body", "addTaskDesktop.html");
@@ -253,7 +247,7 @@ function clearAddTaskHtmlBody() {
     document.querySelector('body').innerHTML = "";
 }
 
-/** 
+/**
  * @description Fills the HTML with content for the Add Task view.
  * Initializes the TaskElements class and populates the left and right containers.
  * Sets up the form submission function and button click handlers.
