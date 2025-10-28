@@ -191,7 +191,7 @@ a {
     background-color: transparent;
 }
 
-.loading-color{
+.loading-color {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -252,5 +252,34 @@ a {
 
     100% {
         transform: rotate(360deg);
+    }
+}
+
+/*NOTE - Landscape mode warning for mobile devices */
+
+@media screen and (orientation: landscape) {
+    body {
+        display: none;
+    }
+
+    .landscape-warning {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        color: #000;
+        z-index: 9999;
+        font-size: 2rem;
+        text-align: center;
+        padding-top: 40vh;
+    }
+}
+
+@media screen and (orientation: portrait) {
+    .landscape-warning {
+        display: none;
     }
 }

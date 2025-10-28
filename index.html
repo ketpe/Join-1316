@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=portrait">
     <title>Join - Login</title>
     <link rel="shortcut icon" href="./assets/logo-for-Favicon.svg" type="image/x-icon">
     <link rel="stylesheet" href="./style.css">
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="./styles/loginSignupMobile.css">
 </head>
 
-<body class="login-signup-page" onload="loginLoaded()" >
+<body class="login-signup-page" onload="loginLoaded()">
 
     <main class="login-signup-main">
 
@@ -33,34 +33,25 @@
                     <div class="login-signup-input-field-container" id="loginInputFieldContainer">
                         <label for="email" class="visually-hidden">Email</label>
                         <div class="login-signup-input-container mb-32">
-                            <input type="text" id="email" name="email" class="login-signup-input"
-                                aria-required="true"
-                                aria-describedby="login-error-text"
-                                placeholder="Email" 
-                                autocomplete="email" 
-                                onblur="loginInputFieldsOnBlur(this)" 
-                                oninput="loginInputFieldsOnInput(this)">
+                            <input type="text" id="email" name="email" class="login-signup-input" aria-required="true"
+                                aria-describedby="login-error-text" placeholder="Email" autocomplete="email"
+                                onblur="loginInputFieldsOnBlur(this)" oninput="loginInputFieldsOnInput(this)">
                             <div class="input-icons input-mail" aria-hidden="true"></div>
                         </div>
-                        
+
                         <label for="password" class="visually-hidden">Password</label>
 
                         <div class="login-password-container">
                             <input type="password" id="password" name="password"
-                                class="login-signup-input login-password" 
-                                placeholder="Password" autocomplete="off"
-                                spellcheck="false"
-                                aria-required="true"
-                                aria-describedby="login-error-text"
-                                onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')" 
-                                onblur="loginInputFieldsOnBlur(this)" 
-                                oninput="loginInputFieldsOnInput(this)">
+                                class="login-signup-input login-password" placeholder="Password" autocomplete="off"
+                                spellcheck="false" aria-required="true" aria-describedby="login-error-text"
+                                onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')"
+                                onblur="loginInputFieldsOnBlur(this)" oninput="loginInputFieldsOnInput(this)">
 
                             <button type="button" title="password icon"
                                 class="login-toggle-password login-password-lock" id="loginTogglePassword" role="img"
                                 alt="Toggle password visibility"
-                                onclick="togglePasswordVisibility(2, 'password', 'loginTogglePassword')"
-                               >
+                                onclick="togglePasswordVisibility(2, 'password', 'loginTogglePassword')">
                                 <span class="visually-hidden">Toggle password visibility</span>
                             </button>
                         </div>
@@ -89,7 +80,9 @@
                 </div>
             </footer>
         </section>
-
+        <div class="landscape-warning">
+            Please rotate your device to portrait mode.
+        </div>
 
 
     </main>
