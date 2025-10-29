@@ -68,7 +68,7 @@
     flex: 1 1 auto;
     overflow-y: auto;
     max-height: calc(100vh - 160px);
-    padding: 17px 36px;
+    padding: 17px 16px;
 }
 
 .contacts-mobile {
