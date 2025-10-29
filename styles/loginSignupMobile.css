@@ -264,12 +264,13 @@ body {
     .login-signup-input-field-container {
         width: 100%;
         padding: 0 16px;
-        margin-bottom: 32px;
+        margin-bottom: 18px;
     }
 
     .login-form-buttons {
         flex-direction: column;
-        gap: 12px;
+        gap: 18px;
+        margin-top: 0;
     }
 
     .signup-form-button {
