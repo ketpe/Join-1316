@@ -12,17 +12,10 @@
 
 </head>
 
-<body class="login-signup-page" onload="signupinit()">
+<body class="login-signup-page" onload="signupinit()" onmouseover="signupMouseUp(event)">
     <main class="login-signup-main">
-        <div class="login-signup-logo" aria-label="Join Application Logo" role="img"></div>
-
-        <header class="login-sigup-header">
-            <button type="button" class="btn btn-fill btn-sm d-none" aria-label="Sign up success"
-                id="successfullySignUp">You Signed Up
-                successfully</button>
-        </header>
-
-        <section aria-label="form section" class="login-signup-container" aria-labelledby="signup-form-title">
+        <div class="login-join-logo signup-logo" aria-label="Join Application Logo" role="img"></div>
+        <section aria-label="form section" class="signup-container" aria-labelledby="signup-form-title">
 
             <form class="login-signup-form form-for-signup" method="post" onsubmit="signUpForm(event)">
                 <div class="signup-title" aria-hidden="true">
@@ -35,67 +28,88 @@
                 <div class="login-signup-input-field-container">
 
                     <label for="fullname" class="visually-hidden">Contact Name</label>
-                    <input type="text" id="fullname" class="login-signup-input input-name" placeholder="Name"
-                        name="fullname" required>
+
+                    <div class="login-signup-input-container mb-26">
+                        <input type="text" id="fullname" class="login-signup-input" placeholder="Name" name="fullname"
+                            onblur="signInFieldOnBlur(this)">
+                        <div class="input-icons input-name"></div>
+                    </div>
 
                     <label for="email" class="visually-hidden">Username</label>
-                    <input type="text" id="email" class="login-signup-input input-mail" placeholder="Email" name="email"
-                        required>
+
+                    <div class="login-signup-input-container mb-26">
+                        <input type="text" id="email" class="login-signup-input" placeholder="Email" name="email"
+                            onblur="signInFieldOnBlur(this)">
+                        <div class="input-icons input-mail"></div>
+                    </div>
+
 
                     <label for="password" class="visually-hidden">Password</label>
-                    <div class="login-password-container">
+                    <div class="login-password-container mb-26">
                         <input type="password" id="password" class="login-signup-input login-password"
-                            placeholder="Password" name="password" required
-                            onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')">
+                            placeholder="Password" name="password"
+                            onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')"
+                            onblur="signInFieldOnBlur(this)">
 
                         <button type="button" class="login-toggle-password login-password-lock" role="img"
                             aria-labelledby="Password visibility toggle button" id="loginTogglePassword"
-                            alt="Toggle password visibility"
+                            title="Toggle password visibility"
                             onclick="togglePasswordVisibility(2, 'password', 'loginTogglePassword')"></button>
                     </div>
 
                     <label for="password-confirm" class="visually-hidden">Password Confirm</label>
-                    <div class="login-password-container">
-                        <input type="password" id="password-confirm" class="login-signup-input login-password"
-                            placeholder="Confirm Password" name="password-confirm" required
-                            onclick="togglePasswordVisibility(1, 'password-confirm', 'loginTogglePasswordConfirm')">
+                    <div class="login-password-container mb-8">
+                        <input type="password" id="passwordConfirm" class="login-signup-input login-password"
+                            placeholder="Confirm Password" name="password-confirm"
+                            onclick="togglePasswordVisibility(1, 'passwordConfirm', 'loginTogglePasswordConfirm')"
+                            onblur="signInFieldOnBlur(this)">
 
                         <button type="button" class="login-toggle-password login-password-lock" role="img"
                             aria-labelledby="Password visibility toggle button" id="loginTogglePasswordConfirm"
-                            alt="Toggle password visibility"
-                            onclick="togglePasswordVisibility(2, 'password-confirm', 'loginTogglePasswordConfirm')"></button>
+                            title="Toggle password visibility"
+                            onclick="togglePasswordVisibility(2, 'passwordConfirm', 'loginTogglePasswordConfirm')"></button>
 
                     </div>
 
-                    <span class="login-signup-error-text-container">
+                    <span class="login-signup-error-text-container mb-8">
                         <p id="login-error-text" class="d-none" role="alert">
-                            Your passwords dont´t match. Please try again.
                         </p>
                     </span>
 
                 </div>
 
                 <div class="signup-confirm-container">
-                    <input type="checkbox" id="signupConfirm" class="signup-confirm-button"
-                        onclick="toggleSignUpButton()" required>
+                    <input type="checkbox" id="signupConfirm" class="signup-confirm-button" title="Confirm Checkbox">
                     <label for="signupConfirm" class="signup-confirm-label"></label>
                     <span>I accept the <a href="./privacyPolicy.html?backToLogin=true">Privacy policy</a></span>
                 </div>
 
-                <div class="login-form-buttons fixed-height">
-                    <button id="signup-hidden" type="submit" class="btn btn-fill btn-md" disabled>Sign up</button>
+                <div class="login-form-buttons fixed-height signup-form-button">
+                    <button id="signup-button" type="submit" class="btn btn-fill btn-md" disabled>Sign up</button>
                 </div>
 
             </form>
 
-            <footer>
-                <div class="login-signup-footer">
-                    <a aria-label="Read our Privacy Policy" href="./privacyPolicy.html?backToLogin=true">Privacy
-                        Policy</a>
-                    <a aria-label="Read our Legal Notice" href="./legalNotice.html?backToLogin=true">Legal notice</a>
-                </div>
-            </footer>
+
         </section>
+
+        <footer>
+            <div class="login-signup-footer">
+                <a aria-label="Read our Privacy Policy" href="./privacyPolicy.html?backToLogin=true">Privacy
+                    Policy</a>
+                <a aria-label="Read our Legal Notice" href="./legalNotice.html?backToLogin=true">Legal notice</a>
+            </div>
+        </footer>
+
+        <dialog id="signUp-safe-dialog" class="signUp-safe-dialog visually-hidden" aria-labelledby="safe-dialog-title"
+            aria-modal="true">
+            <span>You Signed Up</span>
+        </dialog>
+
+        <div class="landscape-warning">
+            Please rotate your device to portrait mode.
+        </div>
+
     </main>
 
     <script type="module" src="./app.js"></script>

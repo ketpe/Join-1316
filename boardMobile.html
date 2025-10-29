@@ -1,0 +1,101 @@
+<div class="main-container-mobile">
+    <div id="loadingOverlay" class="loading-animation-overlay"></div>
+    <div id="loadingContainer" class="loading-container visually-hidden">
+        <div></div>
+    </div>
+    <div id="addTaskSafeChangesToast" class="add-task-safe-changes">
+        <span id="addTaskToastText">Changes saved!</span>
+    </div>
+    <div class="right-container">
+        <div class="header-section" id="header"></div>
+        <main class="right-content" aria-labelledby="Board-title">
+            <section class="board-main-content-mobile">
+                <header class="board-header-mobile">
+                    <div class="board-headline-mobile">
+                        <aside class="board-headline-mobile-container">
+                            <h1 class="board-headline-text">Board</h1>
+                            <button type="button" class="btn btn-fill btn-mobile-board-add-Task btn-add-tasks"
+                                onclick="onAddTaskDialogOpen('todo')" title="Add new Task">
+                                <img src="./assets/plus-icon.svg" alt="plus-icon" srcset="">
+                            </button>
+                        </aside>
+                        <aside class="board-right-headline-content">
+                            <form action="">
+                                <label for="board-searchbar" class="visually-hidden"></label>
+                                <div class="board-search-wrapper">
+                                    <input oninput="searchTaskInBoard()" type="text" id="board-searchbar"
+                                        class="board-input-search" placeholder="Find Task"
+                                        aria-label="Searchbar for tasks">
+                                    <button type="submit" class="board-search-btn">
+                                        <div class="search-seperator"></div>
+                                        <img src="./assets/search-icon.svg" alt="Suchen">
+                                    </button>
+                                </div>
+                            </form>
+                        </aside>
+                    </div>
+                </header>
+                <article class="board-kanban-mobile" id="board-kanban-mobile">
+                    <div id="empty-Search-Result-info" class="empty-Search-Result-info">
+                        <p>No tasks found. Please try again.</p>
+                    </div>
+                    <div class="kanban-column-mobile" id="todo"
+                        ondragover="event.preventDefault(); this.classList.add('over');"
+                        ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
+                        <div class="board-headline-column">
+                            <p class="board-column-text">To do</p>
+                            <button type="button" onclick="onAddTaskDialogOpen('todo')" title="Add Task To do"
+                                class="btn-add-board-task"></button>
+                        </div>
+                        <div class="kanban-tasks-mobile" id="kanban-tasks-todo" data-category="Todo"></div>
+                    </div>
+                    <div class="kanban-column-mobile" id="inprogress"
+                        ondragover="event.preventDefault(); this.classList.add('over');"
+                        ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
+
+                        <div class="board-headline-column">
+                            <p class="board-column-text">In progress</p>
+                            <button type="button" onclick="onAddTaskDialogOpen('inprogress')" title="Add Task In progress"
+                                class="btn-add-board-task"></button>
+                        </div>
+                        <div class="kanban-tasks-mobile" id="kanban-tasks-inprogress" data-category="In Progress">
+                        </div>
+                    </div>
+                    <div class="kanban-column-mobile" id="awaiting"
+                        ondragover="event.preventDefault(); this.classList.add('over');"
+                        ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
+                        <div class="board-headline-column">
+                            <p class="board-column-text">Await feedback</p>
+                            <button type="button" onclick="onAddTaskDialogOpen('awaiting')" title="Add Task Await feedback"
+                                class="btn-add-board-task"></button>
+                        </div>
+                        <div class="kanban-tasks-mobile" id="kanban-tasks-awaiting" data-category="Awaiting Feedback">
+                        </div>
+                    </div>
+                    <div class="kanban-column-mobile" id="done"
+                        ondragover="event.preventDefault(); this.classList.add('over');"
+                        ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
+                        <div class="board-headline-column">
+                            <p class="board-column-text">Done</p>
+                        </div>
+                        <div class="kanban-tasks-mobile" id="kanban-tasks-done" data-category="Done"></div>
+                    </div>
+                </article>
+            </section>
+            <section id="add-task-dialog-section" class="add-task-dialog-section">
+                <dialog id="add-task-dialog" class="add-task-dialog" onclick="addTaskDialogClose(event)"
+                    onresize="resizeAddTaskBoardDialog(this)">
+                    <div id="dialog-content"></div>
+                </dialog>
+            </section>
+            <section id="detail-view-task-dialog-section" class="detail-view-task-dialog-section">
+                <dialog id="detail-view-task-dialog" class="detail-view-task-dialog"
+                    onclick="closeDialogByEvent(event,'detail-view-task-dialog'), getBoardTaskWithLoadingAnimation()">
+                    <div id="dialog-content-detail-view-task" class="detail-view-content"></div>
+                </dialog>
+            </section>
+            <nav id="navbar" aria-label="Mainnavigation"></nav>
+        </main>
+    </div>
+</div>
+<div class="landscape-warning" hidden>Please rotate your device to portait mode.📱</div>

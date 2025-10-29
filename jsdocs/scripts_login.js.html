@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scripts/login.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scripts/login.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview
+ * @namespace login
+ * @description Login Page Script
+ * Manages the login page functionality, including animations based on window size,
+ * and input validation.
+ * Handles login form submission and guest login.
+ * Resets login parameters on page load.
+ * Implements functions to change animations for mobile and desktop modes.
+ * Manages session storage for login status.
+ * Handles navigation to summary page upon successful login.
+ * Implements error handling for invalid login attempts.
+ * Manages input field behaviors for login form.
+ */
+
+let isStartup = false;
+
+/**
+ * @function loginLoaded
+ * @memberof login
+ * @description Function to be called when the login page is loaded.
+ * @returns {void}
+ */
+function loginLoaded() {
+    resetUrl();
+    if (!isStartup) { return; }
+    const [height, width] = getCurrentWindowSize();
+    width &lt;= 500 ? changeAnimationToMobileMode() : changeAnimationToDesktopMode();
+    window.addEventListener('resize', loginResize);
+    window.addEventListener('resize', updateLandscapeBlock);
+}
+
+/**
+ * @function resetUrl
+ * @memberof login
+ * @description Resets the URL parameters on page load.
+ * @return {void}
+ */
+function resetUrl() {
+    let param = new URLSearchParams(document.location.search);
+    let pageParam = param.get('isNotStartup');
+    isStartup = pageParam == null || pageParam.length == 0 || pageParam.startsWith('false') ? true : false;
+    resetAllParameter();
+    if (pageParam != null &amp;&amp; pageParam.length > 0) {
+        param.delete('isNotStartup');
+        window.history.replaceState({}, document.title, '/index.html');
+    }
+}
+
+/**
+ * @function resetAllParameter
+ * @memberof login
+ * @description Resets all login parameters.
+ * Sets email and password input fields to empty and log status to '0'.
+ * @returns {void}
+ */
+function resetAllParameter() {
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    emailInput.value = '';
+    passwordInput.value = '';
+    setLogStatus('0');
+}
+
+/**
+ * @function changeAnimationToMobileMode
+ * @memberof login
+ * @description Changes the login animation to mobile mode.
+ * @returns {void}
+ */
+function changeAnimationToMobileMode() {
+    const loginLogo = document.querySelector('.login-join-logo');
+    const loginSection = document.querySelector('.login-section');
+    const loginBody = document.querySelector('body');
+    loginSection.style.animation = 'startup 500ms ease-in';
+    loginLogo.style.animation = 'moveLogoMobile 600ms ease-in-out forwards';
+    loginBody.style.animation = 'fadeBackground 600ms ease-in-out forwards';
+}
+
+/**
+ * @function changeAnimationToDesktopMode
+ * @memberof login
+ * @description Changes the login animation to desktop mode.
+ * @returns {void}
+ */
+function changeAnimationToDesktopMode() {
+    const loginLogo = document.querySelector('.login-join-logo');
+    const loginSection = document.querySelector('.login-section');
+    loginLogo.style.animation = 'moveLogo 500ms ease-in-out forwards';
+    loginSection.style.animation = 'startup 500ms ease-in';
+}
+
+/**
+ * @function loginResize
+ * @memberof login
+ * @description Function to be called on window resize event on login page.
+ * @returns {void}
+ */
+function loginResize() {
+    const loginLogo = document.querySelector('.login-join-logo');
+    const loginBody = document.querySelector('body');
+    const loginSection = document.querySelector('.login-section');
+    loginLogo.style.animation = 'none';
+    loginBody.style.animation = 'none';
+    loginSection.style.animation = 'none';
+}
+
+/**
+ * @function loginFormSubmit
+ * @memberof login
+ * @description Function to be called on login form submission.
+ * @param {Event} event
+ * @return {void}
+ */
+function loginFormSubmit(event) {
+    event.preventDefault();
+    let signIn = new FormData(event.target);
+    let email = signIn.get("email");
+    let password = signIn.get("password");
+    checkLogin(email, password);
+};
+
+/**
+ * @function loginInputFieldsOnInput
+ * @memberof login
+ * @description Function to be called on login input fields.
+ * @param {HTMLElement} input 
+ * @returns {void}
+ */
+function loginInputFieldsOnInput(input) {
+    if (!input) { return; }
+
+    if (input.value &amp;&amp; input.value.length >= 3) {
+        removeErrorMessage('login-error-text');
+    }
+}
+
+/**
+ * @function loginInputFieldsOnBlur
+ * @memberof login
+ * @description Function to be called on login input fields.
+ * @param {HTMLElement} input 
+ * @returns {void}
+ */
+function loginInputFieldsOnBlur(input) {
+    if (!input) { return; }
+    if (input.value &amp;&amp; input.value.length >= 3) {
+        toggleBorderColorByError(input.id, true);
+    } else {
+        toggleBorderColorByError(input.id, false);
+    }
+}
+
+/**
+ * @function checkLogin
+ * @memberof login
+ * @description Function to check login credentials.
+ * Redirects to summary page on success, shows error on failure.
+ * Reads user data from Firebase.
+ * @param {string} email 
+ * @param {string} password 
+ * @return {Promise&lt;void>}
+ */
+async function checkLogin(email, password) {
+    const fb = new FirebaseDatabase();
+    const logInUser = await fb.getFirebaseLogin(() => fb.getDataByKey("email", email, "contacts"));
+    if (logInUser &amp;&amp; logInUser.password === password &amp;&amp; logInUser.email === email) {
+        setLogStatus(logInUser.id);
+        navigateToSummary(null, true);
+    } else {
+        setLogStatus('0');
+        toggleBorderColorByError();
+        document.getElementById("password").value = '';
+        showErrorMessage('login-error-text');
+    }
+};
+
+/**
+ * @function loginGuest
+ * @memberof login
+ * @description Function to login as guest.
+ * Sets log status to 'Guest' and navigates to summary page.
+ * @returns {void}
+ */
+function loginGuest() {
+    setLogStatus('Guest');
+    navigateToSummary(null, true);
+};
+
+
+
+
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Oct 28 2025 21:36:38 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

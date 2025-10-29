@@ -25,8 +25,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* height: 786px;
-    width: 1061px; */
 }
 
 .add-task-dialog {
@@ -52,9 +50,6 @@
     overflow-y: hidden;
 }
 
-.add-task-mobile-fields{
-    
-}
 
 .add-task-head {
     display: flex;
@@ -73,7 +68,6 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
-    /* width: 440px; */
     width: 100%;
 }
 
@@ -91,7 +85,8 @@ legend {
     margin-bottom: 8px;
 }
 
-span {
+.required-label {
+    margin-right: 4px;
     color: var(--input-error-color);
 }
 
@@ -157,7 +152,7 @@ span {
 
 .a-t-priority-button-container {
     width: 100%;
-    height: 58px;
+    /* height: 58px; */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -212,6 +207,7 @@ span {
     flex-direction: column;
     width: 100%;
     height: 48px;
+    z-index: 0;
 }
 
 .date-input {
@@ -287,9 +283,6 @@ span {
     margin-bottom: 8px;
 }
 
-/*NOTE[192-241] - Validierung der Kontaktdaten Styles für anzeigen beginnen hier. Entnommen aus add-Task*/
-/*REVIEW - Könnte mit dem Styling aus add-Task zusammengelegt werden*/
-
 .a-t-error-text-container {
     height: 12px;
     margin-top: 4px;
@@ -309,7 +302,6 @@ span {
 }
 
 .error-text-hidden {
-    /* color: var(--default-bg-color) !important; */
     color: transparent !important;
 }
 
@@ -318,7 +310,6 @@ span {
 }
 
 .a-t-text-area {
-    /* max-width: calc(440px - (2 * 1px) - (2 * 18px)); */
     max-height: calc(120px - (2 * 1px) - (2 * 16px));
     border-radius: 10px;
     border: 1px solid var(--input-border-color);
@@ -363,7 +354,6 @@ span {
     border-radius: 0px 0px 10px 10px;
     background-color: white;
     z-index: 1;
-    /* box-shadow: 0 0 14px 3px rgba(0, 0, 0, .2); */
     overflow: hidden;
     transition: height 0.3s ease;
 
@@ -429,7 +419,6 @@ span {
 
 .a-t-sub-input {
     padding-right: 75px;
-    /* width: calc(440px - (2 * 1px) - 21px - 75px); */
 }
 
 .btn-show-hide-category-list,
@@ -543,12 +532,13 @@ span {
     border-radius: 50%;
 
     span {
-        width: 100%;
+        width: 38px;
         font-family: 'Inter';
         font-size: 12px;
         font-weight: 400;
         color: white;
         text-align: center;
+        margin: 0 !important;
     }
 }
 
@@ -731,6 +721,36 @@ span {
     color: black;
 }
 
+
+.add-task-safe-changes{
+    position: absolute;
+    z-index: 10000;
+    width: 200px;
+    height: 50px;
+    border: none;
+    border-radius: 16px;
+    background-color: var(--bg-default);
+    box-shadow: 0 0 4px 0px rgba(0, 0, 0, .15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(calc(100vw / 2 - 100px)) translateY(-1000%);
+    transition: transform 250ms ease-in-out;
+}
+
+.add-task-safe-changes>span{
+    font-family: 'Inter';
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+}
+
+.safe-changes-toast-open{
+    transform: translateX(calc(100vw / 2 - 100px)) translateY(calc(100vh / 2 - 25px));
+}
+
+
+
 .add-task-safe-dialog {
     width: 326px;
     height: 74px;
@@ -755,7 +775,7 @@ span {
     transform: translateY(100%);
 }
 
-.add-task-safe-dialog p {
+.add-task-safe-dialog span {
     font-family: 'Inter';
     font-size: 20px;
     font-weight: 400;
@@ -786,4 +806,7 @@ span {
         transform: translateY(0%);
     }
 }
+
+
+
 

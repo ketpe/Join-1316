@@ -1,51 +1,195 @@
+/**
+ * @fileoverview
+ * @namespace board
+ * @description This script manages the Kanban board functionality, including loading components, fetching tasks from the database, rendering tasks, handling responsive design, and managing task interactions.
+ * It includes functions for loading HTML components based on screen size, retrieving and processing task data, rendering tasks on the board, and handling user interactions such as searching and editing tasks.
+ */
 let boardTaskComponents = null;
+let currentView = "";
+const minDesktopHeight = 880;
+const minDesktopWidth = 880;
+const breakPointToDesktopSingle = 1180;
 
 /**
+ * @function onLoadBoard
+ * @memberof board
+ * @description Initializes the Kanban board by checking user login status, determining the current board size, and loading appropriate HTML components for desktop or mobile view.
+ * @returns {Promise<void>}
+ */
+async function onLoadBoard() {
+    checkUserOrGuestIsloggedIn();
+    const [height, width] = getCurrentWindowSize();
+    const head = document.getElementsByTagName('head');
+    if (width >= minDesktopWidth) {
+        await loadHtmlComponentsForDesktop(head);
+        setNavigationButtonActive('board', "desktop");
+        kanbanUpdateSizeDesktop();
+    } else {
+        await loadHtmlComponentsForMobile(head);
+        setNavigationButtonActive('board', "mobile");
+        kanbanUpdateSizeMobile();
+    }
+    window.addEventListener('resize', onBoardPageResize);
+    window.addEventListener('resize', updateLandscapeBlock);
+}
+
+/**
+ * @function loadHtmlComponentsForDesktop
+ * @memberof board
+ * @description Loads HTML components for the desktop view of the Kanban board.
+ * It clears the existing HTML body, includes necessary HTML files for the desktop layout, shows a loading animation, fetches and renders board tasks, and then hides the loading animation.
+ * @param {HTMLCollection} head - The head element of the document.
+ * @returns {Promise<void>}
+ */
+async function loadHtmlComponentsForDesktop(head) {
+    currentView = "desktop";
+    clearBoardHtmlBody();
+    await includeHtmlForNode("body", "boardDesktop.html");
+
+    await Promise.all([
+        includeHtml("navbar", "navbarDesktop.html"),
+        includeHtml("header", "headerDesktop.html"),
+
+    ]);
+    showLoadingAnimation();
+    await getBoardTasks();
+    renderUserInitial();
+    hideLoadingAnimation();
+}
+
+/**
+ * @function loadHtmlComponentsForMobile
+ * @memberof board
+ * @description Loads HTML components for the mobile view of the Kanban board.
+ * It clears the existing HTML body, includes necessary HTML files for the mobile layout, shows a loading animation, fetches and renders board tasks, and then hides the loading animation.
+ * @returns {Promise<void>}
+ */
+async function loadHtmlComponentsForMobile() {
+    currentView = "mobile"
+    clearBoardHtmlBody();
+    await includeHtmlForNode("body", "boardMobile.html");
+
+    await Promise.all([
+        includeHtml("header", "headerMobile.html"),
+        includeHtml("navbar", "navbarMobile.html"),
+    ]);
+    showLoadingAnimation();
+    await getBoardTasks();
+    renderUserInitial();
+    hideLoadingAnimation();
+}
+
+/**
+ * @function getBoardTaskWithLoadingAnimation
+ * @memberof board
+ * @description Fetches board tasks with a loading animation.
+ * @returns {Promise<void>}
+ */
+async function getBoardTaskWithLoadingAnimation() {
+    showLoadingAnimation();
+    await getBoardTasks();
+    hideLoadingAnimation();
+}
+
+/**
+ * @function clearBoardHtmlBody
+ * @memberof board
+ * @description Clears the content of the board HTML body.
+ * @returns {void}
+ */
+function clearBoardHtmlBody() {
+    document.querySelector('body').innerHTML = "";
+}
+
+/**
+ * @function getBoardTasks
+ * @memberof board
  * @description Fetches tasks from the database, processes them, and renders them on the Kanban board. Also updates the board size and styles assigned contacts.
  * @returns {Promise<void>} - A promise that resolves when the tasks have been fetched and rendered.
 */
 async function getBoardTasks() {
-    const { taskContentelements } = getHtmlTasksContent();
+    const [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone] = getHtmlTasksContent();
     const fb = new FirebaseDatabase();
     let tasks = await fb.getFirebaseLogin(() => fb.getAllData("tasks"));
     tasks = await getDatabaseTaskCategory(tasks);
     tasks = await getDatabaseTaskSubtasks(tasks);
     tasks = await getDatabaseTaskContact(tasks);
-    kanbanUpdateSize();
+    onBoardPageResize();
     renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
     addLeftPositionStyleassignedContacts();
     setNavigationButtonActive('board', "desktop");
+    hideAllDropzones();
 }
 
 /**
- * @description Updates the height of the Kanban board based on the window size and header heights.
- * This function calculates the available height for the Kanban board by subtracting the heights of the header and board header from the total window height, and then sets the height of the Kanban board element accordingly.
+ * @function onBoardPageResize
+ * @memberof board
+ * @description Adjusts the Kanban board layout based on the current window size, loading either mobile or desktop components as needed.
+ * @returns {Promise<void>}
  */
-function kanbanUpdateSize() {
+async function onBoardPageResize() {
+    const [height, width] = getCurrentWindowSize();
+    if ((width <= minDesktopWidth) && currentView != "mobile") {
+        await loadHtmlComponentsForMobile();
+        setNavigationButtonActive('contacts', "mobile");
+        kanbanUpdateSizeMobile();
+    } else if (width >= minDesktopWidth + 1 && currentView != "desktop") {
+        await loadHtmlComponentsForDesktop();
+        setNavigationButtonActive('contacts', "desktop");
+        kanbanUpdateSizeDesktop();
+    }
+}
+
+/**
+ * @function kanbanUpdateSizeDesktop
+ * @memberof board
+ * @description Updates the height of the Kanban board for Desktop based on the window size and header heights.
+ * This function calculates the available height for the Kanban board by subtracting the heights of the header and board header from the total window height,
+ * and then sets the height of the Kanban board element accordingly.
+ * @returns {void}
+ */
+function kanbanUpdateSizeDesktop() {
     const headerHeight = document.getElementById('header').offsetHeight;
     const boardHeaderHeight = document.querySelector('.board-header').offsetHeight;
     const windowsHeight = window.innerHeight;
-
     const kanbanHeight = windowsHeight - (headerHeight + boardHeaderHeight + 20);
     document.getElementById('board-kanban').style.height = kanbanHeight + "px";
 }
+/**
+ * @function kanbanUpdateSizeMobile
+ * @memberof board
+ * @description Updates the height of the Kanban board for mobile view based on the window size and header heights.
+ * This function calculates the available height for the Kanban board by subtracting the heights of the header and
+ * mobile navigation from the total window height, and then sets the height of the mobile Kanban board element accordingly.
+ * @return {void}
+ */
+function kanbanUpdateSizeMobile() {
+    const headerHeight = document.getElementById('header').offsetHeight;
+    const navHeight = document.querySelector('.nav-mobile').offsetHeight;
+    const windowsHeight = window.innerHeight;
+    const kanbanHeight = windowsHeight - (headerHeight + navHeight + 20);
+    document.querySelector('.board-main-content-mobile').style.height = kanbanHeight + "px";
+}
 
 /**
+ * @function renderBoardtasks
+ * @memberof board
  * @description Renders the tasks on the Kanban board. checks the task state category and appends the task to the corresponding column.
- * @param {*} tasks - The list of tasks to render.
- * @param {*} taskToDo - The container for "To Do" tasks.
- * @param {*} taskInProgress - The container for "In Progress" tasks.
- * @param {*} taskAwaitingFeedback - The container for "Awaiting Feedback" tasks.
- * @param {*} taskDone - The container for "Done" tasks.
+ * @param {Array} tasks - The list of tasks to render.
+ * @param {HTMLElement} taskToDo - The container for "To Do" tasks.
+ * @param {HTMLElement} taskInProgress - The container for "In Progress" tasks.
+ * @param {HTMLElement} taskAwaitingFeedback - The container for "Awaiting Feedback" tasks.
+ * @param {HTMLElement} taskDone - The container for "Done" tasks.
+ * @returns {void}
  */
 function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone) {
     tasks.forEach(task => {
         let renderedContacts = '';
         renderedContacts = renderAssignedContacts(task.assignedContacts);
-        task.taskStateCategory === 'todo' ? taskToDo.innerHTML += boardTasksTemplate(task, renderedContacts) :
-            task.taskStateCategory === 'inprogress' ? taskInProgress.innerHTML += boardTasksTemplate(task, renderedContacts) :
-                task.taskStateCategory === 'awaiting' ? taskAwaitingFeedback.innerHTML += boardTasksTemplate(task, renderedContacts) :
-                    task.taskStateCategory === 'done' ? taskDone.innerHTML += boardTasksTemplate(task, renderedContacts) : '';
+        task.taskStateCategory === 'todo' ? taskToDo.innerHTML += boardTasksTemplate(task, renderedContacts, '', 'In progress') :
+            task.taskStateCategory === 'inprogress' ? taskInProgress.innerHTML += boardTasksTemplate(task, renderedContacts, 'To-Do', 'Awaiting feedback') :
+                task.taskStateCategory === 'awaiting' ? taskAwaitingFeedback.innerHTML += boardTasksTemplate(task, renderedContacts, 'In progress', 'Done') :
+                    task.taskStateCategory === 'done' ? taskDone.innerHTML += boardTasksTemplate(task, renderedContacts, 'Awaiting feedback', '') : '';
     })
     let taskItems = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
     taskItems = addDropZones(taskItems);
@@ -53,30 +197,38 @@ function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback,
 }
 
 /**
+ * @function addDropZones
+ * @memberof board
  * @description Adds empty drop zones to the task columns.
- * @param {*} taskItems - The array of task column elements.
- * @returns {*} - The updated array of task column elements.
+ * @param {Array} taskItems - The array of task column elements.
+ * @returns {Array} - The updated array of task column elements.
  */
 function addDropZones(taskItems) {
     taskItems.forEach(tE => { if (tE) tE.innerHTML += boardTaskEmptyDropTemplate() });
     return taskItems
 }
+
 /**
+ * @function boardTasksTemplate
+ * @memberof board
  * @description Retrieves the HTML elements for the task content areas.
  * @returns {Array} - An array of HTML elements representing the task content areas.
  */
 function getHtmlTasksContent() {
-    let taskContentElements = getBoardTaskref();
-    taskContentElements.forEach(tE => { if (tE) tE.innerHTML = ""; });
-    taskContentElements.forEach(tE => {
+    const [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone] = getBoardTaskref();
+    [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone].forEach(tE => { if (tE) tE.innerHTML = ""; });
+    [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone].forEach(tE => {
         if (tE) tE.innerHTML = boardTaskEmptyTemplate(tE.dataset.category);
     })
-    return { taskContentElements };
+    return [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
 }
+
 /**
+ * @function getDatabaseTaskCategory
+ * @memberof board
  * @description Retrieves the task categories from the database for the given tasks.
- * @param {*} tasks - The list of tasks to retrieve categories for.
- * @returns {*} - The updated list of tasks with category data.
+ * @param {Array} tasks - The list of tasks to retrieve categories for.
+ * @returns {Promise<Array>} - The updated list of tasks with category data.
  */
 async function getDatabaseTaskCategory(tasks) {
     for (let task of tasks) {
@@ -88,9 +240,11 @@ async function getDatabaseTaskCategory(tasks) {
 }
 
 /**
+ * @function getDatabaseTaskSubtasks
+ * @memberof board
  * @description Retrieves the subtasks from the database for the given tasks.
- * @param {*} tasks - The list of tasks to retrieve subtasks for.
- * @returns {*} - The updated list of tasks with subtask data.
+ * @param {Array} tasks - The list of tasks to retrieve subtasks for.
+ * @returns {Promise<Array>} - The updated list of tasks with subtask data.
  */
 async function getDatabaseTaskSubtasks(tasks) {
     const fb = new FirebaseDatabase();
@@ -103,16 +257,17 @@ async function getDatabaseTaskSubtasks(tasks) {
             let foundSubTask = getAllSubtasks.find(obj => obj.id === taskSubTask.subTaskID);
             if (foundSubTask) subTasks.push(foundSubTask);
         });
-        //Hier noch sortieren nach position
         task.subTasks = subTasks;
     });
     tasks = getSubTaskSumOfTrue(tasks);
     return tasks;
 }
 /**
+ * @function getSubTaskSumOfTrue
+ * @memberof board
  * @description Calculates the sum of true subtasks for each task.
- * @param {*} tasks - The list of tasks to process.
- * @returns {*} - The updated list of tasks with the count of true subtasks.
+ * @param {Array} tasks - The list of tasks to process.
+ * @returns {Array} - The updated list of tasks with the count of true subtasks.
  */
 function getSubTaskSumOfTrue(tasks) {
     tasks.forEach(task => {
@@ -125,30 +280,32 @@ function getSubTaskSumOfTrue(tasks) {
     return tasks;
 }
 /**
+ * @function getDatabaseTaskContact
+ * @memberof board
  * @description Retrieves the assigned contacts from the database for the given tasks.
- * @param {*} tasks - The list of tasks to retrieve assigned contacts for.
- * @returns {*} - The updated list of tasks with assigned contact data.
+ * @param {Array} tasks - The list of tasks del retrieve assigned contacts for.
+ * @returns {Promise<Array>} - The updated list of tasks with assigned contact data.
  */
 async function getDatabaseTaskContact(tasks) {
     const fb = new FirebaseDatabase();
     let getAllAssignedContacts = await fb.getFirebaseLogin(() => fb.getAllData('taskContactAssigned'));
     let getAllContacts = await fb.getFirebaseLogin(() => fb.getAllData('contacts'));
-
     tasks.forEach(task => {
         let assignedContacts = getAllAssignedContacts.filter(obj => obj.taskID === task.id)
         let contacts = [];
         assignedContacts.forEach(assContact => {
             let contact = getAllContacts.filter(obj => obj.id === assContact.contactId)
             if (contact) contacts.push(contact);
-
         })
         task.assignedContacts = contacts;
     })
     return tasks;
 }
 /**
+ * @function boardTasksTemplate
+ * @memberof board
  * @description Renders the assigned contacts for a task.
- * @param {*} assignedContacts - The list of assigned contacts to render.
+ * @param {Array} assignedContacts - The list of assigned contacts to render.
  * @returns {string} - The HTML string representing the assigned contacts.
  */
 function renderAssignedContacts(assignedContacts) {
@@ -158,27 +315,31 @@ function renderAssignedContacts(assignedContacts) {
     try {
         assignedContacts.forEach(contactArr => {
             if (counter >= 6) throw breakExecption;
-            contactArr.forEach(contact => {
-                assignedContactsTemplate += getAllAssignedContactsTemplate(contact);
-            });
+            contactArr.forEach(contact => { assignedContactsTemplate += getAllAssignedContactsTemplate(contact); });
             counter++;
         });
-    } catch (error) {
-        return assignedContactsTemplate;
-    }
+    } catch (error) { return assignedContactsTemplate; }
     return assignedContactsTemplate;
 }
+
 /**
+ * @function toggleSubtaskCheckbox
+ * @memberof board
  * @description Toggles the checked state of a subtask checkbox.
- * @param {*} element - The checkbox element to toggle.
+ * @param {HTMLElement} element - The checkbox element to toggle.
+ * @returns {void}
  */
 function toggleSubtaskCheckbox(element) {
     const btn = element;
     btn.classList.toggle('checkbox-btn-default');
     btn.classList.toggle('checkbox-btn-default-hover');
 }
+
 /**
+ * @function toggleNoTaskVisible
+ * @memberof board
  * @description Toggles the visibility of the "no tasks" message in each task column based on the number of tasks present.
+ * @returns {void}
  */
 function toggleNoTaskVisible() {
     let taskItems = getBoardTaskref();
@@ -191,50 +352,61 @@ function toggleNoTaskVisible() {
         }
     });
 }
+
 /**
- *
+ * @function getBoardTaskref
+ * @memberof board
  * @description Retrieves references to the task content areas on the Kanban board.
  * @returns {Array} - An array of HTML elements representing the task content areas.
  */
 function getBoardTaskref() {
-    taskToDo = document.getElementById("kanban-tasks-todo");
-    taskInProgress = document.getElementById("kanban-tasks-inprogress");
-    taskAwaitingFeedback = document.getElementById("kanban-tasks-awaiting");
-    taskDone = document.getElementById("kanban-tasks-done");
-    taskContentElements = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
-    return taskContentElements;
+    let taskToDo = document.getElementById("kanban-tasks-todo");
+    let taskInProgress = document.getElementById("kanban-tasks-inprogress");
+    let taskAwaitingFeedback = document.getElementById("kanban-tasks-awaiting");
+    let taskDone = document.getElementById("kanban-tasks-done");
+    return [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
+
 }
 /**
+ * @function addLeftPositionStyleassignedContacts
+ * @memberof board
  * @description Adds left position styles to assigned contact elements within task cards to ensure proper overlapping display.
+ * @returns {void}
  */
 function addLeftPositionStyleassignedContacts() {
     const taskCards = document.querySelectorAll('.board-task-content');
     taskCards.forEach(card => {
         const contacts = card.querySelectorAll('.assigned-contact-pos');
-        contacts.forEach((contact, i) => {
-            contact.style.left = `calc(${i * 25}px)`;
-        });
+        contacts.forEach((contact, i) => { contact.style.left = `calc(${i * 25}px)`; });
     });
 }
 
 /**
+ * @function getDetailViewTask
+ * @memberof board
  * @description Fetches task details and renders them in the detail view dialog
  * @param {string} taskId - The ID of the task to fetch details for
+ * @returns {Promise<void>} - A promise that resolves when the task details have been rendered
  */
 async function getDetailViewTask(taskId) {
+    addLoadingFunctionToDialog();
     boardTaskComponents = null;
     let tasks = await getTaskByTaskID(taskId);
     await includeHtml("dialog-content-detail-view-task", "taskTemplate.html");
+    const editDialog = document.getElementById('detail-view-task-dialog');
+    editDialog.style.background = "white";
     const taskUtils = new AddTaskUtils();
     const currentUser = taskUtils.readCurrentUserID();
-    const isGuest = taskUtils.isCurrentUserGuest();
     boardTaskComponents = new TaskComponents(currentUser, "boardTaskComponents");
     boardTaskComponents.runWithDataAsView(tasks[0]);
 }
 
 /**
+ * @function detailViewChangeSubtaskChecked
+ * @memberof board
  * @description Toggles the checked state of a subtask in the detail view
  * @param {HTMLElement} button - The button element that was clicked
+ * @returns {Promise<void>}
  */
 async function detailViewChangeSubtaskChecked(button) {
     button.classList.toggle('checkbox-btn-default');
@@ -246,35 +418,67 @@ async function detailViewChangeSubtaskChecked(button) {
 }
 
 /**
+ * @function deleteCurrentTask
+ * @memberof board
  * @description Deletes the current task
  * @param {HTMLElement} button - The button element that was clicked
+ * @returns {Promise<void>}
  */
 async function deleteCurrentTask(button) {
     const currentTaskID = button.getAttribute('data-id');
     const taskDelete = new BoardTaskDetailDeleteUtil(currentTaskID);
     if (await taskDelete.startDelete()) {
         closeDialog('detail-view-task-dialog');
-        getBoardTasks();
+        await showChangesSavedToast(currentTaskID, "Task deleted!");
     }
 
 }
 
 /**
+ * @function editCurrentTask
+ * @memberof board
  * @description Edits the current task. It fetches the task details and opens the edit form in the dialog.
  * @param {HTMLElement} button - The button element that was clicked
+ * @returns {Promise<void>}
  */
 async function editCurrentTask(button) {
+    removeLoadingFunctionFromDialog();
     boardTaskComponents = null;
     const currentTaskID = button.getAttribute('data-id');
     const task = await getTaskByTaskID(currentTaskID);
     const taskUtils = new AddTaskUtils();
     const currentUser = taskUtils.readCurrentUserID();
-    const isGuest = taskUtils.isCurrentUserGuest();
     boardTaskComponents = new TaskComponents(currentUser, "boardTaskComponents");
     await boardTaskComponents.runWithDataAsEdit(task[0]);
 }
 
 /**
+ * @function removeLoadingFunctionFromDialog
+ * @memberof board
+ * @description Removes the loading function from the detail view dialog
+ * @returns {void}
+ */
+function removeLoadingFunctionFromDialog() {
+    const editDialog = document.getElementById('detail-view-task-dialog');
+    if (!editDialog) { return; }
+    editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog")');
+}
+
+/**
+ * @function addLoadingFunctionToDialog
+ * @memberof board
+ * @description Adds the loading function to the detail view dialog
+ * @returns {void}
+ */
+function addLoadingFunctionToDialog() {
+    const editDialog = document.getElementById('detail-view-task-dialog');
+    if (!editDialog) { return; }
+    editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog"), getBoardTaskWithLoadingAnimation()');
+}
+
+/**
+ * @function getTaskByTaskID
+ * @memberof board
  * @description Fetches a task by its ID.
  * @param {string} taskId - The ID of the task to fetch
  * @returns {Promise<Array>} - A promise that resolves to an array of task objects
@@ -289,28 +493,70 @@ async function getTaskByTaskID(taskId) {
 }
 
 /**
- * @description Handles the submission of the edit task form
+ * @function editCurrentTaskSubmit
+ * @memberof board
+ * @description Submits the edited task details and updates the task in the database.
  * @param {Event} event - The submit event
+ * @returns {Promise<void>}
  */
 async function editCurrentTaskSubmit(event) {
     if (event) event.preventDefault();
+    removeLoadingFunctionFromDialog();
     const currentID = event.submitter.getAttribute('data-id');
-    const editTaskFormData = new FormData(event.currentTarget);
-    const currentTitle = editTaskFormData.get('task-title');
-    const currentDescription = editTaskFormData.get('task-description');
-    const currentDate = editTaskFormData.get('due-date');
+    const { title, description, date } = getEditTaskFormValues(event.currentTarget);
     const tasks = await getTaskByTaskID(currentID);
     const [prio, category, subtaskArray, contactAssignedArray] = boardTaskComponents.getTaskDetails;
-    const editTaskUtil = new EditTaskSafeUtil(tasks[0], currentTitle, currentDescription, currentDate, prio, contactAssignedArray, subtaskArray);
-    const resultUpdate = await editTaskUtil.startUpdate();
-    if (resultUpdate) {
+    const editTaskUtil = new EditTaskSafeUtil(tasks[0], title, description, date, prio, contactAssignedArray, subtaskArray);
+    if (await editTaskUtil.startUpdate()) {
         document.getElementById('dialog-content-detail-view-task').innerHTML = "";
-        await getDetailViewTask(currentID);
+        document.getElementById('detail-view-task-dialog').style.background = "rgba(0, 0, 0, .005)";
+        await showChangesSavedToast(currentID, "Changes saved!");
     }
 }
 /**
+ * @function getEditTaskFormValues
+ * @memberof board
+ * @description Extracts the values from the edit task form.
+ * @param {HTMLFormElement} form - The form element containing the task details.
+ * @returns {Object} - An object containing the title, description, and due date of the task.
+ */
+function getEditTaskFormValues(form) {
+    const data = new FormData(form);
+    return {
+        title: data.get('task-title'),
+        description: data.get('task-description'),
+        date: data.get('due-date')
+    };
+}
+
+/**
+ * @function showChangesSavedToast
+ * @memberof board
+ * @description Shows a toast message indicating that changes have been saved or delete a Task.
+ * If the message indicates that changes were saved, it refreshes the detail view of the task; otherwise, it navigates back to the board.
+ * @param {string} currentID - The ID of the current task.
+ * @param {string} message - The message to display in the toast.
+ * @returns {Promise<void>}
+ */
+async function showChangesSavedToast(currentID, message) {
+    removeLoadingFunctionFromDialog();
+    const toast = document.getElementById('addTaskSafeChangesToast');
+    const toastText = document.getElementById('addTaskToastText');
+    if (!toast || !toastText) { return; }
+    toastText.textContent = message;
+    toast.classList.add('safe-changes-toast-open');
+    await new Promise(resolve => setTimeout(resolve, 1200));
+    toast.classList.remove('safe-changes-toast-open');
+    await new Promise(resolve => setTimeout(resolve, 600));
+    message == "Changes saved!" ? getDetailViewTask(currentID) : navigateToBoard();
+}
+
+/**
+ * @function searchTaskInBoard
+ * @memberof board
  * @description Searches for tasks on the board based on the input in the search bar.
- * It filters tasks by title and description, and toggles their visibility accordingly.
+ * It filters tasks by title and description, and toggles their visibility accordingly. It also manages the display of a "no search results" hint.
+ * @return {void}
  */
 function searchTaskInBoard() {
     const { searchInput, taskTitles, taskDescriptions } = getRefsForSearch();
@@ -327,9 +573,12 @@ function searchTaskInBoard() {
     toggleNoSearchResultHint(visibleCount, searchInput);
 }
 /**
+ * @function toggleNoSearchResultHint
+ * @memberof board
  * @description Toggles the visibility of the "no search results" hint based on the search results.
  * @param {number} visibleCount - The number of visible task cards.
  * @param {string} searchInput - The current search input.
+ * @return {void}
  */
 function toggleNoSearchResultHint(visibleCount, searchInput) {
     const noResultHint = document.getElementById('empty-Search-Result-info');
@@ -342,6 +591,8 @@ function toggleNoSearchResultHint(visibleCount, searchInput) {
     }
 }
 /**
+ * @function emptySearchBar
+ * @memberof board
  * @description Empties the search bar and shows all task titles.
  * @param {string} searchInput - The current search input.
  * @param {NodeList} taskTitles - The list of task title elements.
@@ -356,6 +607,8 @@ function emptySearchBar(searchInput, taskTitles) {
     }
 }
 /**
+ * @function getRefsForSearch
+ * @memberof board
  * @description Gets references for the search functionality.
  * @returns {Object} - An object containing the search input and task elements.
  */

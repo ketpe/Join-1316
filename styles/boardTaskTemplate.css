@@ -1,9 +1,37 @@
 .board-task-content {
-    width: 220px;
     height: 212px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+}
+
+.board-category-and-swap {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.swap-menu {
+    position: absolute;
+    left: 68%;
+    top: 28%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: none;
+    flex-direction: column;
+    padding: 6px 8px 16px 8px;
+    justify-content: center;
+    align-items: center;
+    width: 140px;
+    height: 113px;
+    background: var(--bg-default);
+    border: 1.5px solid var(--bg-default);
+    border-radius: 0 20px 20px 20px;
+    overflow: hidden;
+
 }
 
 .board-task-head-category {
@@ -25,8 +53,106 @@
     }
 }
 
+.swap-menu-options {
+    position: fixed;
+    width: 100%;
+
+    background-color: var(--bg-default);
+    border-radius: 20px 0 20px 20px;
+    color: var(--btn-menu-text-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 200;
+
+}
+
+.swap-menu-mobile-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 12px;
+    height: 100%;
+    width: 100%;
+}
+
+.swap-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    display: none;
+
+}
+
+.swap-mobile-menu {
+    width: 40px;
+    height: 40px;
+    background: white;
+    border: 1.5px solid var(--bg-default);
+    border-radius: 6px;
+    display: none;
+    padding: 2px 3px;
+    justify-content: center;
+    align-items: center;
+}
+
+.swap-mobile-icon {
+    width: 20px;
+    height: 20px;
+    background: url(../assets/swap-task-menu.svg) center/cover no-repeat;
+}
+
+.swap-menu-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.btn-swapmenu {
+    width: 90%;
+    height: 28px;
+    background-color: transparent;
+    border: unset;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 8px;
+
+    p {
+        font-family: Mulish;
+        font-weight: 500;
+        font-style: Medium;
+        font-size: 14px;
+        color: #fff;
+        padding-left: 5px;
+        margin: 0;
+        text-align: start;
+    }
+}
+
+.swap-menu-title {
+    font-family: Mulish;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 16px;
+    color: white;
+    margin: 0;
+    padding: 6px 8px 16px 0;
+    text-align: start;
+}
+
+.swap-menu-icon-up {
+    background: url(../assets/arrow_upward.svg) center/cover no-repeat;
+}
+
+.swap-menu-icon-down {
+    background: url(../assets/arrow_upwarddown.svg) center/cover no-repeat;
+}
+
 .board-task-title {
-    width: 220px;
     height: 19px;
 
     p {
@@ -38,7 +164,6 @@
 }
 
 .board-task-description {
-    width: 220px;
     height: 38px;
 
     p {
@@ -47,6 +172,10 @@
         font-style: Regular;
         font-size: 16px;
         color: var(--btn-compliance-links-font-color);
+        max-width: 220px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 }
 
@@ -57,7 +186,6 @@
     justify-content: flex-start;
     align-items: center;
     appearance: none;
-    width: 220px;
 }
 
 .sub-task-progressbar progress {
@@ -85,13 +213,11 @@
 
 .board-task-assigned {
     display: flex;
-
 }
 
-/*FIXME - Die ids müssen dynamisch generiert werden. #assigned-contact-1 jeweils 25px + */
+
 .assigned-contact-pos:nth-child(n) {
     position: absolute;
-    /* left: calc((var(--contact-index, 0)) * 25px); */
 }
 
 .assigned-contact-board {
@@ -108,7 +234,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 
 .board-contact-initials-text {

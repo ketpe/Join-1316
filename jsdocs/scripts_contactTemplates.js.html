@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scripts/contactTemplates.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scripts/contactTemplates.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @namespace contactTemplates
+ * @description Template functions for generating contact-related HTML elements.
+ * Provides small template helpers used across the contact views.
+ */
+
+/**
+ * @function getContactListHeaderTemplate
+ * @memberof contactTemplates
+ * Creates the header template for a letter in the contact list
+ * @param {string} firstLetter - The initial letter of the contacts
+ * @returns {string} HTML template for the letter header
+ */
+function getContactListHeaderTemplate(firstLetter) {
+    return `&lt;li onclick="clearActiveContactClass()" class="contact-letter">${firstLetter}&lt;/li>
+&lt;li class="separator-contact-list">&lt;/li>`
+};
+
+/**
+ * @function getContactListContent
+ * @memberof contactTemplates
+ * Creates the HTML template for a single contact
+ * @param {Object} obj - The contact object
+ * @param {string} obj.initial - The initials of the contact
+ * @param {string} obj.firstname - The first name of the contact
+ * @param {string} obj.lastname - The last name of the contact
+ * @param {string} obj.email - The email address of the contact
+ * @returns {string} HTML template for the contact
+ */
+function getContactListContent(obj) {
+    return `&lt;li class="contact-item obj" id="${obj.id}" active="false" onclick="openContactDetail(this)">
+    &lt;div class="contact-initials ${obj.initialColor}">
+        &lt;p class="contact-initials-text">${obj.initial}&lt;/p>
+    &lt;/div>
+    &lt;div class="contact-info">
+        &lt;div class="contact-name">${obj.firstname} ${obj.lastname}&lt;/div>
+        &lt;div class="contact-email">${obj.email}&lt;/div>
+    &lt;/div>
+&lt;/li>`
+}
+
+/**
+ * @function getContactDetailView
+ * @memberof contactTemplates
+ * @description Creates the HTML template for the contact detail view.
+ * @param {object} cd 
+ * @param {String} mobileSuffix 
+ * @returns {string} HTML template for the contact detail view
+ */
+function getContactDetailView(cd, mobileSuffix) {
+    return `&lt;div class="first-line-detail-view${mobileSuffix}">
+    &lt;div class="initial-avatar${mobileSuffix} ${cd.initialColor}">
+        &lt;p class="detail-view-initials${mobileSuffix}">${cd.initial}&lt;/p>
+    &lt;/div>
+    &lt;div class="name-and-action-panel">
+        &lt;div class="contacts-detailview-name${mobileSuffix}">${cd.firstname} ${cd.lastname}&lt;/div>
+        &lt;div class="contacts-detailview-actions">
+            &lt;button type="button" onclick="openDialog('add-contact-dialog', ()  => renderEditContactIntoDialog('${cd.id}'))" class="btn-contact-action btn-contact-edit">
+                &lt;div class="action-icons action-edit-icon">&lt;/div>
+                &lt;p>Edit&lt;/p>
+            &lt;/button>
+            &lt;button type="button" onclick="onDeleteContact(event,this)" id="${cd.id}" class="btn-contact-action btn-contact-delete">
+                &lt;div class="action-icons action-delete-icon">&lt;/div>
+                &lt;p>Delete&lt;/p>
+            &lt;/button>
+        &lt;/div>
+    &lt;/div>
+    &lt;/div>
+    &lt;div class="detail-c-view-subline${mobileSuffix}">
+        &lt;p>Contact Information&lt;/p>
+    &lt;/div>
+    &lt;div class="detail-c-view-information${mobileSuffix}">
+        &lt;div class="detail-c-view-email${mobileSuffix}">
+            &lt;p>Email:&lt;/p>
+            &lt;p>${cd.email}&lt;/p>
+        &lt;/div>
+        &lt;div class="detail-c-view-phone${mobileSuffix}">
+            &lt;p>Phone:&lt;/p>
+            &lt;p>${cd.phone}&lt;/p>
+        &lt;/div>
+    &lt;/div>`
+}
+
+/**
+ * @function getMobileBtnTemplate
+ * @memberof contactTemplates
+ * @param {object} cd
+ * @returns {string} HTML template for the mobile button
+ */
+function getMobileBtnTemplate(cd) {
+    return `&lt;button onclick="openDialog('btns-action-menu-mobile')" type="button" class="mobile-menu-btn">
+        &amp;#x2022;&amp;#x2022;&amp;#x2022;
+    &lt;/button>
+    `
+}
+
+/**
+ * @function getBtnsInMobileDetails
+ * @memberof contactTemplates
+ * @param {object} cd
+ * @returns {string} HTML template for the mobile action buttons    
+ */
+function getBtnsInMobileDetails(cd) {
+    return `&lt;button type="button"
+                        onclick="openDialog('add-contact-dialog-mobile', ()  => renderEditContactIntoDialogMobile('${cd.id}'))"
+                        class="btn-contact-action btn-contact-edit-mobile">
+                        &lt;div class="action-icons action-edit-icon">&lt;/div>
+                        &lt;p>Edit&lt;/p>
+                    &lt;/button>
+                    &lt;button type="button" onclick="onDeleteContactMobile(event,this)" id="${cd.id}"
+                        class="btn-contact-action btn-contact-delete-mobile">
+                        &lt;div class="action-icons action-delete-icon">&lt;/div>
+                        &lt;p>Delete&lt;/p>
+                    &lt;/button>`
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Oct 28 2025 21:36:38 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -46,6 +46,12 @@
     }
 }
 
+@media(max-height: 880px) {
+    .add-task-fields {
+        overflow-y: scroll;
+    }
+}
+
 @media(max-width: 800px) {
     .add-task-footer-mobile {
         bottom: -10px;
@@ -62,7 +68,7 @@
     .btn-priority {
         width: 100px;
 
-        div>p {
+        div>span {
             font-size: 16px;
         }
     }
@@ -96,7 +102,7 @@
         padding: 9px;
     }
 
-    .btn-clear-cancel>div>p {
+    .btn-clear-cancel>div>span {
         font-size: 18px;
     }
 
@@ -105,7 +111,7 @@
         padding: 9px;
     }
 
-    .btn-create-task>div>p {
+    .btn-create-task>div>span {
         font-size: 18px;
     }
 
@@ -124,7 +130,7 @@
         width: 90px;
         padding: 12px 10px;
 
-        div>p {
+        div>span {
             font-size: 14px;
         }
     }
@@ -164,7 +170,7 @@
         padding: 9px;
     }
 
-    .btn-clear-cancel>div>p {
+    .btn-clear-cancel>div>span {
         font-size: 16px;
     }
 
@@ -173,7 +179,7 @@
         padding: 9px;
     }
 
-    .btn-create-task>div>p {
+    .btn-create-task>div>span {
         font-size: 16px;
     }
 
@@ -202,9 +208,9 @@
     }
 
     .btn-priority {
-        width: 80px;
+        width: 75px;
 
-        div>p {
+        div>span {
             font-size: 12px;
         }
     }
@@ -222,7 +228,7 @@
         font-size: 16px !important;
     }
 
-    .btn-create-task>div>p {
+    .btn-create-task>div>span {
         font-size: 16px;
     }
 
@@ -233,8 +239,3 @@
 }
 
 
-@media(max-height: 880px) {
-    .add-task-fields {
-        overflow-y: scroll;
-    }
-}

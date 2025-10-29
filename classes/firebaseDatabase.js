@@ -1,20 +1,21 @@
 /**
- * Beipiel 1:
- * const fb = new FirebaseDatabase();
- * const data = await fb.getFirebaseLogin(() => fb.getAllData('contacts'));
- * console.log(data);
- * Beispiel 2:
- * const fb = new FirebaseDatabase();
- * const logInUser = await fb.getFirebaseLogin(() => fb.getDataByKey("email", email, "contacts"));
- */
-
+ * Class for interacting with Firebase Realtime Database.
+ * Provides methods for authentication, data retrieval, updating, and deletion.
+ * @class FirebaseDatabase
+ * @property {Object} constructor - The constructor for the FirebaseDatabase class.
+ * @example
+ * const firebaseDB = new FirebaseDatabase();
+ */ 
 
 class FirebaseDatabase {
 
-    constructor() {
+    constructor() {}
 
-    }
-
+    /**
+     * Authenticates the user and executes the provided callback function.
+     * @param {Function} callback - The callback function to execute after authentication.
+     * @returns {Promise} A promise that resolves with the result of the callback function.
+     */
     async getFirebaseLogin(callback) {
 
         return new Promise((resolve, reject) => {
@@ -31,9 +32,13 @@ class FirebaseDatabase {
         });
     }
 
+    /**
+     * Retrieves all data from the specified table.
+     * @param {string} tableName - The name of the table to retrieve data from.
+     * @returns {Array} An array of all data entries in the table.
+     */
     async getAllData(tableName = "") {
         try {
-
             const database = firebaseGetDatabase();
             const databaseRef = firebaseRef(database);
             const databaseTableData = await firebaseGet(firebaseChild(databaseRef, tableName));
@@ -46,18 +51,34 @@ class FirebaseDatabase {
 
     }
 
+    /**
+     * Retrieves data from the specified table by key and value.
+     * @param {string} key - The key to search by.
+     * @param {string|number} values - The value to match.
+     * @param {string} tableName - The name of the table to search in.
+     * @returns {Object|null} The found data object or null if not found.
+     */
     async getDataByKey(key = "", values, tableName = "") {
         let dataArray = await this.getAllData(tableName);
         return dataArray.length > 0 ? dataArray.find(x => x[key] == values) : null;
     }
 
-
+    /**
+     * Retrieves and sorts all contacts by first name.
+     * @returns {Array} An array of sorted contact objects.
+     */
     async getSortedContact() {
         const contacts = await this.getAllData("contacts");
         let contactssorted = contacts.sort((a, b) => a.firstname.localeCompare(b.firstname));
         return contactssorted
     }
 
+    /**
+     * Updates data at the specified path.
+     * @param {string} path - The path to the data to update.
+     * @param {Object} data - The new data to set.
+     * @returns {boolean} True if the update was successful, false otherwise.
+     */
     async updateData(path, data) {
 
         try {
@@ -70,6 +91,12 @@ class FirebaseDatabase {
         }
     }
 
+    /**
+     * Puts data at the specified path.
+     * @param {string} path - The path to the data to set.
+     * @param {Object} data - The data to set.
+     * @returns {boolean} True if the operation was successful, false otherwise.
+     */
     async putData(path, data) {
         try {
             const database = firebaseGetDatabase();
@@ -81,7 +108,11 @@ class FirebaseDatabase {
         }
     }
 
-
+    /**
+     * Deletes data at the specified path.
+     * @param {string} path - The path to the data to delete.
+     * @returns {boolean} True if the deletion was successful, false otherwise.
+     */
     async deleteData(path) {
         try {
             const database = firebaseGetDatabase();
@@ -93,42 +124,22 @@ class FirebaseDatabase {
         }
     }
 
+    /**
+     * Creates a new signed user and stores their data in the database.
+     * @param {string} id - The user's ID.  
+     * @param {string} firstname - The user's first name.
+     * @param {string} lastname - The user's last name.
+     * @param {string} pwd - The user's password.
+     * @param {string} email - The user's email address.
+     * @param {string} phone - The user's phone number.
+     * @param {string} initial - The user's initials.
+     * @param {string} initialColor - The color associated with the user's initials.
+     * @returns {boolean} True if the user was created and data stored successfully, false otherwise.
+     */
     async createNewSignedUser(id, firstname, lastname, pwd, email, phone, initial, initialColor) {
         const contact = new Contact(id, firstname, lastname, pwd, email, phone, initial, initialColor);
         const fb = new FirebaseDatabase();
         return await fb.getFirebaseLogin(() => fb.putData(`/contacts/${contact.id}`, contact));
     }
 
-
 }
-
-
-/* class SafeDataToDB {
-    constructor(id, firstname, lastname, password, email, phone, initial, initialColor) {
-        this.id = id || getNewUid();
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.password = password;
-        this.email = email;
-        this.phone = phone || '';  // Falls phone leer oder null ist -> ""
-        this.initial = initial;
-        this.initialColor = initialColor || getRandomColor();
-    }
-
-    async safeDataToFirebaseDB() {
-        let data = {
-            id: this.id,
-            firstname: this.firstname,
-            lastname: this.lastname,
-            email: this.email,
-            password: this.password,
-            initial: this.initial,
-            initialColor: this.initialColor,
-            phone: this.phone
-        };
-
-        let fb = new FirebaseDatabase();
-        await fb.getFirebaseLogin(() => fb.putData(`/contacts/${this.id}`, data));
-    }
-} */
-

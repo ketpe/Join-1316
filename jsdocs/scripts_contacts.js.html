@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scripts/contacts.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scripts/contacts.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @namespace contacts
+ * @description Contact list page functions and helpers.
+ * Manages the loading and rendering of contacts in both mobile and desktop views.
+ * Handles contact detail view toggling and action buttons.
+ * Implements responsive design adjustments based on window size.
+ */
+
+let currentView = "";
+const minDesktopHeight = 880;
+const minDesktopWidth = 880;
+const breakPointToDesktopSingle = 1180;
+
+/**
+ * @function onLoadContacts
+ * @memberof contacts
+ * @description Initializes the Contacts page on load.
+ * Sets up the layout based on the current window size and renders the contact list.
+ * @returns {Promise&lt;void>}
+ */
+async function onLoadContacts() {
+    checkUserOrGuestIsloggedIn();
+    const [height, width] = getCurrentWindowSize();
+    const head = document.getElementsByTagName('head');
+    if (width >= minDesktopWidth) {
+        await loadHtmlComponentsForDesktop();
+    } else {
+        await loadHtmlComponentsForMobile(head);
+    }
+    showLoadingAnimation();
+    await renderContacts();
+    hideLoadingAnimation();
+    window.addEventListener('resize', addContactsPageResize);
+    window.addEventListener('resize', updateLandscapeBlock);
+}
+
+
+
+/**
+ * @function renderContacts
+ * @memberof contacts
+ * @description Renders the contact list by fetching sorted contacts from the Firebase database.
+ * Populates the contact list in the UI with headers for each starting letter.
+ * @returns {Promise&lt;void>}
+ */
+async function renderContacts() {
+    const contactList = document.getElementById("contact-list");
+    contactList.innerHTML = "";
+    const fb = new FirebaseDatabase();
+    const sortedContacts = await fb.getFirebaseLogin(() => fb.getSortedContact());
+    let currentLetter = null;
+    createContactList(currentLetter, sortedContacts, contactList)
+}
+
+/**
+ * @function createContactList
+ * @memberof contacts
+ * @description Creates the contact list in the UI.
+ * @param {string} currentLetter
+ * @param {Array} sortedContacts
+ * @param {HTMLElement} contactList
+ * 
+ */
+function createContactList(currentLetter, sortedContacts, contactList) {
+    for (const obj of sortedContacts) {
+        let firstLetter = obj.firstname[0].toUpperCase();
+        if (firstLetter !== currentLetter) {
+            contactList.innerHTML += getContactListHeaderTemplate(firstLetter);
+            contactList.innerHTML += getContactListContent(obj);
+        } else {
+            contactList.innerHTML += getContactListContent(obj);
+        }
+        currentLetter = firstLetter;
+    }
+}
+
+
+
+/**
+ * @function loadHtmlComponentsForDesktop
+ * @memberof contacts
+ * @description Loads the HTML components for the Contacts page in desktop mode.
+ * Adjusts the layout and renders the contact list.
+ * @returns {Promise&lt;void>}
+ */
+async function loadHtmlComponentsForDesktop() {
+    currentView = "desktop";
+    clearContactsHtmlBody();
+    await includeHtmlForNode("body", "contactsDesktop.html");
+
+    await Promise.all([
+        includeHtml("navbar", "navbarDesktop.html"),
+        includeHtml("header", "headerDesktop.html"),
+
+    ]);
+
+    setNavigationButtonActive('contact', "desktop");
+    showLoadingAnimation();
+    await renderContacts();
+    renderUserInitial();
+    hideLoadingAnimation();
+}
+
+/**
+ * @function loadHtmlComponentsForMobile
+ * @memberof contacts
+ * @description Loads the HTML components for the Contacts page in mobile mode.
+ * Adjusts the layout and renders the contact list.
+ * @returns {Promise&lt;void>}
+ */
+async function loadHtmlComponentsForMobile() {
+    currentView = "mobile";
+    clearContactsHtmlBody();
+    await includeHtmlForNode("body", "contactsMobile.html");
+
+    await Promise.all([
+        includeHtml("header", "headerMobile.html"),
+        includeHtml("navbar", "navbarMobile.html"),
+    ]);
+    setNavigationButtonActive('contact', "mobile");
+    showLoadingAnimation();
+    await renderContacts();
+    renderUserInitial();
+    hideLoadingAnimation();
+}
+
+/**
+ * @function clearContactsHtmlBody
+ * @memberof contacts
+ * @description Clears the body content of the Contacts page.
+ * @returns {void}
+ */
+function clearContactsHtmlBody() {
+    document.querySelector('body').innerHTML = "";
+}
+
+
+
+/**
+ * @function addContactsPageResize
+ * @memberof contacts
+ * @description Adjusts the Contacts page layout on window resize.
+ * @returns {Promise&lt;void>}
+ */
+async function addContactsPageResize() {
+    const [height, width] = getCurrentWindowSize();
+    if ((width &lt;= minDesktopWidth) &amp;&amp; currentView != "mobile") {
+        await loadHtmlComponentsForMobile();
+        setNavigationButtonActive('contacts', "desktop");
+
+    } else if (width >= minDesktopWidth + 1 &amp;&amp; currentView != "desktop") {
+        await loadHtmlComponentsForDesktop();
+        setNavigationButtonActive('contacts', "mobile");
+    }
+
+}
+
+/**
+ * @function openContactDetail
+ * @memberof contacts
+ * @description Opens the contact detail view for the selected contact.
+ * @param {HTMLElement} element
+ * @return {Promise&lt;void>}
+ */
+async function openContactDetail(element) {
+    const [height, width] = getCurrentWindowSize();
+    toggleActiveContactClass(element);
+    const fb = new FirebaseDatabase();
+    const detailContact = await fb.getFirebaseLogin(() => fb.getDataByKey(key = "id", values = element.id, tableName = "contacts"));
+    if ((width &lt;= minDesktopWidth) &amp;&amp; currentView == "mobile") {
+        openContactDetailMobile(detailContact);
+    } else if ((width >= minDesktopWidth + 1) &amp;&amp; currentView == "desktop") {
+        openContactDetailDesktop(detailContact);
+    }
+}
+
+/**
+ * @function toggleActiveContactClass
+ * @memberof contacts
+ * @description Toggles the active class for the selected contact.
+ * @param {HTMLElement} activeContact
+ * @returns {void}
+ */
+function toggleActiveContactClass(activeContact) {
+    const contactItems = document.querySelectorAll('#contact-list .contact-item');
+    contactItems.forEach(item => {
+        item.classList.remove('contact-item-active');
+    });
+    if (activeContact) {
+        activeContact.classList.add('contact-item-active');
+    }
+}
+
+/**
+ * @function clearActiveContactClass
+ * @memberof contacts
+ * @description Clears the active contact class and resets the contact list.
+ * @return {void}
+ */
+function clearActiveContactClass() {
+    const detailContact = document.getElementById('contact-detail-content');
+    detailContact.innerHTML = "";
+    renderContacts();
+}
+
+/**
+ * @function onEditContactDialogOpen
+ * @memberof contacts
+ * @description Opens the edit contact dialog for the selected contact.
+ * @param {string} id
+ * @return {void}
+ */
+function onEditContactDialogOpen(id) {
+    toggleScrollOnBody(true);
+    addDialogShowClass();
+    document.getElementById('add-contact-dialog').showModal();
+    renderEditContactIntoDialog(id);
+}
+
+/**
+ * @function openContactDetailMobile
+ * @memberof contacts
+ * @description Opens the contact detail view in mobile mode.
+ * @param {Object} detailContact
+ * @returns {void}
+ */
+function openContactDetailMobile(detailContact) {
+    let renderDetailContact = document.getElementById('contact-detail-content');
+    let contactListMobile = document.getElementById('contact-list-mobile');
+    contactListMobile.classList.add('visually-hidden');
+    renderDetailContact.parentElement.classList.remove('visually-hidden');
+    renderDetailContact.innerHTML = "";
+    renderDetailContact.innerHTML = getContactDetailView(detailContact, "-mobile");
+    addNewActionBtns(detailContact);
+}
+
+/**
+ * @function openContactDetailDesktop
+ * @memberof contacts
+ * @description Opens the contact detail view in desktop mode.
+ * @param {Object} detailContact
+ * @return {void}
+ */
+function openContactDetailDesktop(detailContact) {
+    let renderDetailContact = document.getElementById('contact-detail-content');
+    renderDetailContact.classList.remove('visually-hidden');
+    renderDetailContact.innerHTML = "";
+    renderDetailContact.classList.remove('slide-Details-in');
+    renderDetailContact.offsetWidth;
+    renderDetailContact.classList.add('slide-Details-in');
+    renderDetailContact.innerHTML += getContactDetailView(detailContact, "");
+}
+
+/**
+ * @function addNewActionBtns
+ * @memberof contacts
+ * @description Adds new action buttons to the mobile contact detail view.
+ * @param {Object} detailContact
+ * @return {void}
+ */
+function addNewActionBtns(detailContact) {
+    document.querySelector('.contacts-detailview-actions').classList.add('visually-hidden');
+    document.getElementById('btn-add-contact-mobile').classList.add('visually-hidden');
+    let refmobileBtn = document.querySelector('.contacts-main-mobile');
+    let menuActionBtn = document.getElementById('btns-action-menu-mobile');
+    menuActionBtn.innerHTML = "";
+    menuActionBtn.innerHTML += getBtnsInMobileDetails(detailContact);
+    refmobileBtn.innerHTML += getMobileBtnTemplate(detailContact);
+}
+
+/**
+ * @function backToContactList
+ * @memberof contacts
+ * @description Navigates back to the contact list from the contact detail view in mobile mode.
+ * @returns {void}
+ */
+function backToContactList() {
+    let renderDetailContact = document.getElementById('contact-detail-content');
+    let contactListMobile = document.getElementById('contact-list-mobile');
+    contactListMobile.classList.remove('visually-hidden');
+    renderDetailContact.parentElement.classList.add('visually-hidden');
+    renderDetailContact.innerHTML = "";
+    resetActionMenuMobile()
+    renderContacts();
+
+}
+
+/**
+ * @function openActionMenuMobile
+ * @memberof contacts
+ * @description Opens the action menu in the mobile contact detail view.
+ * @returns {void}
+ */
+function openActionMenuMobile() {
+    const actionMenu = document.querySelector('.detail-contact-actions-mobile');
+    actionMenu.style.display = "flex";
+    actionMenu.classList.toggle('visually-hidden');
+    actionMenu.classList.remove('slide-Details-in');
+    actionMenu.offsetWidth;
+    actionMenu.classList.add('slide-Details-in');
+}
+
+/**
+ * @function resetActionMenuMobile
+ * @memberof contacts
+ * @description Resets the action menu in the mobile contact detail view.
+ * @return {void}
+ */
+function resetActionMenuMobile() {
+    document.getElementById('btn-add-contact-mobile').classList.remove('visually-hidden');
+    closeDialogByEvent(event, 'btns-action-menu-mobile');
+    let refmobileBtn = document.querySelector('.contacts-main-mobile');
+    let btnToRemove = refmobileBtn.querySelector('.mobile-menu-btn');
+    if (btnToRemove) {
+        btnToRemove.remove();
+    }
+}
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Oct 28 2025 21:36:38 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

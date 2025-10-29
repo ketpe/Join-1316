@@ -8,6 +8,10 @@
 
 
 class BoardTaskDetailDeleteUtil {
+    /**
+     * Creates an instance of the BoardTaskDetailDeleteUtil class.
+     * @param {string} taskId - The ID of the task to be deleted.
+     */
     constructor(taskId){
         this.taskId = taskId;
     }
@@ -22,10 +26,10 @@ class BoardTaskDetailDeleteUtil {
         const [contactsDbList, taskContactDBList] = await editTask.getTaskContactAssignedList();
         const [subtaskDbList, taskToSubtaskDBList, maxPos] = await editTask.getTaskSubtaskList();
 
-        if(!await this.removeDataInArrayFromDB(taskContactDBList, 'taskContactAssigned')){return false;}
-        if(!await this.removeDataInArrayFromDB(taskToSubtaskDBList, 'taskSubtask')){return false;}
-        if(!await this.removeDataInArrayFromDB(subtaskDbList, 'subTasks')){return false;}
-        if(!await this.removeTaskFromDb(this.taskId)){return false;}
+        if(!this.removeDataInArrayFromDB(taskContactDBList, 'taskContactAssigned')){return false;}
+        if(!this.removeDataInArrayFromDB(taskToSubtaskDBList, 'taskSubtask')){return false;}
+        if(!this.removeDataInArrayFromDB(subtaskDbList, 'subTasks')){return false;}
+        if(!this.removeTaskFromDb(this.taskId)){return false;}
 
         return true;
     }

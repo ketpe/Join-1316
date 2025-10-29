@@ -46,14 +46,17 @@
                             </p>
                         </div>
                         <div class="login-form-buttons">
-                            <button type="button" class=" btn-clear-cancel btn btn-outline btn-md"
-                                onclick="cancelAddContact()">
-                                <p class="">Cancel</p>
-                                <div aria-label="Close dialog" role="img" class="btn-cancel-icon"></div>
+                            <button type="button" class="btn btn-outline btn-clear-cancel" onclick="cancelAddContact()">
+                                <div>
+                                    <span class="">Cancel</span>
+                                    <div aria-label="Close dialog" role="img" class="btn-cancel-icon"></div>
+                                </div>
+
                             </button>
                             <button type="submit" onmouseover="toggleBtnEditContact(this)"
-                                class="btn-create btn btn-fill btn-md" id="btn-create-contact" disabled="true">
-                                <p class="">Save</p>
+                                class="btn-create btn btn-fill btn-md btn-md-auto-height" id="btn-create-contact"
+                                disabled="true">
+                                <span class="">Save</span>
                                 <div aria-label="Save contact" role="img" class="btn-create-icon"></div>
                             </button>
                         </div>

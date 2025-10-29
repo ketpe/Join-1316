@@ -1,6 +1,21 @@
+/**
+ * @namespace script
+ * @description Common functions for the application
+ * Loaded by all pages
+ */
 
+
+/**
+ * Set onclick event to document body to close submenu when clicking outside
+*/
 setOnClickEventToDocument();
 
+/**
+ * Initialize the webpage by including HTML components and rendering user initials.
+ * @function init
+ * @memberof script
+ * @returns {Promise<void>}
+ */
 async function init() {
     await Promise.all([
         includeHtml("navbar", "navbarDesktop.html"),
@@ -8,13 +23,20 @@ async function init() {
     ]);
 
     renderUserInitial();
-    
+
 }
 
+/**
+ * Render the user's initial in the UI.
+ * @function renderUserInitial
+ * @memberof script
+ * @returns {Promise<void>}
+
+ */
 async function renderUserInitial() {
     let logInStatus = getLogStatus();
     let userinitial = "G";
-    if (logInStatus !== "0") {
+    if (logInStatus !== "0" && logInStatus !== "Guest") {
         const fb = new FirebaseDatabase();
         const userinitialRef = await fb.getFirebaseLogin(() => fb.getDataByKey('id', logInStatus, 'contacts'));
         userinitial = userinitialRef.initial;
@@ -25,6 +47,10 @@ async function renderUserInitial() {
 
 /**
  * Set onclick event to document body to close submenu when clicking outside
+ * @function setOnClickEventToDocument
+ * @memberof script
+ * @return {void}
+
  */
 function setOnClickEventToDocument() {
     const body = document.querySelector('body');
@@ -32,58 +58,105 @@ function setOnClickEventToDocument() {
 }
 
 
+
 /**
  * Show submenu in desktop or mobile mode
- * @param {*} id
+ * @function showSubmenu
+ * @memberof script
+ * @param {string} id
+ * @param {Event} event
+ * @param {string} desktopOrMobile
+ * @returns {void}
+ * 
  */
 function showSubmenu(id, event, desktopOrMobile) {
     if (event) event.stopPropagation();
     const subMenu = document.getElementById(id);
 
-    if(desktopOrMobile == "desktop"){
+    if (desktopOrMobile == "desktop") {
         subMenu.classList.toggle('d-none');
     }
-    
-    if(desktopOrMobile == "mobile"){
+
+    if (desktopOrMobile == "mobile") {
         subMenu.classList.toggle('is-submenu-mobile-open');
     }
-    
+
 };
 
 /**
- *
- * @param {*} event
+ * Prevent event bubbling.
+ * @function noBubbling
+ * @memberof script
+ * @param {Event} event
+ * @returns {void}
+ * 
  */
-
 function noBubbling(event) {
     event.stopPropagation()
 };
 
 /**
  * Close the submenu when clicking outside of it
- * @param {*} event
- * @returns
+ * @function subMenuClose
+ * @memberof script
+ * @param {Event} event
+ * @returns {void}
+ * 
  */
-function subMenuClose(event){
+function subMenuClose(event) {
 
     let subMenu = document.getElementById('subMenu')
-    if(!subMenu){return;}
+    if (!subMenu) { return; }
     const desktopOrMobile = subMenu.getAttribute('data-dOrM');
 
     if (desktopOrMobile == "desktop" && !subMenu.classList.contains('d-none') && !subMenu.contains(event.target)) {
         subMenu.classList.add('d-none');
-    }else if(desktopOrMobile == "mobile" && subMenu.classList.contains('is-submenu-mobile-open') && !subMenu.contains(event.target)){
+    } else if (desktopOrMobile == "mobile" && subMenu.classList.contains('is-submenu-mobile-open') && !subMenu.contains(event.target)) {
         subMenu.classList.remove('is-submenu-mobile-open');
     }
 }
 
-
-function showErrorMessage(message) {
-    let errorText = document.getElementById("login-error-text");
-    errorText.textContent = message;
-    errorText.classList.remove("d-none");
+/**
+ * Show an error message for a specific element.
+ * @function showErrorMessage
+ * @memberof script
+ * @param {String} elementId
+ * @param {String} errorMessage
+ * @return {void}
+ * 
+ */
+function showErrorMessage(elementId, errorMessage = "") {
+    let errorText = document.getElementById(elementId);
+    if (errorText.classList.contains('d-none')) {
+        errorText.classList.remove("d-none");
+        if (errorMessage.length > 0) {
+            errorText.textContent = errorMessage;
+        }
+    }
 }
 
+/**
+ * Remove the error message for a specific element.
+ * @function removeErrorMessage
+ * @memberof script
+ * @param {String} elementId
+ * @return {void}
+ * 
+ */
+function removeErrorMessage(elementId) {
+    let errorText = document.getElementById(elementId);
+    if (!errorText.classList.contains('d-none')) {
+        errorText.classList.add("d-none")
+    };
+}
+
+/**
+ * Get a random color class from the predefined list.
+ * @function getRandomColor
+ * @memberof script
+ * @returns {String} A random color class.
+ * 
+ */
 function getRandomColor() {
     const colorClasses = [
         'orange', 'violet', 'coral', 'gold', 'lemon', 'red', 'blue',
@@ -93,10 +166,27 @@ function getRandomColor() {
     return colorClasses[randomIndex];
 }
 
+/**
+ * Generates a new unique identifier (UUID).
+ * @function getNewUid
+ * @memberof script
+ * @returns {string} A new UUID.
+ * 
+ */
 function getNewUid() {
     return crypto.randomUUID();
 }
 
+/**
+ * Toggles the visibility of the password input field.
+ * @function togglePasswordVisibility
+ * @memberof script
+ * @param {Number} toggleCounter 
+ * @param {String} passwortInputID 
+ * @param {String} toggleIconID 
+ * @return {void}
+ * 
+ */
 function togglePasswordVisibility(toggleCounter, passwortInputID, toggleIconID) {
     let passwordInput = document.getElementById(passwortInputID);
     let toggleIcon = document.getElementById(toggleIconID);
@@ -113,19 +203,106 @@ function togglePasswordVisibility(toggleCounter, passwortInputID, toggleIconID) 
     };
 }
 
+/**
+ * Toggles the border color of an element based on field has validation error.
+ * @function toggleBorderColorByError
+ * @memberof script
+ * @param {String} elementId 
+ * @param {Boolean} loginErrorBorder 
+ * @return {void}
+ * 
+ */
 function toggleBorderColorByError(elementId = null, loginErrorBorder = false) {
     const elements = elementId
         ? [document.getElementById(elementId)].filter(Boolean)
-        : document.querySelectorAll(".login-signup-input, .loginErrorBorder");
+        : document.querySelectorAll(".login-signup-input, .login-error-border");
 
     elements.forEach(el => {
         loginErrorBorder
-            ? el.classList.add("login-signup-input") && el.classList.remove("loginErrorBorder")
-            : el.classList.contains("login-signup-input") && el.classList.replace("login-signup-input", "loginErrorBorder");
+            ? el.classList.remove("login-error-border")
+            : el.classList.add("login-error-border");
     });
 }
 
+/** Get the current window size.
+ * @function getCurrentWindowSize
+ * @memberof script
+ * @returns {number[]} An array containing the height and width of the window.
+ * 
+ */
 function getCurrentWindowSize() {
     return [window.innerHeight, window.innerWidth];
 }
 
+/**
+ * Check if user or guest is logged in, if not navigate to login page.
+ * @function checkUserOrGuestIsloggedIn
+ * @memberof script
+ * @return {void}
+ * 
+ */
+function checkUserOrGuestIsloggedIn() {
+    let logInStatus = getLogStatus();
+    if (logInStatus == "0") {
+        navigateToLogin();
+    }
+}
+
+/**
+ * Shows a loading overlay.
+ * @function showOverlay
+ * @memberof script
+ * @returns {void}
+ * 
+ */
+function showOverlay(){
+    const overlay = document.getElementById('loadingOverlay');
+    if(!overlay){return;}
+    overlay.classList.add('is-loading-visible');
+}
+
+/**
+ * Hides the loading overlay.
+ * @function hideOverlay
+ * @memberof script
+ * @returns {void}
+ * 
+ */
+function hideOverlay() {
+    const overlay = document.getElementById('loadingOverlay');
+    if(!overlay){return;}
+    overlay.classList.remove('is-loading-visible');
+}
+
+/**
+ * Shows a loading animation.
+ * @function showLoadingAnimation
+ * @memberof script
+ * @returns {void}
+ * 
+ */
+function showLoadingAnimation() {
+    const overlay = document.getElementById('loadingOverlay');
+    const loadingContainer = document.getElementById('loadingContainer');
+    if (!overlay || !loadingContainer) { return; }
+    overlay.classList.add('loading-color');
+    overlay.classList.add('is-loading-visible');
+    loadingContainer.classList.remove('visually-hidden');
+}
+
+/**
+ * Hides the loading animation after a short delay.
+ * @function hideLoadingAnimation
+ * @memberof script
+ * @returns {void}
+ * 
+ */
+function hideLoadingAnimation() {
+    setTimeout(() => {
+        const overlay = document.getElementById('loadingOverlay');
+        const loadingContainer = document.getElementById('loadingContainer');
+        if (!overlay || !loadingContainer) { return; }
+        overlay.classList.remove('is-loading-visible');
+        loadingContainer.classList.add('visually-hidden');
+    }, 500);
+}

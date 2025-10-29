@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: classes/boardTaskDetailEditUtils.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: classes/boardTaskDetailEditUtils.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Class for rendering and managing the edit view of a task in the board detail view.
+ * Handles loading the edit HTML, rendering components, and setting up event listeners.
+ * @class BoardTaskDetailEditUtils
+ * @property {string} currentTaskID - The ID of the current task.
+ * @property {Object} currentTask - The current task object.
+ * @property {Object} currentInstance - The current instance of the task.
+ */
+
+class BoardTaskDetailEditUtils{
+
+    /**
+     * Creates an instance of the BoardTaskDetailEditUtils class.
+     * @param {string} currentTaskID - The ID of the current task.
+     * @param {Object} currentTask - The current task object.
+     * @param {Object} currentInstance - The current instance of the task.
+     */
+    constructor(currentTaskID, currentTask, currentInstance){
+        this.currentTask = currentTask;
+        this.currentTaskID = currentTaskID;
+        this.currentInstance = currentInstance;
+    }
+
+    /**
+     * Initiates the rendering process for the task edit view.
+     * Cleans the dialog, loads the edit HTML, renders components, and sets up onclick events.
+     * @return {Promise&lt;void>}
+     */
+    async startRenderTaskEdit(){
+        this.cleanDialog();
+        await this.loadEditHtmlIntoDialog();
+        this.renderEditComponents();
+        const addTaskUtils = new AddTaskUtils();
+        addTaskUtils.setAddTaskCreateBtnMouseFunction('detail-edit-ok-btn', this.currentInstance);
+
+    }
+
+    /**
+     * Cleans the dialog content area.
+     * @return {void}
+     */
+    cleanDialog(){
+        document.getElementById('dialog-content-detail-view-task').innerHTML = "";
+    }
+
+    /**
+     * Loads the HTML template for the task edit view into the dialog content area.
+     * @return {Promise&lt;void>}
+     */
+    async loadEditHtmlIntoDialog(){
+        await includeHtml("dialog-content-detail-view-task", "taskEditTemplate.html");
+    }
+
+    /**
+     * Renders the edit components for the task.
+     * @return {void}
+     */
+    renderEditComponents(){
+        let mainConatiner = document.querySelector('.task-edit-fields');
+        let taskComponents = new TaskElements(this.currentInstance);
+        mainConatiner.innerHTML += taskComponents.getTitleComponent(false, this.currentTask['title']);
+        mainConatiner.innerHTML += taskComponents.getDescriptionComponents(this.currentTask['description'], true);
+        mainConatiner.innerHTML += taskComponents.getDueDateComponents(false, this.currentTask['dueDate']);
+        mainConatiner.innerHTML += taskComponents.getPrioButtonComponents();
+        mainConatiner.innerHTML += taskComponents.getContactComponents();
+        mainConatiner.innerHTML += taskComponents.getAssignedBadges();
+        mainConatiner.innerHTML += taskComponents.getSubTaskComponents();
+        mainConatiner.innerHTML += taskComponents.getSubtaskListContainer();
+    }
+
+    /**
+     * Gets the current assigned contact list from the task.
+     * @returns {Array} The list of currently assigned contacts.
+     */
+    getCurrentAssignList(){
+        let contacts = [];
+
+        for(let i = 0; i &lt; this.currentTask.assignedContacts.length; i++){
+            contacts.push(this.currentTask.assignedContacts[i][0]);
+        }
+
+        return contacts;
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Oct 28 2025 21:36:38 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

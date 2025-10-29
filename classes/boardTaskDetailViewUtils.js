@@ -3,12 +3,23 @@
  * It includes methods to display task information, handle assigned contacts, and manage subtasks.
  * It also includes helper functions to generate HTML elements for contacts, categories, and subtasks.
  * The class is designed to work with a task management application, facilitating the display and interaction with task details in a user-friendly manner.
+ * Loaded by board detail view page
+ * @class BoardTaskDetailViewUtils
+ * @property {string} currentTaskID - The ID of the current task.
+ * @property {Object} currentTask - The current task object.
+ * @property {Object} currentInstance - The current instance of the task.
  */
 
 class BoardTaskDetailViewUtils {
 
     currentTask;
 
+    /** 
+     * Creates an instance of the BoardTaskDetailViewUtils class.
+     * @param {string} currentTaskID - The ID of the current task.
+     * @param {Object} currentTask - The current task object.
+     * @param {Object} currentInstance - The current instance of the task.
+     */
     constructor(currentTaskID, currentTask, currentInstance) {
         this.currentTaskID = currentTaskID;
         this.currentTask = currentTask;
@@ -89,7 +100,8 @@ class BoardTaskDetailViewUtils {
         contactSelectElement.innerHTML = "";
         for (let i = 0; i < this.currentTask.assignedContacts.length; i++) {
             if(this.currentTask.assignedContacts[i].length == 0){continue;}
-            contactSelectElement.innerHTML += getContactListElement(this.currentTask.assignedContacts[i][0], false, true, this.currentInstance);
+            contactSelectElement.innerHTML += getContactListElement(this.currentTask.assignedContacts[i][0], false, true, this.currentInstance, 
+                this.checkIfCurrentUserIsAssigned(this.currentTask.assignedContacts[i][0]['id']));
             counter++;
             if (counter >= 3) { break; }
         }
@@ -98,6 +110,20 @@ class BoardTaskDetailViewUtils {
             heightOfOneContact * this.currentTask.assignedContacts.length : heightOfOneContact * 3);
 
         contactSelectElement.style.height = (heightOfContainer) + "px";
+    }
+
+    /**
+     * @description Checks if the current user is assigned to the task.
+     * @function checkIfCurrentUserIsAssigned
+     * @memberof BoardTaskDetailViewUtils
+     * @param {string} contactID 
+     * @returns Boolean indicating if the current user is assigned to the task
+     */
+    checkIfCurrentUserIsAssigned(contactID){
+        const currentUser = getLogStatus();
+        if(!currentUser){ return false; }
+        if(currentUser == "guest"){ return false; }
+        return currentUser == contactID;
     }
 
     /**

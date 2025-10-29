@@ -1,0 +1,179 @@
+@media(max-width: 1439px) {
+
+    .board-header {
+        width: auto;
+    }
+
+    .board-headline {
+        padding-left: 16px;
+        gap: 32px;
+    }
+
+    .board-kanban {
+        gap: 16px;
+        padding: 0 16px 0 16px;
+        flex-wrap: wrap;
+    }
+}
+
+@media(max-width: 1060px) {
+
+    .board-header {
+        margin-bottom: 32px;
+    }
+
+    .board-headline {
+        flex-wrap: wrap;
+    }
+
+    .board-headline-text {
+        margin: 0;
+    }
+}
+
+@media(max-width: 880px) {
+    .right-container {
+        width: 100%;
+    }
+
+    .join-h1 {
+        font-size: 36px;
+    }
+
+    .left-header {
+        height: 27px;
+    }
+
+    .left-header>p {
+        font-size: 16px;
+    }
+
+    .task-section {
+        padding: 12px 6px;
+        gap: 16px;
+        min-width: 310px;
+        max-height: 640px;
+        max-width: 396px;
+    }
+
+    .task-description {
+        font-size: 16px;
+        margin-top: 13px;
+        margin-bottom: 16px;
+    }
+
+    label,
+    legend {
+        font-family: 'Open Sans' !important;
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        color: var(--menu-font-color-board) !important;
+    }
+
+    .task-data-row {
+        margin-bottom: 16px;
+    }
+
+    .task-data-row p {
+        font-size: 16px;
+    }
+
+    .task-subtask {
+        font-size: 16px;
+    }
+
+    .task-detailview-actions {
+        gap: 8px;
+    }
+
+    .task-main-edit {
+        width: auto;
+    }
+
+    .a-t-priority-button-container {
+        margin-bottom: 26px;
+    }
+
+
+    .task-main-scroll {
+        padding-inline-end: 8px;
+    }
+
+    .task-mobile-label {
+        font-family: 'Inter' !important;
+        font-size: 16px !important;
+        color: black !important;
+        font-weight: 400 !important;
+    }
+
+    .a-t-input {
+        font-size: 16px;
+        height: calc(40px - (2px + 24px));
+    }
+
+    .a-t-input::placeholder {
+        font-size: 16px;
+    }
+
+    .a-t-text-area {
+        max-height: calc(104px - (2 * 1px) - (2 * 16px));
+        font-size: 16px;
+    }
+
+    .date-trigger {
+        transform: translateY(-224%) translateX(-69%);
+    }
+
+    .btn-small {
+        width: 77px !important;
+    }
+
+    .board-task-content {
+        width: 220px;
+    }
+
+    .empty-Search-Result-info {
+        top: 40%;
+    }
+
+    .board-task-title {
+        width: 220px;
+    }
+
+    .board-task-description {
+        width: 220px;
+    }
+
+    .swap-mobile-menu {
+        display: flex;
+    }
+
+}
+
+@media(max-width: 450px) {
+    .join-h1 {
+        font-size: 32px;
+    }
+
+    .task-section {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+
+@media(max-width: 375px) {
+
+    .task-edit-fields {
+        width: 100%;
+    }
+
+    .board-search-wrapper {
+        width: 100%;
+    }
+
+    .field-frame {
+        width: 100%;
+    }
+}
+

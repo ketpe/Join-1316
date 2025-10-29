@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: classes/addTaskUtils.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: classes/addTaskUtils.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Utility class for managing tasks, contacts, and subtasks.
+ * Provides methods for handling user IDs, contact assignments, and subtask management.
+ * Also includes caching functionality for task data in the add task view.
+ * Dependencies:
+ * - db-functions.js: For database operations.
+ * - addTaskCreateTask.js: For task creation processes.
+ * Usage:
+ * const addTaskUtils = new AddTaskUtils();
+*/
+class AddTaskUtils {
+
+    static _addTaskCache = {
+        formData: { title: "", description: "", dueDate: "", priority: "Medium" },
+        category: null,
+        assignedContacts: [],
+        subTasks: []
+    };
+
+    /**
+     * Gets the cached data for the add task view.
+     * @returns {Object} The cached data for the add task view.
+     */
+    static getAddTaskCache() {
+        return this._addTaskCache;
+    }
+
+    /**
+     * Sets the cached data for the add task view.
+     * @param {Object} patch - The data to update in the cache.
+     */
+    static setAddTaskCache(patch) {
+        this._addTaskCache = { ...this._addTaskCache, ...patch };
+    }
+
+    /**
+     * Captures the current data from the add task view and updates the cache.
+     * @returns {void}
+     */
+    static captureCurrentAddTaskDataFromView() {
+
+        if (!this.checkBodyIsNotEmpty()) { return; }
+        const { titleElement, descriptionElement, dueDateElement } = this.captureInputFields();
+        const { category, assignedContacts, subTasks } = this.getTaskComponentVariablen;
+
+        this.setAddTaskCache({
+            formData: {
+                title: (titleElement?.value ?? "").trim(),
+                description: (descriptionElement?.value ?? "").trim(),
+                dueDate: (dueDateElement?.value ?? "").trim(),
+                priority: this.getPrioDataForCache
+            },
+            category,
+            assignedContacts: Array.isArray(assignedContacts) ? [...assignedContacts] : [],
+            subTasks: Array.isArray(subTasks) ? [...subTasks] : []
+        });
+    }
+
+    /**
+     * Gets the current task component variables, falling back to cached values if necessary.
+     * @returns {Object} An object containing the current category, assigned contacts, and subtasks.
+     */
+    static get getTaskComponentVariablen() {
+        const components = this.getTaskComponent;
+        const category = components?.currentCategory?.id ? components.currentCategory : this._addTaskCache.category;
+        const assignedContacts = components?.currentContactAssignList || this._addTaskCache.assignedContacts;
+        const subTasks = components?.currentSubTasks || this._addTaskCache.subTasks;
+        return { category, assignedContacts, subTasks };
+    }
+
+    /**
+     * Gets the selected priority from the view or falls back to the cached priority.
+     * @returns {string} The selected priority or the cached priority.
+     */
+    static get getPrioDataForCache() {
+        const prioButtonsContainer = document.getElementById('task-priority-button');
+        const selectedPrioButton = prioButtonsContainer?.querySelector('.btn[data-selected="true"]');
+        return selectedPrioButton?.getAttribute('name') || this._addTaskCache.formData.priority || "Medium";
+    }
+
+    /**
+     * Gets the current task component instance from the global window object.
+     * @returns {Object} The current task component instance.
+     */
+    static get getTaskComponent() {
+        return window.addTasktaskComponents || window.addTaskDialogTaskComponents;
+    }
+
+    /**
+     * Checks if the document body is not empty.
+     * @returns {boolean} True if the document body has children, false otherwise.
+     */
+    static checkBodyIsNotEmpty() {
+        return document.body &amp;&amp; document.body.children.length > 0 ? true : false;
+    }
+
+    /**
+     * Applies the cached add task data to the view components.
+     * @param {Object} components - The components to apply the data to.
+     * @returns {void}
+     */
+    static applyAddTaskDataToView(components) {
+        if (!components) { return; }
+        const { formData, category, assignedContacts, subTasks } = this._addTaskCache;
+
+        components.currentTitle = formData.title;
+        components.currentDueDate = formData.dueDate || "";
+        components.currentPriority = formData.priority || "Medium";
+        components.currentCategory = category || {};
+        components.currentContactAssignList = Array.isArray(assignedContacts) ? [...assignedContacts] : [];
+        components.currentSubTasks = Array.isArray(subTasks) ? [...subTasks] : [];
+
+        this.applyFormDataIntoInputFields(formData);
+        components.setNewPriority(formData.priority || "Medium");
+        this.applyCategoryToView(category, components);
+        components.showOrHideBadgeContainer('show');
+        components.renderSubtasks();
+        const btn = document.getElementById('createTaskButton');
+        components.addTaskCheckRequiredField(btn);
+
+    }
+
+    /**
+     * Applies form data into the input fields of the add task view.
+     * @param {Object} formData - The form data to apply.
+     * @returns {void}
+     */
+    static applyFormDataIntoInputFields(formData) {
+        const { titleElement, descriptionElement, dueDateElement } = this.captureInputFields();
+        if (titleElement) { titleElement.value = formData.title || ""; }
+        if (descriptionElement) { descriptionElement.value = formData.description || ""; }
+        if (dueDateElement) { dueDateElement.value = formData.dueDate || ""; }
+    }
+
+    /**
+     * Applies the selected category to the view components.
+     * @param {Object} category - The category to apply.
+     * @param {Object} components - The components to apply the category to.
+     * @returns {void}
+     */
+    static applyCategoryToView(category, components) {
+        if (category?.title) {
+            components.setCategoryInputfieldValue(category.title);
+            components.showAndLeaveErrorMessage('a-t-category-required', false);
+            components.showAndLeaveErrorBorder('task-category', false);
+        } else {
+            components.setCategoryInputfieldValue('Select task category');
+        }
+    }
+
+    /**
+     * Captures the input fields from the add task view.
+     * @returns {Object} An object containing the title, description, and due date elements.
+     */
+    static captureInputFields() {
+        const titleElement = document.getElementById('task-title');
+        const descriptionElement = document.getElementById('task-description');
+        const dueDateElement = document.getElementById('due-date-display');
+
+        return { titleElement, descriptionElement, dueDateElement };
+    }
+
+    /**
+     * Constructor for the AddTaskUtils class.
+     */
+    constructor() { }
+
+    /**
+     * Retrieves the current user ID from session storage.
+     * @returns {string} Current User ID from session storage
+     */
+    readCurrentUserID() {
+        return sessionStorage.getItem('logInStatus');
+    }
+
+    /**
+     * Checks if the current user is a guest.
+     * @returns {boolean} True if the current user is a guest, false otherwise.
+     */
+    isCurrentUserGuest() {
+        return sessionStorage.getItem('logInStatus') == "0";
+    }
+
+    /**
+     * Finds a contact in the assigned list.
+     * @param {Object} contact - The contact object to find.
+     * @param {Array} currentContactAssignList - The list of currently assigned contacts.
+     * @returns {boolean} True if the contact is found in the assigned list, false otherwise.
+     */
+    findContactInAssignList(contact, currentContactAssignList) {
+        if (currentContactAssignList.length == 0) { return false; }
+        return this.getIndexOfObjectOfArray(contact['id'], currentContactAssignList) != -1;
+    }
+
+    /**
+     * Checks if a contact is available in the database.
+     * @param {string} currentContactID - The ID of the contact to check.
+     * @param {Array} contactAllListFromDB - The list of all contacts from the database.
+     * @returns {boolean} True if the contact is available, false otherwise.
+     */
+    checkIfContactAvailable(currentContactID, contactAllListFromDB) {
+        return this.getIndexOfObjectOfArray(currentContactID, contactAllListFromDB) != -1;
+    }
+
+    /**
+     * Adds a contact to the task's assigned list.
+     * @param {string} currentContactID - The ID of the contact to add.
+     * @param {Array} contactAllListFromDB - The list of all contacts from the database.
+     * @param {Array} currentContactAssignList - The list of currently assigned contacts.
+     * @returns {Array} The updated list of assigned contacts.
+     */
+    contactAddToTask(currentContactID, contactAllListFromDB, currentContactAssignList) {
+        const indexOfContact = this.getIndexOfObjectOfArray(currentContactID, contactAllListFromDB);
+        if (indexOfContact > -1) {
+            currentContactAssignList.push(contactAllListFromDB[indexOfContact]);
+        }
+        return currentContactAssignList;
+    }
+
+    /**
+     * Removes a contact from the task's assigned list.
+     * @param {string} currentContactID - The ID of the contact to remove.
+     * @param {Array} currentContactAssignList - The list of currently assigned contacts.
+     * @returns {Array} The updated list of assigned contacts.
+     */
+    contactRemoveFromTask(currentContactID, currentContactAssignList) {
+        const indexOfContact = this.getIndexOfObjectOfArray(currentContactID, currentContactAssignList);
+        if (indexOfContact > -1) {
+            currentContactAssignList.splice(indexOfContact, 1);
+        }
+        return currentContactAssignList;
+    }
+
+    /**
+     * Gets the index of an object in an array by its ID.
+     * @param {string} objectID - The ID of the object to find.
+     * @param {Array} objectArray - The array to search in.
+     * @returns {number} The index of the object in the array, or -1 if not found.
+     */
+    getIndexOfObjectOfArray(objectID, objectArray) {
+
+        let objectFind = objectArray.find(x => x['id'] == objectID);
+        if (objectFind == null) { return -1; }
+        return objectArray.indexOf(objectFind);
+    }
+
+    /**
+     * Filters contacts based on the input value.
+     * @param {string} inputValue - The value to filter contacts by.
+     * @param {Array} contactAllListFromDB - The list of all contacts from the database.
+     * @returns {Array} The filtered list of contacts.
+     */
+    filterContacts(inputValue, contactAllListFromDB) {
+        const inputCleanValue = (inputValue ?? "").trim();
+        if (inputCleanValue.length &lt; 2) { return contactAllListFromDB; }
+        return contactAllListFromDB.filter((c) => c['firstname'].toLowerCase().startsWith(inputCleanValue.toLowerCase()));
+    }
+
+    /**
+     * Adds a subtask to the current list of subtasks.
+     * @param {string} subTaskEntry - The title of the subtask to add.
+     * @param {Array} currentSubTasks - The list of currently existing subtasks.
+     * @returns {Array} The updated list of subtasks.
+     */
+    addSubtaskToArray(subTaskEntry, currentSubTasks) {
+
+        const position = currentSubTasks.length != 0 ? this.getMaxPositionOfSubtasks(currentSubTasks) + 1 : 0;
+
+        const newSubTask = {
+            'id': getNewUid(),
+            'title': subTaskEntry,
+            'taskChecked': false,
+            'position': position
+        };
+
+        currentSubTasks.push(newSubTask);
+        return currentSubTasks;
+    }
+
+    /**
+     * Gets the maximum position of subtasks.
+     * @param {Array} currentSubTasks - The list of current subtasks.
+     * @returns {number} The maximum position of the subtasks.
+     */
+    getMaxPositionOfSubtasks(currentSubTasks) {
+        if (currentSubTasks.length === 0) {
+            return 0;
+        } else {
+            const firstSubstak = currentSubTasks[0];
+            if (!firstSubstak.hasOwnProperty('position')) { return 0; }
+        }
+        const positions = currentSubTasks.map(s => s['position']).filter(p => typeof p === 'number' &amp;&amp; !isNaN(p));
+        if (positions.length === 0) { return 0; }
+        const maxPosition = Math.max(...positions);
+        return maxPosition;
+    }
+
+    /**
+     * Removes a subtask from the current list of subtasks.
+     * @param {string} subtaskID - The ID of the subtask to remove.
+     * @param {Array} currentSubTasks - The list of currently existing subtasks.
+     * @returns {Array} The updated list of subtasks.
+     */
+    removeSubtaskFromArray(subtaskID, currentSubTasks) {
+        let indexOfSubtask = this.getIndexOfObjectOfArray(subtaskID, currentSubTasks);
+        if (indexOfSubtask &lt; 0) { return currentSubTasks; }
+        currentSubTasks.splice(indexOfSubtask, 1);
+        return currentSubTasks;
+    }
+
+    /**
+     * Sets the mouseover function for the add task create button.
+     * @param {string} buttonID - The ID of the button element.
+     * @param {string} currentInstanceName - The name of the current instance to reference in the mouseover function.
+     */
+    setAddTaskCreateBtnMouseFunction(buttonID, currentInstanceName) {
+        const btn = document.getElementById(buttonID);
+        if (!btn) { return; }
+        btn.setAttribute('onmouseover', `${currentInstanceName}.addTaskSubmitOnMouse(this)`);
+    }
+
+    /**
+     * Retrieves the necessary DOM elements for desktop layout.
+     * @returns {Object|null} An object containing the header, footer, and add task header elements, or null if any are missing.
+     */
+    getElementsForDesktop() {
+        const header = document.querySelector(".header-desktop");
+        const footer = document.querySelector(".add-task-footer");
+        const addTaskHeader = document.querySelector(".add-task-head");
+        if (header &amp;&amp; footer &amp;&amp; addTaskHeader) {
+            return { header, footer, addTaskHeader };
+        }
+
+        return null;
+    }
+
+    /**
+     * Retrieves the necessary DOM elements for mobile layout.
+     * @returns {Object|null} An object containing the header, footer, and add task header elements, or null if any are missing.
+     */
+    getElementsForMobile() {
+        const header = document.querySelector(".top-container-mobile");
+        const footer = document.querySelector(".buttom-container-mobile");
+        const addTaskHeader = document.querySelector(".add-task-head-mobile");
+
+        if (header &amp;&amp; footer &amp;&amp; addTaskHeader) {
+            return { header, footer, addTaskHeader };
+        }
+
+        return null;
+    }
+
+    /**
+     * Retrieves the necessary DOM elements for desktop layout in single view.
+     * @returns {Object|null} An object containing the header, footer, and add task header elements, or null if any are missing.
+     */
+    getElementsForDesktopSingle() {
+        const header = document.querySelector(".header-desktop");
+        const addTaskHeader = document.querySelector(".add-task-head-mobile");
+        const footer = null;
+
+        if (header &amp;&amp; addTaskHeader) {
+            return { header, footer, addTaskHeader };
+        }
+
+        return null;
+    }
+
+    /**
+     * Retrieves the necessary DOM elements for the board dialog layout.
+     * @returns {Object|null} An object containing the header element, or null if it is missing.
+     */
+    getElementsForBoardDialog() {
+        const header = document.querySelector('.add-task-head');
+
+        if (header) {
+            return { header };
+        }
+
+        return null;
+    }
+
+    /**
+     * Calculates the available space for input fields.
+     * @param {number} aHeight - The total available height.
+     * @param {number} distanceFromButtom - The distance from the bottom of the viewport.
+     * @param {Object} elements - The DOM elements to consider.
+     * @returns {number} The calculated space for input fields.
+     */
+    calculateSpaceForFields(aHeight, distanceFromButtom, { header, footer, addTaskHeader }) {
+        const headerHeight = header?.offsetHeight || 0;
+        const footerHeight = footer?.offsetHeight || 0;
+        const addTaskHeight = addTaskHeader?.offsetHeight || 0;
+        return aHeight - (headerHeight + footerHeight + addTaskHeight + distanceFromButtom + 24);
+    }
+
+    /**
+     * Measures the remaining space for input fields in the desktop layout.
+     * @param {number} aHeight - The total available height.
+     * @returns {Promise&lt;number>} A promise that resolves to the calculated space for input fields.
+     */
+    measureTheRemainingSpaceOfFieldsForDesktop(aHeight) {
+        return this.measureWithRetry(
+            aHeight,
+            (addTaskU) => addTaskU.getElementsForDesktop(),
+            45,
+            3,
+            100
+        );
+    }
+
+    /**
+     * Measures the remaining space for input fields in the desktop layout in single view.
+     * @param {number} aHeight - The total available height.
+     * @returns {Promise&lt;number>} A promise that resolves to the calculated space for input fields.
+     */
+    measureTheRemainingSpaceOfFieldsForDesktopSingle(aHeight) {
+        return this.measureWithRetry(
+            aHeight,
+            (addTaskU) => addTaskU.getElementsForDesktopSingle(),
+            95,
+            3,
+            100
+        );
+    }
+
+    /**
+     * Measures the remaining space for input fields in the mobile layout.
+     * @param {number} aHeight - The total available height.
+     * @returns {Promise&lt;number>} A promise that resolves to the calculated space for input fields.
+     */
+    measureTheRemainingSpaceOfFieldsForMobile(aHeight) {
+        return this.measureWithRetry(
+            aHeight,
+            (addTaskU) => addTaskU.getElementsForMobile(),
+            95,
+            3,
+            100
+        );
+    }
+
+    /**
+     * Measures the remaining space for input fields in the board dialog layout.
+     * @param {number} dialogHeight - The total available height of the dialog.
+     * @returns {Promise&lt;number>} A promise that resolves to the calculated space for input fields.
+     */
+    measureTheRemainingSpaceOfFieldsForBoardSingle(dialogHeight) {
+        return this.measureWithRetry(
+            dialogHeight,
+            (addTaskU) => addTaskU.getElementsForBoardDialog(),
+            150,
+            3,
+            100
+        );
+    }
+
+    /**
+     * Measures the available space for input fields with retries.
+     * @param {number} aHeight - The total available height.            
+     */
+    measureWithRetry(aHeight, getElementsFunction, offset, retries = 3, delay = 100) {
+        return new Promise((resolve) => {
+            let counter = 0;
+
+            function tryCalculate() {
+                const addTaskU = new AddTaskUtils();
+                const elements = getElementsFunction(addTaskU);
+
+                if (elements) {
+                    resolve(addTaskU.calculateSpaceForFields(aHeight, offset, elements));
+                } else if (counter &lt; retries) {
+                    counter++;
+                    setTimeout(tryCalculate, delay);
+                }
+            }
+
+            tryCalculate();
+        });
+    }
+
+    /**
+     * Gets the current size of the add task view.
+     * @returns {Array} An array containing the current height and width of the window.
+     */
+    get getCurrentAddTaskSize() {
+        return [window.innerHeight, window.innerWidth];
+    }
+
+    /**
+     * Sets the submit function for the add task form. And attaches necessary data attributes.
+     * @param {string} instanceName - The name of the instance.
+     * @param {boolean} isDialog - Indicates if the form is in a dialog.
+     * @returns {void}
+     */
+    setAddTaskFormSubmitFunction(instanceName = "addTasktaskComponents", isDialog) {
+        const form = document.getElementById('add-task-form');
+        if (!form) { return; }
+        form.setAttribute('onsubmit', `return ${instanceName}.addTaskCreateTask(event)`);
+        form.setAttribute('data-isDialog', isDialog);
+    }
+}
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Oct 28 2025 21:36:38 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scripts/addTaskDialog.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scripts/addTaskDialog.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @namespace addTaskDialog
+ * @description Handles the opening and closing of the Add Task dialog.
+ * Manages the rendering of content within the dialog and adjusts the view for dialog presentation.
+ * Also includes utility functions for creating test data and defining data models.
+ * Loaded by board detail view page
+ * @file scripts/addTaskDialog.js
+ */
+
+const DIALOGINDESKTOP_WIDTH = 1071;
+const DIALOGINDESKTOP_HEIGHT = 890;
+
+let currentUser = "";
+let isGuest = false;
+let addTaskUtils = new AddTaskUtils();
+let addTaskDialogTaskComponents = null;
+let resizeLockDialog = false;
+let currentDialogView = "desktop";
+let currentStateCategory = "todo";
+
+/**
+ * @description Opens the Add Task dialog, renders the content, and adjusts the view for dialog presentation.
+ * This function is asynchronous to accommodate data loading and rendering processes.
+ * The dialog view is adjusted based on the current window size to ensure optimal user experience.
+ * The task state category can be specified to pre-select the appropriate column for the new task.
+ * @function onAddTaskDialogOpen
+ * @memberof addTaskDialog
+ * @param {string} stateCategory - The state category to which the new task will be added (e.g., "todo", "inprogress", "awaiting").
+ * @returns {Promise&lt;void>} A promise that resolves when the dialog is fully opened and rendered.
+ */
+async function onAddTaskDialogOpen(stateCategory = "todo") {
+    currentStateCategory = stateCategory;
+    const [height, width] = addTaskUtils.getCurrentAddTaskSize;
+
+    if (width &lt;= 880) {
+        navigateToAddTask(null, currentStateCategory);
+    } else if (height >= DIALOGINDESKTOP_HEIGHT &amp;&amp; width >= DIALOGINDESKTOP_WIDTH) {
+        currentDialogView = "desktop";
+        await showAddTaskAsDialog();
+        giveFunctionsToBoardBody();
+    } else {
+        currentDialogView = "desktop-single";
+        showAddTaskAsDialogSingle();
+        giveFunctionsToBoardBody();
+    }
+
+    currentDialogView == "desktop-single" ? changeAddTaskFormFieldSizeBoardDialogSingle() : changeAddTaskFormFieldSizeBoardDialog();
+}
+
+/**
+ * @description Handles the resizing of the Add Task dialog.
+ * @function resizeAddTaskBoardDialog
+ * @memberof addTaskDialog
+ * @param {Event} event - The resize event.
+ * @returns {Promise&lt;void>}
+ */
+async function resizeAddTaskBoardDialog(event) {
+    if (resizeLockDialog) { return; }
+    resizeLockDialog = true;
+    const dialog = document.getElementById('add-task-dialog');
+    if (!dialog) { return; }
+    if (!dialog.classList.contains('dialog-show')) { return; }
+
+    const [height, width] = addTaskUtils.getCurrentAddTaskSize;
+
+    if (width &lt;= 880) {
+        navigateToAddTask(null, currentStateCategory);
+    } else if (height >= DIALOGINDESKTOP_HEIGHT &amp;&amp; width >= DIALOGINDESKTOP_WIDTH &amp;&amp; currentDialogView != "desktop") {
+        currentDialogView = "desktop";
+        await showAddTaskAsDialog();
+    } else if ((height &lt; DIALOGINDESKTOP_HEIGHT || width &lt; DIALOGINDESKTOP_WIDTH) &amp;&amp; currentDialogView != "desktop-single") {
+        currentDialogView = "desktop-single";
+        await showAddTaskAsDialogSingle();
+    }
+
+    currentDialogView == "desktop-single" ? changeAddTaskFormFieldSizeBoardDialogSingle() : changeAddTaskFormFieldSizeBoardDialog();
+    resizeLockDialog = false;
+}
+
+/**
+ * @description Displays the Add Task dialog in desktop mode.
+ * Captures current form data, clears dialog content, and renders the Add Task components.
+ * Adjusts the dialog view for desktop presentation.
+ * @function showAddTaskAsDialog
+ * @memberof addTaskDialog
+ * @returns {Promise&lt;void>}
+ */
+async function showAddTaskAsDialog() {
+    AddTaskUtils.captureCurrentAddTaskDataFromView();
+    clearDialogContent();
+    addTaskDialogtoggleScrollOnBody(true);
+    addDialogShowClass('add-task-dialog');
+    document.getElementById('add-task-dialog').showModal();
+    await renderAddTaskIntoDialog();
+    changeAddTaskViewToDialog();
+    await loadDataForAddTaskDialog();
+}
+
+/**
+ * @description Displays the Add Task dialog in desktop single-column mode.
+ * Captures current form data, clears dialog content, and renders the Add Task components.
+ * Adjusts the dialog view for single-column presentation.
+ * @function showAddTaskAsDialogSingle
+ * @memberof addTaskDialog
+ * @returns {Promise&lt;void>}
+ */
+async function showAddTaskAsDialogSingle() {
+    AddTaskUtils.captureCurrentAddTaskDataFromView();
+    clearDialogContent();
+    addTaskDialogtoggleScrollOnBody(true);
+    addDialogShowClass('add-task-dialog');
+    document.getElementById('add-task-dialog').showModal();
+    await renderAddTaskIntoDialogSingle();
+    await loadDataForAddTaskDialog();
+}
+
+/**
+ * @description Loads data for the Add Task dialog.
+ * Initializes the TaskComponents class if not already done, sets up button functions, and applies data to the view.
+ * @function loadDataForAddTaskDialog
+ * @memberof addTaskDialog
+ * @returns {Promise&lt;void>}
+ */
+async function loadDataForAddTaskDialog() {
+    currentUser = addTaskUtils.readCurrentUserID();
+    isGuest = addTaskUtils.isCurrentUserGuest();
+    if (!addTaskDialogTaskComponents) {
+        addTaskDialogTaskComponents = new TaskComponents(currentUser, "addTaskDialogTaskComponents", currentStateCategory);
+        addTaskDialogTaskComponents.run();
+        window.addTaskDialogTaskComponents = addTaskDialogTaskComponents;
+    }
+
+    addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTaskDialogTaskComponents');
+    AddTaskUtils.applyAddTaskDataToView(addTaskDialogTaskComponents);
+    addTaskUtils.setAddTaskFormSubmitFunction("addTaskDialogTaskComponents", true);
+}
+
+/**
+ * @description Clears the content of the Add Task dialog.
+ * This function removes all HTML content from the dialog's content area.
+ * @function clearDialogContent
+ * @memberof addTaskDialog
+ * @returns {void}
+ */
+function clearDialogContent() {
+    document.getElementById('dialog-content').innerHTML = "";
+}
+
+/**
+ * @description Gives necessary functions to the board body element.
+ * @function giveFunctionsToBoardBody
+ * @memberof addTaskDialog
+ * @returns {void}
+ */
+function giveFunctionsToBoardBody() {
+    const body = document.querySelector('body');
+    if (!body) { return; }
+    body.setAttribute("onmouseup", "addTaskDialogTaskComponents.addTaskWindowMouseClick(event)");
+    body.setAttribute("onresize", "resizeAddTaskBoardDialog(event)");
+}
+
+/**
+ * @description Check if can close the dialog.
+ * This function is triggered when the user attempts to close the dialog.
+ * It hides the dialog and resets any form fields as necessary.
+ * @function addTaskDialogClose
+ * @memberof addTaskDialog
+ * @param {Event} event - The event that triggered the close action.
+ * @return {void}
+ */
+function addTaskDialogClose(event) {
+    const dialog = document.getElementById('add-task-dialog');
+    const closeDiv = document.getElementById('a-t-dialog-close-div');
+    const addTaskForm = document.getElementById('add-task-form');
+    const dialogContent = document.getElementById('dialog-content');
+
+    if (event.target == addTaskForm) { return; }
+    if (event.target == dialogContent) { return; }
+
+    if (event.target == dialog ||
+        event.target == closeDiv ||
+        event.target.closest('.btn-clear-cancel') ||
+        event.target.closest('.btn-create')
+    ) {
+
+        closeTheDialog(dialog);
+    }
+}
+
+
+/**
+ * @description Closes the specified dialog.
+ * @function closeTheDialog
+ * @memberof addTaskDialog
+ * @param {HTMLDialogElement} dialog - The dialog element to close.
+ * @param {string} dialogID - The ID of the dialog element.
+ * @returns {void}
+ */
+function closeTheDialog(dialog, dialogID = "") {
+
+    const dialogAddTask = dialog ? dialog : document.getElementById(dialogID);
+
+    addDialogHideClass('add-task-dialog');
+    setTimeout(function () {
+        dialogAddTask.close();
+        document.getElementsByTagName('body')[0].removeAttribute("onmouseup");
+        addTaskDialogtoggleScrollOnBody(false);
+        addTaskDialogTaskComponents = null;
+        navigateToBoard();
+    }, 1000);
+}
+
+/**
+ * @description Toggles the scroll on the body element.
+ * This function adds or removes the 'dialog-open' class on the body element,
+ * which controls the scrolling behavior when a dialog is open.
+ * @function addTaskDialogtoggleScrollOnBody
+ * @memberof addTaskDialog
+ * @param {boolean} addClass - If true, adds the 'dialog-open' class; if false, removes it.
+ * @returns {void}
+ */
+function addTaskDialogtoggleScrollOnBody(addClass) {
+    let bodyElement = document.getElementsByTagName('body')[0];
+    addClass ? bodyElement.classList.add('dialog-open') : bodyElement.removeAttribute('class');
+}
+
+/**
+ * @description Renders the Add Task content into the dialog.
+ * This function is asynchronous to accommodate the loading of HTML content.
+ * It uses the includeHtml function to load the 'addTaskContent.html' file into the dialog's content area.
+ * @function renderAddTaskIntoDialog
+ * @memberof addTaskDialog
+ * @returns {Promise&lt;void>} A promise that resolves when the content is fully rendered.
+ */
+async function renderAddTaskIntoDialog() {
+    await Promise.all([
+        includeHtml("dialog-content", "addTaskContent.html")
+    ]);
+    const taskElements = new TaskElements("addTaskDialogTaskComponents");
+    taskElements.fillLeftContainerOnAddTask();
+    taskElements.fillRightContainerOnAddTask();
+}
+
+/**
+ * @description Renders the Add Task content into the dialog in single-column mode.
+ * This function is asynchronous to accommodate the loading of HTML content.
+ * It uses the includeHtml function to load the 'addTaskContentSingle.html' file into the dialog's content area.
+ * It also initializes and starts rendering the Add Task Mobile utilities.
+ * @function renderAddTaskIntoDialogSingle
+ * @memberof addTaskDialog
+ * @returns {Promise&lt;void>} A promise that resolves when the content is fully rendered.
+ */
+async function renderAddTaskIntoDialogSingle() {
+    await Promise.all([
+        includeHtml("dialog-content", "addTaskContentSingle.html")
+    ]).then(() => {
+        const taskMobileUtil = new AddTaskMobileUtil("addTaskDialogTaskComponents");
+        taskMobileUtil.startRenderAddTaskMobile();
+    }).then(() => {
+        changeDialogStyleToSingle();
+    });
+}
+
+/**
+ * @description Adjusts the form field sizes for the Add Task dialog in single-column mode.
+ * This function calculates the appropriate heights for the dialog and its fields based on the current window size.
+ * It ensures that the form fields are displayed correctly within the dialog.
+ * @function changeAddTaskFormFieldSizeBoardDialogSingle
+ * @memberof addTaskDialog
+ * @returns {void}
+ */
+function changeAddTaskFormFieldSizeBoardDialogSingle() {
+    const [height, width] = addTaskUtils.getCurrentAddTaskSize;
+    const dialog = document.getElementById('add-task-dialog');
+    const heightDialog = height - 100;
+    dialog.style.height = heightDialog + "px";
+    addTaskUtils.measureTheRemainingSpaceOfFieldsForBoardSingle(heightDialog)
+        .then((result) => {
+            document.querySelector('.add-task-mobile-fields').style.height = result + "px";
+        });
+}
+
+/**
+ * @description Adjusts the form field sizes for the Add Task dialog in board mode.
+ * This function calculates the appropriate heights for the dialog and its fields based on the current window size.
+ * It ensures that the form fields are displayed correctly within the dialog.
+ * @function changeAddTaskFormFieldSizeBoardDialog
+ * @memberof addTaskDialog
+ * @param {*} params
+ * @returns {void}
+ */
+function changeAddTaskFormFieldSizeBoardDialog(params) {
+    const [height, width] = addTaskUtils.getCurrentAddTaskSize;
+    const dialog = document.getElementById('add-task-dialog');
+    const heightDialog = height - 100;
+    dialog.style.height = heightDialog + "px";
+}
+
+/**
+ * @description Changes the dialog style to single-column mode.
+ * @function changeDialogStyleToSingle
+ * @memberof addTaskDialog
+ * @returns {void}
+ */
+function changeDialogStyleToSingle() {
+    const dialog = document.getElementById('add-task-dialog');
+    if (!dialog) { return; }
+    dialog.classList.remove('add-task-dialog');
+    dialog.classList.add('add-task-board-dialog-single');
+    const headLine = dialog.querySelector('h1');
+    if (!headLine) { return; }
+    headLine.classList.remove('join-h1');
+    headLine.classList.add('join-h1-dialog-sm');
+    const fields = dialog.querySelector('.add-task-mobile-fields');
+    if (!fields) { return; }
+    fields.classList.add('mb-24');
+}
+
+
+/**
+ * @description Changes the view of the Add Task form to be suitable for dialog presentation.
+ * This function adjusts various elements' classes to ensure the form is displayed correctly within a dialog.
+ * It modifies visibility, layout, and styling to enhance user experience in the dialog context.
+ * @function changeAddTaskViewToDialog
+ * @memberof addTaskDialog
+ * @return {void}
+ */
+function changeAddTaskViewToDialog() {
+    document.getElementById('a-t-dialog-close-btn').classList.remove('display-hidden');
+    document.getElementById('a-t-cancel-btn').classList.remove('display-hidden');
+    document.getElementById('a-t-clear-btn').classList.add('display-hidden');
+    document.getElementById('add-task-form').classList.remove('add-task-form-desktop');
+    document.getElementById('add-task-form').classList.add('add-task-form-dialog');
+    document.getElementById('a-t-middle-container').classList.add('a-t-f-i-midle-dialog');
+    document.getElementById('due-date-hidden').classList.add('date-input-hidden-dialog');
+    document.querySelector('h1').classList.add('join-h1-dialog');
+    document.querySelector('.add-task-head').classList.add('mb-24');
+}
+
+/**
+ * @description Adds the show class to the Add Task dialog.
+ * This function modifies the dialog's classes to make it visible with appropriate styling.
+ * @function addDialogShowClass
+ * @memberof addTaskDialog
+ * @return {void}
+ */
+function addDialogShowClass() {
+    let dialog = document.getElementById('add-task-dialog');
+    dialog.classList.remove('dialog-hide');
+    dialog.classList.add('dialog-show');
+}
+
+/**
+ * @description Adds the hide class to the Add Task dialog.
+ * This function modifies the dialog's classes to hide it with appropriate styling.
+ * @function addDialogHideClass
+ * @memberof addTaskDialog
+ * @return {void}
+ */
+function addDialogHideClass() {
+    let dialog = document.getElementById('add-task-dialog');
+    dialog.classList.remove('dialog-show');
+    dialog.classList.add('dialog-hide');
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Oct 28 2025 21:36:38 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

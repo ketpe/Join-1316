@@ -1,73 +1,75 @@
 <div class="main-container">
+    <div id="loadingOverlay" class="loading-animation-overlay"></div>
+    <div id="loadingContainer" class="loading-container visually-hidden">
+        <div aria-hidden="true"></div>
+    </div>
     <div class="left-container">
-        <div id="navbar"></div>
+        <div id="navbar" aria-label="main navigation"></div>
     </div>
     <div class="right-container">
         <div class="header-section" id="header"></div>
         <main class="right-content">
-            <div id="summary">
+            <div id="summary" aria-label="polite">
                 <header class="summary-header">
-                    <h1 class="summary-title">Join 360</h1>
+                    <h1 class="join-h1 margin-zero">Join 360</h1>
                     <img class="headings-separator" src="./assets/headings-separator.svg" alt="Headings  separator"
                         srcset="">
-                    <p class="summary-subtitle">Key Metrics at a Glance</p>
+                    <h2 class="join-h2-normal margin-zero">Key Metrics at a Glance</h2>
                 </header>
-                <articel class="summary-content">
+                <article class="summary-content">
                     <section class="summary-user">
                         <div class="task-actions">
-                            <button onclick="location.href='./boardDesktop.html'" class="btn-task">
-                                <div class="todo-icon"></div>
+                            <button type="button" onclick="navigateToBoard()" class="btn-task">
+                                <div class="todo-icon" aria-hidden="true"></div>
                                 <div class="quantity-container">
-                                    <p id="summary-todo" class="quantity-task"></p>
-                                    <p class="quantity-label-task">To-do</p>
+                                    <span id="summary-todo" class="quantity-task" aria-live="polite"></span>
+                                    <span class="quantity-label-task">To-do</span>
                                 </div>
                             </button>
-                            <button onclick="location.href='./boardDesktop.html'" class="btn-task">
-                                <div class="done-icon"></div>
+                            <button type="button" onclick="navigateToBoard()" class="btn-task">
+                                <div class="done-icon" aria-hidden="true"></div>
                                 <div class="quantity-container">
-                                    <p id="summary-done" class="quantity-task"></p>
-                                    <p class="quantity-label-task">Done</p>
+                                    <span id="summary-done" class="quantity-task" aria-live="polite"></span>
+                                    <span class="quantity-label-task">Done</span>
                                 </div>
                             </button>
                         </div>
-                        <button onclick="location.href='./boardDesktop.html'" class="btn-urgent">
+                        <button type="button" onclick="navigateToBoard()" class="btn-urgent">
                             <section class="urgent-display">
-                                <div class="urgent-icon"></div>
+                                <div class="urgent-icon" aria-hidden="true"></div>
                                 <div class="quantity-container">
-                                    <p id="summary-urgent" class="quantity-task"></p>
-                                    <p class="quantity-label-task">Urgent</p>
+                                    <span id="summary-urgent" class="quantity-task" aria-live="polite"></span>
+                                    <span class="quantity-label-task">Urgent</span>
                                 </div>
                             </section>
-                            <div role="img" class="urgent-separator" aria-label="Urgent tasks separator"></div>
+                            <div class="urgent-separator" aria-hidden="true"></div>
                             <div class="urgent-date-container">
                                 <time id="urgent-time" class="urgent-time" datetime=""></time>
-                                <p class="urgent-time-underline">Upcoming Deadline</p>
+                                <span class="urgent-time-underline">Upcoming Deadline</span>
                             </div>
                         </button>
                         <section class="summary-tasks">
-                            <button onclick="location.href='./boardDesktop.html'" class="btn-summary-tasks">
-                                <p class="number-of-Tasks" id="summary-board"></p>
-                                <p class="description-of-task">Tasks in Board</p>
+                            <button type="button" onclick="navigateToBoard()" class="btn-summary-tasks">
+                                <span class="number-of-Tasks" id="summary-board" aria-live="polite"></span>
+                                <span class="description-of-task">Tasks in Board</span>
                             </button>
-                            <button onclick="location.href='./boardDesktop.html'" class="btn-summary-tasks">
-                                <p class="number-of-Tasks" id="summary-inprogress"></p>
-                                <p class="description-of-task">Tasks in Progress</p>
+                            <button type="button" onclick="navigateToBoard()" class="btn-summary-tasks">
+                                <span class="number-of-Tasks" id="summary-inprogress" aria-live="polite"></span>
+                                <span class="description-of-task">Tasks in Progress</span>
                             </button>
-                            <button onclick="location.href='./boardDesktop.html'" class="btn-summary-tasks">
-                                <p class="number-of-Tasks" id="summary-awaiting"></p>
-                                <p class="description-of-task">Awaiting Feedback</p>
+                            <button type="button" onclick="navigateToBoard()" class="btn-summary-tasks">
+                                <span class="number-of-Tasks" id="summary-awaiting" aria-live="polite"></span>
+                                <span class="description-of-task">Awaiting Feedback</span>
                             </button>
                         </section>
                     </section>
-                    <section class="personal-greets">
-                        <p class="headline-greet" id="greeting"></p>
-                        <p class="personal-greets-user" id="greetingName"></p>
+                    <section class="personal-greets" aria-live="polite" aria-atomic="true">
+                        <span class="headline-greet" id="greeting"></span>
+                        <span class="personal-greets-user" id="greetingName"></span>
                     </section>
-                </articel>
+                </article>
             </div>
         </main>
     </div>
 </div>
-</main>
-</div>
-</div>
+<div class="landscape-warning" hidden>Please rotate your device to portait mode.📱</div>

@@ -8,6 +8,8 @@
     --logo-height: 121px;
     --logo-position-top: 80px;
     --logo-position-left: 77px;
-    --form-for-login-width: 650px;
-    --form-for-login-height: 450px;
+    --form-for-login-width: 40.5rem;
+    --form-for-login-height: 28rem;
+    --form-for-signup-width: 630px;
+    --form-for-signup-height: 598px;
 }

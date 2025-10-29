@@ -17,7 +17,16 @@
 
 class EditTaskSafeUtil{
 
-
+    /**
+     *  Creates an instance of the EditTaskSafeUtil class.
+     * @param {Array} task - The current task data from the database
+     * @param {string} currentTitle - The updated title for the task
+     * @param {string} currentDescription - The updated description for the task
+     * @param {string} currentDueDate - The updated due date for the task
+     * @param {string} currentPrio - The updated priority for the task
+     * @param {Array} currentContactList - The list of contacts currently assigned to the task  
+     * @param {Array} currentSubtasks - The list of subtasks currently associated with the task
+     */
     constructor(task, currentTitle, currentDescription, currentDueDate, currentPrio, currentContactList, currentSubtasks){
         this.task = task;
         this.currentTitle = currentTitle;
@@ -166,7 +175,15 @@ class EditTaskSafeUtil{
      */
     async getTaskContactAssignedList(){
         const fb = new FirebaseDatabase();
-        const dataArray = await fb.getFirebaseLogin(() => fb.getAllData('taskContactAssigned'));
+        let dataArray = [];
+
+        try {
+            dataArray = await fb.getFirebaseLogin(() => fb.getAllData('taskContactAssigned'));
+        } catch (error) {
+            console.error("Error fetching taskContactAssigned data:", error);
+        }
+
+        
         const taskContactList = dataArray.filter(x => x['taskID'] == this.task['id']);
         const contacts = await this.getContactsListDb(taskContactList);
         return [contacts, taskContactList];
@@ -268,7 +285,7 @@ class EditTaskSafeUtil{
         const fb = new FirebaseDatabase();
         for(let i = 0; i < contactListForAdd.length; i++){
             const caID = getNewUid();
-            const ca = new ContactAssinged(caID, this.task['id'], contactListForAdd[i]['id']);
+            const ca = new ContactAssigned(caID, this.task['id'], contactListForAdd[i]['id']);
             const result = await fb.getFirebaseLogin(() => fb.putData(`taskContactAssigned/${caID}`, ca));
             if(!result){return false;}
         }
@@ -307,7 +324,7 @@ class EditTaskSafeUtil{
         for(let i = 0; i < newSubtasks.length; i++){
             maxPos++;
             const subTask = new Subtask(newSubtasks[i]['id'], newSubtasks[i]['title'], false, maxPos);
-            const subTaskToTask = new SubstaskToTask(getNewUid(), this.task['id'], subTask.id);
+            const subTaskToTask = new SubtaskToTask(getNewUid(), this.task['id'], subTask.id);
             const resultSubtask = await fb.getFirebaseLogin(() => fb.putData(`subTasks/${subTask.id}`, subTask));
             if(!resultSubtask){return false;}
             const resultTaskToSubstask = await fb.getFirebaseLogin(() => fb.putData(`taskSubtask/${subTaskToTask.id}`, subTaskToTask));
@@ -339,5 +356,7 @@ class EditTaskSafeUtil{
         }
         return true;
     }
+
+    
 
 }

@@ -21,7 +21,7 @@
         align-items: center;
     }
 
-    .summary-title {
+    .join-h1 {
         font-size: calc(61px * 0.9);
     }
 
@@ -30,8 +30,20 @@
     }
 }
 
+@media(max-width: 880px){
+    .join-h1-mobile{
+        padding-top: 32px;
+    }
+}
+
 
 @media (max-width: 427px) {
+
+    .nav-mobile-btn {
+        height: 67px;
+        width: 74px;
+    }
+
     .summary-header-mobile {
         width: auto;
     }
@@ -40,10 +52,11 @@
         align-items: center;
         justify-content: center;
         width: auto;
+        padding: 0;
     }
 
     .task-actions-mobile {
-        width: 90%;
+        width: 100%;
         height: auto;
         justify-content: center;
         margin-bottom: 10px;
@@ -58,7 +71,7 @@
     }
 
     .btn-urgent-mobile {
-        width: 75%;
+        width: 86%;
         max-height: 80px;
         padding: 19px 9px;
         gap: 8px;
@@ -66,7 +79,7 @@
     }
 
     .urgent-display {
-        gap: 2px;
+        gap: 13px;
     }
 
     .urgent-separator-mobile {
@@ -85,8 +98,9 @@
     }
 
     .btn-summary-tasks-mobile {
-        padding: 19px 9px;
-        max-height: 80px;
+        padding: 22px 0px;
+        max-height: 87px;
+        width: 87px;
     }
 
     .quantity-task-mobile {
@@ -103,4 +117,20 @@
         width: 30px;
         height: 30px;
     }
+
+    .quantity-container{
+        gap: 5px;
+    }
+
+    .greeting-mobile-name {
+        font-size: 37px
+    }
+}
+
+@media (max-width: 350px) {
+    .headline-add-contacts {
+        white-space: normal;
+    }
+
+    
 }

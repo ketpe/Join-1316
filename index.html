@@ -11,41 +11,46 @@
     <link rel="stylesheet" href="./styles/loginSignupMobile.css">
 </head>
 
-<body class="login-signup-page">
+<body class="login-signup-page" onload="loginLoaded()">
 
-    <main class="login-signup-main login-mobile-aninmation">
+    <main class="login-signup-main">
 
-        <div class="login-signup-logo logo-for-login" aria-label="Join Application Logo" role="img"></div>
+        <div class="login-join-logo" aria-hidden="true"></div>
 
-        <section class="login-section" aria-labelledby="login-section-title">
+        <section class="login-section" aria-labelledby="login-title">
             <header class="login-signup-header">
                 <p>Not a Join user?</p>
                 <button type="button" class="btn btn-fill btn-sm" aria-label="Sign up if you are not a user"
                     onclick="navigateToSignUp()">Sign up</button>
             </header>
 
-            <section aria-label="form section" class="login-signup-container" aria-labelledby="login-form-title">
+            <section aria-label="form section" class="login-container" aria-labelledby="login-title">
                 <form class="login-signup-form form-for-login" aria-describedby="login-error-text" method="post"
-                    onsubmit="loginForm(event)">
-                    <h1>Log in</h1>
+                    onsubmit="loginFormSubmit(event)">
+                    <h1 id="login-title">Log in</h1>
                     <div class="login-signup-h1-line" aria-hidden="true"></div>
 
                     <div class="login-signup-input-field-container" id="loginInputFieldContainer">
                         <label for="email" class="visually-hidden">Email</label>
-                        <input type="text" id="email" name="email" class="login-signup-input input-mail"
-                            placeholder="Email" autocomplete="email">
+                        <div class="login-signup-input-container mb-32">
+                            <input type="text" id="email" name="email" class="login-signup-input" aria-required="true"
+                                aria-describedby="login-error-text" placeholder="Email" autocomplete="email"
+                                onblur="loginInputFieldsOnBlur(this)" oninput="loginInputFieldsOnInput(this)">
+                            <div class="input-icons input-mail" aria-hidden="true"></div>
+                        </div>
+
                         <label for="password" class="visually-hidden">Password</label>
 
                         <div class="login-password-container">
                             <input type="password" id="password" name="password"
                                 class="login-signup-input login-password" placeholder="Password" autocomplete="off"
-                                spellcheck="false"
+                                spellcheck="false" aria-required="true" aria-describedby="login-error-text"
                                 onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')"
-                                onclick="toggleBorderColorByError('password')">
+                                onblur="loginInputFieldsOnBlur(this)" oninput="loginInputFieldsOnInput(this)">
 
                             <button type="button" title="password icon"
                                 class="login-toggle-password login-password-lock" id="loginTogglePassword" role="img"
-                                aria-labelledby="Password visibility toggle button" alt="Toggle password visibility"
+                                alt="Toggle password visibility"
                                 onclick="togglePasswordVisibility(2, 'password', 'loginTogglePassword')">
                                 <span class="visually-hidden">Toggle password visibility</span>
                             </button>
@@ -63,10 +68,7 @@
                         <button type="button" class="btn btn-outline btn-md" onclick="loginGuest()">Guest Log
                             in</button>
                     </div>
-
-
                 </form>
-
             </section>
 
 
@@ -78,12 +80,10 @@
                 </div>
             </footer>
         </section>
-
-
-
     </main>
-    <!-- <div class="intro-mobile"></div> -->
+    <div class="landscape-warning" hidden>Please rotate your device to portait mode.📱</div>
     <script type="module" src="./app.js"></script>
+    <script src="./scripts/landscapeBlock.js"></script>
     <script src="./classes/firebaseDatabase.js"></script>
     <script src="./script.js"></script>
     <script src="./scripts/navigations.js"></script>

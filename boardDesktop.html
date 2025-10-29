@@ -1,207 +1,101 @@
-<!DOCTYPE html>
-<html lang="de">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Board</title>
-    <link rel="shortcut icon" href="./assets/logo-for-Favicon.svg" type="image/x-icon">
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./styles/boardDesktop.css">
-    <link rel="stylesheet" href="./styles/addTask.css">
-    <link rel="stylesheet" href="./styles/addTaskMobile.css">
-    <link rel="stylesheet" href="./styles/boardTaskTemplate.css">
-    <link rel="stylesheet" href="./styles/taskDetailviewTemplate.css">
-</head>
-
-<body onload="init(), getBoardTasks()" onresize="kanbanUpdateSize()">
-
-    <div class="main-container">
-        <aside class="left-container">
-            <nav id="navbar" aria-label="Mainnavigation"></nav>
-        </aside>
-        <div class="right-container">
-            <div class="header-section" id="header"></div>
-            <main class="right-content" aria-labelledby="Board-title">
-                <section class="board-main-content">
-                    <header class="board-header">
-                        <div class="board-headline">
-                            <p class="board-headline-text">Board</p>
-                            <aside class="board-right-headline-content">
-                                <form action="">
-                                    <label for="board-searchbar" class="visually-hidden"></label>
-                                    <div class="board-search-wrapper">
-                                        <input oninput="searchTaskInBoard()" type="text" id="board-searchbar"
-                                            class="board-input-search" placeholder="Find Task"
-                                            aria-label="Searchbar for tasks">
-                                        <button type="submit" class="board-search-btn">
-                                            <div class="search-seperator"></div>
-                                            <img src="./assets/search-icon.svg" alt="Suchen">
-                                        </button>
-                                    </div>
-                                </form>
-                                <button type="button" class="btn btn-fill btn-lg btn-add-tasks"
-                                    onclick="onAddTaskDialogOpen()">
-                                    <p>Add new Task</p>
-                                    <img src="./assets/plus-icon.svg" alt="" srcset="">
-                                </button>
-                            </aside>
-                        </div>
-                        <div class="board-headline-bottom">
-                            <div class="board-headline-column">
-                                <p class="board-column-text">To do</p>
-                                <button type="button" title="Add Task To do" class="btn-add-board-task"></button>
-                            </div>
-                            <div class="board-headline-column">
-                                <p class="board-column-text">In progress</p>
-                                <button type="button" title="Add Task In progress" class="btn-add-board-task"></button>
-                            </div>
-                            <div class="board-headline-column">
-                                <p class="board-column-text">Await feedback</p>
-                                <button type="button" title="Add Task Await feedback"
-                                    class="btn-add-board-task"></button>
-                            </div>
-                            <div class="board-headline-column">
-                                <p class="board-column-text">Done</p>
-                            </div>
-                        </div>
-                    </header>
-                    <article class="board-kanban" id="board-kanban">
-                        <div id="empty-Search-Result-info" class="empty-Search-Result-info">
-                            <p>No tasks found. Please try again.</p>
-                        </div>
-                        <div class="kanban-column" id="todo"
-                            ondragover="event.preventDefault(); this.classList.add('over');"
-                            ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
-                            <div class="kanban-tasks" id="kanban-tasks-todo" data-category="Todo">
-                                <div class="kanban-task-empty" hidden>
-                                    <p>No Task To Do</p>
-                                </div>
-                                <div class="kanban-task" draggable="true" id="task1"
-                                    ondragstart="startDrag(event, this)" ondragend="endDrag(this)">
-                                    <div class="board-task-content">
-                                        <div class="board-task-head-category">
-                                            <p>User Story</p>
-                                        </div>
-                                        <div class="board-task-title">
-                                            <p>Kochwelt Page & Recipe Recommender</p>
-                                        </div>
-                                        <div class="board-task-description">
-                                            <p>Build start page with recipe recommendation.</p>
-                                        </div>
-                                        <div class="board-task-progress">
-                                            <label for="sub-task-progress"></label>
-                                            <progress class="sub-task-progressbar" id="sub-task-progress" value="1"
-                                                max="2" aria-describedby="progress-value">0</progress>
-                                            <output class="progress-value-Text" id="progress-value">0/2
-                                                Subtasks</output>
-                                        </div>
-                                        <div class="board-task-assigned-priority">
-                                            <div class="board-task-assigned" id="assigned-contact-1">
-                                                <div class="assigned-contact-board">
-                                                    <div class="contact-initials-board blue">
-                                                        <p class="board-contact-initials-text">AB</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="board-task-assigned" id="assigned-contact-2">
-                                                <div class="assigned-contact-board">
-                                                    <div class="contact-initials-board red">
-                                                        <p class="board-contact-initials-text">PK</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="board-task-assigned" id="assigned-contact-3">
-                                                <div class="assigned-contact-board">
-                                                    <div class="contact-initials-board orange">
-                                                        <p class="board-contact-initials-text">EW</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="board-task-priority">
-                                                <div role="img" aria-label="Priority: " class="priority-icon-urgent">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="kanban-task" draggable="true" id="task2"
-                                    ondragstart="startDrag(event, this)" ondragend="endDrag(this)">Aufgabe 2</div>
-                            </div>
-                        </div>
-                        <div class="kanban-column" id="inprogress"
-                            ondragover="event.preventDefault(); this.classList.add('over');"
-                            ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
-                            <div class="kanban-tasks" id="kanban-tasks-inprogress" data-category="In Progress">
-                                <div class="kanban-task-empty" hidden>
-                                    <p>No Task In Progress</p>
-                                </div>
-                                <div class="kanban-task" draggable="true" id="task3"
-                                    ondragstart="startDrag(event, this)" ondragend="endDrag(this)">Aufgabe 3</div>
-                            </div>
-                        </div>
-                        <div class="kanban-column" id="awaiting"
-                            ondragover="event.preventDefault(); this.classList.add('over');"
-                            ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
-                            <div class="kanban-tasks" id="kanban-tasks-awaiting" data-category="Awaiting Feedback">
-                                <div class="kanban-task-empty" hidden>
-                                    <p>No Task Awaiting Feedback</p>
-                                </div>
-                                <div class="kanban-task" draggable="true" id="task4"
-                                    ondragstart="startDrag(event, this)" ondragend="endDrag(this)">Aufgabe 4</div>
-                            </div>
-                        </div>
-                        <div class="kanban-column" id="done"
-                            ondragover="event.preventDefault(); this.classList.add('over');"
-                            ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
-                            <div class="kanban-tasks" id="kanban-tasks-done" data-category="Done">
-                                <div class="kanban-task-empty" hidden>
-                                    <p>No Task Done</p>
-                                </div>
-                                <div class="kanban-task" draggable="true" id="task5"
-                                    ondragstart="startDrag(event, this)" ondragend="endDrag(this)">Aufgabe 5</div>
-                            </div>
-                        </div>
-                    </article>
-                </section>
-                <section id="add-task-dialog-section" class="add-task-dialog-section">
-                    <dialog id="add-task-dialog" class="add-task-dialog" onclick="addTaskDialogClose(event)" onresize="resizeAddTaskBoardDialog(this)">
-                        <div id="dialog-content"></div>
-                    </dialog>
-                </section>
-                <section id="detail-view-task-dialog-section" class="detail-view-task-dialog-section">
-                    <dialog id="detail-view-task-dialog" class="detail-view-task-dialog"
-                        onclick="closeDialogByEvent(event,'detail-view-task-dialog')">
-                        <div id="dialog-content-detail-view-task" class="detail-view-content"></div>
-                    </dialog>
-                </section>
-            </main>
-        </div>
+<div class="main-container">
+    <div id="loadingOverlay" class="loading-animation-overlay"></div>
+    <div id="loadingContainer" class="loading-container visually-hidden">
+        <div></div>
     </div>
+    <div id="addTaskSafeChangesToast" class="add-task-safe-changes">
+        <span id="addTaskToastText">Changes saved!</span>
+    </div>
+    <aside class="left-container">
+        <nav id="navbar" aria-label="Mainnavigation"></nav>
+    </aside>
+    <div class="right-container">
+        <div class="header-section" id="header"></div>
+        <main class="right-content">
+            <section class="board-main-content">
+                <header class="board-header">
+                    <div class="board-headline">
+                        <h1 class="board-headline-text">Board</h1>
+                        <aside class="board-right-headline-content">
+                            <form action="">
+                                <label for="board-searchbar" class="visually-hidden" aria-hidden="true">Search</label>
+                                <div class="board-search-wrapper">
+                                    <input oninput="searchTaskInBoard()" type="text" id="board-searchbar"
+                                        class="board-input-search" placeholder="Find Task" aria-label="board-searchbar">
+                                    <button type="submit" class="board-search-btn">
+                                        <div class="search-seperator"></div>
+                                        <img src="./assets/search-icon.svg" alt="Suchen">
+                                    </button>
+                                </div>
+                            </form>
+                            <button type="button" class="btn btn-fill btn-lg btn-add-tasks"
+                                onclick="onAddTaskDialogOpen('todo')" title="Add new Task">
+                                <span>Add new Task</span>
+                                <img src="./assets/plus-icon.svg" alt="" srcset="">
+                            </button>
+                        </aside>
+                    </div>
+                </header>
+                <article class="board-kanban" id="board-kanban">
+                    <div id="empty-Search-Result-info" class="empty-Search-Result-info">
+                        <p>No tasks found. Please try again.</p>
+                    </div>
+                    <div class="kanban-column" id="todo"
+                        ondragover="event.preventDefault(); this.classList.add('over');"
+                        ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
+                        <div class="board-headline-column">
+                            <h3 class="board-column-text">To do</h3>
+                            <button type="button" onclick="onAddTaskDialogOpen('todo')" title="Add Task To do"
+                                class="btn-add-board-task"></button>
+                        </div>
+                        <div class="kanban-tasks" id="kanban-tasks-todo" data-category="Todo"></div>
+                    </div>
+                    <div class="kanban-column" id="inprogress"
+                        ondragover="event.preventDefault(); this.classList.add('over');"
+                        ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
 
-    <script type="module" src="./app.js"></script>
-    <script src="./classes/dueDateCheck.js"></script>
-    <script src="./classes/addTaskUtils.js"></script>
-    <script src="./classes/addTaskCreateTask.js"></script>
-    <script src="./classes/addTaskMobileUtil.js"></script>
-    <script src="./classes/boardTaskDetailViewUtils.js"></script>
-    <script src="./classes/boardTaskDetailEditUtils.js"></script>
-    <script src="./classes/boardTaskDetailDeleteUtil.js"></script>
-    <script src="./classes/editTaskSafeUtil.js"></script>
-    <script src="./classes/taskElements.js"></script>
-    <script src="./classes/models.js"></script>
-    <script src="./classes/taskComponents.js"></script>
-    <script src="./script.js"></script>
-    <script src="./scripts/board.js"></script>
-    <script src="./classes/firebaseDatabase.js"></script>
-    <script src="./scripts/template.js"></script>
-    <script src="./scripts/addTaskDialog.js"></script>
-    <script src="./scripts/navigations.js"></script>
-    <script src="./scripts/dragAndDrop.js"></script>
-    <script src="./scripts/boardTaskTemplate.js"></script>
-    <script src="./scripts/openCloseDialog.js"></script>
-
-</body>
-
-
-</html>
+                        <div class="board-headline-column">
+                            <h3 class="board-column-text">In progress</h3>
+                            <button type="button" onclick="onAddTaskDialogOpen('inprogress')" title="Add Task In progress"
+                                class="btn-add-board-task"></button>
+                        </div>
+                        <div class="kanban-tasks" id="kanban-tasks-inprogress" data-category="In Progress">
+                        </div>
+                    </div>
+                    <div class="kanban-column" id="awaiting"
+                        ondragover="event.preventDefault(); this.classList.add('over');"
+                        ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
+                        <div class="board-headline-column">
+                            <h3 class="board-column-text">Await feedback</h3>
+                            <button type="button" onclick="onAddTaskDialogOpen('awaiting')" title="Add Task Await feedback"
+                                class="btn-add-board-task"></button>
+                        </div>
+                        <div class="kanban-tasks" id="kanban-tasks-awaiting" data-category="Awaiting Feedback">
+                        </div>
+                    </div>
+                    <div class="kanban-column" id="done"
+                        ondragover="event.preventDefault(); this.classList.add('over');"
+                        ondragleave="this.classList.remove('over');" ondrop="dropTask(event, this)">
+                        <div class="board-headline-column">
+                            <h3 class="board-column-text">Done</h3>
+                        </div>
+                        <div class="kanban-tasks" id="kanban-tasks-done" data-category="Done"></div>
+                    </div>
+                </article>
+            </section>
+            <section id="add-task-dialog-section" class="add-task-dialog-section">
+                <dialog id="add-task-dialog" class="add-task-dialog" onclick="addTaskDialogClose(event)"
+                    onresize="resizeAddTaskBoardDialog(this)">
+                    <div id="dialog-content"></div>
+                </dialog>
+            </section>
+            <section id="detail-view-task-dialog-section" class="detail-view-task-dialog-section">
+                <dialog id="detail-view-task-dialog" class="detail-view-task-dialog"
+                    onclick="closeDialogByEvent(event,'detail-view-task-dialog'), getBoardTaskWithLoadingAnimation()">
+                    <div id="dialog-content-detail-view-task" class="detail-view-content"></div>
+                </dialog>
+            </section>
+        </main>
+    </div>
+</div>
+<div class="landscape-warning" hidden>Please rotate your device to portait mode.📱</div>

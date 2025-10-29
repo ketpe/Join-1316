@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: script.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: script.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @namespace script
+ * @description Common functions for the application
+ * Loaded by all pages
+ */
+
+
+/**
+ * Set onclick event to document body to close submenu when clicking outside
+*/
+setOnClickEventToDocument();
+
+/**
+ * Initialize the webpage by including HTML components and rendering user initials.
+ * @function init
+ * @memberof script
+ * @returns {Promise&lt;void>}
+ */
+async function init() {
+    await Promise.all([
+        includeHtml("navbar", "navbarDesktop.html"),
+        includeHtml("header", "headerDesktop.html")
+    ]);
+
+    renderUserInitial();
+
+}
+
+/**
+ * Render the user's initial in the UI.
+ * @function renderUserInitial
+ * @memberof script
+ * @returns {Promise&lt;void>}
+
+ */
+async function renderUserInitial() {
+    let logInStatus = getLogStatus();
+    let userinitial = "G";
+    if (logInStatus !== "0" &amp;&amp; logInStatus !== "Guest") {
+        const fb = new FirebaseDatabase();
+        const userinitialRef = await fb.getFirebaseLogin(() => fb.getDataByKey('id', logInStatus, 'contacts'));
+        userinitial = userinitialRef.initial;
+    }
+    let renderUserInitialRef = document.getElementById("user-initial-render");
+    renderUserInitialRef.textContent = userinitial;
+}
+
+/**
+ * Set onclick event to document body to close submenu when clicking outside
+ * @function setOnClickEventToDocument
+ * @memberof script
+ * @return {void}
+
+ */
+function setOnClickEventToDocument() {
+    const body = document.querySelector('body');
+    body.setAttribute('onclick', 'subMenuClose(event)');
+}
+
+
+
+/**
+ * Show submenu in desktop or mobile mode
+ * @function showSubmenu
+ * @memberof script
+ * @param {string} id
+ * @param {Event} event
+ * @param {string} desktopOrMobile
+ * @returns {void}
+ * 
+ */
+function showSubmenu(id, event, desktopOrMobile) {
+    if (event) event.stopPropagation();
+    const subMenu = document.getElementById(id);
+
+    if (desktopOrMobile == "desktop") {
+        subMenu.classList.toggle('d-none');
+    }
+
+    if (desktopOrMobile == "mobile") {
+        subMenu.classList.toggle('is-submenu-mobile-open');
+    }
+
+};
+
+/**
+ * Prevent event bubbling.
+ * @function noBubbling
+ * @memberof script
+ * @param {Event} event
+ * @returns {void}
+ * 
+ */
+function noBubbling(event) {
+    event.stopPropagation()
+};
+
+/**
+ * Close the submenu when clicking outside of it
+ * @function subMenuClose
+ * @memberof script
+ * @param {Event} event
+ * @returns {void}
+ * 
+ */
+function subMenuClose(event) {
+
+    let subMenu = document.getElementById('subMenu')
+    if (!subMenu) { return; }
+    const desktopOrMobile = subMenu.getAttribute('data-dOrM');
+
+    if (desktopOrMobile == "desktop" &amp;&amp; !subMenu.classList.contains('d-none') &amp;&amp; !subMenu.contains(event.target)) {
+        subMenu.classList.add('d-none');
+    } else if (desktopOrMobile == "mobile" &amp;&amp; subMenu.classList.contains('is-submenu-mobile-open') &amp;&amp; !subMenu.contains(event.target)) {
+        subMenu.classList.remove('is-submenu-mobile-open');
+    }
+}
+
+/**
+ * Show an error message for a specific element.
+ * @function showErrorMessage
+ * @memberof script
+ * @param {String} elementId
+ * @param {String} errorMessage
+ * @return {void}
+ * 
+ */
+function showErrorMessage(elementId, errorMessage = "") {
+    let errorText = document.getElementById(elementId);
+    if (errorText.classList.contains('d-none')) {
+        errorText.classList.remove("d-none");
+        if (errorMessage.length > 0) {
+            errorText.textContent = errorMessage;
+        }
+    }
+}
+
+/**
+ * Remove the error message for a specific element.
+ * @function removeErrorMessage
+ * @memberof script
+ * @param {String} elementId
+ * @return {void}
+ * 
+ */
+function removeErrorMessage(elementId) {
+    let errorText = document.getElementById(elementId);
+    if (!errorText.classList.contains('d-none')) {
+        errorText.classList.add("d-none")
+    };
+}
+
+/**
+ * Get a random color class from the predefined list.
+ * @function getRandomColor
+ * @memberof script
+ * @returns {String} A random color class.
+ * 
+ */
+function getRandomColor() {
+    const colorClasses = [
+        'orange', 'violet', 'coral', 'gold', 'lemon', 'red', 'blue',
+        'peach', 'cyan', 'pink', 'indigo', 'mint', 'magenta', 'lime', 'amber'
+    ];
+    const randomIndex = Math.floor(Math.random() * colorClasses.length);
+    return colorClasses[randomIndex];
+}
+
+/**
+ * Generates a new unique identifier (UUID).
+ * @function getNewUid
+ * @memberof script
+ * @returns {string} A new UUID.
+ * 
+ */
+function getNewUid() {
+    return crypto.randomUUID();
+}
+
+/**
+ * Toggles the visibility of the password input field.
+ * @function togglePasswordVisibility
+ * @memberof script
+ * @param {Number} toggleCounter 
+ * @param {String} passwortInputID 
+ * @param {String} toggleIconID 
+ * @return {void}
+ * 
+ */
+function togglePasswordVisibility(toggleCounter, passwortInputID, toggleIconID) {
+    let passwordInput = document.getElementById(passwortInputID);
+    let toggleIcon = document.getElementById(toggleIconID);
+    let togglePasswordVisibilityArray = {
+        1: ["login-password-lock", "login-password-visible-off", 2, "password"],
+        2: ["login-password-visible-off", "login-password-visible-on", 3, "text"],
+        3: ["login-password-visible-on", "login-password-lock", 1, "password"],
+    };
+    if (togglePasswordVisibilityArray[toggleCounter]) {
+        let [from, to, next, type] = togglePasswordVisibilityArray[toggleCounter];
+        toggleIcon.classList.replace(from, to);
+        passwordInput.type = type;
+        toggleIcon.onclick = () => togglePasswordVisibility(next, passwortInputID, toggleIconID);
+    };
+}
+
+/**
+ * Toggles the border color of an element based on field has validation error.
+ * @function toggleBorderColorByError
+ * @memberof script
+ * @param {String} elementId 
+ * @param {Boolean} loginErrorBorder 
+ * @return {void}
+ * 
+ */
+function toggleBorderColorByError(elementId = null, loginErrorBorder = false) {
+    const elements = elementId
+        ? [document.getElementById(elementId)].filter(Boolean)
+        : document.querySelectorAll(".login-signup-input, .login-error-border");
+
+    elements.forEach(el => {
+        loginErrorBorder
+            ? el.classList.remove("login-error-border")
+            : el.classList.add("login-error-border");
+    });
+}
+
+/** Get the current window size.
+ * @function getCurrentWindowSize
+ * @memberof script
+ * @returns {number[]} An array containing the height and width of the window.
+ * 
+ */
+function getCurrentWindowSize() {
+    return [window.innerHeight, window.innerWidth];
+}
+
+/**
+ * Check if user or guest is logged in, if not navigate to login page.
+ * @function checkUserOrGuestIsloggedIn
+ * @memberof script
+ * @return {void}
+ * 
+ */
+function checkUserOrGuestIsloggedIn() {
+    let logInStatus = getLogStatus();
+    if (logInStatus == "0") {
+        navigateToLogin();
+    }
+}
+
+/**
+ * Shows a loading overlay.
+ * @function showOverlay
+ * @memberof script
+ * @returns {void}
+ * 
+ */
+function showOverlay(){
+    const overlay = document.getElementById('loadingOverlay');
+    if(!overlay){return;}
+    overlay.classList.add('is-loading-visible');
+}
+
+/**
+ * Hides the loading overlay.
+ * @function hideOverlay
+ * @memberof script
+ * @returns {void}
+ * 
+ */
+function hideOverlay() {
+    const overlay = document.getElementById('loadingOverlay');
+    if(!overlay){return;}
+    overlay.classList.remove('is-loading-visible');
+}
+
+/**
+ * Shows a loading animation.
+ * @function showLoadingAnimation
+ * @memberof script
+ * @returns {void}
+ * 
+ */
+function showLoadingAnimation() {
+    const overlay = document.getElementById('loadingOverlay');
+    const loadingContainer = document.getElementById('loadingContainer');
+    if (!overlay || !loadingContainer) { return; }
+    overlay.classList.add('loading-color');
+    overlay.classList.add('is-loading-visible');
+    loadingContainer.classList.remove('visually-hidden');
+}
+
+/**
+ * Hides the loading animation after a short delay.
+ * @function hideLoadingAnimation
+ * @memberof script
+ * @returns {void}
+ * 
+ */
+function hideLoadingAnimation() {
+    setTimeout(() => {
+        const overlay = document.getElementById('loadingOverlay');
+        const loadingContainer = document.getElementById('loadingContainer');
+        if (!overlay || !loadingContainer) { return; }
+        overlay.classList.remove('is-loading-visible');
+        loadingContainer.classList.add('visually-hidden');
+    }, 500);
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Oct 28 2025 21:36:38 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

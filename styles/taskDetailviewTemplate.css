@@ -13,10 +13,7 @@
     max-width: 525px;
     min-width: 376px;
     max-height: 747px;
-    padding-top: 48px;
-    padding-right: 40px;
-    padding-bottom: 48px;
-    padding-left: 40px;
+    padding: 24px 32px;
     gap: 24px;
     display: flex;
     flex-direction: column;
@@ -106,15 +103,6 @@
     margin-block-end: 0;
 }
 
-/* .task-details-table {
-    display: flex;
-    flex-direction: row;
-
-    td {
-        padding: 0 25px 25px 0;
-    }
-} */
-
 .task-due-date-section,
 .task-priority-section {
     font-family: Inter;
@@ -167,8 +155,6 @@
     height: 12px;
     background-image: url('../assets/prio-baja-default.svg');
 }
-
-/*NOTE - Listenelemente*/
 
 .task-detail-view-contact-list{
     width: 100%;
@@ -274,7 +260,6 @@
     padding-left: 16px;
 }
 
-/* .checkbox-btn-default-hover:hover, */
 .checkbox-btn-default {
     background-image: url("../assets/signup-confirm-default.svg");
 }
@@ -290,7 +275,7 @@
     background-color: white;
 }
 
-/* .checkbox-btn-default:hover, */
+
 .checkbox-btn-default-hover {
     background-image: url("../assets/signup-confirm-checked.svg");
 }
@@ -298,8 +283,6 @@
 .subtask-text {
     color: black;
 }
-
-/*NOTE - Btns */
 
 .action-icons {
     width: 24px;
@@ -309,14 +292,11 @@
     background-color: transparent;
 }
 
-/**FIXME - apply .action-icons  funktioniert nicht*/
 .action-edit-icon {
-    /* @apply .action-icons; */
     background-image: url(../assets/edit-contacts-icon.svg);
 }
 
 .action-delete-icon {
-    /* @apply .action-icons; */
     background-image: url(../assets/delete-contacts-icon.svg);
 }
 
@@ -338,7 +318,6 @@
     height: 24px;
 }
 
-/*TODO - Btn sollten noch verschoben werden*/
 .btn-task-action {
     display: flex;
     align-items: center;

@@ -79,7 +79,7 @@ body {
 }
 
 
-.subMenuMobileBox {
+.sub-menu-mobile-box {
     position: fixed;
     top: 61px;
     right: 4px;
@@ -103,6 +103,18 @@ body {
 
 .is-submenu-mobile-open {
     transform: translateX(0);
+}
+
+.sub-menu-overlay {
+  position: fixed;
+  inset: 0; 
+  background: rgba(0, 0, 0, 0.0); 
+  z-index: 1999; 
+  display: none; 
+}
+
+.sub-menu-overlay.is-submenu-overlay-visible {
+  display: block;
 }
 
 @media (prefers-reduced-motion: reduce) {
