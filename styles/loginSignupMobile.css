@@ -147,7 +147,7 @@ body {
     }
 
     .signup-container {
-        margin-top: 32px !important;
+        margin-top: 76px !important;
     }
 
     .form-for-login {
@@ -166,6 +166,10 @@ body {
 
     .arrow-left {
         top: 28px !important;
+    }
+
+    .mb-26{
+        margin-bottom: 18px !important;
     }
 }
 
@@ -265,7 +269,7 @@ body {
 
     .login-form-buttons {
         flex-direction: column;
-        gap: 21px;
+        gap: 12px;
     }
 
     .signup-form-button {
