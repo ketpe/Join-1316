@@ -175,7 +175,15 @@ class EditTaskSafeUtil{
      */
     async getTaskContactAssignedList(){
         const fb = new FirebaseDatabase();
-        const dataArray = await fb.getFirebaseLogin(() => fb.getAllData('taskContactAssigned'));
+        let dataArray = [];
+
+        try {
+            dataArray = await fb.getFirebaseLogin(() => fb.getAllData('taskContactAssigned'));
+        } catch (error) {
+            console.error("Error fetching taskContactAssigned data:", error);
+        }
+
+        
         const taskContactList = dataArray.filter(x => x['taskID'] == this.task['id']);
         const contacts = await this.getContactsListDb(taskContactList);
         return [contacts, taskContactList];
