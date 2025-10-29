@@ -29,7 +29,7 @@ function openDialog(dialogId, renderSpecificFunction) {
  * @param {string} dialogId - The ID of the dialog to close
  * @returns {void}
  */
-function closeDialogByEvent(event, dialogId) {
+function closeDialogByEvent(event, dialogId,) {
     const dialog = document.getElementById(dialogId);
     const closeDiv = document.getElementById('btn-overlay-close-div');
     if (
@@ -40,6 +40,7 @@ function closeDialogByEvent(event, dialogId) {
     ) {
         closeDialog(dialogId);
     }
+
 }
 
 /**
