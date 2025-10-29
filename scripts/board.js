@@ -108,7 +108,7 @@ function clearBoardHtmlBody() {
  * @returns {Promise<void>} - A promise that resolves when the tasks have been fetched and rendered.
 */
 async function getBoardTasks() {
-    const { taskContentElements } = getHtmlTasksContent();
+    const [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone] = getHtmlTasksContent();
     const fb = new FirebaseDatabase();
     let tasks = await fb.getFirebaseLogin(() => fb.getAllData("tasks"));
     tasks = await getDatabaseTaskCategory(tasks);
@@ -215,12 +215,12 @@ function addDropZones(taskItems) {
  * @returns {Array} - An array of HTML elements representing the task content areas.
  */
 function getHtmlTasksContent() {
-    let taskContentElements = getBoardTaskref();
-    taskContentElements.forEach(tE => { if (tE) tE.innerHTML = ""; });
-    taskContentElements.forEach(tE => {
+    const [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone] = getBoardTaskref();
+    [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone].forEach(tE => { if (tE) tE.innerHTML = ""; });
+    [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone].forEach(tE => {
         if (tE) tE.innerHTML = boardTaskEmptyTemplate(tE.dataset.category);
     })
-    return { taskContentElements };
+    return [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
 }
 
 /**
@@ -360,12 +360,12 @@ function toggleNoTaskVisible() {
  * @returns {Array} - An array of HTML elements representing the task content areas.
  */
 function getBoardTaskref() {
-    taskToDo = document.getElementById("kanban-tasks-todo");
-    taskInProgress = document.getElementById("kanban-tasks-inprogress");
-    taskAwaitingFeedback = document.getElementById("kanban-tasks-awaiting");
-    taskDone = document.getElementById("kanban-tasks-done");
-    taskContentElements = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
-    return taskContentElements;
+    let taskToDo = document.getElementById("kanban-tasks-todo");
+    let taskInProgress = document.getElementById("kanban-tasks-inprogress");
+    let taskAwaitingFeedback = document.getElementById("kanban-tasks-awaiting");
+    let taskDone = document.getElementById("kanban-tasks-done");
+    return [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
+
 }
 /**
  * @function addLeftPositionStyleassignedContacts
