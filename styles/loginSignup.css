@@ -46,7 +46,7 @@
     margin-right: 35px;
 }
 
-.login-signup-container {
+.login-container, .signup-container {
     flex: 1;
     height: calc(100vh - (114px + 72px));
     display: flex;

@@ -464,6 +464,8 @@ function removeLoadingFunctionFromDialog() {
     editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog")');
 }
 
+/**TO DO: Hier war das Problem mit dem Snapshot */
+
 /**
  * @function addLoadingFunctionToDialog
  * @memberof board
@@ -473,7 +475,8 @@ function removeLoadingFunctionFromDialog() {
 function addLoadingFunctionToDialog() {
     const editDialog = document.getElementById('detail-view-task-dialog');
     if (!editDialog) { return; }
-    editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog"), getBoardTaskWithLoadingAnimation(),navigateToBoard()');
+    /* editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog"), getBoardTaskWithLoadingAnimation(),navigateToBoard()'); */
+    editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog"), getBoardTaskWithLoadingAnimation()');
 }
 
 /**

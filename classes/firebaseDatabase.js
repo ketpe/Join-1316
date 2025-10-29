@@ -40,35 +40,12 @@ class FirebaseDatabase {
     async getAllData(tableName = "") {
         try {
             const database = firebaseGetDatabase();
-            // Verwende child nur wenn tableName gesetzt ist, sonst root-ref
-            const databaseRef = tableName ? firebaseChild(firebaseRef(database), tableName) : firebaseRef(database);
+            const databaseRef = firebaseRef(database);
+            const databaseTableData = await firebaseGet(firebaseChild(databaseRef, tableName));
 
-            let snapshot;
-            try {
-                snapshot = await firebaseGet(databaseRef);
-            } catch (error) {
-                console.error("Error fetching data from table:", error);
-                return []; // sofort zurückkehren wenn fetch fehlschlägt
-            }
-
-            // Absichern: snapshot kann undefined/null sein
-            if (!snapshot || typeof snapshot.exists !== "function" || !snapshot.exists()) {
-                return [];
-            }
-
-            const value = snapshot.val();
-            if (!value) return [];
-
-            // Wenn Objekt -> Werte extrahieren, sonst Array/Primitive passend behandeln
-            if (typeof value === "object" && !Array.isArray(value)) {
-                return Object.values(value).filter(data => data != null);
-            } else if (Array.isArray(value)) {
-                return value.filter(data => data != null);
-            } else {
-                return [value];
-            }
+            return databaseTableData.exists() ? Object.values(databaseTableData.val()).filter(data => data != null) : [];
         } catch (error) {
-            console.error("getAllData failed:", error);
+            console.error(error.message);
             return [];
         }
 

@@ -43,7 +43,8 @@ body {
 .form-for-signup,
 .login-signup-form,
 .login-signup-header,
-.login-signup-container {
+.login-container,
+.signup-container {
     transition:
         margin var(--dur-fast) var(--ease-smooth),
         padding var(--dur-fast) var(--ease-smooth),
@@ -93,7 +94,8 @@ body {
         --signup-logo-size-scale: .7;
     }
 
-    .login-signup-container {
+    .login-container,
+    .signup-container {
         padding: 0 16px;
     }
 
@@ -107,8 +109,59 @@ body {
         height: 530px !important;
     }
 
+    .signup-container {
+        margin-top: 32px !important;
+    }
+
+    .login-container {
+        margin-top: 0px !important;
+    }
+
+    .form-for-login {
+        margin-bottom: 4px !important;
+        height: 417px !important;
+        margin-top: 140px !important;
+    }
+
     .login-signup-input-field-container {
         margin-bottom: 0 !important;
+    }
+
+    .login-signup-header {
+        margin-bottom: 49px !important;
+    }
+
+    .arrow-left {
+        top: 28px !important;
+    }
+}
+
+@media(max-height: 800px) {
+    .form-for-signup {
+        height: 530px !important;
+    }
+
+    .login-container
+    {
+        margin-top: 0px !important;
+    }
+
+    .signup-container {
+        margin-top: 32px !important;
+    }
+
+    .form-for-login {
+        margin-bottom: 4px !important;
+        height: 417px !important;
+        margin-top: 140px !important;
+    }
+
+    .login-signup-input-field-container {
+        margin-bottom: 0 !important;
+    }
+
+    .login-signup-header {
+        margin-bottom: 49px !important;
     }
 
     .arrow-left {
@@ -167,7 +220,8 @@ body {
         margin-right: 35px;
     }
 
-    .login-signup-container {
+    .login-container,
+    .signup-container {
         order: 1;
         width: 100%;
         margin-top: 100px;
