@@ -31,7 +31,7 @@ async function onLoadBoard() {
     }
     window.addEventListener('resize', onBoardPageResize);
     window.addEventListener('resize', updateLandscapeBlock);
-    
+
 }
 
 /**
@@ -142,11 +142,11 @@ async function onBoardPageResize() {
     setTaskEditDialogSize(height);
 }
 
-function setTaskEditDialogSize(height){
+function setTaskEditDialogSize(height) {
     const editDialog = document.querySelector('#detail-view-task-dialog.dialog-show');
-    if(!editDialog){return;}
+    if (!editDialog) { return; }
     const taskSection = editDialog.querySelector('.task-section');
-    if(!taskSection){return;}
+    if (!taskSection) { return; }
     taskSection.style.height = (height - 200) + "px";
 }
 
@@ -324,11 +324,19 @@ function renderAssignedContacts(assignedContacts) {
     let counter = 0;
     try {
         assignedContacts.forEach(contactArr => {
-            if (counter >= 6) throw breakExecption;
+            if (counter >= 5) {
+                assignedContactsTemplate = renderLimitedContactsTemplate(counter, assignedContacts.length, assignedContactsTemplate); throw breakExecption;
+            }
             contactArr.forEach(contact => { assignedContactsTemplate += getAllAssignedContactsTemplate(contact); });
             counter++;
         });
     } catch (error) { return assignedContactsTemplate; }
+    return assignedContactsTemplate;
+}
+
+function renderLimitedContactsTemplate(counter, total, assignedContactsTemplate) {
+    let invisibleContacts = total - counter;
+    assignedContactsTemplate += getContactsTemplateOverflow(invisibleContacts);
     return assignedContactsTemplate;
 }
 

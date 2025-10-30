@@ -14,7 +14,7 @@
  * @param {string} nextCategory - The next category of the task.
  * @returns {string} The HTML template for the board task.
  */
- 
+
 function boardTasksTemplate(task, rendererdContacts, prevCategory, nextCategory) {
     return `<div class="kanban-task" draggable="true" id="${task.id}" ondragstart="startDrag(event, this)" ondragend="endDrag(this)"
     onclick="getDetailViewTask('${task.id}')"  data-task-id="${task.id}">
@@ -103,6 +103,15 @@ function getAllAssignedContactsTemplate(assignedContacts) {
                     <div class="assigned-contact-board">
                         <div class="contact-initials-board assigned-contact-pos ${assignedContacts.initialColor}">
                             <p class="board-contact-initials-text">${assignedContacts.initial}</p>
+                        </div>
+                    </div>
+                </div>`
+}
+function getContactsTemplateOverflow(numberOfOverflow) {
+    return `<div class="board-task-assigned" id="">
+                    <div class="assigned-contact-board">
+                        <div class="contact-initials-board assigned-contact-pos bg-default-color ">
+                            <p class="board-contact-initials-text"> +${numberOfOverflow}</p>
                         </div>
                     </div>
                 </div>`
