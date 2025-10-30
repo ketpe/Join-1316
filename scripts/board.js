@@ -311,6 +311,7 @@ async function getDatabaseTaskContact(tasks) {
     })
     return tasks;
 }
+
 /**
  * @function boardTasksTemplate
  * @memberof board
