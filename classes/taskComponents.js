@@ -8,7 +8,7 @@
  * const taskComponents = new TaskComponents(currentUser, 'taskInstance', 'stateCategory');
  */
 
-class TaskComponents{
+class TaskComponents {
 
     contactAllListFromDB = [];
     categories = [];
@@ -64,6 +64,7 @@ class TaskComponents{
         this.currentSubTasks = currentTask['subTasks'];
     }
 
+
     /**
      * Runs the task components with the specified data as edit.
      * @param {Object} currentTask - The current task object.
@@ -90,7 +91,7 @@ class TaskComponents{
      * Reads the current task date into variables.
      * @returns {void}
      */
-    readCurrentTaskDateIntoVariables(){
+    readCurrentTaskDateIntoVariables() {
         this.currentSubTasks = this.currentTask['subTasks'];
         this.currentDueDate = this.currentTask['dueDate'];
         this.currentTitle = this.currentTask['title'];
@@ -197,14 +198,14 @@ class TaskComponents{
     */
     addTaskCheckRequiredField(createButton) {
 
-        if(!createButton){return;}
+        if (!createButton) { return; }
 
         const hasCategory = this.currentCategory && typeof this.currentCategory === 'object' && 'title' in this.currentCategory;
         createButton.disabled = !(
             this.currentDueDate.length > 0 &&
-                this.currentTitle.length > 0 &&
-                this.currentPriority.length > 0 &&
-                hasCategory);
+            this.currentTitle.length > 0 &&
+            this.currentPriority.length > 0 &&
+            hasCategory);
 
         createButton.disabled ? createButton.setAttribute('aria-disabled', 'true') : createButton.removeAttribute('aria-disabled');
 
@@ -294,7 +295,7 @@ class TaskComponents{
     allPriortyButtonsReset() {
         this.currentPriority = "";
         const btnContainer = document.getElementById('task-priority-button');
-        if(!btnContainer){return;}
+        if (!btnContainer) { return; }
         const buttons = btnContainer.querySelectorAll('.btn');
 
         buttons.forEach((b) => {
@@ -396,7 +397,7 @@ class TaskComponents{
      * @param {string} showOrHide - Determines whether to show or hide the contact list.
      * @returns {void}
      */
-    setInputAndButtonOnclickFunctionForContacts(showOrHide){
+    setInputAndButtonOnclickFunctionForContacts(showOrHide) {
         const buttonShowOhrHide = document.getElementById('show-and-hide-contacts');
         buttonShowOhrHide.setAttribute('onclick', (showOrHide == "show" ? `${this.currentInstance}.showAndHideContacts("hide")` : `${this.currentInstance}.showAndHideContacts("show")`));
         const inputField = document.getElementById('task-assign-to');
@@ -896,7 +897,7 @@ class TaskComponents{
 
         if (event) event.preventDefault();
         const addTaskFormData = new FormData(event.currentTarget);
-        
+
         const currentTask = new Task(
             getNewUid(),
             addTaskFormData.get('task-title'),
@@ -904,7 +905,7 @@ class TaskComponents{
             addTaskFormData.get('due-date'),
             this.currentPriority,
             this.currentCategory['id'],
-            this.currentStateCategory 
+            this.currentStateCategory
         );
 
         const createNewTask = new CreateNewTask(currentTask, this.currentSubTasks, this.currentContactAssignList, this.currentUser);
@@ -916,7 +917,7 @@ class TaskComponents{
      * Checks if the add task form is in a dialog.
      * @returns {boolean} True if the form is in a dialog, false otherwise.
      */
-    getIsDialog(){
+    getIsDialog() {
         const forms = document.querySelectorAll('form');
         if (!forms) { return false; }
 

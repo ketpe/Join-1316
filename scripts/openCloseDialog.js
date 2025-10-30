@@ -17,9 +17,34 @@
 function openDialog(dialogId, renderSpecificFunction) {
     toggleScrollOnBody(true);
     addDialogShowClass(dialogId);
+    setEditDialogEventListeners();
     document.getElementById(dialogId).showModal();
     if (renderSpecificFunction) renderSpecificFunction();
 }
+
+/**
+ * @function setEditDialogEventListeners
+ * @memberof openCloseDialog
+ * @description Sets event listeners for the edit dialog.
+ * @returns {void}
+ */
+function setEditDialogEventListeners() {
+    const dialog = document.getElementById("detail-view-task-dialog");
+  if (!dialog) return;
+  const onShown = () => {
+    if (!dialog.classList.contains('dialog-show')) return;
+    setTimeout(() => dialog.setAttribute('onclick',"closeDialogByEvent(event,'detail-view-task-dialog');getBoardTaskWithLoadingAnimation();"), 250);
+    dialog.removeEventListener('animationend', onShown);
+  };
+  const cleanup = () => {
+    dialog.removeAttribute('onclick');
+    ['animationend','close','cancel'].forEach(e=>dialog.removeEventListener(e, onShown));
+  };
+  dialog.addEventListener('animationend', onShown);
+  dialog.addEventListener('close', cleanup);
+  dialog.addEventListener('cancel', cleanup);
+}
+
 
 /**
  * @function closeDialogByEvent
@@ -40,7 +65,6 @@ function closeDialogByEvent(event, dialogId,) {
     ) {
         closeDialog(dialogId);
     }
-
 }
 
 /**
@@ -52,11 +76,17 @@ function closeDialogByEvent(event, dialogId,) {
  */
 function closeDialog(dialogId) {
     addDialogHideClass(dialogId);
+
     setTimeout(function () {
         document.getElementById(dialogId).close();
+
         toggleScrollOnBody(false);
     }, 1000);
+
 }
+
+
+
 /**
  * @function toggleScrollOnBody
  * @memberof openCloseDialog
@@ -101,8 +131,8 @@ function addDialogHideClass(dialogId) {
  * @description Renders the add contact form into the dialog
  * @return {void}
  */
-function renderAddContactIntoDialog() {
-    includeHtml("dialog-content-contacts", "addContact.html");
+async function renderAddContactIntoDialog() {
+    await includeHtml("dialog-content-contacts", "addContact.html");
     resetContactForm();
 }
 
@@ -126,7 +156,7 @@ async function renderDetailViewTemplate(taskId) {
  */
 function renderAddContactIntoDialogMobile() {
     includeHtml("add-contact-dialog-mobile", "addContactMobile.html");
-    resetContactForm();
+    //resetContactForm();
 }
 function renderEditContactIntoDialog(contactId) {
     includeHtml("dialog-content-contacts", "editContact.html")

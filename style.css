@@ -175,11 +175,11 @@ a {
 }
 
 .dialog-show {
-    animation: slide-Dialog-in 1000ms ease-in-out forwards;
+    animation: slide-Dialog-in 500ms ease-in-out forwards;
 }
 
 .dialog-hide {
-    animation: slide-Dialog-out 1000ms ease-in-out forwards;
+    animation: slide-Dialog-out 500ms ease-in-out forwards;
 }
 
 .loading-animation-overlay {

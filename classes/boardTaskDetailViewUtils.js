@@ -91,7 +91,7 @@ class BoardTaskDetailViewUtils {
 
     /**
      * Renders the assigned contacts in the dialog.
-     * Limits the display to a maximum of three contacts and adjusts the container height accordingly.
+     * Adjusts the container height accordingly.
      * @returns {void}
      */
     viewAssignedContacts() {
@@ -103,11 +103,10 @@ class BoardTaskDetailViewUtils {
             contactSelectElement.innerHTML += getContactListElement(this.currentTask.assignedContacts[i][0], false, true, this.currentInstance, 
                 this.checkIfCurrentUserIsAssigned(this.currentTask.assignedContacts[i][0]['id']));
             counter++;
-            if (counter >= 3) { break; }
         }
         const heightOfOneContact = 52;
-        let heightOfContainer = (this.currentTask.assignedContacts.length <= 3 ?
-            heightOfOneContact * this.currentTask.assignedContacts.length : heightOfOneContact * 3);
+        let heightOfContainer = (this.currentTask.assignedContacts.length <= 3 ? heightOfOneContact * this.currentTask.assignedContacts.length 
+            : heightOfOneContact * this.currentTask.assignedContacts.length + 20);
 
         contactSelectElement.style.height = (heightOfContainer) + "px";
     }
@@ -132,11 +131,11 @@ class BoardTaskDetailViewUtils {
      */
     viewSubTasks(){
         let subTaskContainer = document.getElementById('detail-view-subtask-container');
-        for(let i = 0; i < this.currentTask.subTasks.length; i++){
-            subTaskContainer.innerHTML += getSubtaskForDetailView(this.currentTask.subTasks[i]);
+        const subtaskArray = this.getSortedSubTask();
+        for(let i = 0; i < subtaskArray.length; i++){
+            subTaskContainer.innerHTML += getSubtaskForDetailView(subtaskArray[i]);
         }
-
-        subTaskContainer.style.height = (this.currentTask.subTasks.length * 28) + "px";
+        subTaskContainer.style.height = (subtaskArray.length * 28) + "px";
     }
 
     /**
@@ -145,6 +144,16 @@ class BoardTaskDetailViewUtils {
      */
     getCurrentHeight(){
         return document.querySelector(".task-main").offsetHeight;
+    }
+
+    /**
+     * Retrieves the sorted subtask array.
+     * @returns {Array} The sorted subtask array.
+     */
+    getSortedSubTask(){
+        if(!this.currentTask.subTasks || this.currentTask.subTasks.length == 0){return [];}
+        const sortedSubTasks = this.currentTask.subTasks.sort((a, b) => a.position - b.position);
+        return sortedSubTasks;
     }
 
     /**

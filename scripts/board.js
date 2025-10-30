@@ -21,16 +21,17 @@ async function onLoadBoard() {
     const [height, width] = getCurrentWindowSize();
     const head = document.getElementsByTagName('head');
     if (width >= minDesktopWidth) {
-        await loadHtmlComponentsForDesktop(head);
+        await loadHtmlComponentsForDesktop(height);
         setNavigationButtonActive('board', "desktop");
         kanbanUpdateSizeDesktop();
     } else {
-        await loadHtmlComponentsForMobile(head);
+        await loadHtmlComponentsForMobile(height);
         setNavigationButtonActive('board', "mobile");
         kanbanUpdateSizeMobile();
     }
     window.addEventListener('resize', onBoardPageResize);
     window.addEventListener('resize', updateLandscapeBlock);
+    
 }
 
 /**
@@ -41,7 +42,7 @@ async function onLoadBoard() {
  * @param {HTMLCollection} head - The head element of the document.
  * @returns {Promise<void>}
  */
-async function loadHtmlComponentsForDesktop(head) {
+async function loadHtmlComponentsForDesktop(height) {
     currentView = "desktop";
     clearBoardHtmlBody();
     await includeHtmlForNode("body", "boardDesktop.html");
@@ -64,7 +65,7 @@ async function loadHtmlComponentsForDesktop(head) {
  * It clears the existing HTML body, includes necessary HTML files for the mobile layout, shows a loading animation, fetches and renders board tasks, and then hides the loading animation.
  * @returns {Promise<void>}
  */
-async function loadHtmlComponentsForMobile() {
+async function loadHtmlComponentsForMobile(height) {
     currentView = "mobile"
     clearBoardHtmlBody();
     await includeHtmlForNode("body", "boardMobile.html");
@@ -138,6 +139,15 @@ async function onBoardPageResize() {
         setNavigationButtonActive('contacts', "desktop");
         kanbanUpdateSizeDesktop();
     }
+    setTaskEditDialogSize(height);
+}
+
+function setTaskEditDialogSize(height){
+    const editDialog = document.querySelector('#detail-view-task-dialog.dialog-show');
+    if(!editDialog){return;}
+    const taskSection = editDialog.querySelector('.task-section');
+    if(!taskSection){return;}
+    taskSection.style.height = (height - 200) + "px";
 }
 
 /**
@@ -389,7 +399,6 @@ function addLeftPositionStyleassignedContacts() {
  * @returns {Promise<void>} - A promise that resolves when the task details have been rendered
  */
 async function getDetailViewTask(taskId) {
-    addLoadingFunctionToDialog();
     boardTaskComponents = null;
     let tasks = await getTaskByTaskID(taskId);
     await includeHtml("dialog-content-detail-view-task", "taskTemplate.html");
@@ -399,6 +408,7 @@ async function getDetailViewTask(taskId) {
     const currentUser = taskUtils.readCurrentUserID();
     boardTaskComponents = new TaskComponents(currentUser, "boardTaskComponents");
     boardTaskComponents.runWithDataAsView(tasks[0]);
+    setTaskEditDialogSize(window.innerHeight);
 }
 
 /**
@@ -461,7 +471,7 @@ async function editCurrentTask(button) {
 function removeLoadingFunctionFromDialog() {
     const editDialog = document.getElementById('detail-view-task-dialog');
     if (!editDialog) { return; }
-    editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog")');
+    //editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog")');
 }
 
 /**
@@ -473,7 +483,7 @@ function removeLoadingFunctionFromDialog() {
 function addLoadingFunctionToDialog() {
     const editDialog = document.getElementById('detail-view-task-dialog');
     if (!editDialog) { return; }
-    editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog"), getBoardTaskWithLoadingAnimation()');
+    //editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog"), getBoardTaskWithLoadingAnimation()');
 }
 
 /**
