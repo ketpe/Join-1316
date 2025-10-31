@@ -99,15 +99,13 @@ class BoardTaskDetailViewUtils {
         let contactSelectElement = document.getElementById('contact-List-for-task');
         contactSelectElement.innerHTML = "";
         for (let i = 0; i < this.currentTask.assignedContacts.length; i++) {
-            if(this.currentTask.assignedContacts[i].length == 0){continue;}
-            contactSelectElement.innerHTML += getContactListElement(this.currentTask.assignedContacts[i][0], false, true, this.currentInstance, 
+            if (this.currentTask.assignedContacts[i].length == 0) { continue; }
+            contactSelectElement.innerHTML += getContactListElement(this.currentTask.assignedContacts[i][0], false, true, this.currentInstance,
                 this.checkIfCurrentUserIsAssigned(this.currentTask.assignedContacts[i][0]['id']));
             counter++;
         }
-        const heightOfOneContact = 52;
-        let heightOfContainer = (this.currentTask.assignedContacts.length <= 3 ? heightOfOneContact * this.currentTask.assignedContacts.length 
-            : heightOfOneContact * this.currentTask.assignedContacts.length + 20);
-
+        const heightOfOneContact = this.getOffsetHeightOfElement('.contact-list-btn') ? this.getOffsetHeightOfElement('.contact-list-btn') + 1 : 55;
+        let heightOfContainer = heightOfOneContact * this.currentTask.assignedContacts.length;
         contactSelectElement.style.height = (heightOfContainer) + "px";
     }
 
@@ -118,10 +116,10 @@ class BoardTaskDetailViewUtils {
      * @param {string} contactID 
      * @returns Boolean indicating if the current user is assigned to the task
      */
-    checkIfCurrentUserIsAssigned(contactID){
+    checkIfCurrentUserIsAssigned(contactID) {
         const currentUser = getLogStatus();
-        if(!currentUser){ return false; }
-        if(currentUser == "guest"){ return false; }
+        if (!currentUser) { return false; }
+        if (currentUser == "guest") { return false; }
         return currentUser == contactID;
     }
 
@@ -129,55 +127,56 @@ class BoardTaskDetailViewUtils {
      * Renders the subtask information in the dialog.
      * @returns {void}
      */
-    viewSubTasks(){
+    viewSubTasks() {
         let subTaskContainer = document.getElementById('detail-view-subtask-container');
         const subtaskArray = this.getSortedSubTask();
-        for(let i = 0; i < subtaskArray.length; i++){
+        for (let i = 0; i < subtaskArray.length; i++) {
             subTaskContainer.innerHTML += getSubtaskForDetailView(subtaskArray[i]);
         }
-        subTaskContainer.style.height = (subtaskArray.length * 28) + "px";
+        const heightOfOneSubtask = this.getOffsetHeightOfElement('.subtask-content') ? this.getOffsetHeightOfElement('.subtask-content') : 36;
+        subTaskContainer.style.height = (subtaskArray.length * heightOfOneSubtask) + "px";
     }
 
+  
     /**
-     * Retrieves the current height of the task main container.
-     * @returns {number} The current height of the task main container.
+     * Retrieves the offset height of a specified element.
+     * @param {string} elementMarker - The CSS selector for the element.
+     * @returns {number} The offset height of the element, or 0 if not found.
      */
-    getCurrentHeight(){
-        return document.querySelector(".task-main").offsetHeight;
+    getOffsetHeightOfElement(elementMarker) {
+        let element = document.querySelector(elementMarker);
+        return element ? element.offsetHeight : 0;
     }
 
     /**
      * Retrieves the sorted subtask array.
      * @returns {Array} The sorted subtask array.
      */
-    getSortedSubTask(){
-        if(!this.currentTask.subTasks || this.currentTask.subTasks.length == 0){return [];}
+    getSortedSubTask() {
+        if (!this.currentTask.subTasks || this.currentTask.subTasks.length == 0) { return []; }
         const sortedSubTasks = this.currentTask.subTasks.sort((a, b) => a.position - b.position);
         return sortedSubTasks;
     }
 
-    /**
-     * Sets the dialog height based on the current main container height.
-     * @param {number} currentMainHeight - The current height of the main container.
-     * @returns {void}
-     */
-    setDialogHeight(currentMainHeight){
-        let taskMain = document.querySelector(".task-main");
-        if(currentMainHeight <= 615){
-            taskMain.style.height = currentMainHeight + "px";
-        }else{
-            taskMain.style.height = "615px";
-            taskMain.classList.add('task-main-scroll');
-        }
-    }
 
     /**
      * Sets the current task ID into the edit and delete buttons for reference.
      * @returns {void}
      */
-    setTaskIDIntoButtons(){
+    setTaskIDIntoButtons() {
         document.getElementById('detail-view-delete-btn').setAttribute('data-id', `${this.currentTaskID}`);
         document.getElementById('detail-view-edit-btn').setAttribute('data-id', `${this.currentTaskID}`);
+    }
+
+    /**
+     * Measures the current dialog content height.
+     * @returns {Array} - An array containing the header, main content, and footer heights.
+     */
+    measureCurrentDialogContentHeight() {
+        const headerHeight = this.getOffsetHeightOfElement('.task-header');
+        const footerHeight = this.getOffsetHeightOfElement('footer.task-detailview-actions') + 24;
+        const mainContentHeight = this.getOffsetHeightOfElement('main.task-main');
+        return [headerHeight, mainContentHeight, footerHeight];
     }
 
 }

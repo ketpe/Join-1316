@@ -59,8 +59,6 @@ class TaskComponents {
         const boardUtils = new BoardTaskDetailViewUtils(this.currentTaskId, this.currentTask, this.currentInstance);
         openDialog('detail-view-task-dialog');
         boardUtils.startRenderTaskDetails();
-        const currentMainHeight = boardUtils.getCurrentHeight();
-        boardUtils.setDialogHeight(currentMainHeight);
         this.currentSubTasks = currentTask['subTasks'];
     }
 
@@ -579,21 +577,21 @@ class TaskComponents {
     /**
      * Renders the assigned profile badges for the selected contacts.
      * If no contacts are assigned, the function returns early.
-     * Show only up to 4 badges for better UI.
      * @returns {void}
      */
     renderAsignedProfilBadge() {
-        if (this.currentContactAssignList.length == 0) {
-            return;
-        }
-
+        if (this.currentContactAssignList.length == 0) {return;}
         let badgeContainer = document.getElementById('contact-assigned-badge');
         badgeContainer.innerHTML = "";
         let counter = 0;
         for (let i = 0; i < this.currentContactAssignList.length; i++) {
             badgeContainer.innerHTML += getAssignedContactBadge(this.currentContactAssignList[i]);
             counter++;
-            if (counter == 4) { break; }
+            if (counter == 5) {
+                const invisibleContacts = this.currentContactAssignList.length - counter;
+                badgeContainer.innerHTML += getBadgeForContactOverflow(invisibleContacts);
+                break;
+            }
         }
     }
 
@@ -835,26 +833,34 @@ class TaskComponents {
      * Renders the list of subtasks.
      * If there are no subtasks, it returns early.
      * If an ID for editing is provided, it renders that subtask in edit mode.
-     * Otherwise, it renders all subtasks in read-only mode, showing only up to 3 subtasks for better UI.
+     * Otherwise, it renders all subtasks in read-only mode.
      * @param {string} idForEdit - The ID of the subtask to edit.
      * @returns void
      */
     renderSubtasks(idForEdit = "") {
         let subTaskList = document.querySelector('.sub-task-list');
         subTaskList.innerHTML = "";
-        if (this.currentSubTasks.length == 0) { return; }
-        let counter = 0;
+        const sortedSubTasks = this.getSortedSubTask();
+        if (sortedSubTasks.length == 0) { return; }
         if (!subTaskList) { return; }
 
-        for (let i = 0; i < this.currentSubTasks.length; i++) {
-            if (this.currentSubTasks[i]['id'] == idForEdit) {
-                subTaskList.innerHTML += getSubtaskListElementForChanging(this.currentSubTasks[i], this.currentInstance);
+        for (let i = 0; i < sortedSubTasks.length; i++) {
+            if (sortedSubTasks[i]['id'] == idForEdit) {
+                subTaskList.innerHTML += getSubtaskListElementForChanging(sortedSubTasks[i], this.currentInstance);
                 continue;
             }
-            subTaskList.innerHTML += getSubtaskListElementReadOnly(this.currentSubTasks[i], this.currentInstance);
-            counter++;
-            if (counter >= 3) { break; }
+            subTaskList.innerHTML += getSubtaskListElementReadOnly(sortedSubTasks[i], this.currentInstance);
         }
+    }
+
+    /**
+     * Retrieves the sorted subtask array.
+     * @returns {Array} The sorted subtask array.
+     */
+    getSortedSubTask() {
+        if (!this.currentSubTasks || this.currentSubTasks.length == 0) { return []; }
+        const sortedSubTasks = this.currentSubTasks.sort((a, b) => a.position - b.position);
+        return sortedSubTasks;
     }
 
     /**

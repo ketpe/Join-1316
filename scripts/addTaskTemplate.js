@@ -43,6 +43,19 @@ function getAssignedContactBadge(contact) {
 }
 
 /**
+ * @description Generates the HTML for a contact overflow badge.
+ * @function getBadgeForContactOverflow
+ * @memberof addTaskTemplate
+ * @param {number} numberOfOverflow - The number of overflow contacts.
+ * @returns {string} The HTML string for the contact overflow badge.
+ */
+function getBadgeForContactOverflow(numberOfOverflow) {
+    return `
+        <div class="contact-ellipse bg-default-color"><span>+${numberOfOverflow}</span></div>
+    `;
+}
+
+/**
  * @description Generates the HTML for a category list element.
  * @function getCategoryListElement
  * @memberof addTaskTemplate
@@ -70,7 +83,7 @@ function getSubtaskListElementReadOnly(subTask, taskInstance) {
     return `
         <li class="li-readonly" id="${subTask['id']}" ondblclick="${taskInstance}.editCurrentSelectedSubTask('${subTask['id']}')">
             <div class="subtask-list-input-container">
-                <input class="sub-task-list-input-readonly" type="text" title="subtask list inputfield" value="${subTask['title']}" readonly>
+                <input name="subtask-${subTask['id']}" class="sub-task-list-input-readonly" type="text" title="subtask list inputfield" value="${subTask['title']}" readonly>
                 <div class="sub-list-edit-btn-container">
                     <button type="button" title="edit current entry button" onclick="${taskInstance}.editCurrentSelectedSubTask('${subTask['id']}')">
                         <div role="img" title="edit icon"></div>

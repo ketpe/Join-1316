@@ -175,5 +175,8 @@
     .field-frame {
         width: 100%;
     }
-}
 
+    .contact-profil-container p {
+        font-size: 16px !important;
+    }
+}

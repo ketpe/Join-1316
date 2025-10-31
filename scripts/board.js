@@ -9,6 +9,7 @@ let currentView = "";
 const minDesktopHeight = 880;
 const minDesktopWidth = 880;
 const breakPointToDesktopSingle = 1180;
+let [headerHeight, mainContentHeight, footerHeight] = [0, 0, 0];
 
 /**
  * @function onLoadBoard
@@ -142,12 +143,31 @@ async function onBoardPageResize() {
     setTaskEditDialogSize(height);
 }
 
+/**
+ * @function setTaskEditDialogSize
+ * @memberof board
+ * @description Set the height of the task edit dialog based on the current window size.
+ * set height of main content area in task edit dialog and toggle scroll class.
+ * @param {number} height - The height to set for the dialog.
+ * @returns {void}
+ */
 function setTaskEditDialogSize(height) {
     const editDialog = document.querySelector('#detail-view-task-dialog.dialog-show');
     if (!editDialog) { return; }
     const taskSection = editDialog.querySelector('.task-section');
     if (!taskSection) { return; }
-    taskSection.style.height = (height - 200) + "px";
+    const taskMain = document.querySelector(".task-main");
+    if(!taskMain){return;}
+    const sumHeightsInDialog = headerHeight + mainContentHeight + footerHeight;
+
+    if(height - 200 > sumHeightsInDialog){
+        taskSection.style.height = (sumHeightsInDialog + 40) + "px";
+        taskMain.classList.remove('task-main-scroll');
+    }else{
+        taskSection.style.height = (height - 200) + "px";
+        taskMain.style.height = (height - 200 - headerHeight - footerHeight) + "px";
+        taskMain.classList.add('task-main-scroll');
+    }
 }
 
 /**
@@ -417,6 +437,7 @@ async function getDetailViewTask(taskId) {
     const currentUser = taskUtils.readCurrentUserID();
     boardTaskComponents = new TaskComponents(currentUser, "boardTaskComponents");
     boardTaskComponents.runWithDataAsView(tasks[0]);
+    [headerHeight, mainContentHeight, footerHeight] = new BoardTaskDetailViewUtils().measureCurrentDialogContentHeight();
     setTaskEditDialogSize(window.innerHeight);
 }
 
