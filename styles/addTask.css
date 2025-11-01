@@ -40,7 +40,7 @@
     overflow-y: hidden;
 }
 
-.add-task-board-dialog-single{
+.add-task-board-dialog-single {
     padding: 0;
     border: none !important;
     margin: auto;
@@ -251,9 +251,9 @@ legend {
 }
 
 .date-trigger {
-    transform: translateY(-240%) translateX(-70%);
-    width: 22px;
-    height: 22px;
+    transform: translateY(-238%) translateX(-70%);
+    width: 24px;
+    height: 24px;
     padding: 0;
     border: 0;
     background: none;
@@ -263,8 +263,8 @@ legend {
 }
 
 .date-trigger>div {
-    height: 24px;
-    width: 24px;
+    height: 22px;
+    width: 22px;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -391,7 +391,6 @@ legend {
     z-index: 5;
 }
 
-.subtask-list-input-container,
 .sub-input-container,
 .category-select-container,
 .contact-select-container {
@@ -402,10 +401,6 @@ legend {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-}
-
-.subtask-list-input-container {
-    height: 32px;
 }
 
 .a-t-sub-input,
@@ -495,6 +490,13 @@ legend {
     background-color: var(--bg-contact-item);
 }
 
+.contact-list-btn-view {
+    cursor: unset;
+}
+
+.contact-list-btn-view:hover {
+    background-color: transparent !important;
+}
 
 .contact-selected {
     background-color: var(--bg-default);
@@ -571,7 +573,7 @@ legend {
     margin-top: 8px;
 }
 
-.sub-list-writing-btn-container,
+
 .sub-input-writing-btn-container {
     display: flex;
     justify-content: center;
@@ -606,7 +608,6 @@ legend {
     background-size: cover;
 }
 
-.sub-list-writing-btn-container div:nth-child(2),
 .sub-list-edit-btn-container div:nth-child(2),
 .sub-input-writing-btn-container div:nth-child(2) {
     margin-left: 2px;
@@ -618,10 +619,10 @@ legend {
 
 }
 
-.sub-list-writing-btn-container button:nth-child(3)>div,
+.sub-list-writing-btn-container .btn-accept>div,
 .sub-input-writing-btn-container button:nth-child(3)>div {
     height: 11.25px;
-    width: 15.49px;
+    width: 14.49px;
     background-image: url('../assets/check-sub-icon.svg');
     background-position: center center;
     background-repeat: no-repeat;
@@ -629,47 +630,100 @@ legend {
 }
 
 
-.sub-task-list {
+.subtask-list-input-container {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
     width: 100%;
+    margin-top: 2px;
+    cursor: default;
     box-sizing: border-box;
+}
+
+.sub-task-list {
+    box-sizing: border-box;
+    width: 100%;
     list-style: none;
     padding: 0;
     margin: 0;
     margin-top: 10px;
 }
 
-.sub-task-list li {
-    margin-top: 2px;
+.sub-task-list .li-edit {
+    position: relative;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
-    height: 32px;
+    margin-top: 2px;
+    cursor: default;
+    box-sizing: border-box;
+    padding: 8px 1px 8px 1px;
+}
+
+.sub-task-list li {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 2px;
     cursor: pointer;
     transition: background 0.1s ease-in-out;
+    padding: 8px 12px 8px 22px;
+    box-sizing: border-box;
 }
 
 .sub-task-list .li-readonly::before {
+    position: absolute;
     content: "•";
-    margin-right: 0.5em;
-    padding-left: 1em;
+    left: 8px;
+    top: 0.55em;
+    font-size: 16px;
     color: black;
+    line-height: 1;
 }
 
 .sub-task-list-input-readonly {
-    font-family: 'Inter';
+    display: block;
+    flex: 1 1 0%;
+    min-width: 0;
+    padding-left: 0;
     font-size: 16px;
     font-weight: 400;
     color: black;
-    background-color: transparent;
+    background: transparent;
     border: none;
     cursor: pointer;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .sub-task-list-input-readonly:focus {
     outline: none;
 }
 
-.sub-list-edit-btn-container button:nth-child(1)>div {
+
+.sub-list-edit-btn-container {
+    flex: 0 0 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.sub-list-writing-btn-container {
+    flex: 0 0 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+
+.sub-list-edit-btn-container .btn-edit>div {
     height: 18.25px;
     width: 18.25px;
     background-image: url('../assets/edit-sub-icon.svg');
@@ -678,51 +732,66 @@ legend {
     background-size: cover;
 }
 
-.sub-list-writing-btn-container button:nth-child(1)>div,
-.sub-list-edit-btn-container button:nth-child(3)>div {
-    height: 18px;
-    width: 16px;
+.sub-list-writing-btn-container .btn-separator, 
+.sub-list-edit-btn-container .btn-separator {
+    width: 1px;
+    height: 24px;
+    background-color: var(--input-border-color);
+}
+
+.sub-list-writing-btn-container .btn-delete>div,
+.sub-list-edit-btn-container .btn-delete>div {
+    height: 17px;
+    width: 14px;
     background-image: url('../assets/delete-icon.svg');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-.sub-list-edit-btn-container {
-    display: none;
-}
 
 .sub-task-list .li-readonly:hover {
     background-color: var(--bg-contact-item);
     border-radius: 10px;
 }
 
+
 .sub-task-list .li-readonly:hover .sub-list-edit-btn-container {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.subtask-list-edit-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    right: 20px;
+    align-items: flex-start;
+    width: 100%;
+    gap: 8px;
+    min-width: 0;
+    flex: 1 1 auto;
+    border-bottom: solid 1px var(--btn-bg-hover);
 }
 
 .sub-task-list-input-edit {
-    height: 21px;
-    width: calc(440px - 66px);
+    display: block;
+    flex: 1 1 0%;
+    min-width: 0;
     outline: none;
     border: none;
     background-color: white;
     padding-block: 0;
     padding-inline: 0;
-    padding: 4px 50px 4px 16px;
-    border-bottom: solid 1px var(--btn-bg-hover);
+    padding: 4px 8px 6px 7px;
     font-family: 'Inter';
     font-size: 16px;
     font-weight: 400;
     color: black;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 
-.add-task-safe-changes{
+.add-task-safe-changes {
     position: absolute;
     z-index: 10000;
     width: 200px;
@@ -738,14 +807,14 @@ legend {
     transition: transform 250ms ease-in-out;
 }
 
-.add-task-safe-changes>span{
+.add-task-safe-changes>span {
     font-family: 'Inter';
     font-size: 18px;
     font-weight: 400;
     color: white;
 }
 
-.safe-changes-toast-open{
+.safe-changes-toast-open {
     transform: translateX(calc(100vw / 2 - 100px)) translateY(calc(100vh / 2 - 25px));
 }
 
@@ -806,7 +875,3 @@ legend {
         transform: translateY(0%);
     }
 }
-
-
-
-

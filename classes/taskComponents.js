@@ -583,15 +583,13 @@ class TaskComponents {
         if (this.currentContactAssignList.length == 0) {return;}
         let badgeContainer = document.getElementById('contact-assigned-badge');
         badgeContainer.innerHTML = "";
-        let counter = 0;
         for (let i = 0; i < this.currentContactAssignList.length; i++) {
-            badgeContainer.innerHTML += getAssignedContactBadge(this.currentContactAssignList[i]);
-            counter++;
-            if (counter == 5) {
-                const invisibleContacts = this.currentContactAssignList.length - counter;
+            if (i == 5) {
+                const invisibleContacts = this.currentContactAssignList.length - i;
                 badgeContainer.innerHTML += getBadgeForContactOverflow(invisibleContacts);
                 break;
             }
+            badgeContainer.innerHTML += getAssignedContactBadge(this.currentContactAssignList[i]);
         }
     }
 
@@ -740,6 +738,8 @@ class TaskComponents {
 
     }
 
+    /**TODO - Hier noch alle vorhandenen Subtasks Accepten und auf readonly schalten! */
+
     /**
      * Handles the click event on the subtask input field.
      * If the subtask writing buttons are not visible, it shows them.
@@ -750,6 +750,7 @@ class TaskComponents {
     onclickSubtaskInput(input) {
         if (!input) { return; }
         this.toggleSubWritingButtons(true);
+        
     }
 
     /**
@@ -840,27 +841,14 @@ class TaskComponents {
     renderSubtasks(idForEdit = "") {
         let subTaskList = document.querySelector('.sub-task-list');
         subTaskList.innerHTML = "";
-        const sortedSubTasks = this.getSortedSubTask();
-        if (sortedSubTasks.length == 0) { return; }
-        if (!subTaskList) { return; }
-
-        for (let i = 0; i < sortedSubTasks.length; i++) {
-            if (sortedSubTasks[i]['id'] == idForEdit) {
-                subTaskList.innerHTML += getSubtaskListElementForChanging(sortedSubTasks[i], this.currentInstance);
+        if (!this.currentSubTasks || this.currentSubTasks.length == 0) { return; }
+        for (let i = 0; i < this.currentSubTasks.length; i++) {
+            if (this.currentSubTasks[i]['id'] == idForEdit) {
+                subTaskList.innerHTML += getSubtaskListElementForChanging(this.currentSubTasks[i], this.currentInstance);
                 continue;
             }
-            subTaskList.innerHTML += getSubtaskListElementReadOnly(sortedSubTasks[i], this.currentInstance);
+            subTaskList.innerHTML += getSubtaskListElementReadOnly(this.currentSubTasks[i], this.currentInstance);
         }
-    }
-
-    /**
-     * Retrieves the sorted subtask array.
-     * @returns {Array} The sorted subtask array.
-     */
-    getSortedSubTask() {
-        if (!this.currentSubTasks || this.currentSubTasks.length == 0) { return []; }
-        const sortedSubTasks = this.currentSubTasks.sort((a, b) => a.position - b.position);
-        return sortedSubTasks;
     }
 
     /**
@@ -875,9 +863,9 @@ class TaskComponents {
         let currentSubTask = this.currentSubTasks.find(x => x['id'] == subtaskID);
         if (!currentSubTask) { return; }
         const inputField = document.getElementById(`subTaskEdit-${subtaskID}`);
-        const inputValueClean = (inputField.value ?? "").trim();
+        const inputValueClean = (inputField.innerText ?? "").trim();
         if (inputValueClean.length <= 3) { return; }
-        currentSubTask['title'] = inputField.value;
+        currentSubTask['title'] = inputField.innerText;
         this.renderSubtasks();
     }
 

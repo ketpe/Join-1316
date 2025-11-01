@@ -100,8 +100,7 @@ class BoardTaskDetailViewUtils {
         contactSelectElement.innerHTML = "";
         for (let i = 0; i < this.currentTask.assignedContacts.length; i++) {
             if (this.currentTask.assignedContacts[i].length == 0) { continue; }
-            contactSelectElement.innerHTML += getContactListElement(this.currentTask.assignedContacts[i][0], false, true, this.currentInstance,
-                this.checkIfCurrentUserIsAssigned(this.currentTask.assignedContacts[i][0]['id']));
+            contactSelectElement.innerHTML += getContactListElementForView(this.currentTask.assignedContacts[i][0], this.checkIfCurrentUserIsAssigned(this.currentTask.assignedContacts[i][0]['id']));
             counter++;
         }
         const heightOfOneContact = this.getOffsetHeightOfElement('.contact-list-btn') ? this.getOffsetHeightOfElement('.contact-list-btn') + 1 : 55;
@@ -125,19 +124,34 @@ class BoardTaskDetailViewUtils {
 
     /**
      * Renders the subtask information in the dialog.
+     * Get the heights of individual subtasks to set the container height.
      * @returns {void}
      */
     viewSubTasks() {
-        let subTaskContainer = document.getElementById('detail-view-subtask-container');
-        const subtaskArray = this.getSortedSubTask();
-        for (let i = 0; i < subtaskArray.length; i++) {
-            subTaskContainer.innerHTML += getSubtaskForDetailView(subtaskArray[i]);
+        const subTaskContainer = document.getElementById('detail-view-subtask-container');
+        let subtaskHeightsArray = [];
+        if (!this.currentTask.subTasks || this.currentTask.subTasks.length == 0) { return; }
+        for (let i = 0; i < this.currentTask.subTasks.length; i++) {
+            subTaskContainer.innerHTML += getSubtaskForDetailView(this.currentTask.subTasks[i]);
+            const heightOfOneSubtask = this.getOffsetHeightOfElement(`#subtask-content-for-${this.currentTask.subTasks[i]['id']}`);
+            subtaskHeightsArray.push(heightOfOneSubtask);
         }
-        const heightOfOneSubtask = this.getOffsetHeightOfElement('.subtask-content') ? this.getOffsetHeightOfElement('.subtask-content') : 36;
-        subTaskContainer.style.height = (subtaskArray.length * heightOfOneSubtask) + "px";
+        this.setSubtaskContainerHeight(subtaskHeightsArray);
     }
 
-  
+    /**
+     * Set the height of the subtask container based on the heights of individual subtasks.
+     * @param {Array<number>} subtaskHeightsArray 
+     * @returns 
+     */
+    setSubtaskContainerHeight(subtaskHeightsArray){
+        const sum = subtaskHeightsArray.reduce((currentSum, currentHeight) => currentSum + currentHeight, 0);
+        const subTaskContainer = document.getElementById('detail-view-subtask-container'); 
+        if(!subTaskContainer){return;}
+        subTaskContainer.style.height = sum + "px";   
+    }
+
+
     /**
      * Retrieves the offset height of a specified element.
      * @param {string} elementMarker - The CSS selector for the element.
@@ -147,17 +161,6 @@ class BoardTaskDetailViewUtils {
         let element = document.querySelector(elementMarker);
         return element ? element.offsetHeight : 0;
     }
-
-    /**
-     * Retrieves the sorted subtask array.
-     * @returns {Array} The sorted subtask array.
-     */
-    getSortedSubTask() {
-        if (!this.currentTask.subTasks || this.currentTask.subTasks.length == 0) { return []; }
-        const sortedSubTasks = this.currentTask.subTasks.sort((a, b) => a.position - b.position);
-        return sortedSubTasks;
-    }
-
 
     /**
      * Sets the current task ID into the edit and delete buttons for reference.

@@ -29,6 +29,19 @@ function getContactListElement(contact, isAssinged, isdetailView = false, taskIn
     `;
 }
 
+function getContactListElementForView(contact, isCurrentUser = false) {
+    return `
+        <article class="contact-list-btn contact-list-btn-view" data-active="false">
+            <div class="contact-profil-container">
+                <div class="contact-ellipse ${contact['initialColor']}"><span>${contact['initial']}</span></div>
+                <p> ${contact['firstname']} ${contact['lastname']} ${isCurrentUser ? "(You)" : ""}</p>
+            </div>
+            <div class="contact-check-icon contact-unchecked d-none" role="img" title="Check or uncheck Icon"></div>
+        </article>
+    `;
+}
+
+
 /**
  * @description Generates the HTML for an assigned contact badge.
  * @function getAssignedContactBadge
@@ -83,13 +96,15 @@ function getSubtaskListElementReadOnly(subTask, taskInstance) {
     return `
         <li class="li-readonly" id="${subTask['id']}" ondblclick="${taskInstance}.editCurrentSelectedSubTask('${subTask['id']}')">
             <div class="subtask-list-input-container">
-                <input name="subtask-${subTask['id']}" class="sub-task-list-input-readonly" type="text" title="subtask list inputfield" value="${subTask['title']}" readonly>
+                <span class="sub-task-list-input-readonly" role="textbox" aria-readonly="true" title="Subtask title">
+                    ${subTask['title']}
+                </span>
                 <div class="sub-list-edit-btn-container">
-                    <button type="button" title="edit current entry button" onclick="${taskInstance}.editCurrentSelectedSubTask('${subTask['id']}')">
+                    <button class="btn-edit" type="button" title="edit current entry button" onclick="${taskInstance}.editCurrentSelectedSubTask('${subTask['id']}')">
                         <div role="img" title="edit icon"></div>
                     </button>
-                    <div></div>
-                    <button type="button" title="delete current entry" onclick="${taskInstance}.deleteCurrentSelectedSubTask('${subTask['id']}')">
+                    <div class="btn-separator"></div>
+                    <button class="btn-delete" type="button" title="delete current entry" onclick="${taskInstance}.deleteCurrentSelectedSubTask('${subTask['id']}')">
                         <div role="img" title="delete icon"></div>
                     </button>
                 </div>
@@ -98,6 +113,8 @@ function getSubtaskListElementReadOnly(subTask, taskInstance) {
         </li>
     `;
 }
+
+
 
 /**
  * @description Generates the HTML for a subtask list element in edit mode.
@@ -110,15 +127,14 @@ function getSubtaskListElementReadOnly(subTask, taskInstance) {
 function getSubtaskListElementForChanging(subTask, taskInstance) {
     return `
         <li class="li-edit">
-            <div class="subtask-list-input-container">
-                <input id="subTaskEdit-${subTask['id']}" class="sub-task-list-input-edit" type="text" title="subtask list inputfield"
-                    value="${subTask['title']}">
+            <div class="subtask-list-edit-container">
+                <div role="textbox" aria-readonly="false" contenteditable="true" id="subTaskEdit-${subTask['id']}" class="sub-task-list-input-edit" title="subtask list inputfield">${subTask['title']}</div>
                 <div class="sub-list-writing-btn-container">
-                    <button type="button" title="delete current entry" onclick="${taskInstance}.deleteCurrentSelectedSubTask('${subTask['id']}')">
+                    <button class="btn-delete" type="button" title="delete current entry" onclick="${taskInstance}.deleteCurrentSelectedSubTask('${subTask['id']}')">
                         <div role="img" title="delete icon"></div>
                     </button>
-                    <div></div>
-                        <button type="button" title="accept current entry button" onclick="${taskInstance}.safeChangesOnCurrentSelectedSubtask('${subTask['id']}')">
+                    <div class="btn-separator"></div>
+                    <button class="btn-accept" type="button" title="accept current entry button" onclick="${taskInstance}.safeChangesOnCurrentSelectedSubtask('${subTask['id']}')">
                         <div role="img" title="accept icon"></div>
                     </button>
                 </div>
@@ -136,7 +152,7 @@ function getSubtaskListElementForChanging(subTask, taskInstance) {
  */
 function getSubtaskForDetailView(currentSubtask) {
     return `
-        <div class="subtask-content">
+        <div class="subtask-content" id="subtask-content-for-${currentSubtask['id']}">
             <button onclick="detailViewChangeSubtaskChecked(this)" type="button" data-id="${currentSubtask['id']}" data-checked="${currentSubtask['taskChecked']}"
                 title="Check if the subtask is finished" class="checkbox-btn ${currentSubtask['taskChecked'] ? 'checkbox-btn-default-hover' : 'checkbox-btn-default'}"></button>
             <span id="subtask-text" class="subtask-text">${currentSubtask['title']}</span>

@@ -87,7 +87,7 @@
     }
 
     .task-main-edit {
-        width: auto;
+       /*  width: auto; */
     }
 
     .a-t-priority-button-container {
@@ -149,6 +149,7 @@
     }
 
 }
+
 
 @media(max-width: 450px) {
     .join-h1 {

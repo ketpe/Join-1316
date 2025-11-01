@@ -140,35 +140,37 @@ async function onBoardPageResize() {
         setNavigationButtonActive('contacts', "desktop");
         kanbanUpdateSizeDesktop();
     }
-    setTaskEditDialogSize(height);
+    setTaskViewEditDialogSize(height);
 }
 
 /**
- * @function setTaskEditDialogSize
+ * @function setTaskViewEditDialogSize
  * @memberof board
  * @description Set the height of the task edit dialog based on the current window size.
  * set height of main content area in task edit dialog and toggle scroll class.
  * @param {number} height - The height to set for the dialog.
  * @returns {void}
  */
-function setTaskEditDialogSize(height) {
+function setTaskViewEditDialogSize(height) {
     const editDialog = document.querySelector('#detail-view-task-dialog.dialog-show');
     if (!editDialog) { return; }
     const taskSection = editDialog.querySelector('.task-section');
     if (!taskSection) { return; }
-    const taskMain = document.querySelector(".task-main");
-    if(!taskMain){return;}
+    const taskMain = taskSection.querySelector('.task-main')  ?? taskSection.querySelector('.task-main-edit');
+    if (!taskMain) return;
     const sumHeightsInDialog = headerHeight + mainContentHeight + footerHeight;
 
-    if(height - 200 > sumHeightsInDialog){
+    if (height - 200 > sumHeightsInDialog) {
         taskSection.style.height = (sumHeightsInDialog + 40) + "px";
         taskMain.classList.remove('task-main-scroll');
-    }else{
+    } else {
         taskSection.style.height = (height - 200) + "px";
         taskMain.style.height = (height - 200 - headerHeight - footerHeight) + "px";
         taskMain.classList.add('task-main-scroll');
     }
 }
+
+
 
 /**
  * @function kanbanUpdateSizeDesktop
@@ -287,11 +289,29 @@ async function getDatabaseTaskSubtasks(tasks) {
             let foundSubTask = getAllSubtasks.find(obj => obj.id === taskSubTask.subTaskID);
             if (foundSubTask) subTasks.push(foundSubTask);
         });
-        task.subTasks = subTasks;
+        task.subTasks = getSortedSubTask(subTasks);
     });
     tasks = getSubTaskSumOfTrue(tasks);
     return tasks;
 }
+
+/**
+ * @function getSortedSubTask
+ * @memberof board
+ * @description Retrieves the sorted subtask array.
+ * @returns {Array} The sorted subtask array.
+ */
+function getSortedSubTask(subtaskArray) {
+    if (!subtaskArray || subtaskArray.length == 0) { return []; }
+    const sortedSubTasks = subtaskArray.sort((a, b) => a.position - b.position);
+    return sortedSubTasks;
+}
+function getSortedSubTask(subtaskArray) {
+    if (!subtaskArray || subtaskArray.length == 0) { return []; }
+    const sortedSubTasks = subtaskArray.sort((a, b) => a.position - b.position);
+    return sortedSubTasks;
+}
+
 /**
  * @function getSubTaskSumOfTrue
  * @memberof board
@@ -438,7 +458,7 @@ async function getDetailViewTask(taskId) {
     boardTaskComponents = new TaskComponents(currentUser, "boardTaskComponents");
     boardTaskComponents.runWithDataAsView(tasks[0]);
     [headerHeight, mainContentHeight, footerHeight] = new BoardTaskDetailViewUtils().measureCurrentDialogContentHeight();
-    setTaskEditDialogSize(window.innerHeight);
+    setTaskViewEditDialogSize(window.innerHeight);
 }
 
 /**
@@ -490,6 +510,11 @@ async function editCurrentTask(button) {
     const currentUser = taskUtils.readCurrentUserID();
     boardTaskComponents = new TaskComponents(currentUser, "boardTaskComponents");
     await boardTaskComponents.runWithDataAsEdit(task[0]);
+    [headerHeight, mainContentHeight, footerHeight] = new BoardTaskDetailViewUtils().measureCurrentDialogContentHeight();
+    headerHeight = 32;
+    mainContentHeight = window.innerHeight - 200 - 32 - 82;
+    footerHeight = 82;
+    setTaskViewEditDialogSize(window.innerHeight);
 }
 
 /**
@@ -501,7 +526,6 @@ async function editCurrentTask(button) {
 function removeLoadingFunctionFromDialog() {
     const editDialog = document.getElementById('detail-view-task-dialog');
     if (!editDialog) { return; }
-    //editDialog.setAttribute('onclick', 'closeDialogByEvent(event,"detail-view-task-dialog")');
 }
 
 /**

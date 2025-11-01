@@ -33,7 +33,7 @@ function setEditDialogEventListeners() {
   if (!dialog) return;
   const onShown = () => {
     if (!dialog.classList.contains('dialog-show')) return;
-    setTimeout(() => dialog.setAttribute('onclick',"closeDialogByEvent(event,'detail-view-task-dialog');getBoardTaskWithLoadingAnimation();"), 250);
+    setTimeout(() => dialog.setAttribute('onclick',"closeDialogByEvent(event,'detail-view-task-dialog')"), 250);
     dialog.removeEventListener('animationend', onShown);
   };
   const cleanup = () => {
@@ -64,6 +64,9 @@ function closeDialogByEvent(event, dialogId,) {
         event.target.closest('.btn-create')
     ) {
         closeDialog(dialogId);
+        if(dialogId == "detail-view-task-dialog"){
+            getBoardTaskWithLoadingAnimation();
+        }
     }
 }
 

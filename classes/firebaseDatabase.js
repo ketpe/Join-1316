@@ -73,6 +73,7 @@ class FirebaseDatabase {
         return contactssorted
     }
 
+
     /**
      * Updates data at the specified path.
      * @param {string} path - The path to the data to update.
