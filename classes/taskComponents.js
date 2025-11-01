@@ -738,17 +738,18 @@ class TaskComponents {
 
     }
 
-    /**TODO - Hier noch alle vorhandenen Subtasks Accepten und auf readonly schalten! */
 
     /**
      * Handles the click event on the subtask input field.
      * If the subtask writing buttons are not visible, it shows them.
      * If they are visible, it hides them.
+     * Reset all subtasks to non-edit mode.
      * @param {HTMLElement} input - The input field element for the subtask.
      * @returns void
      */
     onclickSubtaskInput(input) {
         if (!input) { return; }
+        this.renderSubtasks("", true);
         this.toggleSubWritingButtons(true);
         
     }
@@ -777,6 +778,8 @@ class TaskComponents {
         }
     }
 
+    /**TODO - Hier berechnen. ob das alles noch fraufpasst, sonst a-t-f-i-right Container anpassen und scrollen! */
+
     /**
      * Adopts the current subtask entry.
      * If the input field is empty or has less than 3 characters, it does nothing.
@@ -792,6 +795,47 @@ class TaskComponents {
         this.currentSubTasks = this.addTaskUtils.addSubtaskToArray(inputValueClean, this.currentSubTasks);
         this.clearSubInputField();
         this.renderSubtasks();
+        this.checkAvailableSpaceInAddtask();
+    }
+
+
+    checkAvailableSpaceInAddtask(){
+
+        const addTaskDialog = document.getElementById('add-task-dialog');
+        const addTaskRightContainer = addTaskDialog.querySelector('.a-t-f-i-right');
+        const addTaskHeader = addTaskDialog.querySelector('header.add-task-head');
+        const addTaskFooter = addTaskDialog.querySelector('.add-task-footer');
+
+        if(!addTaskRightContainer || !addTaskDialog || !addTaskHeader || !addTaskFooter){return;}
+        const [sum, rightContainerAvalable] = this.calculateHeightForRightContainer(addTaskDialog, addTaskHeader, addTaskFooter, addTaskRightContainer);
+
+        if(sum > addTaskDialog.offsetHeight){
+            addTaskRightContainer.classList.add('a-t-f-i-scroll');
+            addTaskRightContainer.style.height = rightContainerAvalable + "px";
+        } else {
+            addTaskRightContainer.classList.remove('a-t-f-i-scroll');
+            addTaskRightContainer.style.height = "auto";
+        }
+        
+    }
+
+    
+    getHeightOfAllChildrenInRightContainer(rightContainer){
+        if(!rightContainer){return;}
+        let sumHeight = 0;
+        const elements = rightContainer.querySelectorAll('*');
+        elements.forEach(element => {
+            sumHeight += element.offsetHeight;
+        });
+        return sumHeight;
+    }
+
+
+    calculateHeightForRightContainer(dialog, header, footer, rightContainer){
+        const heightOfRightContainerHeight = this.getHeightOfAllChildrenInRightContainer(rightContainer);
+        const sum = heightOfRightContainerHeight + header.offsetHeight + footer.offsetHeight + 200;
+        const rightContainerAvalable = dialog.offsetHeight - header.offsetHeight - footer.offsetHeight - 200;
+        return [sum, rightContainerAvalable];
     }
 
     /**
@@ -838,12 +882,12 @@ class TaskComponents {
      * @param {string} idForEdit - The ID of the subtask to edit.
      * @returns void
      */
-    renderSubtasks(idForEdit = "") {
+    renderSubtasks(idForEdit = "", isReset = false) {
         let subTaskList = document.querySelector('.sub-task-list');
         subTaskList.innerHTML = "";
         if (!this.currentSubTasks || this.currentSubTasks.length == 0) { return; }
         for (let i = 0; i < this.currentSubTasks.length; i++) {
-            if (this.currentSubTasks[i]['id'] == idForEdit) {
+            if (this.currentSubTasks[i]['id'] == idForEdit && !isReset) {
                 subTaskList.innerHTML += getSubtaskListElementForChanging(this.currentSubTasks[i], this.currentInstance);
                 continue;
             }
@@ -864,7 +908,7 @@ class TaskComponents {
         if (!currentSubTask) { return; }
         const inputField = document.getElementById(`subTaskEdit-${subtaskID}`);
         const inputValueClean = (inputField.innerText ?? "").trim();
-        if (inputValueClean.length <= 3) { return; }
+        if (inputValueClean.length <= 2) { return; }
         currentSubTask['title'] = inputField.innerText;
         this.renderSubtasks();
     }

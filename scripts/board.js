@@ -158,7 +158,7 @@ function setTaskViewEditDialogSize(height) {
     if (!taskSection) { return; }
     const taskMain = taskSection.querySelector('.task-main')  ?? taskSection.querySelector('.task-main-edit');
     if (!taskMain) return;
-    const sumHeightsInDialog = headerHeight + mainContentHeight + footerHeight;
+    const sumHeightsInDialog = headerHeight + mainContentHeight + footerHeight + 60;
 
     if (height - 200 > sumHeightsInDialog) {
         taskSection.style.height = (sumHeightsInDialog + 40) + "px";

@@ -114,6 +114,10 @@ legend {
     align-items: flex-start;
 }
 
+.a-t-f-i-scroll {
+    overflow-y: scroll;
+}
+
 .a-t-f-i-midle {
     height: 100%;
     min-width: 1px;
