@@ -30,19 +30,19 @@ function openDialog(dialogId, renderSpecificFunction) {
  */
 function setEditDialogEventListeners() {
     const dialog = document.getElementById("detail-view-task-dialog");
-  if (!dialog) return;
-  const onShown = () => {
-    if (!dialog.classList.contains('dialog-show')) return;
-    setTimeout(() => dialog.setAttribute('onclick',"closeDialogByEvent(event,'detail-view-task-dialog')"), 250);
-    dialog.removeEventListener('animationend', onShown);
-  };
-  const cleanup = () => {
-    dialog.removeAttribute('onclick');
-    ['animationend','close','cancel'].forEach(e=>dialog.removeEventListener(e, onShown));
-  };
-  dialog.addEventListener('animationend', onShown);
-  dialog.addEventListener('close', cleanup);
-  dialog.addEventListener('cancel', cleanup);
+    if (!dialog) return;
+    const onShown = () => {
+        if (!dialog.classList.contains('dialog-show')) return;
+        setTimeout(() => dialog.setAttribute('onclick', "closeDialogByEvent(event,'detail-view-task-dialog')"), 250);
+        dialog.removeEventListener('animationend', onShown);
+    };
+    const cleanup = () => {
+        dialog.removeAttribute('onclick');
+        ['animationend', 'close', 'cancel'].forEach(e => dialog.removeEventListener(e, onShown));
+    };
+    dialog.addEventListener('animationend', onShown);
+    dialog.addEventListener('close', cleanup);
+    dialog.addEventListener('cancel', cleanup);
 }
 
 
@@ -55,6 +55,7 @@ function setEditDialogEventListeners() {
  * @returns {void}
  */
 function closeDialogByEvent(event, dialogId,) {
+    event.stopPropagation();
     const dialog = document.getElementById(dialogId);
     const closeDiv = document.getElementById('btn-overlay-close-div');
     if (
@@ -64,7 +65,7 @@ function closeDialogByEvent(event, dialogId,) {
         event.target.closest('.btn-create')
     ) {
         closeDialog(dialogId);
-        if(dialogId == "detail-view-task-dialog"){
+        if (dialogId == "detail-view-task-dialog") {
             getBoardTaskWithLoadingAnimation();
         }
     }
