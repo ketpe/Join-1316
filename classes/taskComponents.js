@@ -855,7 +855,7 @@ class TaskComponents {
 
         if(sum > window.innerHeight){
             rightContainer.classList.add('a-t-f-i-scroll');
-            rightContainer.style.height = rightContainerAvalable + "px"; 
+            rightContainer.style.height = rightContainerAvalable  <= 400 ? "400px" : rightContainerAvalable + "px";
         }else{
             rightContainer.classList.remove('a-t-f-i-scroll');
             rightContainer.style.height = 440 + "px";
