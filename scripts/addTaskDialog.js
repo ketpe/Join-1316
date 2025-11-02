@@ -86,7 +86,7 @@ async function resizeAddTaskBoardDialog(event) {
  * @returns {Promise<void>}
  */
 async function showAddTaskAsDialog() {
-    AddTaskUtils.captureCurrentAddTaskDataFromView();
+    AddTaskCache.captureCurrentAddTaskDataFromView();
     clearDialogContent();
     addTaskDialogtoggleScrollOnBody(true);
     addDialogShowClass('add-task-dialog');
@@ -123,7 +123,7 @@ function setDialogEventListener() {
  * @returns {Promise<void>}
  */
 async function showAddTaskAsDialogSingle() {
-    AddTaskUtils.captureCurrentAddTaskDataFromView();
+    AddTaskCache.captureCurrentAddTaskDataFromView();
     clearDialogContent();
     addTaskDialogtoggleScrollOnBody(true);
     addDialogShowClass('add-task-dialog');
@@ -149,7 +149,7 @@ async function loadDataForAddTaskDialog() {
     }
 
     addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTaskDialogTaskComponents');
-    AddTaskUtils.applyAddTaskDataToView(addTaskDialogTaskComponents);
+    AddTaskCache.applyAddTaskDataToView(addTaskDialogTaskComponents);
     addTaskUtils.setAddTaskFormSubmitFunction("addTaskDialogTaskComponents", true);
 }
 

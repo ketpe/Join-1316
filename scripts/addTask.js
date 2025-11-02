@@ -82,13 +82,13 @@ async function addTaskPageResize() {
     try {
         const [height, width] = addTaskUtils.getCurrentAddTaskSize;
         if (width <= breakPointToMobile && currentView !== MOBILE) {
-            AddTaskUtils.captureCurrentAddTaskDataFromView();
+            AddTaskCache.captureCurrentAddTaskDataFromView();
             await changeAddTaskToMobile(height, width);
         } else if (width >= breakPointToDesktopSingle && currentView !== DESKTOP) {
-            AddTaskUtils.captureCurrentAddTaskDataFromView();
+            AddTaskCache.captureCurrentAddTaskDataFromView();
             await changeAddTaskToDesktop(height, width);
         } else if (width > breakPointToMobile && width <= breakPointToDesktopSingle && currentView != DESKTOPSINGLE) {
-            AddTaskUtils.captureCurrentAddTaskDataFromView();
+            AddTaskCache.captureCurrentAddTaskDataFromView();
             await changeAddTaskToDesktopSingle(height, width);
         }
 
@@ -316,7 +316,7 @@ async function loadDataForAddTask() {
         window.addTasktaskComponents = addTasktaskComponents;
     }
 
-    AddTaskUtils.applyAddTaskDataToView(addTasktaskComponents);
+    AddTaskCache.applyAddTaskDataToView(addTasktaskComponents);
 
 }
 
