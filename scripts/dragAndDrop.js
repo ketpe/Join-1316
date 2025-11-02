@@ -12,8 +12,8 @@ let draggedTask = null;
  * @function startDrag
  * @memberof dragAndDrop
  * @description Initiates the drag operation for a task.
- * @param {*} event 
- * @param {Task} task 
+ * @param {*} event
+ * @param {Task} task
  * @return {void}
  */
 function startDrag(event, task) {
@@ -30,7 +30,7 @@ function startDrag(event, task) {
  * @function getCurrentColumnId
  * @memberof dragAndDrop
  * @description Gets the ID of the current column for a task.
- * @param {Task} task 
+ * @param {Task} task
  * @returns {string} The ID of the current column.
  */
 function getCurrentColumnId(task) {
@@ -138,6 +138,7 @@ async function dropTask(event, column) {
  */
 async function moveTaskToCategory(taskId, newCategory) {
     if (!taskId) return console.error('Task ID is null oder undefined.');
+    if (!newCategory) return;
     newCategory = rewriteCategory(newCategory);
     const fb = new FirebaseDatabase();
     await fb.getFirebaseLogin(() => fb.updateData(`tasks/${taskId}`, { taskStateCategory: newCategory }));
