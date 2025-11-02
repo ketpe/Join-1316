@@ -132,6 +132,7 @@ async function getBoardTasks() {
 async function onBoardPageResize() {
     const [height, width] = getCurrentWindowSize();
     if ((width <= minDesktopWidth) && currentView != "mobile") {
+        checkIfAddTaskDialogOpen();
         await loadHtmlComponentsForMobile();
         setNavigationButtonActive('contacts', "mobile");
         kanbanUpdateSizeMobile();
@@ -141,6 +142,19 @@ async function onBoardPageResize() {
         kanbanUpdateSizeDesktop();
     }
     setTaskViewEditDialogSize(height);
+
+}
+
+/**
+ * @function checkIfAddTaskDialogOpen
+ * @memberof board
+ * @description Checks if the add task dialog is open and navigates to it if necessary.
+ * @returns {void}
+ */
+function checkIfAddTaskDialogOpen() {
+    const addTaskDialog = document.querySelector('#add-task-dialog.dialog-show');
+    if(!addTaskDialog){return;}
+    navigateToAddTask(null, currentStateCategory);
 }
 
 /**
