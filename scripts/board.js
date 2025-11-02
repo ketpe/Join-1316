@@ -112,7 +112,7 @@ function clearBoardHtmlBody() {
 async function getBoardTasks() {
     const [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone] = getHtmlTasksContent();
     const fb = new FirebaseDatabase();
-    let tasks = await fb.getFirebaseLogin(() => fb.getAllData("tasks"));
+    tasks = await fb.getFirebaseLogin(() => fb.getAllData("tasks"));
     tasks = await getDatabaseTaskCategory(tasks);
     tasks = await getDatabaseTaskSubtasks(tasks);
     tasks = await getDatabaseTaskContact(tasks);
@@ -153,7 +153,7 @@ async function onBoardPageResize() {
  */
 function checkIfAddTaskDialogOpen() {
     const addTaskDialog = document.querySelector('#add-task-dialog.dialog-show');
-    if(!addTaskDialog){return;}
+    if (!addTaskDialog) { return; }
     navigateToAddTask(null, currentStateCategory);
 }
 
@@ -170,7 +170,7 @@ function setTaskViewEditDialogSize(height) {
     if (!editDialog) { return; }
     const taskSection = editDialog.querySelector('.task-section');
     if (!taskSection) { return; }
-    const taskMain = taskSection.querySelector('.task-main')  ?? taskSection.querySelector('.task-main-edit');
+    const taskMain = taskSection.querySelector('.task-main') ?? taskSection.querySelector('.task-main-edit');
     if (!taskMain) return;
     const sumHeightsInDialog = headerHeight + mainContentHeight + footerHeight + 60;
 
