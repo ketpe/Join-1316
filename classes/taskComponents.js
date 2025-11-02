@@ -620,10 +620,13 @@ class TaskComponents {
         this.renderCategoryOptions(this.categories);
         const categoryListContainer = document.getElementById('category-list-container');
         const categoryList = document.getElementById('category-list-for-task');
-        const heightOfOneCategory = document.getElementById(this.categories[0]['id']).offsetHeight;
-        let heightOfContainer = heightOfOneCategory * this.categories.length + 40;
+        const heightOfOneCategory = document.getElementById(this.categories[0]['id']).offsetHeight || 54;
+        let heightOfContainer = heightOfOneCategory * this.categories.length + 25;
         categoryListContainer.style.height = heightOfContainer + "px";
         categoryList.style.height = (heightOfContainer - 27) + "px";
+        categoryList.style.marginTop = "28px";
+        // WICHTIG: wie bei Contacts → Container scroll-freigeben
+        categoryListContainer.classList.add("any-list-scroll");
         this.setCategoryInputfieldValue('Select task category');
         this.currentCategory = {};
         this.isCategoryListOpen = true;
@@ -778,8 +781,6 @@ class TaskComponents {
         }
     }
 
-    /**TODO - Hier berechnen. ob das alles noch fraufpasst, sonst a-t-f-i-right Container anpassen und scrollen! */
-
     /**
      * Adopts the current subtask entry.
      * If the input field is empty or has less than 3 characters, it does nothing.
@@ -799,27 +800,47 @@ class TaskComponents {
     }
 
 
+    /**
+     * Checks if there is enough space in the add task dialog for the current content.
+     * If there isn't enough space, it enables scrolling in the right container.
+     * @returns void
+     */
     checkAvailableSpaceInAddtask(){
+        const [addTaskDialog, addTaskRightContainer, addTaskHeader, addTaskFooter, seperator] = this.getElementsForCheckSpaceInAddTask();
 
-        const addTaskDialog = document.getElementById('add-task-dialog');
-        const addTaskRightContainer = addTaskDialog.querySelector('.a-t-f-i-right');
-        const addTaskHeader = addTaskDialog.querySelector('header.add-task-head');
-        const addTaskFooter = addTaskDialog.querySelector('.add-task-footer');
-
-        if(!addTaskRightContainer || !addTaskDialog || !addTaskHeader || !addTaskFooter){return;}
+        if(!addTaskRightContainer || !addTaskDialog || !addTaskHeader || !addTaskFooter || !seperator){return;}
         const [sum, rightContainerAvalable] = this.calculateHeightForRightContainer(addTaskDialog, addTaskHeader, addTaskFooter, addTaskRightContainer);
 
         if(sum > addTaskDialog.offsetHeight){
             addTaskRightContainer.classList.add('a-t-f-i-scroll');
             addTaskRightContainer.style.height = rightContainerAvalable + "px";
+            seperator.style.height = rightContainerAvalable + "px";
         } else {
             addTaskRightContainer.classList.remove('a-t-f-i-scroll');
             addTaskRightContainer.style.height = "auto";
+            seperator.style.height = 440 + "px";
         }
         
     }
 
-    
+    /**
+     * Gets the elements needed to check the space in the add task dialog.
+     * @returns {Array} - An array containing the relevant elements.
+     */
+    getElementsForCheckSpaceInAddTask(){
+        const addTaskDialog = document.getElementById('add-task-dialog');
+        const addTaskRightContainer = addTaskDialog.querySelector('.a-t-f-i-right');
+        const addTaskHeader = addTaskDialog.querySelector('header.add-task-head');
+        const addTaskFooter = addTaskDialog.querySelector('.add-task-footer');
+        const seperator = addTaskDialog.querySelector('#a-t-middle-container');
+        return [addTaskDialog, addTaskRightContainer, addTaskHeader, addTaskFooter, seperator];
+    }
+
+    /**
+     * Gets the height of all children in the right container.
+     * @param {HTMLElement} rightContainer - The right container element.
+     * @returns {number} - The total height of all children in the right container.
+     */
     getHeightOfAllChildrenInRightContainer(rightContainer){
         if(!rightContainer){return;}
         let sumHeight = 0;
@@ -831,6 +852,14 @@ class TaskComponents {
     }
 
 
+    /**
+     * Calculates the total height needed for the right container in the add task dialog.
+     * @param {HTMLElement} dialog 
+     * @param {HTMLElement} header 
+     * @param {HTMLElement} footer 
+     * @param {HTMLElement} rightContainer 
+     * @returns {Array} - An array containing the total height and the available height for the right container.
+     */
     calculateHeightForRightContainer(dialog, header, footer, rightContainer){
         const heightOfRightContainerHeight = this.getHeightOfAllChildrenInRightContainer(rightContainer);
         const sum = heightOfRightContainerHeight + header.offsetHeight + footer.offsetHeight + 200;

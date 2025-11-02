@@ -94,7 +94,8 @@ legend {
     width: calc((2 * 440px) + (2 * 24px) + 2px);
     display: flex;
     justify-content: space-evenly;
-    align-items: center;
+    /* align-items: center; */
+    align-items: flex-start;
 
 }
 
@@ -116,18 +117,30 @@ legend {
 
 .a-t-f-i-scroll {
     overflow-y: scroll;
+    padding-inline-end: 12px;
 }
 
-.a-t-f-i-midle {
+/* .a-t-f-i-midle {
     height: 100%;
     min-width: 1px;
     background-color: var(--input-border-color);
     margin-left: 24px;
     margin-right: 24px;
+} */
+
+.a-t-f-i-midle {
+    height: 100%;
+    min-width: 1px;
+    width: 1px;
+    background-color: var(--input-border-color);
+    margin-left: 24px;
+    margin-right: 24px;
+    /* align-self: top; */
 }
 
 .a-t-f-i-midle-dialog {
     height: 440px;
+    /* height: auto !important; */
 }
 
 .add-task-footer {
@@ -680,7 +693,7 @@ legend {
     position: absolute;
     content: "•";
     left: 8px;
-    top: 0.55em;
+    top: 0.72em;
     font-size: 16px;
     color: black;
     line-height: 1;
