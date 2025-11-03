@@ -126,12 +126,10 @@ async function getDatabaseTaskContact(tasks) {
  */
 
 function getSortedContact(contacts) {
-    console.log(contacts);
-
-    let flatContacts = contacts.flat(); // Glättet das Array, nimmt die Verschachtelung raus
-    let sorted = flatContacts.sort((a, b) => a.firstname.localeCompare(b.firstname)); //Sortiert dann das Array
-    let structured = sorted.map(obj => [obj]); // Verschatelt das Array wieder
-    return structured; // theroretisch kann die Verschachtelung vorher entfernt werden, man muus sie nur auch beim erstellen der Tasks rausnehmen
+    let flatContacts = contacts.flat();
+    let sorted = flatContacts.sort((a, b) => a.firstname.localeCompare(b.firstname));
+    let structured = sorted.map(obj => [obj]);
+    return structured;
 
 }
 
