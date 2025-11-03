@@ -27,6 +27,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview
  * @description Template functions for board tasks.
  * @namespace boardTaskTemplate
  */
@@ -42,7 +43,7 @@
  * @param {string} nextCategory - The next category of the task.
  * @returns {string} The HTML template for the board task.
  */
- 
+
 function boardTasksTemplate(task, rendererdContacts, prevCategory, nextCategory) {
     return `&lt;div class="kanban-task" draggable="true" id="${task.id}" ondragstart="startDrag(event, this)" ondragend="endDrag(this)"
     onclick="getDetailViewTask('${task.id}')"  data-task-id="${task.id}">
@@ -60,14 +61,16 @@ function boardTasksTemplate(task, rendererdContacts, prevCategory, nextCategory)
                 &lt;div class="swap-menu-options">
                 &lt;h3 class="swap-menu-title">Move to&lt;/h3>
                 &lt;div id="subMenu" class="swap-menu-mobile-box" data-dOrM="mobile">
+                ${prevCategory.length > 0 ? `
                     &lt;button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${task.id}','${prevCategory}')">
                     &lt;div role="img" aria-label="to do icon" class="swap-menu-icon swap-menu-icon-up">&lt;/div>
                     &lt;p>${prevCategory}&lt;/p>
-                    &lt;/button>
+                    &lt;/button>`: ''}
+                    ${nextCategory.length > 0 ? `
                     &lt;button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${task.id}','${nextCategory}')">
                     &lt;div role="img" aria-label="review icon" class="swap-menu-icon swap-menu-icon-down">&lt;/div>
                     &lt;p>${nextCategory}&lt;/p>
-                    &lt;/button>
+                    &lt;/button>` : ''}
                     &lt;/div>
                 &lt;/div>
             &lt;/section>
@@ -135,6 +138,15 @@ function getAllAssignedContactsTemplate(assignedContacts) {
                     &lt;/div>
                 &lt;/div>`
 }
+function getContactsTemplateOverflow(numberOfOverflow) {
+    return `&lt;div class="board-task-assigned" id="">
+                    &lt;div class="assigned-contact-board">
+                        &lt;div class="contact-initials-board assigned-contact-pos bg-default-color ">
+                            &lt;p class="board-contact-initials-text"> +${numberOfOverflow}&lt;/p>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>`
+}
 
 /**
  * @function getBtnTemplateAfterMovingTask
@@ -146,15 +158,17 @@ function getAllAssignedContactsTemplate(assignedContacts) {
  * @returns {string} The HTML template for the buttons after moving a task.
  */
 function getBtnTemplateAfterMovingTask(taskId, prevCategory, nextCategory) {
-    return `&lt;button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${taskId}','${prevCategory}')">
+    return `${!prevCategory.length === 0 ? `
+                    &lt;button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${taskId}','${prevCategory}')">
                     &lt;div role="img" aria-label="to do icon" class="swap-menu-icon swap-menu-icon-up">&lt;/div>
                     &lt;p>${prevCategory}&lt;/p>
-                    &lt;/button>
+                    &lt;/button>`: ''}
+                    ${!nextCategory.length === 0 ? `
                     &lt;button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${taskId}','${nextCategory}')">
                     &lt;div role="img" aria-label="review icon" class="swap-menu-icon swap-menu-icon-down">&lt;/div>
                     &lt;p>${nextCategory}&lt;/p>
-                    &lt;/button>
-                    &lt;/div>`
+                    &lt;/button>` : ''}
+                    &lt;/div>`;
 }
 </code></pre>
         </article>
@@ -166,13 +180,13 @@ function getBtnTemplateAfterMovingTask(taskId, prevCategory, nextCategory) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardDatabase.html">boardDatabase</a></li><li><a href="boardDetailView.html">boardDetailView</a></li><li><a href="boardSearch.html">boardSearch</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="boardTasks.html">boardTasks</a></li><li><a href="boardUtils.html">boardUtils</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li><li><a href="taskComponents_.html">taskComponents</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskCache.html">AddTaskCache</a></li><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Mixins</h3><ul><li><a href="taskComponents.categories.html">categories</a></li><li><a href="taskComponents.contacts.html">contacts</a></li><li><a href="taskComponents.create.html">create</a></li><li><a href="taskComponents.layout.html">layout</a></li><li><a href="taskComponents.priority.html">priority</a></li><li><a href="taskComponents.subtasks.html">subtasks</a></li><li><a href="taskComponents.validation.html">validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Oct 28 2025 21:36:38 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Nov 03 2025 20:17:50 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

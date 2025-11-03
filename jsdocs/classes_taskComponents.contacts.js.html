@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: classes/taskComponents.contacts.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: classes/taskComponents.contacts.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @description TaskComponents class methods for managing contacts in tasks.
+ * This file contains methods for loading contacts from the database,
+ * displaying and hiding contact selection lists, rendering contact options,
+ * and handling contact selection for tasks.
+ * @see TaskComponents
+ * @mixin taskComponents.contacts
+ */
+(function() {
+    const taskComponentsPrototype = TaskComponents.prototype;
+
+    /**
+    * @description Loads all contacts from the database and sorts them.
+    * Utilizes the getSortedContact function from db-functions.js.
+    * @function loadContactsAllFromDB
+    * @memberof taskComponents.contacts
+    * @returns {Promise&lt;void>}
+    */
+    taskComponentsPrototype.loadContactsAllFromDB = async function() {
+        const fb = new FirebaseDatabase();
+        this.contactAllListFromDB = await fb.getFirebaseLogin(() => fb.getSortedContact());
+    };
+
+    /**
+     * @description Shows or hides the contact selection input field.
+     * Uses helper functions to update the UI accordingly.
+     * @function showAndHideContacts
+     * @memberof taskComponents.contacts
+     * @param {string} showOrHide - Determines whether to show or hide the contact list.
+     * @return {void}
+     */
+    taskComponentsPrototype.showAndHideContacts = function(showOrHide = "show") {
+        this.setInputAndButtonOnclickFunctionForContacts(showOrHide);
+        const inputField = document.getElementById('task-assign-to');
+        if (showOrHide == "show") {
+            inputField.value = "";
+            inputField.focus();
+            this.showContactListForSelect();
+            this.renderHideIcon('show-hide-icon-contacts');
+            this.showOrHideBadgeContainer("hide");
+        } else {
+            inputField.value = "Select contacts to assign";
+            this.hideContactListForSelect();
+            this.renderShowIcon('show-hide-icon-contacts');
+            this.showOrHideBadgeContainer("show");
+            inputField.blur();
+        }
+    };
+
+    /**
+     * @description Sets the onclick function for the input field and button for showing/hiding contacts.
+     * @function setInputAndButtonOnclickFunctionForContacts
+     * @memberof taskComponents.contacts
+     * @param {string} showOrHide - Determines whether to show or hide the contact list.
+     * @returns {void}
+     */
+    taskComponentsPrototype.setInputAndButtonOnclickFunctionForContacts = function(showOrHide) {
+        const buttonShowOrHide = document.getElementById('show-and-hide-contacts');
+        buttonShowOrHide.setAttribute('onclick', (showOrHide == "show" ? `${this.currentInstance}.showAndHideContacts("hide")` : 
+            `${this.currentInstance}.showAndHideContacts("show")`));
+        const inputField = document.getElementById('task-assign-to');
+        inputField.setAttribute('onclick', (showOrHide == "show" ? `${this.currentInstance}.showAndHideContacts("hide")` : 
+            `${this.currentInstance}.showAndHideContacts("show")`));
+    };
+
+     /**
+     * @description Renders the show icon for the contact selection.
+     * @function renderShowIcon
+     * @memberof taskComponents.contacts
+     * @param {string} elementID - The ID of the element to modify.
+     * @returns {void}
+     */
+    taskComponentsPrototype.renderShowIcon = function(elementID) {
+        const iconDiv = document.getElementById(elementID);
+        if (!iconDiv) { return; }
+        iconDiv.classList.remove('icon-hide-list');
+        iconDiv.classList.add('icon-show-list');
+    };
+
+    /**
+     * @description Renders the hide icon for the contact selection.
+     * @function renderHideIcon
+     * @memberof taskComponents.contacts
+     * @param {string} elementID - The ID of the element to modify.
+     * @returns {void}
+     */
+    taskComponentsPrototype.renderHideIcon = function(elementID) {
+        const iconDiv = document.getElementById(elementID);
+        if (!iconDiv) { return; }
+        iconDiv.classList.add('icon-hide-list');
+        iconDiv.classList.remove('icon-show-list');
+    };
+
+    /**
+     * @description Shows the contact list for selection.
+     * If a current contact list is provided, it uses that; otherwise, it uses the full contact list from the database.
+     * Additionally, it adjusts the height of the contact list container based on the number of contacts.
+     * @function showContactListForSelect
+     * @memberof taskComponents.contacts
+     * @param {Array} currentContactList
+     * @returns {void}
+     */
+    taskComponentsPrototype.showContactListForSelect = function(currentContactList = []) {
+        const contactListArray = currentContactList.length !== 0 ? currentContactList : this.contactAllListFromDB;
+        if (contactListArray == null || contactListArray.length == 0) { return; }
+        this.renderContactOptions(contactListArray);
+        const contactListContainer = document.getElementById('contact-List-container');
+        const contactList = document.getElementById('contact-List-for-task');
+        const heightOfOneContact = 56;
+        let heightOfContainer = (contactListArray.length &lt;= 5 ? heightOfOneContact * contactListArray.length : heightOfOneContact * 5) + 25;
+        contactListContainer.style.height = heightOfContainer + "px";
+        contactList.style.height = (heightOfContainer - 27) + "px";
+        contactList.style.marginTop = "28px";
+        this.isContactListOpen = true;
+        contactListContainer.classList.add("any-list-scroll");
+    };
+
+    /**
+     * @description Hides the contact list dropdown for task selection.
+     * This function collapses the contact list container and the contact list itself by setting their heights to zero
+     * using `requestAnimationFrame` for smooth UI updates. It also clears the contact list's contents and updates
+     * the `isContactListOpen` flag to indicate that the contact list is closed.
+     * Side Effects:
+     * - Modifies the DOM elements with IDs 'contact-List-container' and 'contact-List-for-task'.
+     * - Sets the global variable `isContactListOpen` to `false`.
+     * @function hideContactListForSelect
+     * @memberof taskComponents.contacts
+     * @returns {void}
+     */
+    taskComponentsPrototype.hideContactListForSelect = function() {
+        const contactListContainer = document.getElementById('contact-List-container');
+        const contactList = document.getElementById('contact-List-for-task');
+
+        requestAnimationFrame(() => {
+            contactListContainer.style.height = "0";
+            contactList.style.height = "0";
+            contactList.style.marginTop = "0";
+        });
+
+        contactList.innerHTML = "";
+        this.isContactListOpen = false;
+    }
+
+    /**
+     * @description Renders the contact options for selection.
+     * Using TaskUtils to check if the contact is already assigned to the task.
+     * If the contact is the current user, it indicates that in the display.
+     * @function renderContactOptions
+     * @memberof taskComponents.contacts
+     * @param {Array} contactList
+     * @return {void}
+     */
+    taskComponentsPrototype.renderContactOptions = function(contactList) {
+        let contactSelectElement = document.getElementById('contact-List-for-task');
+        contactSelectElement.innerHTML = "";
+
+        for (let i = 0; i &lt; contactList.length; i++) {
+            const isCurrentUser = this.currentUser &amp;&amp; (this.currentUser === contactList[i]['id']);
+            const currentContactAssigned = this.addTaskUtils.findContactInAssignList(contactList[i], this.currentContactAssignList);
+            contactSelectElement.innerHTML += getContactListElement(contactList[i], currentContactAssigned, false, this.currentInstance, isCurrentUser);
+        }
+    };
+
+    /**
+     * @description Handles the selection of a contact button in the list.
+     * Uses TaskUtils to check if the contact is available and toggles its selection state.
+     * @function contactButtonOnListSelect
+     * @memberof taskComponents.contacts
+     * @param {HTMLElement} currentContactBtn - The button element representing the selected contact.
+     * @returns {void}
+     */
+    taskComponentsPrototype.contactButtonOnListSelect = function(currentContactBtn) {
+
+        const contactID = currentContactBtn.getAttribute('id');
+        if (!this.addTaskUtils.checkIfContactAvailable(contactID, this.contactAllListFromDB)) { return; }
+
+        currentContactBtn.getAttribute('data-active') == "true" ?
+            this.checkOutContact(currentContactBtn, contactID) : this.checkInContact(currentContactBtn, contactID);
+
+    };
+
+    /**
+     * @description Adds the selected contact to the task and updates the UI accordingly.
+     * Uses TaskUtils to manage the contact assignment list.
+     * Changes the styling of the selected contact to indicate its selection.
+     * @function checkInContact
+     * @memberof taskComponents.contacts
+     * @param {HTMLElement} currentContact
+     * @param {string} contactID
+     * @returns {void}
+     */
+    taskComponentsPrototype.checkInContact = function(currentContact, contactID) {
+        this.currentContactAssignList = this.addTaskUtils.contactAddToTask(contactID, this.contactAllListFromDB, this.currentContactAssignList);
+        currentContact.classList.add('contact-selected');
+        const elementName = currentContact.querySelector(`.contact-profil-container p`);
+        elementName.classList.add('white');
+        const elementCheck = currentContact.querySelector(`.contact-check-icon`);
+        elementCheck.classList.remove('contact-unchecked');
+        elementCheck.classList.add('contact-checked');
+        currentContact.setAttribute('data-active', 'true');
+    };
+
+    /**
+     * @description Removes the selected contact from the task and updates the UI accordingly.
+     * Uses TaskUtils to manage the contact assignment list.
+     * Changes the styling of the selected contact to indicate its removal.
+     * @function checkOutContact
+     * @memberof taskComponents.contacts
+     * @param {HTMLElement} currentContact
+     * @param {string} contactID
+     * @return {void}
+     */
+    taskComponentsPrototype.checkOutContact = function(currentContact, contactID) {
+        this.currentContactAssignList = this.addTaskUtils.contactRemoveFromTask(contactID, this.currentContactAssignList);
+        currentContact.classList.remove('contact-selected');
+        const elementName = currentContact.querySelector(`.contact-profil-container p`);
+        elementName.classList.remove('white');
+        const elementCheck = currentContact.querySelector(`.contact-check-icon`);
+        elementCheck.classList.add('contact-unchecked');
+        elementCheck.classList.remove('contact-checked');
+        currentContact.setAttribute('data-active', 'false');
+    };
+
+    /**
+     * @description Filters the contact list based on the input value.
+     * Uses TaskUtils to filter contacts from the full contact list.
+     * @function filterContactFromInputValue
+     * @memberof taskComponents.contacts
+     * @param {string} inputValue
+     * @returns {void}
+     */
+    taskComponentsPrototype.filterContactFromInputValue = function(inputValue) {
+        this.showContactListForSelect(this.addTaskUtils.filterContacts(inputValue, this.contactAllListFromDB));
+    };
+
+    /**
+     * @description Shows or hides the badge container for assigned contacts.
+     * @function showOrHideBadgeContainer
+     * @memberof taskComponents.contacts
+     * @param {string} showOrHide
+     * @returns {void}
+     */
+    taskComponentsPrototype.showOrHideBadgeContainer = function(showOrHide = "") {
+        if (showOrHide.length == 0) { return; }
+        let container = document.getElementById('contact-assigned-badge');
+        if (showOrHide == "show") {
+            container.classList.remove('d-none');
+            this.renderAsignedProfilBadge();
+        } else {
+            container.classList.add('d-none');
+            container.innerHTML = "";
+        }
+    };
+
+    /**
+     * @description Renders the assigned profile badges for the selected contacts.
+     * Uses a helper function to create badges for each assigned contact.
+     * If no contacts are assigned, the function returns early.
+     * @function renderAsignedProfilBadge
+     * @memberof taskComponents.contacts
+     * @returns {void}
+     */
+    taskComponentsPrototype.renderAsignedProfilBadge = function() {
+        if (this.currentContactAssignList.length == 0) {return;}
+        let badgeContainer = document.getElementById('contact-assigned-badge');
+        badgeContainer.innerHTML = "";
+        const sortedContacts = this.getSortedContact(this.currentContactAssignList);
+        for (let i = 0; i &lt; sortedContacts.length; i++) {
+            if (i == 5) {
+                const invisibleContacts = sortedContacts.length - i;
+                badgeContainer.innerHTML += getBadgeForContactOverflow(invisibleContacts);
+                break;
+            }
+            badgeContainer.innerHTML += getAssignedContactBadge(sortedContacts[i]);
+        }
+    };
+
+    /**
+     * @description Sorts an array of contacts by name before rendering badges.
+     * @function getSortedContact
+     * @memberof taskComponents.contacts
+     * @param {Array} contactArray 
+     * @returns {Array} Sorted array of contacts.
+     */
+    taskComponentsPrototype.getSortedContact = function(contactArray) {
+        return contactArray.sort((a, b) => a.firstname.localeCompare(b.firstname));
+    }
+
+})();</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardDatabase.html">boardDatabase</a></li><li><a href="boardDetailView.html">boardDetailView</a></li><li><a href="boardSearch.html">boardSearch</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="boardTasks.html">boardTasks</a></li><li><a href="boardUtils.html">boardUtils</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li><li><a href="taskComponents_.html">taskComponents</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskCache.html">AddTaskCache</a></li><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Mixins</h3><ul><li><a href="taskComponents.categories.html">categories</a></li><li><a href="taskComponents.contacts.html">contacts</a></li><li><a href="taskComponents.create.html">create</a></li><li><a href="taskComponents.layout.html">layout</a></li><li><a href="taskComponents.priority.html">priority</a></li><li><a href="taskComponents.subtasks.html">subtasks</a></li><li><a href="taskComponents.validation.html">validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Nov 03 2025 20:17:50 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -91,7 +91,7 @@ class BoardTaskDetailViewUtils {
 
     /**
      * Renders the assigned contacts in the dialog.
-     * Limits the display to a maximum of three contacts and adjusts the container height accordingly.
+     * Adjusts the container height accordingly.
      * @returns {void}
      */
     viewAssignedContacts() {
@@ -99,16 +99,12 @@ class BoardTaskDetailViewUtils {
         let contactSelectElement = document.getElementById('contact-List-for-task');
         contactSelectElement.innerHTML = "";
         for (let i = 0; i < this.currentTask.assignedContacts.length; i++) {
-            if(this.currentTask.assignedContacts[i].length == 0){continue;}
-            contactSelectElement.innerHTML += getContactListElement(this.currentTask.assignedContacts[i][0], false, true, this.currentInstance, 
-                this.checkIfCurrentUserIsAssigned(this.currentTask.assignedContacts[i][0]['id']));
+            if (this.currentTask.assignedContacts[i].length == 0) { continue; }
+            contactSelectElement.innerHTML += getContactListElementForView(this.currentTask.assignedContacts[i][0], this.checkIfCurrentUserIsAssigned(this.currentTask.assignedContacts[i][0]['id']));
             counter++;
-            if (counter >= 3) { break; }
         }
-        const heightOfOneContact = 52;
-        let heightOfContainer = (this.currentTask.assignedContacts.length <= 3 ?
-            heightOfOneContact * this.currentTask.assignedContacts.length : heightOfOneContact * 3);
-
+        const heightOfOneContact = this.getOffsetHeightOfElement('.contact-list-btn') ? this.getOffsetHeightOfElement('.contact-list-btn') + 1 : 55;
+        let heightOfContainer = heightOfOneContact * this.currentTask.assignedContacts.length;
         contactSelectElement.style.height = (heightOfContainer) + "px";
     }
 
@@ -119,56 +115,71 @@ class BoardTaskDetailViewUtils {
      * @param {string} contactID 
      * @returns Boolean indicating if the current user is assigned to the task
      */
-    checkIfCurrentUserIsAssigned(contactID){
+    checkIfCurrentUserIsAssigned(contactID) {
         const currentUser = getLogStatus();
-        if(!currentUser){ return false; }
-        if(currentUser == "guest"){ return false; }
+        if (!currentUser) { return false; }
+        if (currentUser == "guest") { return false; }
         return currentUser == contactID;
     }
 
     /**
      * Renders the subtask information in the dialog.
+     * Get the heights of individual subtasks to set the container height.
      * @returns {void}
      */
-    viewSubTasks(){
-        let subTaskContainer = document.getElementById('detail-view-subtask-container');
-        for(let i = 0; i < this.currentTask.subTasks.length; i++){
+    viewSubTasks() {
+        const subTaskContainer = document.getElementById('detail-view-subtask-container');
+        let subtaskHeightsArray = [];
+        if (!this.currentTask.subTasks || this.currentTask.subTasks.length == 0) { return; }
+        for (let i = 0; i < this.currentTask.subTasks.length; i++) {
             subTaskContainer.innerHTML += getSubtaskForDetailView(this.currentTask.subTasks[i]);
+            const heightOfOneSubtask = this.getOffsetHeightOfElement(`#subtask-content-for-${this.currentTask.subTasks[i]['id']}`);
+            subtaskHeightsArray.push(heightOfOneSubtask);
         }
-
-        subTaskContainer.style.height = (this.currentTask.subTasks.length * 28) + "px";
+        this.setSubtaskContainerHeight(subtaskHeightsArray);
     }
 
     /**
-     * Retrieves the current height of the task main container.
-     * @returns {number} The current height of the task main container.
-     */
-    getCurrentHeight(){
-        return document.querySelector(".task-main").offsetHeight;
-    }
-
-    /**
-     * Sets the dialog height based on the current main container height.
-     * @param {number} currentMainHeight - The current height of the main container.
+     * Set the height of the subtask container based on the heights of individual subtasks.
+     * @param {Array<number>} subtaskHeightsArray 
      * @returns {void}
      */
-    setDialogHeight(currentMainHeight){
-        let taskMain = document.querySelector(".task-main");
-        if(currentMainHeight <= 615){
-            taskMain.style.height = currentMainHeight + "px";
-        }else{
-            taskMain.style.height = "615px";
-            taskMain.classList.add('task-main-scroll');
-        }
+    setSubtaskContainerHeight(subtaskHeightsArray){
+        const sum = subtaskHeightsArray.reduce((currentSum, currentHeight) => currentSum + currentHeight, 0);
+        const subTaskContainer = document.getElementById('detail-view-subtask-container'); 
+        if(!subTaskContainer){return;}
+        subTaskContainer.style.height = sum + "px";   
+    }
+
+
+    /**
+     * Retrieves the offset height of a specified element.
+     * @param {string} elementMarker - The CSS selector for the element.
+     * @returns {number} The offset height of the element, or 0 if not found.
+     */
+    getOffsetHeightOfElement(elementMarker) {
+        let element = document.querySelector(elementMarker);
+        return element ? element.offsetHeight : 0;
     }
 
     /**
      * Sets the current task ID into the edit and delete buttons for reference.
      * @returns {void}
      */
-    setTaskIDIntoButtons(){
+    setTaskIDIntoButtons() {
         document.getElementById('detail-view-delete-btn').setAttribute('data-id', `${this.currentTaskID}`);
         document.getElementById('detail-view-edit-btn').setAttribute('data-id', `${this.currentTaskID}`);
+    }
+
+    /**
+     * Measures the current dialog content height.
+     * @returns {Array} - An array containing the header, main content, and footer heights.
+     */
+    measureCurrentDialogContentHeight() {
+        const headerHeight = this.getOffsetHeightOfElement('.task-header');
+        const footerHeight = this.getOffsetHeightOfElement('footer.task-detailview-actions') + 24;
+        const mainContentHeight = this.getOffsetHeightOfElement('main.task-main');
+        return [headerHeight, mainContentHeight, footerHeight];
     }
 
 }

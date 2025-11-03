@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scripts/boardDetailView.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scripts/boardDetailView.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview
+ * @namespace boardDetailView
+ * @description Functions for managing the detail view of tasks on the Kanban board, including fetching task details, rendering them in a dialog, handling edits, deletions, and updating the UI accordingly.
+ */
+/**
+ * @function getDetailViewTask
+ * @memberof boardDetailView
+ * @description Fetches task details and renders them in the detail view dialog
+ * @param {string} taskId - The ID of the task to fetch details for
+ * @returns {Promise&lt;void>} - A promise that resolves when the task details have been rendered
+ */
+async function getDetailViewTask(taskId) {
+    boardTaskComponents = null;
+    let tasks = await getTaskByTaskID(taskId);
+    await includeHtml("dialog-content-detail-view-task", "taskTemplate.html");
+    const editDialog = document.getElementById('detail-view-task-dialog');
+    editDialog.style.background = "white";
+    const taskUtils = new AddTaskUtils();
+    const currentUser = taskUtils.readCurrentUserID();
+    boardTaskComponents = new TaskComponents(currentUser, "boardTaskComponents");
+    boardTaskComponents.runWithDataAsView(tasks[0]);
+    [headerHeight, mainContentHeight, footerHeight] = new BoardTaskDetailViewUtils().measureCurrentDialogContentHeight();
+    setTaskViewEditDialogSize(window.innerHeight);
+}
+
+/**
+ * @function detailViewChangeSubtaskChecked
+ * @memberof boardDetailView
+ * @description Toggles the checked state of a subtask in the detail view
+ * @param {HTMLElement} button - The button element that was clicked
+ * @returns {Promise&lt;void>}
+ */
+async function detailViewChangeSubtaskChecked(button) {
+    button.classList.toggle('checkbox-btn-default');
+    button.classList.toggle('checkbox-btn-default-hover');
+    const subTaskID = button.getAttribute('data-id');
+    const isActiv = button.getAttribute('data-checked');
+    const fb = new FirebaseDatabase();
+    await fb.getFirebaseLogin(() => fb.updateData(`subTasks/${subTaskID}`, { taskChecked: isActiv == "true" ? false : true }));
+}
+
+/**
+ * @function deleteCurrentTask
+ * @memberof boardDetailView
+ * @description Deletes the current task
+ * @param {HTMLElement} button - The button element that was clicked
+ * @returns {Promise&lt;void>}
+ */
+async function deleteCurrentTask(button) {
+    const currentTaskID = button.getAttribute('data-id');
+    const taskDelete = new BoardTaskDetailDeleteUtil(currentTaskID);
+    if (await taskDelete.startDelete()) {
+        closeDialog('detail-view-task-dialog');
+        await showChangesSavedToast(currentTaskID, "Task deleted!");
+    }
+
+}
+
+/**
+ * @function editCurrentTask
+ * @memberof boardDetailView
+ * @description Edits the current task. It fetches the task details and opens the edit form in the dialog.
+ * @param {HTMLElement} button - The button element that was clicked
+ * @returns {Promise&lt;void>}
+ */
+async function editCurrentTask(button) {
+    removeLoadingFunctionFromDialog();
+    boardTaskComponents = null;
+    const currentTaskID = button.getAttribute('data-id');
+    const task = await getTaskByTaskID(currentTaskID);
+    const taskUtils = new AddTaskUtils();
+    const currentUser = taskUtils.readCurrentUserID();
+    boardTaskComponents = new TaskComponents(currentUser, "boardTaskComponents");
+    await boardTaskComponents.runWithDataAsEdit(task[0]);
+    [headerHeight, mainContentHeight, footerHeight] = new BoardTaskDetailViewUtils().measureCurrentDialogContentHeight();
+    headerHeight = 32;
+    mainContentHeight = window.innerHeight - 200 - 32 - 82;
+    footerHeight = 82;
+    setTaskViewEditDialogSize(window.innerHeight);
+}
+
+/**
+ * @function editCurrentTaskSubmit
+ * @memberof boardDetailView
+ * @description Submits the edited task details and updates the task in the database.
+ * @param {Event} event - The submit event
+ * @returns {Promise&lt;void>}
+ */
+async function editCurrentTaskSubmit(event) {
+    if (event) event.preventDefault();
+    removeLoadingFunctionFromDialog();
+    const currentID = event.submitter.getAttribute('data-id');
+    const { title, description, date } = getEditTaskFormValues(event.currentTarget);
+    const tasks = await getTaskByTaskID(currentID);
+    const [prio, category, subtaskArray, contactAssignedArray] = boardTaskComponents.getTaskDetails;
+    const editTaskUtil = new EditTaskSafeUtil(tasks[0], title, description, date, prio, contactAssignedArray, subtaskArray);
+    if (await editTaskUtil.startUpdate()) {
+        document.getElementById('dialog-content-detail-view-task').innerHTML = "";
+        document.getElementById('detail-view-task-dialog').style.background = "rgba(0, 0, 0, .005)";
+        await showChangesSavedToast(currentID, "Changes saved!");
+    }
+}
+
+/**
+ * @function getEditTaskFormValues
+ * @memberof boardDetailView
+ * @description Extracts the values from the edit task form.
+ * @param {HTMLFormElement} form - The form element containing the task details.
+ * @returns {Object} - An object containing the title, description, and due date of the task.
+ */
+function getEditTaskFormValues(form) {
+    const data = new FormData(form);
+    return {
+        title: data.get('task-title'),
+        description: data.get('task-description'),
+        date: data.get('due-date')
+    };
+}
+
+/**
+ * @function showChangesSavedToast
+ * @memberof boardDetailView
+ * @description Shows a toast message indicating that changes have been saved or delete a Task.
+ * If the message indicates that changes were saved, it refreshes the detail view of the task; otherwise, it navigates back to the board.
+ * @param {string} currentID - The ID of the current task.
+ * @param {string} message - The message to display in the toast.
+ * @returns {Promise&lt;void>}
+ */
+async function showChangesSavedToast(currentID, message) {
+    removeLoadingFunctionFromDialog();
+    const toast = document.getElementById('addTaskSafeChangesToast');
+    const toastText = document.getElementById('addTaskToastText');
+    if (!toast || !toastText) { return; }
+    toastText.textContent = message;
+    toast.classList.add('safe-changes-toast-open');
+    await new Promise(resolve => setTimeout(resolve, 1200));
+    toast.classList.remove('safe-changes-toast-open');
+    await new Promise(resolve => setTimeout(resolve, 600));
+    message == "Changes saved!" ? getDetailViewTask(currentID) : navigateToBoard();
+}
+
+/**
+ * @function removeLoadingFunctionFromDialog
+ * @memberof boardDetailView
+ * @description Removes the loading function from the detail view dialog
+ * @returns {void}
+ */
+function removeLoadingFunctionFromDialog() {
+    const editDialog = document.getElementById('detail-view-task-dialog');
+    if (!editDialog) { return; }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardDatabase.html">boardDatabase</a></li><li><a href="boardDetailView.html">boardDetailView</a></li><li><a href="boardSearch.html">boardSearch</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="boardTasks.html">boardTasks</a></li><li><a href="boardUtils.html">boardUtils</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li><li><a href="taskComponents_.html">taskComponents</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskCache.html">AddTaskCache</a></li><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Mixins</h3><ul><li><a href="taskComponents.categories.html">categories</a></li><li><a href="taskComponents.contacts.html">contacts</a></li><li><a href="taskComponents.create.html">create</a></li><li><a href="taskComponents.layout.html">layout</a></li><li><a href="taskComponents.priority.html">priority</a></li><li><a href="taskComponents.subtasks.html">subtasks</a></li><li><a href="taskComponents.validation.html">validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Nov 03 2025 20:17:50 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

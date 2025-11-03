@@ -125,7 +125,7 @@
     }
 }
 
-@media(max-width: 400px) {
+@media(max-width: 420px) {
     .btn-priority {
         width: 90px;
         padding: 12px 10px;
@@ -204,7 +204,14 @@
 
     .a-t-input {
         font-size: 16px !important;
-        padding: 12px 15px !important;
+        padding-left: 15px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        padding-right: 15px;
+    }
+
+    .a-t-sub-input{
+        padding-right: 74px !important;
     }
 
     .btn-priority {
@@ -212,6 +219,7 @@
 
         div>span {
             font-size: 12px;
+                margin: 0 5px 0 0;
         }
     }
 
@@ -234,6 +242,10 @@
 
     .nav-mobile-btn p{
         font-size: 13px !important;
+    }
+
+    .contact-assigned-badge{
+        gap: 6px;
     }
 
 }

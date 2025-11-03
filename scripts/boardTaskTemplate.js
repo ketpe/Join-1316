@@ -1,4 +1,5 @@
 /**
+ * @fileoverview
  * @description Template functions for board tasks.
  * @namespace boardTaskTemplate
  */
@@ -14,7 +15,7 @@
  * @param {string} nextCategory - The next category of the task.
  * @returns {string} The HTML template for the board task.
  */
- 
+
 function boardTasksTemplate(task, rendererdContacts, prevCategory, nextCategory) {
     return `<div class="kanban-task" draggable="true" id="${task.id}" ondragstart="startDrag(event, this)" ondragend="endDrag(this)"
     onclick="getDetailViewTask('${task.id}')"  data-task-id="${task.id}">
@@ -32,14 +33,16 @@ function boardTasksTemplate(task, rendererdContacts, prevCategory, nextCategory)
                 <div class="swap-menu-options">
                 <h3 class="swap-menu-title">Move to</h3>
                 <div id="subMenu" class="swap-menu-mobile-box" data-dOrM="mobile">
+                ${prevCategory.length > 0 ? `
                     <button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${task.id}','${prevCategory}')">
                     <div role="img" aria-label="to do icon" class="swap-menu-icon swap-menu-icon-up"></div>
                     <p>${prevCategory}</p>
-                    </button>
+                    </button>`: ''}
+                    ${nextCategory.length > 0 ? `
                     <button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${task.id}','${nextCategory}')">
                     <div role="img" aria-label="review icon" class="swap-menu-icon swap-menu-icon-down"></div>
                     <p>${nextCategory}</p>
-                    </button>
+                    </button>` : ''}
                     </div>
                 </div>
             </section>
@@ -107,6 +110,15 @@ function getAllAssignedContactsTemplate(assignedContacts) {
                     </div>
                 </div>`
 }
+function getContactsTemplateOverflow(numberOfOverflow) {
+    return `<div class="board-task-assigned" id="">
+                    <div class="assigned-contact-board">
+                        <div class="contact-initials-board assigned-contact-pos bg-default-color ">
+                            <p class="board-contact-initials-text"> +${numberOfOverflow}</p>
+                        </div>
+                    </div>
+                </div>`
+}
 
 /**
  * @function getBtnTemplateAfterMovingTask
@@ -118,13 +130,15 @@ function getAllAssignedContactsTemplate(assignedContacts) {
  * @returns {string} The HTML template for the buttons after moving a task.
  */
 function getBtnTemplateAfterMovingTask(taskId, prevCategory, nextCategory) {
-    return `<button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${taskId}','${prevCategory}')">
+    return `${!prevCategory.length === 0 ? `
+                    <button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${taskId}','${prevCategory}')">
                     <div role="img" aria-label="to do icon" class="swap-menu-icon swap-menu-icon-up"></div>
                     <p>${prevCategory}</p>
-                    </button>
+                    </button>`: ''}
+                    ${!nextCategory.length === 0 ? `
                     <button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${taskId}','${nextCategory}')">
                     <div role="img" aria-label="review icon" class="swap-menu-icon swap-menu-icon-down"></div>
                     <p>${nextCategory}</p>
-                    </button>
-                    </div>`
+                    </button>` : ''}
+                    </div>`;
 }

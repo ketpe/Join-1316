@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: classes/taskComponents-old.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: classes/taskComponents-old.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * Class to manage task components including contacts, categories, priorities, and subtasks.
  * This class provides methods to load and manipulate task-related data.
  * It interacts with Firebase for data retrieval and updates the UI accordingly.
@@ -8,7 +36,7 @@
  * const taskComponents = new TaskComponents(currentUser, 'taskInstance', 'stateCategory');
  */
 
-class TaskComponents{
+class TaskComponents {
 
     contactAllListFromDB = [];
     categories = [];
@@ -40,7 +68,7 @@ class TaskComponents{
 
     /**
      * Initializes the task components and loads necessary data.
-     * @returns {Promise<void>}
+     * @returns {Promise&lt;void>}
      */
     async run() {
         await this.loadContactsAllFromDB();
@@ -51,7 +79,7 @@ class TaskComponents{
     /**
      * Runs the task components with the specified data as view.
      * @param {Object} currentTask - The current task object.
-     * @returns {Promise<void>}
+     * @returns {Promise&lt;void>}
      */
     async runWithDataAsView(currentTask) {
         this.currentTask = currentTask;
@@ -59,15 +87,14 @@ class TaskComponents{
         const boardUtils = new BoardTaskDetailViewUtils(this.currentTaskId, this.currentTask, this.currentInstance);
         openDialog('detail-view-task-dialog');
         boardUtils.startRenderTaskDetails();
-        const currentMainHeight = boardUtils.getCurrentHeight();
-        boardUtils.setDialogHeight(currentMainHeight);
         this.currentSubTasks = currentTask['subTasks'];
     }
+
 
     /**
      * Runs the task components with the specified data as edit.
      * @param {Object} currentTask - The current task object.
-     * @returns {Promise<void>}
+     * @returns {Promise&lt;void>}
      */
     async runWithDataAsEdit(currentTask) {
         this.currentTask = currentTask;
@@ -90,7 +117,7 @@ class TaskComponents{
      * Reads the current task date into variables.
      * @returns {void}
      */
-    readCurrentTaskDateIntoVariables(){
+    readCurrentTaskDateIntoVariables() {
         this.currentSubTasks = this.currentTask['subTasks'];
         this.currentDueDate = this.currentTask['dueDate'];
         this.currentTitle = this.currentTask['title'];
@@ -131,7 +158,7 @@ class TaskComponents{
     /**
     * Loads categories from the database.
     * Utilizes the getAllData function from db-functions.js.
-    * @returns {Promise<void>}
+    * @returns {Promise&lt;void>}
     */
     async loadCategoriesFromDB() {
         const fb = new FirebaseDatabase();
@@ -179,12 +206,12 @@ class TaskComponents{
     */
     addTaskWindowMouseClick(e) {
 
-        if (!e.target.closest(".contact-select-container") && !e.target.closest(".contact-List-container") && this.isContactListOpen) {
+        if (!e.target.closest(".contact-select-container") &amp;&amp; !e.target.closest(".contact-List-container") &amp;&amp; this.isContactListOpen) {
             this.isContactListOpen = false;
             this.showAndHideContacts("hide");
         }
 
-        if (!e.target.closest('.category-select-container') && !e.target.closest('.category-list-container') && this.isCategoryListOpen) {
+        if (!e.target.closest('.category-select-container') &amp;&amp; !e.target.closest('.category-list-container') &amp;&amp; this.isCategoryListOpen) {
             this.isCategoryListOpen = false;
             this.showAndHideCategories('hide');
         }
@@ -197,14 +224,14 @@ class TaskComponents{
     */
     addTaskCheckRequiredField(createButton) {
 
-        if(!createButton){return;}
+        if (!createButton) { return; }
 
-        const hasCategory = this.currentCategory && typeof this.currentCategory === 'object' && 'title' in this.currentCategory;
+        const hasCategory = this.currentCategory &amp;&amp; typeof this.currentCategory === 'object' &amp;&amp; 'title' in this.currentCategory;
         createButton.disabled = !(
-            this.currentDueDate.length > 0 &&
-                this.currentTitle.length > 0 &&
-                this.currentPriority.length > 0 &&
-                hasCategory);
+            this.currentDueDate.length > 0 &amp;&amp;
+            this.currentTitle.length > 0 &amp;&amp;
+            this.currentPriority.length > 0 &amp;&amp;
+            hasCategory);
 
         createButton.disabled ? createButton.setAttribute('aria-disabled', 'true') : createButton.removeAttribute('aria-disabled');
 
@@ -284,7 +311,7 @@ class TaskComponents{
         if (!button) { return; }
         const buttonName = button.getAttribute('name');
         const isActiv = button.getAttribute('data-selected') == "true";
-        this.currentPriority == buttonName && isActiv ? this.allPriortyButtonsReset() : this.setNewPriority(buttonName);
+        this.currentPriority == buttonName &amp;&amp; isActiv ? this.allPriortyButtonsReset() : this.setNewPriority(buttonName);
     }
 
     /**
@@ -294,7 +321,7 @@ class TaskComponents{
     allPriortyButtonsReset() {
         this.currentPriority = "";
         const btnContainer = document.getElementById('task-priority-button');
-        if(!btnContainer){return;}
+        if (!btnContainer) { return; }
         const buttons = btnContainer.querySelectorAll('.btn');
 
         buttons.forEach((b) => {
@@ -396,7 +423,7 @@ class TaskComponents{
      * @param {string} showOrHide - Determines whether to show or hide the contact list.
      * @returns {void}
      */
-    setInputAndButtonOnclickFunctionForContacts(showOrHide){
+    setInputAndButtonOnclickFunctionForContacts(showOrHide) {
         const buttonShowOhrHide = document.getElementById('show-and-hide-contacts');
         buttonShowOhrHide.setAttribute('onclick', (showOrHide == "show" ? `${this.currentInstance}.showAndHideContacts("hide")` : `${this.currentInstance}.showAndHideContacts("show")`));
         const inputField = document.getElementById('task-assign-to');
@@ -442,7 +469,7 @@ class TaskComponents{
         const contactListContainer = document.getElementById('contact-List-container');
         const contactList = document.getElementById('contact-List-for-task');
         const heightOfOneContact = 56;
-        let heightOfContainer = (contactListArray.length <= 5 ? heightOfOneContact * contactListArray.length : heightOfOneContact * 5) + 25;
+        let heightOfContainer = (contactListArray.length &lt;= 5 ? heightOfOneContact * contactListArray.length : heightOfOneContact * 5) + 25;
         contactListContainer.style.height = heightOfContainer + "px";
         contactList.style.height = (heightOfContainer - 27) + "px";
         contactList.style.marginTop = "28px";
@@ -487,8 +514,8 @@ class TaskComponents{
         let contactSelectElement = document.getElementById('contact-List-for-task');
         contactSelectElement.innerHTML = "";
 
-        for (let i = 0; i < contactList.length; i++) {
-            const isCurrentUser = this.currentUser && (this.currentUser === contactList[i]['id']);
+        for (let i = 0; i &lt; contactList.length; i++) {
+            const isCurrentUser = this.currentUser &amp;&amp; (this.currentUser === contactList[i]['id']);
             const currentContactAssigned = this.addTaskUtils.findContactInAssignList(contactList[i], this.currentContactAssignList);
             contactSelectElement.innerHTML += getContactListElement(contactList[i], currentContactAssigned, false, this.currentInstance, isCurrentUser);
         }
@@ -578,21 +605,19 @@ class TaskComponents{
     /**
      * Renders the assigned profile badges for the selected contacts.
      * If no contacts are assigned, the function returns early.
-     * Show only up to 4 badges for better UI.
      * @returns {void}
      */
     renderAsignedProfilBadge() {
-        if (this.currentContactAssignList.length == 0) {
-            return;
-        }
-
+        if (this.currentContactAssignList.length == 0) {return;}
         let badgeContainer = document.getElementById('contact-assigned-badge');
         badgeContainer.innerHTML = "";
-        let counter = 0;
-        for (let i = 0; i < this.currentContactAssignList.length; i++) {
+        for (let i = 0; i &lt; this.currentContactAssignList.length; i++) {
+            if (i == 5) {
+                const invisibleContacts = this.currentContactAssignList.length - i;
+                badgeContainer.innerHTML += getBadgeForContactOverflow(invisibleContacts);
+                break;
+            }
             badgeContainer.innerHTML += getAssignedContactBadge(this.currentContactAssignList[i]);
-            counter++;
-            if (counter == 4) { break; }
         }
     }
 
@@ -623,10 +648,13 @@ class TaskComponents{
         this.renderCategoryOptions(this.categories);
         const categoryListContainer = document.getElementById('category-list-container');
         const categoryList = document.getElementById('category-list-for-task');
-        const heightOfOneCategory = document.getElementById(this.categories[0]['id']).offsetHeight;
-        let heightOfContainer = heightOfOneCategory * this.categories.length + 40;
+        const heightOfOneCategory = document.getElementById(this.categories[0]['id']).offsetHeight || 54;
+        let heightOfContainer = heightOfOneCategory * this.categories.length + 25;
         categoryListContainer.style.height = heightOfContainer + "px";
         categoryList.style.height = (heightOfContainer - 27) + "px";
+        categoryList.style.marginTop = "28px";
+        // WICHTIG: wie bei Contacts → Container scroll-freigeben
+        categoryListContainer.classList.add("any-list-scroll");
         this.setCategoryInputfieldValue('Select task category');
         this.currentCategory = {};
         this.isCategoryListOpen = true;
@@ -661,7 +689,7 @@ class TaskComponents{
         let categorySelectElement = document.getElementById('category-list-for-task');
         categorySelectElement.innerHTML = "";
 
-        for (let i = 0; i < categories.length; i++) {
+        for (let i = 0; i &lt; categories.length; i++) {
             categorySelectElement.innerHTML += getCategoryListElement(categories[i], this.currentInstance);
         }
     }
@@ -679,7 +707,7 @@ class TaskComponents{
     categoryButtonOnListSelect(button) {
         if (!button) { showCategoryError(); }
         let indexOfCategory = this.addTaskUtils.getIndexOfObjectOfArray(button.getAttribute('id'), this.categories);
-        if (indexOfCategory < 0) { showCategoryError(); }
+        if (indexOfCategory &lt; 0) { showCategoryError(); }
         this.currentCategory = this.categories[indexOfCategory];
         this.hideCategoryListForSelect();
         this.setCategoryInputfieldValue(this.currentCategory['title']);
@@ -741,16 +769,20 @@ class TaskComponents{
 
     }
 
+
     /**
      * Handles the click event on the subtask input field.
      * If the subtask writing buttons are not visible, it shows them.
      * If they are visible, it hides them.
+     * Reset all subtasks to non-edit mode.
      * @param {HTMLElement} input - The input field element for the subtask.
      * @returns void
      */
     onclickSubtaskInput(input) {
         if (!input) { return; }
+        this.renderSubtasks("", true);
         this.toggleSubWritingButtons(true);
+        
     }
 
     /**
@@ -782,16 +814,124 @@ class TaskComponents{
      * If the input field is empty or has less than 3 characters, it does nothing.
      * Otherwise, it adds the subtask to the current subtask list, clears the input field, and renders the subtasks.
      * Uses TaskUtils to manage the subtask list.
+     * Checks the available space in the add task dialog and the add task view after adding the subtask.
+     * Change the Height of the right container if needed.
+     * Additionally, it clears the input field after adding the subtask.
      * @returns void
      */
     adoptCurrentSubEntry() {
         let inputfield = document.getElementById('task-sub-task');
         if (!inputfield) { return; }
         const inputValueClean = (inputfield.value ?? "").trim();
-        if (inputValueClean.length < 3) { return; }
+        if (inputValueClean.length &lt; 3) { return; }
         this.currentSubTasks = this.addTaskUtils.addSubtaskToArray(inputValueClean, this.currentSubTasks);
         this.clearSubInputField();
         this.renderSubtasks();
+        this.checkAvailableSpaceInAddTaskDialog();
+        this.checkAvailableSpaceInAddTask();
+    }
+
+
+    /**
+     * Checks if there is enough space in the add task dialog for the current content.
+     * If there isn't enough space, it enables scrolling in the right container.
+     * @returns void
+     */
+    checkAvailableSpaceInAddTaskDialog(){
+        const [addTaskDialog, addTaskRightContainer, addTaskHeader, addTaskFooter, seperator] = this.getElementsForCheckSpaceInAddTaskDialog();
+
+        if(!addTaskRightContainer || !addTaskDialog || !addTaskHeader || !addTaskFooter || !seperator){return;}
+        const [sum, rightContainerAvalable] = this.calculateHeightForRightContainerInDialog(addTaskDialog, addTaskHeader, addTaskFooter, addTaskRightContainer);
+
+        if(sum > addTaskDialog.offsetHeight){
+            addTaskRightContainer.classList.add('a-t-f-i-scroll');
+            addTaskRightContainer.style.height = rightContainerAvalable + "px";
+            seperator.style.height = rightContainerAvalable + "px";
+        } else {
+            addTaskRightContainer.classList.remove('a-t-f-i-scroll');
+            addTaskRightContainer.style.height = "auto";
+            seperator.style.height = 440 + "px";
+        }
+        
+    }
+
+    /**
+     * Gets the elements needed to check the space in the add task dialog.
+     * @returns {Array} - An array containing the relevant elements.
+     */
+    getElementsForCheckSpaceInAddTaskDialog(){
+        const addTaskDialog = document.getElementById('add-task-dialog');
+        if(!addTaskDialog){
+            return [];
+        }
+        const addTaskRightContainer = addTaskDialog.querySelector('.a-t-f-i-right');
+        const addTaskHeader = addTaskDialog.querySelector('header.add-task-head');
+        const addTaskFooter = addTaskDialog.querySelector('.add-task-footer');
+        const seperator = addTaskDialog.querySelector('#a-t-middle-container');
+        return [addTaskDialog, addTaskRightContainer, addTaskHeader, addTaskFooter, seperator];
+    }
+
+    /**
+     * Checks if there is enough space in the add task dialog for the current content.
+     * If there isn't enough space, it enables scrolling in the right container.
+     * @returns void
+     */
+    checkAvailableSpaceInAddTask(){
+        const [siteHeader, addTaskHeader, addTaskFooter, seperator, rightContainer] = this.getElementsForCheckSpaceInAddTask();
+        if(!siteHeader || !addTaskHeader || !addTaskFooter || !seperator || !rightContainer){return;}
+        const [sum, rightContainerAvalable] = this.calculateHeightForRightContainer(siteHeader, addTaskHeader, addTaskFooter, rightContainer);
+
+        if(sum > window.innerHeight){
+            rightContainer.classList.add('a-t-f-i-scroll');
+            rightContainer.style.height = rightContainerAvalable  &lt;= 400 ? "400px" : rightContainerAvalable + "px";
+        }else{
+            rightContainer.classList.remove('a-t-f-i-scroll');
+            rightContainer.style.height = 440 + "px";
+            seperator.style.height = 440 + "px";
+        }
+
+    }
+
+    /**
+     * Gets the elements needed to check the space in the add task dialog.
+     * @returns {Array} - An array containing the relevant elements.
+     */
+    getElementsForCheckSpaceInAddTask(){
+        const siteHeader = document.getElementById('header');
+        const addTaskHeader = document.querySelector('header.add-task-head');
+        const addTaskFooter = document.querySelector('.add-task-footer');
+        const seperator = document.querySelector('#a-t-middle-container');
+        const rightContainer = document.querySelector('.a-t-f-i-right');
+        return [siteHeader, addTaskHeader, addTaskFooter, seperator, rightContainer];
+    }
+
+    /**
+     * Calculates the total height needed for the right container in the add task dialog.
+     * @param {HTMLElement} dialog 
+     * @param {HTMLElement} header 
+     * @param {HTMLElement} footer 
+     * @param {HTMLElement} rightContainer 
+     * @returns {Array} - An array containing the total height and the available height for the right container.
+     */
+    calculateHeightForRightContainerInDialog(dialog, header, footer, rightContainer){
+        const sum = rightContainer.scrollHeight + header.offsetHeight + footer.offsetHeight + 200;
+        const rightContainerAvalable = dialog.offsetHeight - header.offsetHeight - footer.offsetHeight - 200;
+        return [sum, rightContainerAvalable];
+    }
+
+
+    /**
+     * Calculates the total height needed for the right container in the add task view.
+     * @param {HTMLElement} siteHeader 
+     * @param {HTMLElement} addTaskHeader 
+     * @param {HTMLElement} addTaskFooter 
+     * @param {HTMLElement} rightContainer 
+     * @returns {Array} - An array containing the total height and the available height for the right container.    
+     */
+    calculateHeightForRightContainer(siteHeader, addTaskHeader, addTaskFooter, rightContainer){
+        const sum = rightContainer.scrollHeight + siteHeader.offsetHeight + addTaskHeader.offsetHeight + addTaskFooter.offsetHeight + 200;
+        const rightContainerAvalable = window.innerHeight - siteHeader.offsetHeight - addTaskHeader.offsetHeight - addTaskFooter.offsetHeight - 200;
+        return [sum, rightContainerAvalable];
     }
 
     /**
@@ -834,25 +974,20 @@ class TaskComponents{
      * Renders the list of subtasks.
      * If there are no subtasks, it returns early.
      * If an ID for editing is provided, it renders that subtask in edit mode.
-     * Otherwise, it renders all subtasks in read-only mode, showing only up to 3 subtasks for better UI.
+     * Otherwise, it renders all subtasks in read-only mode.
      * @param {string} idForEdit - The ID of the subtask to edit.
      * @returns void
      */
-    renderSubtasks(idForEdit = "") {
+    renderSubtasks(idForEdit = "", isReset = false) {
         let subTaskList = document.querySelector('.sub-task-list');
         subTaskList.innerHTML = "";
-        if (this.currentSubTasks.length == 0) { return; }
-        let counter = 0;
-        if (!subTaskList) { return; }
-
-        for (let i = 0; i < this.currentSubTasks.length; i++) {
-            if (this.currentSubTasks[i]['id'] == idForEdit) {
+        if (!this.currentSubTasks || this.currentSubTasks.length == 0) { return; }
+        for (let i = 0; i &lt; this.currentSubTasks.length; i++) {
+            if (this.currentSubTasks[i]['id'] == idForEdit &amp;&amp; !isReset) {
                 subTaskList.innerHTML += getSubtaskListElementForChanging(this.currentSubTasks[i], this.currentInstance);
                 continue;
             }
             subTaskList.innerHTML += getSubtaskListElementReadOnly(this.currentSubTasks[i], this.currentInstance);
-            counter++;
-            if (counter >= 3) { break; }
         }
     }
 
@@ -868,9 +1003,9 @@ class TaskComponents{
         let currentSubTask = this.currentSubTasks.find(x => x['id'] == subtaskID);
         if (!currentSubTask) { return; }
         const inputField = document.getElementById(`subTaskEdit-${subtaskID}`);
-        const inputValueClean = (inputField.value ?? "").trim();
-        if (inputValueClean.length <= 3) { return; }
-        currentSubTask['title'] = inputField.value;
+        const inputValueClean = (inputField.innerText ?? "").trim();
+        if (inputValueClean.length &lt;= 2) { return; }
+        currentSubTask['title'] = inputField.innerText;
         this.renderSubtasks();
     }
 
@@ -890,13 +1025,13 @@ class TaskComponents{
     * Uses the CreateNewTask class to handle the task creation process.
     * After the task is created, it shows a confirmation dialog and navigates to the board view.
     * @param {Event} event - The event object from the form submission.
-    * @returns {Promise<void>}
+    * @returns {Promise&lt;void>}
      */
     async addTaskCreateTask(event) {
 
         if (event) event.preventDefault();
         const addTaskFormData = new FormData(event.currentTarget);
-        
+
         const currentTask = new Task(
             getNewUid(),
             addTaskFormData.get('task-title'),
@@ -904,7 +1039,7 @@ class TaskComponents{
             addTaskFormData.get('due-date'),
             this.currentPriority,
             this.currentCategory['id'],
-            this.currentStateCategory 
+            this.currentStateCategory
         );
 
         const createNewTask = new CreateNewTask(currentTask, this.currentSubTasks, this.currentContactAssignList, this.currentUser);
@@ -916,7 +1051,7 @@ class TaskComponents{
      * Checks if the add task form is in a dialog.
      * @returns {boolean} True if the form is in a dialog, false otherwise.
      */
-    getIsDialog(){
+    getIsDialog() {
         const forms = document.querySelectorAll('form');
         if (!forms) { return false; }
 
@@ -961,4 +1096,26 @@ class TaskComponents{
     }
 
 
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardDatabase.html">boardDatabase</a></li><li><a href="boardDetailView.html">boardDetailView</a></li><li><a href="boardSearch.html">boardSearch</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="boardTasks.html">boardTasks</a></li><li><a href="boardUtils.html">boardUtils</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskCache.html">AddTaskCache</a></li><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Nov 03 2025 19:34:51 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

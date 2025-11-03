@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scripts/boardTasks.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scripts/boardTasks.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview
+ * @namespace boardTasks
+ * @description Utility functions for rendering tasks on the Kanban board. handling task rendering and styling.
+ */
+
+/**
+ * @function renderBoardtasks
+ * @memberof boardTasks
+ * @description Renders the tasks on the Kanban board. checks the task state category and appends the task to the corresponding column.
+ * @param {Array} tasks - The list of tasks to render.
+ * @param {HTMLElement} taskToDo - The container for "To Do" tasks.
+ * @param {HTMLElement} taskInProgress - The container for "In Progress" tasks.
+ * @param {HTMLElement} taskAwaitingFeedback - The container for "Awaiting Feedback" tasks.
+ * @param {HTMLElement} taskDone - The container for "Done" tasks.
+ * @returns {void}
+ */
+function renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone) {
+    tasks.forEach(task => {
+        let renderedContacts = '';
+        renderedContacts = renderAssignedContacts(task.assignedContacts);
+        task.taskStateCategory === 'todo' ? taskToDo.innerHTML += boardTasksTemplate(task, renderedContacts, '', 'In progress') :
+            task.taskStateCategory === 'inprogress' ? taskInProgress.innerHTML += boardTasksTemplate(task, renderedContacts, 'To-Do', 'Awaiting feedback') :
+                task.taskStateCategory === 'awaiting' ? taskAwaitingFeedback.innerHTML += boardTasksTemplate(task, renderedContacts, 'In progress', 'Done') :
+                    task.taskStateCategory === 'done' ? taskDone.innerHTML += boardTasksTemplate(task, renderedContacts, 'Awaiting feedback', '') : '';
+    })
+    let taskItems = [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
+    taskItems = addDropZones(taskItems);
+    toggleNoTaskVisible(taskItems);
+}
+
+
+/**
+ * @function addDropZones
+ * @memberof boardTasks
+ * @description Adds empty drop zones to the task columns.
+ * @param {Array} taskItems - The array of task column elements.
+ * @returns {Array} - The updated array of task column elements.
+ */
+function addDropZones(taskItems) {
+    taskItems.forEach(tE => { if (tE) tE.innerHTML += boardTaskEmptyDropTemplate() });
+    return taskItems
+}
+
+/**
+ * @function boardTasksTemplate
+ * @memberof boardTasks
+ * @description Retrieves the HTML elements for the task content areas.
+ * @returns {Array} - An array of HTML elements representing the task content areas.
+ */
+function getHtmlTasksContent() {
+    const [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone] = getBoardTaskref();
+    [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone].forEach(tE => { if (tE) tE.innerHTML = ""; });
+    [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone].forEach(tE => {
+        if (tE) tE.innerHTML = boardTaskEmptyTemplate(tE.dataset.category);
+    })
+    return [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
+}
+
+/**
+ * @function getBoardTaskref
+ * @memberof boardTasks
+ * @description Retrieves references to the task content areas on the Kanban board.
+ * @returns {Array} - An array of HTML elements representing the task content areas.
+ */
+function getBoardTaskref() {
+    let taskToDo = document.getElementById("kanban-tasks-todo");
+    let taskInProgress = document.getElementById("kanban-tasks-inprogress");
+    let taskAwaitingFeedback = document.getElementById("kanban-tasks-awaiting");
+    let taskDone = document.getElementById("kanban-tasks-done");
+    return [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone];
+}
+
+/**
+ * @function toggleNoTaskVisible
+ * @memberof boardTasks
+ * @description Toggles the visibility of the "no tasks" message in each task column based on the number of tasks present.
+ * @returns {void}
+ */
+function toggleNoTaskVisible() {
+    let taskItems = getBoardTaskref();
+    taskItems.forEach(element => {
+        let noTask = element.querySelector('.kanban-task-empty');
+        if (element.children.length === 2) {
+            noTask.classList.remove('visually-hidden');
+        } else {
+            noTask.classList.add('visually-hidden');
+        }
+    });
+}
+
+/**
+ * @function addLeftPositionStyleassignedContacts
+ * @memberof boardTasks
+ * @description Adds left position styles to assigned contact elements within task cards to ensure proper overlapping display.
+ * @returns {void}
+ */
+function addLeftPositionStyleassignedContacts() {
+    const taskCards = document.querySelectorAll('.board-task-content');
+    taskCards.forEach(card => {
+        const contacts = card.querySelectorAll('.assigned-contact-pos');
+        contacts.forEach((contact, i) => { contact.style.left = `calc(${i * 25}px)`; });
+    });
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardDatabase.html">boardDatabase</a></li><li><a href="boardDetailView.html">boardDetailView</a></li><li><a href="boardSearch.html">boardSearch</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="boardTasks.html">boardTasks</a></li><li><a href="boardUtils.html">boardUtils</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li><li><a href="taskComponents_.html">taskComponents</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskCache.html">AddTaskCache</a></li><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Mixins</h3><ul><li><a href="taskComponents.categories.html">categories</a></li><li><a href="taskComponents.contacts.html">contacts</a></li><li><a href="taskComponents.create.html">create</a></li><li><a href="taskComponents.layout.html">layout</a></li><li><a href="taskComponents.priority.html">priority</a></li><li><a href="taskComponents.subtasks.html">subtasks</a></li><li><a href="taskComponents.validation.html">validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Nov 03 2025 20:17:50 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

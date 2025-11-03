@@ -86,14 +86,32 @@ async function resizeAddTaskBoardDialog(event) {
  * @returns {Promise<void>}
  */
 async function showAddTaskAsDialog() {
-    AddTaskUtils.captureCurrentAddTaskDataFromView();
+    AddTaskCache.captureCurrentAddTaskDataFromView();
     clearDialogContent();
     addTaskDialogtoggleScrollOnBody(true);
     addDialogShowClass('add-task-dialog');
+    setDialogEventListener();
     document.getElementById('add-task-dialog').showModal();
     await renderAddTaskIntoDialog();
     changeAddTaskViewToDialog();
     await loadDataForAddTaskDialog();
+}
+
+/**
+ * @description Sets event listeners for the Add Task dialog.
+ * Specifically, it sets up listeners for animation end events to assign click and resize handlers.
+ * @function setDialogEventListener
+ * @memberof addTaskDialog
+ * @returns {void}
+ */
+function setDialogEventListener() {
+    const dialog = document.querySelector('#add-task-dialog.dialog-show');
+    dialog.addEventListener('animationend', () => {
+        setTimeout(() => {
+            dialog.setAttribute('onclick', "addTaskDialogClose(event)");
+            dialog.setAttribute('onresize', "resizeAddTaskBoardDialog(this)");
+        }, 200);
+    });
 }
 
 /**
@@ -105,7 +123,7 @@ async function showAddTaskAsDialog() {
  * @returns {Promise<void>}
  */
 async function showAddTaskAsDialogSingle() {
-    AddTaskUtils.captureCurrentAddTaskDataFromView();
+    AddTaskCache.captureCurrentAddTaskDataFromView();
     clearDialogContent();
     addTaskDialogtoggleScrollOnBody(true);
     addDialogShowClass('add-task-dialog');
@@ -131,7 +149,7 @@ async function loadDataForAddTaskDialog() {
     }
 
     addTaskUtils.setAddTaskCreateBtnMouseFunction('createTaskButton', 'addTaskDialogTaskComponents');
-    AddTaskUtils.applyAddTaskDataToView(addTaskDialogTaskComponents);
+    AddTaskCache.applyAddTaskDataToView(addTaskDialogTaskComponents);
     addTaskUtils.setAddTaskFormSubmitFunction("addTaskDialogTaskComponents", true);
 }
 

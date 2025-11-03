@@ -52,7 +52,7 @@
         padding: 12px 6px;
         gap: 16px;
         min-width: 310px;
-        max-height: 640px;
+        /* max-height: 640px; */
         max-width: 396px;
     }
 
@@ -87,7 +87,7 @@
     }
 
     .task-main-edit {
-        width: auto;
+       /*  width: auto; */
     }
 
     .a-t-priority-button-container {
@@ -150,6 +150,7 @@
 
 }
 
+
 @media(max-width: 450px) {
     .join-h1 {
         font-size: 32px;
@@ -175,5 +176,8 @@
     .field-frame {
         width: 100%;
     }
-}
 
+    .contact-profil-container p {
+        font-size: 16px !important;
+    }
+}

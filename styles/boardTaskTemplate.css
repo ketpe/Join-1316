@@ -130,6 +130,7 @@
         padding-left: 5px;
         margin: 0;
         text-align: start;
+        flex: 1 1 0%;
     }
 }
 
@@ -146,10 +147,12 @@
 
 .swap-menu-icon-up {
     background: url(../assets/arrow_upward.svg) center/cover no-repeat;
+    flex: 0 0 20px;
 }
 
 .swap-menu-icon-down {
     background: url(../assets/arrow_upwarddown.svg) center/cover no-repeat;
+    flex: 0 0 20px;
 }
 
 .board-task-title {

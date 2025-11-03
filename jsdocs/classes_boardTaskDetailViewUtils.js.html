@@ -119,7 +119,7 @@ class BoardTaskDetailViewUtils {
 
     /**
      * Renders the assigned contacts in the dialog.
-     * Limits the display to a maximum of three contacts and adjusts the container height accordingly.
+     * Adjusts the container height accordingly.
      * @returns {void}
      */
     viewAssignedContacts() {
@@ -127,16 +127,12 @@ class BoardTaskDetailViewUtils {
         let contactSelectElement = document.getElementById('contact-List-for-task');
         contactSelectElement.innerHTML = "";
         for (let i = 0; i &lt; this.currentTask.assignedContacts.length; i++) {
-            if(this.currentTask.assignedContacts[i].length == 0){continue;}
-            contactSelectElement.innerHTML += getContactListElement(this.currentTask.assignedContacts[i][0], false, true, this.currentInstance, 
-                this.checkIfCurrentUserIsAssigned(this.currentTask.assignedContacts[i][0]['id']));
+            if (this.currentTask.assignedContacts[i].length == 0) { continue; }
+            contactSelectElement.innerHTML += getContactListElementForView(this.currentTask.assignedContacts[i][0], this.checkIfCurrentUserIsAssigned(this.currentTask.assignedContacts[i][0]['id']));
             counter++;
-            if (counter >= 3) { break; }
         }
-        const heightOfOneContact = 52;
-        let heightOfContainer = (this.currentTask.assignedContacts.length &lt;= 3 ?
-            heightOfOneContact * this.currentTask.assignedContacts.length : heightOfOneContact * 3);
-
+        const heightOfOneContact = this.getOffsetHeightOfElement('.contact-list-btn') ? this.getOffsetHeightOfElement('.contact-list-btn') + 1 : 55;
+        let heightOfContainer = heightOfOneContact * this.currentTask.assignedContacts.length;
         contactSelectElement.style.height = (heightOfContainer) + "px";
     }
 
@@ -147,56 +143,71 @@ class BoardTaskDetailViewUtils {
      * @param {string} contactID 
      * @returns Boolean indicating if the current user is assigned to the task
      */
-    checkIfCurrentUserIsAssigned(contactID){
+    checkIfCurrentUserIsAssigned(contactID) {
         const currentUser = getLogStatus();
-        if(!currentUser){ return false; }
-        if(currentUser == "guest"){ return false; }
+        if (!currentUser) { return false; }
+        if (currentUser == "guest") { return false; }
         return currentUser == contactID;
     }
 
     /**
      * Renders the subtask information in the dialog.
+     * Get the heights of individual subtasks to set the container height.
      * @returns {void}
      */
-    viewSubTasks(){
-        let subTaskContainer = document.getElementById('detail-view-subtask-container');
-        for(let i = 0; i &lt; this.currentTask.subTasks.length; i++){
+    viewSubTasks() {
+        const subTaskContainer = document.getElementById('detail-view-subtask-container');
+        let subtaskHeightsArray = [];
+        if (!this.currentTask.subTasks || this.currentTask.subTasks.length == 0) { return; }
+        for (let i = 0; i &lt; this.currentTask.subTasks.length; i++) {
             subTaskContainer.innerHTML += getSubtaskForDetailView(this.currentTask.subTasks[i]);
+            const heightOfOneSubtask = this.getOffsetHeightOfElement(`#subtask-content-for-${this.currentTask.subTasks[i]['id']}`);
+            subtaskHeightsArray.push(heightOfOneSubtask);
         }
-
-        subTaskContainer.style.height = (this.currentTask.subTasks.length * 28) + "px";
+        this.setSubtaskContainerHeight(subtaskHeightsArray);
     }
 
     /**
-     * Retrieves the current height of the task main container.
-     * @returns {number} The current height of the task main container.
-     */
-    getCurrentHeight(){
-        return document.querySelector(".task-main").offsetHeight;
-    }
-
-    /**
-     * Sets the dialog height based on the current main container height.
-     * @param {number} currentMainHeight - The current height of the main container.
+     * Set the height of the subtask container based on the heights of individual subtasks.
+     * @param {Array&lt;number>} subtaskHeightsArray 
      * @returns {void}
      */
-    setDialogHeight(currentMainHeight){
-        let taskMain = document.querySelector(".task-main");
-        if(currentMainHeight &lt;= 615){
-            taskMain.style.height = currentMainHeight + "px";
-        }else{
-            taskMain.style.height = "615px";
-            taskMain.classList.add('task-main-scroll');
-        }
+    setSubtaskContainerHeight(subtaskHeightsArray){
+        const sum = subtaskHeightsArray.reduce((currentSum, currentHeight) => currentSum + currentHeight, 0);
+        const subTaskContainer = document.getElementById('detail-view-subtask-container'); 
+        if(!subTaskContainer){return;}
+        subTaskContainer.style.height = sum + "px";   
+    }
+
+
+    /**
+     * Retrieves the offset height of a specified element.
+     * @param {string} elementMarker - The CSS selector for the element.
+     * @returns {number} The offset height of the element, or 0 if not found.
+     */
+    getOffsetHeightOfElement(elementMarker) {
+        let element = document.querySelector(elementMarker);
+        return element ? element.offsetHeight : 0;
     }
 
     /**
      * Sets the current task ID into the edit and delete buttons for reference.
      * @returns {void}
      */
-    setTaskIDIntoButtons(){
+    setTaskIDIntoButtons() {
         document.getElementById('detail-view-delete-btn').setAttribute('data-id', `${this.currentTaskID}`);
         document.getElementById('detail-view-edit-btn').setAttribute('data-id', `${this.currentTaskID}`);
+    }
+
+    /**
+     * Measures the current dialog content height.
+     * @returns {Array} - An array containing the header, main content, and footer heights.
+     */
+    measureCurrentDialogContentHeight() {
+        const headerHeight = this.getOffsetHeightOfElement('.task-header');
+        const footerHeight = this.getOffsetHeightOfElement('footer.task-detailview-actions') + 24;
+        const mainContentHeight = this.getOffsetHeightOfElement('main.task-main');
+        return [headerHeight, mainContentHeight, footerHeight];
     }
 
 }
@@ -210,13 +221,13 @@ class BoardTaskDetailViewUtils {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardDatabase.html">boardDatabase</a></li><li><a href="boardDetailView.html">boardDetailView</a></li><li><a href="boardSearch.html">boardSearch</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="boardTasks.html">boardTasks</a></li><li><a href="boardUtils.html">boardUtils</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li><li><a href="taskComponents_.html">taskComponents</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskCache.html">AddTaskCache</a></li><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Mixins</h3><ul><li><a href="taskComponents.categories.html">categories</a></li><li><a href="taskComponents.contacts.html">contacts</a></li><li><a href="taskComponents.create.html">create</a></li><li><a href="taskComponents.layout.html">layout</a></li><li><a href="taskComponents.priority.html">priority</a></li><li><a href="taskComponents.subtasks.html">subtasks</a></li><li><a href="taskComponents.validation.html">validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Oct 28 2025 21:36:38 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Nov 03 2025 20:17:50 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>
