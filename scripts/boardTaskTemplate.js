@@ -32,14 +32,16 @@ function boardTasksTemplate(task, rendererdContacts, prevCategory, nextCategory)
                 <div class="swap-menu-options">
                 <h3 class="swap-menu-title">Move to</h3>
                 <div id="subMenu" class="swap-menu-mobile-box" data-dOrM="mobile">
+                ${prevCategory.length > 0 ? `
                     <button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${task.id}','${prevCategory}')">
                     <div role="img" aria-label="to do icon" class="swap-menu-icon swap-menu-icon-up"></div>
                     <p>${prevCategory}</p>
-                    </button>
+                    </button>`: ''}
+                    ${nextCategory.length > 0 ? `
                     <button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${task.id}','${nextCategory}')">
                     <div role="img" aria-label="review icon" class="swap-menu-icon swap-menu-icon-down"></div>
                     <p>${nextCategory}</p>
-                    </button>
+                    </button>` : ''}
                     </div>
                 </div>
             </section>
@@ -127,13 +129,15 @@ function getContactsTemplateOverflow(numberOfOverflow) {
  * @returns {string} The HTML template for the buttons after moving a task.
  */
 function getBtnTemplateAfterMovingTask(taskId, prevCategory, nextCategory) {
-    return `<button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${taskId}','${prevCategory}')">
+    return `${!prevCategory.length === 0 ? `
+                    <button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${taskId}','${prevCategory}')">
                     <div role="img" aria-label="to do icon" class="swap-menu-icon swap-menu-icon-up"></div>
                     <p>${prevCategory}</p>
-                    </button>
+                    </button>`: ''}
+                    ${!nextCategory.length === 0 ? `
                     <button type="button" class="btn-swapmenu" onclick="moveTaskToCategory('${taskId}','${nextCategory}')">
                     <div role="img" aria-label="review icon" class="swap-menu-icon swap-menu-icon-down"></div>
                     <p>${nextCategory}</p>
-                    </button>
-                    </div>`
+                    </button>` : ''}
+                    </div>`;
 }
