@@ -137,6 +137,7 @@ function addDialogHideClass(dialogId) {
  */
 async function renderAddContactIntoDialog() {
     await includeHtml("dialog-content-contacts", "addContact.html");
+    resetContactForm();
 }
 
 /**
