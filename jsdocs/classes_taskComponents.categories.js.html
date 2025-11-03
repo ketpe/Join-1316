@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: classes/taskComponents.categories.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: classes/taskComponents.categories.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @description Extends the TaskComponents class with category-related functionalities.
+ * This module adds methods for loading categories from the database,
+ * displaying and hiding category lists, rendering category options,
+ * and handling category selection and input field interactions.
+ * @see TaskComponents
+ * @mixin taskComponents.categories
+ */
+
+(function() {
+    const taskComponentsPrototype = TaskComponents.prototype;
+
+    /**
+    * @description Loads categories from the database.
+    * Utilizes the getAllData function from db-functions.js.
+    * @function loadCategoriesFromDB
+    * @memberof taskComponents.categories
+    * @returns {Promise&lt;void>}
+    */
+    taskComponentsPrototype.loadCategoriesFromDB = async function() {
+        const fb = new FirebaseDatabase();
+        this.categories = await fb.getFirebaseLogin(() => fb.getAllData("categories"));
+    };
+
+    /**
+     * @description Shows or hides the category list for selection.
+     * Toggles the visibility of the category list based on the provided parameter.
+     * @function showAndHideCategories
+     * @memberof taskComponents.categories
+     * @param {string} showOrHide
+     * @return {void}
+     */
+    taskComponentsPrototype.showAndHideCategories = function(showOrHide = "show") {
+        if (showOrHide == "show") {
+            this.showCategoryListForSelect();
+            this.setCategoryShowOrHideButton(showOrHide);
+            this.renderHideIcon('show-hide-icon-category');
+        } else {
+            this.hideCategoryListForSelect();
+            this.checkCategoryInputValue();
+        }
+    };
+
+    /**
+     * @description Shows the category list for selection.
+     * If no categories are available, the function returns early.
+     * Renders the category options and adjusts the height of the category list container based on the number of categories.
+     * @function showCategoryListForSelect
+     * @memberof taskComponents.categories
+     * @returns {void}
+     */
+    taskComponentsPrototype.showCategoryListForSelect = function() {
+        if (this.categories == null || this.categories.length == 0) { return; }
+        this.renderCategoryOptions(this.categories);
+        const categoryListContainer = document.getElementById('category-list-container');
+        const categoryList = document.getElementById('category-list-for-task');
+        const heightOfOneCategory = document.getElementById(this.categories[0]['id']).offsetHeight || 54;
+        let heightOfContainer = heightOfOneCategory * this.categories.length + 25;
+        categoryListContainer.style.height = heightOfContainer + "px";
+        categoryList.style.height = (heightOfContainer - 27) + "px";
+        categoryList.style.marginTop = "28px";
+        categoryListContainer.classList.add("any-list-scroll");
+        this.setCategoryInputfieldValue('Select task category');
+        this.currentCategory = {};
+        this.isCategoryListOpen = true;
+    };
+
+    /**
+     * @description Hides the category list for selection.
+     * Uses `requestAnimationFrame` to smoothly collapse the category list container and the category list itself by setting their heights to zero.
+     * @function hideCategoryListForSelect
+     * @memberof taskComponents.categories
+     * @returns {void}
+     */
+    taskComponentsPrototype.hideCategoryListForSelect = function() {
+        const categoryListContainer = document.getElementById('category-list-container');
+        const categoryList = document.getElementById('category-list-for-task');
+
+        requestAnimationFrame(() => {
+            categoryListContainer.style.height = "0";
+            categoryList.style.height = "0";
+        });
+
+        categoryList.innerHTML = "";
+        this.setCategoryShowOrHideButton('hide');
+        this.renderShowIcon('show-hide-icon-category');
+        this.isCategoryListOpen = false;
+    };
+
+    /**
+     * @description Renders the category options for selection.
+     * If no categories are available, the function returns early.
+     * @function renderCategoryOptions
+     * @memberof taskComponents.categories
+     * @param {Array} categories
+     */
+    taskComponentsPrototype.renderCategoryOptions = function(categories) {
+        let categorySelectElement = document.getElementById('category-list-for-task');
+        categorySelectElement.innerHTML = "";
+
+        for (let i = 0; i &lt; categories.length; i++) {
+            categorySelectElement.innerHTML += getCategoryListElement(categories[i], this.currentInstance);
+        }
+    };
+
+    /**
+     * @description Handles the selection of a category from the list.
+     * If no button is provided, an error is shown.
+     * If the selected category is not found in the categories array, an error is shown.
+     * Sets the current category and updates the input field value.
+     * Hides the category list after selection and checks the category input value for validation.
+     * Uses TaskUtils to find the index of the selected category in the categories array.
+     * @function categoryButtonOnListSelect
+     * @memberof taskComponents.categories
+     * @param {HTMLElement} button - The button element representing the selected category.
+     * @return {void}
+     */
+    taskComponentsPrototype.categoryButtonOnListSelect = function(button) {
+        if (!button) { showCategoryError(); }
+        let indexOfCategory = this.addTaskUtils.getIndexOfObjectOfArray(button.getAttribute('id'), this.categories);
+        if (indexOfCategory &lt; 0) { showCategoryError(); }
+        this.currentCategory = this.categories[indexOfCategory];
+        this.hideCategoryListForSelect();
+        this.setCategoryInputfieldValue(this.currentCategory['title']);
+        this.checkCategoryInputValue();
+    };
+
+    /**
+     * @description Sets the value of the category input field.
+     * @function setCategoryInputfieldValue
+     * @memberof taskComponents.categories
+     * @param {string} value - The value to set in the category input field.
+     * @return {void}
+     */
+    taskComponentsPrototype.setCategoryInputfieldValue = function(value) {
+        document.getElementById('task-category').value = value;
+    };
+
+    /**
+     * @description Sets the onclick attribute for the show/hide button.
+     * @function setCategoryShowOrHideButton
+     * @memberof taskComponents.categories
+     * @param {string} showOrHide
+     * @return {void}
+     */
+    taskComponentsPrototype.setCategoryShowOrHideButton = function(showOrHide) {
+        const buttonShowOrHide = document.getElementById('show-and-hide-categories');
+        buttonShowOrHide.setAttribute('onclick', (showOrHide == "show" ? `${this.currentInstance}.showAndHideCategories("hide")` : `${this.currentInstance}.showAndHideCategories("show")`));
+    };
+
+    /**
+     * @description Handles the click event on the category input field.
+     * If the category list is open, it blurs the input field, hides the category list, and checks the input value.
+     * If the category list is closed, it shows the category list.
+     * @function onclickCategoryInput
+     * @memberof taskComponents.categories
+     * @param {HTMLElement} inputField - The input field element for the category.
+     * @return {void}
+     */
+    taskComponentsPrototype.onclickCategoryInput = function(inputField) {
+        if (this.isCategoryListOpen) {
+            inputField.blur();
+            this.hideCategoryListForSelect();
+            this.checkCategoryInputValue();
+        } else {
+            this.showAndHideCategories('show');
+        }
+    };
+
+})();</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardDatabase.html">boardDatabase</a></li><li><a href="boardDetailView.html">boardDetailView</a></li><li><a href="boardSearch.html">boardSearch</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="boardTasks.html">boardTasks</a></li><li><a href="boardUtils.html">boardUtils</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li><li><a href="taskComponents_.html">taskComponents</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskCache.html">AddTaskCache</a></li><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Mixins</h3><ul><li><a href="taskComponents.categories.html">categories</a></li><li><a href="taskComponents.contacts.html">contacts</a></li><li><a href="taskComponents.create.html">create</a></li><li><a href="taskComponents.layout.html">layout</a></li><li><a href="taskComponents.priority.html">priority</a></li><li><a href="taskComponents.subtasks.html">subtasks</a></li><li><a href="taskComponents.validation.html">validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Nov 03 2025 20:17:50 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

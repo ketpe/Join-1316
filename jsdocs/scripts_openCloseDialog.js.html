@@ -45,9 +45,34 @@
 function openDialog(dialogId, renderSpecificFunction) {
     toggleScrollOnBody(true);
     addDialogShowClass(dialogId);
+    setEditDialogEventListeners();
     document.getElementById(dialogId).showModal();
     if (renderSpecificFunction) renderSpecificFunction();
 }
+
+/**
+ * @function setEditDialogEventListeners
+ * @memberof openCloseDialog
+ * @description Sets event listeners for the edit dialog.
+ * @returns {void}
+ */
+function setEditDialogEventListeners() {
+    const dialog = document.getElementById("detail-view-task-dialog");
+    if (!dialog) return;
+    const onShown = () => {
+        if (!dialog.classList.contains('dialog-show')) return;
+        setTimeout(() => dialog.setAttribute('onclick', "closeDialogByEvent(event,'detail-view-task-dialog')"), 250);
+        dialog.removeEventListener('animationend', onShown);
+    };
+    const cleanup = () => {
+        dialog.removeAttribute('onclick');
+        ['animationend', 'close', 'cancel'].forEach(e => dialog.removeEventListener(e, onShown));
+    };
+    dialog.addEventListener('animationend', onShown);
+    dialog.addEventListener('close', cleanup);
+    dialog.addEventListener('cancel', cleanup);
+}
+
 
 /**
  * @function closeDialogByEvent
@@ -57,7 +82,8 @@ function openDialog(dialogId, renderSpecificFunction) {
  * @param {string} dialogId - The ID of the dialog to close
  * @returns {void}
  */
-function closeDialogByEvent(event, dialogId) {
+function closeDialogByEvent(event, dialogId,) {
+    event.stopPropagation();
     const dialog = document.getElementById(dialogId);
     const closeDiv = document.getElementById('btn-overlay-close-div');
     if (
@@ -67,6 +93,9 @@ function closeDialogByEvent(event, dialogId) {
         event.target.closest('.btn-create')
     ) {
         closeDialog(dialogId);
+        if (dialogId == "detail-view-task-dialog") {
+            getBoardTaskWithLoadingAnimation();
+        }
     }
 }
 
@@ -79,11 +108,17 @@ function closeDialogByEvent(event, dialogId) {
  */
 function closeDialog(dialogId) {
     addDialogHideClass(dialogId);
+
     setTimeout(function () {
         document.getElementById(dialogId).close();
+
         toggleScrollOnBody(false);
     }, 1000);
+
 }
+
+
+
 /**
  * @function toggleScrollOnBody
  * @memberof openCloseDialog
@@ -128,8 +163,8 @@ function addDialogHideClass(dialogId) {
  * @description Renders the add contact form into the dialog
  * @return {void}
  */
-function renderAddContactIntoDialog() {
-    includeHtml("dialog-content-contacts", "addContact.html");
+async function renderAddContactIntoDialog() {
+    await includeHtml("dialog-content-contacts", "addContact.html");
     resetContactForm();
 }
 
@@ -151,9 +186,9 @@ async function renderDetailViewTemplate(taskId) {
  * @description Renders the add contact form into the dialog for mobile devices
  * @return {void}
  */
-function renderAddContactIntoDialogMobile() {
-    includeHtml("add-contact-dialog-mobile", "addContactMobile.html");
-    resetContactForm();
+async function renderAddContactIntoDialogMobile() {
+    await includeHtml("add-contact-dialog-mobile", "addContactMobile.html");
+
 }
 function renderEditContactIntoDialog(contactId) {
     includeHtml("dialog-content-contacts", "editContact.html")
@@ -212,13 +247,13 @@ function closeSwapMobileMenu(event, id) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardDatabase.html">boardDatabase</a></li><li><a href="boardDetailView.html">boardDetailView</a></li><li><a href="boardSearch.html">boardSearch</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="boardTasks.html">boardTasks</a></li><li><a href="boardUtils.html">boardUtils</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li><li><a href="taskComponents_.html">taskComponents</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskCache.html">AddTaskCache</a></li><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Mixins</h3><ul><li><a href="taskComponents.categories.html">categories</a></li><li><a href="taskComponents.contacts.html">contacts</a></li><li><a href="taskComponents.create.html">create</a></li><li><a href="taskComponents.layout.html">layout</a></li><li><a href="taskComponents.priority.html">priority</a></li><li><a href="taskComponents.subtasks.html">subtasks</a></li><li><a href="taskComponents.validation.html">validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Oct 28 2025 21:36:38 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Nov 03 2025 20:17:50 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

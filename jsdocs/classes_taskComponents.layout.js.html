@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: classes/taskComponents.layout.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: classes/taskComponents.layout.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @description Layout related methods for TaskComponents class.
+ * This mixin provides functionalities to manage the layout and UI aspects
+ * of task components, including checking available space in dialogs and adjusting
+ * container heights for optimal display.
+ * @mixin taskComponents.layout
+ * @see TaskComponents
+ */
+
+
+(function() {
+    const taskComponentsPrototype = TaskComponents.prototype;
+
+    /**
+     * @description Checks if there is enough space in the add task dialog for the current content.
+     * If there isn't enough space, it enables scrolling in the right container.
+     * @function checkAvailableSpaceInAddTaskDialog
+     * @memberof taskComponents.layout
+     * @returns {void}
+     */
+    taskComponentsPrototype.checkAvailableSpaceInAddTaskDialog = function(){
+        const [addTaskDialog, addTaskRightContainer, addTaskHeader, addTaskFooter, seperator] = this.getElementsForCheckSpaceInAddTaskDialog();
+
+        if(!addTaskRightContainer || !addTaskDialog || !addTaskHeader || !addTaskFooter || !seperator){return;}
+        const [sum, rightContainerAvalable] = this.calculateHeightForRightContainerInDialog(addTaskDialog, addTaskHeader, addTaskFooter, addTaskRightContainer);
+
+        if(sum > addTaskDialog.offsetHeight){
+            addTaskRightContainer.classList.add('a-t-f-i-scroll');
+            addTaskRightContainer.style.height = rightContainerAvalable + "px";
+            seperator.style.height = rightContainerAvalable + "px";
+        } else {
+            addTaskRightContainer.classList.remove('a-t-f-i-scroll');
+            addTaskRightContainer.style.height = "auto";
+            seperator.style.height = 440 + "px";
+        }
+        
+    };
+
+    /**
+     * @description Gets the elements needed to check the space in the add task dialog.
+     * @function getElementsForCheckSpaceInAddTaskDialog
+     * @memberof taskComponents.layout
+     * @returns {Array} - An array containing the relevant elements.
+     */
+    taskComponentsPrototype.getElementsForCheckSpaceInAddTaskDialog = function(){
+        const addTaskDialog = document.getElementById('add-task-dialog');
+        if(!addTaskDialog){ return []; } 
+        const addTaskRightContainer = addTaskDialog.querySelector('.a-t-f-i-right');
+        const addTaskHeader = addTaskDialog.querySelector('header.add-task-head');
+        const addTaskFooter = addTaskDialog.querySelector('.add-task-footer');
+        const seperator = addTaskDialog.querySelector('#a-t-middle-container');
+        return [addTaskDialog, addTaskRightContainer, addTaskHeader, addTaskFooter, seperator];
+    };
+
+    /**
+     * @description Calculates the total height needed for the right container in the add task dialog.
+     * @function calculateHeightForRightContainerInDialog
+     * @memberof taskComponents.layout
+     * @param {HTMLElement} dialog 
+     * @param {HTMLElement} header 
+     * @param {HTMLElement} footer 
+     * @param {HTMLElement} rightContainer 
+     * @returns {Array} - An array containing the total height and the available height for the right container.
+     */
+    taskComponentsPrototype.calculateHeightForRightContainerInDialog = function(dialog, header, footer, rightContainer){
+        const sum = rightContainer.scrollHeight + header.offsetHeight + footer.offsetHeight + 200;
+        const rightContainerAvalable = dialog.offsetHeight - header.offsetHeight - footer.offsetHeight - 200;
+        return [sum, rightContainerAvalable];
+    };
+
+    /**
+     * @description Checks if there is enough space in the add task dialog for the current content.
+     * If there isn't enough space, it enables scrolling in the right container.
+     * @function checkAvailableSpaceInAddTask
+     * @memberof taskComponents.layout
+     * @returns {void}
+     */
+    taskComponentsPrototype.checkAvailableSpaceInAddTask = function(){
+        const [siteHeader, addTaskHeader, addTaskFooter, seperator, rightContainer] = this.getElementsForCheckSpaceInAddTask();
+        if(!siteHeader || !addTaskHeader || !addTaskFooter || !seperator || !rightContainer){return;}
+        const [sum, rightContainerAvalable] = this.calculateHeightForRightContainer(siteHeader, addTaskHeader, addTaskFooter, rightContainer);
+
+        if(sum > window.innerHeight){
+            rightContainer.classList.add('a-t-f-i-scroll');
+            rightContainer.style.height = rightContainerAvalable  &lt;= 400 ? "400px" : rightContainerAvalable + "px";
+        }else{
+            rightContainer.classList.remove('a-t-f-i-scroll');
+            rightContainer.style.height = 440 + "px";
+            seperator.style.height = 440 + "px";
+        }
+
+    };
+
+    /**
+     * @description Gets the elements needed to check the space in the add task dialog.
+     * @function getElementsForCheckSpaceInAddTask
+     * @memberof taskComponents.layout
+     * @returns {Array} - An array containing the relevant elements.
+     */
+    taskComponentsPrototype.getElementsForCheckSpaceInAddTask = function(){
+        const siteHeader = document.getElementById('header');
+        const addTaskHeader = document.querySelector('header.add-task-head');
+        const addTaskFooter = document.querySelector('.add-task-footer');
+        const seperator = document.querySelector('#a-t-middle-container');
+        const rightContainer = document.querySelector('.a-t-f-i-right');
+        return [siteHeader, addTaskHeader, addTaskFooter, seperator, rightContainer];
+    };
+
+
+    /**
+     * @description Calculates the total height needed for the right container in the add task dialog.
+     * @function calculateHeightForRightContainer
+     * @memberof taskComponents.layout
+     * @param {HTMLElement} dialog 
+     * @param {HTMLElement} header 
+     * @param {HTMLElement} footer 
+     * @param {HTMLElement} rightContainer 
+     * @returns {Array} - An array containing the total height and the available height for the right container.
+     */
+    taskComponentsPrototype.calculateHeightForRightContainerInDialog = function(dialog, header, footer, rightContainer){
+        const sum = rightContainer.scrollHeight + header.offsetHeight + footer.offsetHeight + 200;
+        const rightContainerAvalable = dialog.offsetHeight - header.offsetHeight - footer.offsetHeight - 200;
+        return [sum, rightContainerAvalable];
+    };
+   
+
+})();</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardDatabase.html">boardDatabase</a></li><li><a href="boardDetailView.html">boardDetailView</a></li><li><a href="boardSearch.html">boardSearch</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="boardTasks.html">boardTasks</a></li><li><a href="boardUtils.html">boardUtils</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li><li><a href="taskComponents_.html">taskComponents</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskCache.html">AddTaskCache</a></li><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Mixins</h3><ul><li><a href="taskComponents.categories.html">categories</a></li><li><a href="taskComponents.contacts.html">contacts</a></li><li><a href="taskComponents.create.html">create</a></li><li><a href="taskComponents.layout.html">layout</a></li><li><a href="taskComponents.priority.html">priority</a></li><li><a href="taskComponents.subtasks.html">subtasks</a></li><li><a href="taskComponents.validation.html">validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Nov 03 2025 20:17:50 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

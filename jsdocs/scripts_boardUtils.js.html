@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scripts/boardUtils.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scripts/boardUtils.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview
+ * @namespace boardUtils
+ * @description Utility functions for the Kanban board. handling responsive design and task interactions.
+ */
+/**
+ * @function setTaskViewEditDialogSize
+ * @memberof boardUtils
+ * @description Set the height of the task edit dialog based on the current window size.
+ * set height of main content area in task edit dialog and toggle scroll class.
+ * @param {number} height - The height to set for the dialog.
+ * @returns {void}
+ */
+function setTaskViewEditDialogSize(height) {
+    const editDialog = document.querySelector('#detail-view-task-dialog.dialog-show');
+    if (!editDialog) { return; }
+    const taskSection = editDialog.querySelector('.task-section');
+    if (!taskSection) { return; }
+    const taskMain = taskSection.querySelector('.task-main') ?? taskSection.querySelector('.task-main-edit');
+    if (!taskMain) return;
+    const sumHeightsInDialog = headerHeight + mainContentHeight + footerHeight + 60;
+
+    if (height - 200 > sumHeightsInDialog) {
+        taskSection.style.height = (sumHeightsInDialog + 40) + "px";
+        taskMain.classList.remove('task-main-scroll');
+    } else {
+        taskSection.style.height = (height - 200) + "px";
+        taskMain.style.height = (height - 200 - headerHeight - footerHeight) + "px";
+        taskMain.classList.add('task-main-scroll');
+    }
+}
+
+/**
+ * @function kanbanUpdateSizeDesktop
+ * @memberof boardUtils
+ * @description Updates the height of the Kanban board for Desktop based on the window size and header heights.
+ * This function calculates the available height for the Kanban board by subtracting the heights of the header and board header from the total window height,
+ * and then sets the height of the Kanban board element accordingly.
+ * @returns {void}
+ */
+function kanbanUpdateSizeDesktop() {
+    const headerHeight = document.getElementById('header').offsetHeight;
+    const boardHeaderHeight = document.querySelector('.board-header').offsetHeight;
+    const windowsHeight = window.innerHeight;
+    const kanbanHeight = windowsHeight - (headerHeight + boardHeaderHeight + 20);
+    document.getElementById('board-kanban').style.height = kanbanHeight + "px";
+}
+
+/**
+ * @function kanbanUpdateSizeMobile
+ * @memberof boardUtils
+ * @description Updates the height of the Kanban board for mobile view based on the window size and header heights.
+ * This function calculates the available height for the Kanban board by subtracting the heights of the header and
+ * mobile navigation from the total window height, and then sets the height of the mobile Kanban board element accordingly.
+ * @return {void}
+ */
+function kanbanUpdateSizeMobile() {
+    const headerHeight = document.getElementById('header').offsetHeight;
+    const navHeight = document.querySelector('.nav-mobile').offsetHeight;
+    const windowsHeight = window.innerHeight;
+    const kanbanHeight = windowsHeight - (headerHeight + navHeight + 20);
+    document.querySelector('.board-main-content-mobile').style.height = kanbanHeight + "px";
+}
+
+/**
+ * @function toggleSubtaskCheckbox
+ * @memberof boardUtils
+ * @description Toggles the checked state of a subtask checkbox.
+ * @param {HTMLElement} element - The checkbox element to toggle.
+ * @returns {void}
+ */
+function toggleSubtaskCheckbox(element) {
+    const btn = element;
+    btn.classList.toggle('checkbox-btn-default');
+    btn.classList.toggle('checkbox-btn-default-hover');
+}
+/**
+ * @function renderAssignedContacts
+ * @memberof boardUtils
+ * @description Renders the assigned contacts for a task.
+ * @param {Array} assignedContacts - The list of assigned contacts to render.
+ * @returns {string} - The HTML string representing the assigned contacts.
+ */
+function renderAssignedContacts(assignedContacts) {
+    let breakExecption = {};
+    let assignedContactsTemplate = '';
+    let counter = 0;
+    try {
+        assignedContacts.forEach(contactArr => {
+            if (counter >= 5) {
+                assignedContactsTemplate = renderLimitedContactsTemplate(counter, assignedContacts.length, assignedContactsTemplate); throw breakExecption;
+            }
+            contactArr.forEach(contact => { assignedContactsTemplate += getAllAssignedContactsTemplate(contact); });
+            counter++;
+        });
+    } catch (error) { return assignedContactsTemplate; }
+    return assignedContactsTemplate;
+}
+/**
+ *
+ * @function renderLimitedContactsTemplate
+ * @memberof boardUtils
+ * @description Renders the assigned contacts for a task with a limit on visible contacts.
+ * @param {number} counter - The current count of rendered contacts.
+ * @param {number} total - The total number of assigned contacts.
+ * @param {string} assignedContactsTemplate - The HTML template for the assigned contacts.
+ * @returns {string} - The updated HTML template with the limited contacts.
+ */
+function renderLimitedContactsTemplate(counter, total, assignedContactsTemplate) {
+    let invisibleContacts = total - counter;
+    assignedContactsTemplate += getContactsTemplateOverflow(invisibleContacts);
+    return assignedContactsTemplate;
+}
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardDatabase.html">boardDatabase</a></li><li><a href="boardDetailView.html">boardDetailView</a></li><li><a href="boardSearch.html">boardSearch</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="boardTasks.html">boardTasks</a></li><li><a href="boardUtils.html">boardUtils</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li><li><a href="taskComponents_.html">taskComponents</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskCache.html">AddTaskCache</a></li><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Mixins</h3><ul><li><a href="taskComponents.categories.html">categories</a></li><li><a href="taskComponents.contacts.html">contacts</a></li><li><a href="taskComponents.create.html">create</a></li><li><a href="taskComponents.layout.html">layout</a></li><li><a href="taskComponents.priority.html">priority</a></li><li><a href="taskComponents.subtasks.html">subtasks</a></li><li><a href="taskComponents.validation.html">validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Nov 03 2025 20:17:50 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

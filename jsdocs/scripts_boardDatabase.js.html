@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scripts/boardDatabase.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scripts/boardDatabase.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview
+ * @namespace boardDatabase
+ * @description Functions for interacting with the database to fetch and manipulate board data.
+ */
+
+/**
+ * @function getBoardTasks
+ * @memberof boardDatabase
+ * @description Fetches tasks from the database, processes them, and renders them on the Kanban board. Also updates the board size and styles assigned contacts.
+ * @returns {Promise&lt;void>} - A promise that resolves when the tasks have been fetched and rendered.
+*/
+async function getBoardTasks() {
+    const [taskToDo, taskInProgress, taskAwaitingFeedback, taskDone] = getHtmlTasksContent();
+    const fb = new FirebaseDatabase();
+    tasks = await fb.getFirebaseLogin(() => fb.getAllData("tasks"));
+    tasks = await getDatabaseTaskCategory(tasks);
+    tasks = await getDatabaseTaskSubtasks(tasks);
+    tasks = await getDatabaseTaskContact(tasks);
+    onBoardPageResize();
+    renderBoardtasks(tasks, taskToDo, taskInProgress, taskAwaitingFeedback, taskDone);
+    addLeftPositionStyleassignedContacts();
+    setNavigationButtonActive('board', "desktop");
+    hideAllDropzones();
+}
+
+/**
+ * @function getDatabaseTaskCategory
+ * @memberof boardDatabase
+ * @description Retrieves the task categories from the database for the given tasks.
+ * @param {Array} tasks - The list of tasks to retrieve categories for.
+ * @returns {Promise&lt;Array>} - The updated list of tasks with category data.
+ */
+async function getDatabaseTaskCategory(tasks) {
+    for (let task of tasks) {
+        const fb = new FirebaseDatabase();
+        const categoryData = await fb.getFirebaseLogin(() => fb.getDataByKey("id", task['category'], "categories"));
+        task.categoryData = categoryData;
+    }
+    return tasks;
+}
+
+/**
+ * @function getDatabaseTaskSubtasks
+ * @memberof boardDatabase
+ * @description Retrieves the subtasks from the database for the given tasks.
+ * @param {Array} tasks - The list of tasks to retrieve subtasks for.
+ * @returns {Promise&lt;Array>} - The updated list of tasks with subtask data.
+ */
+async function getDatabaseTaskSubtasks(tasks) {
+    const fb = new FirebaseDatabase();
+    let getAllTaskSubtasks = await fb.getFirebaseLogin(() => fb.getAllData('taskSubtask'));
+    let getAllSubtasks = await fb.getFirebaseLogin(() => fb.getAllData('subTasks'));
+    tasks.forEach(task => {
+        let taskSubTasks = getAllTaskSubtasks.filter(obj => obj.maintaskID === task.id);
+        let subTasks = [];
+        taskSubTasks.forEach(taskSubTask => {
+            let foundSubTask = getAllSubtasks.find(obj => obj.id === taskSubTask.subTaskID);
+            if (foundSubTask) subTasks.push(foundSubTask);
+        });
+        task.subTasks = getSortedSubTask(subTasks);
+    });
+    tasks = getSubTaskSumOfTrue(tasks);
+    return tasks;
+}
+
+/**
+ * @function getSortedSubTask
+ * @memberof boardDatabase
+ * @description Retrieves the sorted subtask array.
+ * @returns {Array} The sorted subtask array.
+ */
+function getSortedSubTask(subtaskArray) {
+    if (!subtaskArray || subtaskArray.length == 0) { return []; }
+    const sortedSubTasks = subtaskArray.sort((a, b) => a.position - b.position);
+    return sortedSubTasks;
+}
+
+/**
+ * @function getSubTaskSumOfTrue
+ * @memberof boardDatabase
+ * @description Calculates the sum of true subtasks for each task.
+ * @param {Array} tasks - The list of tasks to process.
+ * @returns {Array} - The updated list of tasks with the count of true subtasks.
+ */
+function getSubTaskSumOfTrue(tasks) {
+    tasks.forEach(task => {
+        if (Array.isArray(task.subTasks)) {
+            task.countTrueSubtasks = task.subTasks.filter(sT => sT.taskChecked === true).length;
+        } else {
+            task.countTrueSubtasks = 0;
+        }
+    });
+    return tasks;
+}
+
+/**
+ * @function getDatabaseTaskContact
+ * @memberof boardDatabase
+ * @description Retrieves the assigned contacts from the database for the given tasks.
+ * @param {Array} tasks - The list of tasks del retrieve assigned contacts for.
+ * @returns {Promise&lt;Array>} - The updated list of tasks with assigned contact data.
+ */
+async function getDatabaseTaskContact(tasks) {
+    const fb = new FirebaseDatabase();
+    let getAllAssignedContacts = await fb.getFirebaseLogin(() => fb.getAllData('taskContactAssigned'));
+    let getAllContacts = await fb.getFirebaseLogin(() => fb.getAllData('contacts'));
+    tasks.forEach(task => {
+        let assignedContacts = getAllAssignedContacts.filter(obj => obj.taskID === task.id)
+        let contacts = [];
+        assignedContacts.forEach(assContact => {
+            let contact = getAllContacts.filter(obj => obj.id === assContact.contactId)
+            if (contact) contacts.push(contact);
+        })
+        task.assignedContacts = getSortedContact(contacts);
+    })
+    return tasks;
+}
+
+/**
+ * @memberof boardDatabase
+ * @function getSortedContact
+ * @description Sorts contacts by first name.
+ * @param {Array} contacts
+ * @returns {Array} - The sorted array of contacts.
+ */
+
+function getSortedContact(contacts) {
+    let flatContacts = contacts.flat();
+    let sorted = flatContacts.sort((a, b) => a.firstname.localeCompare(b.firstname));
+    let structured = sorted.map(obj => [obj]);
+    return structured;
+
+}
+
+/**
+ * @function getTaskByTaskID
+ * @memberof boardDatabase
+ * @description Fetches a task by its ID.
+ * @param {string} taskId - The ID of the task to fetch
+ * @returns {Promise&lt;Array>} - A promise that resolves to an array of task objects
+ */
+async function getTaskByTaskID(taskId) {
+    const fb = new FirebaseDatabase();
+    let tasks = await fb.getFirebaseLogin(() => fb.getDataByKey("id", taskId, "tasks"));
+    tasks = await getDatabaseTaskCategory([tasks]);
+    tasks = await getDatabaseTaskSubtasks(tasks);
+    tasks = await getDatabaseTaskContact(tasks);
+    return tasks;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardDatabase.html">boardDatabase</a></li><li><a href="boardDetailView.html">boardDetailView</a></li><li><a href="boardSearch.html">boardSearch</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="boardTasks.html">boardTasks</a></li><li><a href="boardUtils.html">boardUtils</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li><li><a href="taskComponents_.html">taskComponents</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskCache.html">AddTaskCache</a></li><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Mixins</h3><ul><li><a href="taskComponents.categories.html">categories</a></li><li><a href="taskComponents.contacts.html">contacts</a></li><li><a href="taskComponents.create.html">create</a></li><li><a href="taskComponents.layout.html">layout</a></li><li><a href="taskComponents.priority.html">priority</a></li><li><a href="taskComponents.subtasks.html">subtasks</a></li><li><a href="taskComponents.validation.html">validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Nov 03 2025 20:17:50 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
