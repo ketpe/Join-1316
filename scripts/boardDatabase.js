@@ -112,9 +112,27 @@ async function getDatabaseTaskContact(tasks) {
             let contact = getAllContacts.filter(obj => obj.id === assContact.contactId)
             if (contact) contacts.push(contact);
         })
-        task.assignedContacts = contacts;
+        task.assignedContacts = getSortedContact(contacts);
     })
     return tasks;
+}
+
+/**
+ * @memberof boardDatabase
+ * @function getSortedContact
+ * @description Sorts contacts by first name.
+ * @param {Array} contacts
+ * @returns {Array} - The sorted array of contacts.
+ */
+
+function getSortedContact(contacts) {
+    console.log(contacts);
+
+    let flatContacts = contacts.flat(); // Glättet das Array, nimmt die Verschachtelung raus
+    let sorted = flatContacts.sort((a, b) => a.firstname.localeCompare(b.firstname)); //Sortiert dann das Array
+    let structured = sorted.map(obj => [obj]); // Verschatelt das Array wieder
+    return structured; // theroretisch kann die Verschachtelung vorher entfernt werden, man muus sie nur auch beim erstellen der Tasks rausnehmen
+
 }
 
 /**

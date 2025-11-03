@@ -5,11 +5,11 @@
  * @property {Object} constructor - The constructor for the FirebaseDatabase class.
  * @example
  * const firebaseDB = new FirebaseDatabase();
- */ 
+ */
 
 class FirebaseDatabase {
 
-    constructor() {}
+    constructor() { }
 
     /**
      * Authenticates the user and executes the provided callback function.
@@ -70,7 +70,7 @@ class FirebaseDatabase {
     async getSortedContact() {
         const contacts = await this.getAllData("contacts");
         let contactssorted = contacts.sort((a, b) => a.firstname.localeCompare(b.firstname));
-        return contactssorted
+        return contactssorted;
     }
 
 
@@ -127,7 +127,7 @@ class FirebaseDatabase {
 
     /**
      * Creates a new signed user and stores their data in the database.
-     * @param {string} id - The user's ID.  
+     * @param {string} id - The user's ID.
      * @param {string} firstname - The user's first name.
      * @param {string} lastname - The user's last name.
      * @param {string} pwd - The user's password.
