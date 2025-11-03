@@ -1,8 +1,19 @@
+/**
+ * @description Validation methods for task components.
+ * This mixin provides validation functionalities for task components,
+ * including title validation, due date validation, and required field checks.
+ * @mixin taskComponents.validation
+ * @see TaskComponents
+ */
+
 (function() {
     const taskComponentsPrototype = TaskComponents.prototype;
 
     /**
-     * Adds the task title on input change.
+     * @description Adds the task title on input change.
+     * Handles validation for the task title field.
+     * @function addTaskTitleOnInput
+     * @memberof taskComponents.validation
      * @returns {void}
      */
     taskComponentsPrototype.addTaskTitleOnInput = function() {
@@ -16,7 +27,11 @@
     };
 
     /**
-    * Validates the task title.
+    * @description Validates the task title.
+    * If the title is longer than 3 characters, it sets the currentTitle property.
+    * Otherwise, it shows an error message and border.
+    * @function taskTitleValidation
+    * @memberof taskComponents.validation
     * @param {string} titleValue - The value of the task title.
     * @return {void}
     */
@@ -36,7 +51,10 @@
     };
 
     /**
-    * Validates the due date field.
+    * @description Validates the due date field.
+    * Updates the currentDueDate and currentDueDateInputValue properties based on validation.
+    * @function dateFieldOnChange
+    * @memberof taskComponents.validation
     * @return {void}
     */
     taskComponentsPrototype.dateFieldOnChange = function() {
@@ -49,7 +67,9 @@
     };
 
     /**
-     * Handles the click event on the date icon to show the date picker.
+     * @description Handles the click event on the date icon to show the date picker.
+     * @function onDateIconClick
+     * @memberof taskComponents.validation
      * @return {void}
      */
     taskComponentsPrototype.onDateIconClick = function() {
@@ -58,7 +78,9 @@
     };
 
     /**
-     * Handles the change event on the date picker.
+     * @description Handles the change event on the date picker.
+     * @function datePickerSelectionChange
+     * @memberof taskComponents.validation
      * @param {Event} e - The change event object.
      * @return {void}
      */
@@ -70,7 +92,9 @@
     };
 
     /**
-    * Shows and leaves an error message for the specified target.
+    * @description Shows and leaves an error message for the specified target.
+    * @function showAndLeaveErrorMessage
+    * @memberof taskComponents.validation
     * @param {string} messageTarget - The ID of the message target element.
     * @param {boolean} visibility - Indicates whether to show or hide the error message.
     * @returns {void}
@@ -88,7 +112,9 @@
     };
 
     /**
-     * Shows and leaves an error border for the specified input field.
+     * @description Shows and leaves an error border for the specified input field.
+     * @function showAndLeaveErrorBorder
+     * @memberof taskComponents.validation
      * @param {string} inputTarget - The ID of the input field.
      * @param {boolean} visibility - Indicates whether to show or hide the error border.
      * @returns {void}
@@ -103,8 +129,10 @@
         }
     };
 
-     /**
-    * Handles the mouse click event on the Add Task form to validate required fields.
+    /**
+    * @description Handles the mouse click event on the Add Task form to validate required fields.
+    * @function addTaskSubmitOnMouse
+    * @memberof taskComponents.validation
     * @param {HTMLElement} button - The button element that was clicked.
     * @return {void}
     */
@@ -115,7 +143,9 @@
     };
 
     /**
-    * Checks if all required fields are filled and enables/disables the create button accordingly.
+    * @description Checks if all required fields are filled and enables/disables the create button accordingly.
+    * @function addTaskCheckRequiredField
+    * @memberof taskComponents.validation
     * @param {HTMLElement} createButton - The create button element.
     * @return {void}
     */
@@ -135,10 +165,12 @@
     }   
 
      /**
-     * Checks the value of the category input field for validity.
+     * @description Checks the value of the category input field for validity.
      * If the input field is empty or has the default placeholder value, it shows an error message and border.
      * If a valid category is selected, it hides the error message and border.
-     * @returns void
+     * @function checkCategoryInputValue
+     * @memberof taskComponents.validation
+     * @returns {void}
      */
     taskComponentsPrototype.checkCategoryInputValue = function() {
         let categoryInput = document.getElementById('task-category');

@@ -1,10 +1,22 @@
+/**
+ * @description Layout related methods for TaskComponents class.
+ * This mixin provides functionalities to manage the layout and UI aspects
+ * of task components, including checking available space in dialogs and adjusting
+ * container heights for optimal display.
+ * @mixin taskComponents.layout
+ * @see TaskComponents
+ */
+
+
 (function() {
     const taskComponentsPrototype = TaskComponents.prototype;
 
     /**
-     * Checks if there is enough space in the add task dialog for the current content.
+     * @description Checks if there is enough space in the add task dialog for the current content.
      * If there isn't enough space, it enables scrolling in the right container.
-     * @returns void
+     * @function checkAvailableSpaceInAddTaskDialog
+     * @memberof taskComponents.layout
+     * @returns {void}
      */
     taskComponentsPrototype.checkAvailableSpaceInAddTaskDialog = function(){
         const [addTaskDialog, addTaskRightContainer, addTaskHeader, addTaskFooter, seperator] = this.getElementsForCheckSpaceInAddTaskDialog();
@@ -25,7 +37,9 @@
     };
 
     /**
-     * Gets the elements needed to check the space in the add task dialog.
+     * @description Gets the elements needed to check the space in the add task dialog.
+     * @function getElementsForCheckSpaceInAddTaskDialog
+     * @memberof taskComponents.layout
      * @returns {Array} - An array containing the relevant elements.
      */
     taskComponentsPrototype.getElementsForCheckSpaceInAddTaskDialog = function(){
@@ -39,7 +53,9 @@
     };
 
     /**
-     * Calculates the total height needed for the right container in the add task dialog.
+     * @description Calculates the total height needed for the right container in the add task dialog.
+     * @function calculateHeightForRightContainerInDialog
+     * @memberof taskComponents.layout
      * @param {HTMLElement} dialog 
      * @param {HTMLElement} header 
      * @param {HTMLElement} footer 
@@ -53,9 +69,11 @@
     };
 
     /**
-     * Checks if there is enough space in the add task dialog for the current content.
+     * @description Checks if there is enough space in the add task dialog for the current content.
      * If there isn't enough space, it enables scrolling in the right container.
-     * @returns void
+     * @function checkAvailableSpaceInAddTask
+     * @memberof taskComponents.layout
+     * @returns {void}
      */
     taskComponentsPrototype.checkAvailableSpaceInAddTask = function(){
         const [siteHeader, addTaskHeader, addTaskFooter, seperator, rightContainer] = this.getElementsForCheckSpaceInAddTask();
@@ -74,7 +92,9 @@
     };
 
     /**
-     * Gets the elements needed to check the space in the add task dialog.
+     * @description Gets the elements needed to check the space in the add task dialog.
+     * @function getElementsForCheckSpaceInAddTask
+     * @memberof taskComponents.layout
      * @returns {Array} - An array containing the relevant elements.
      */
     taskComponentsPrototype.getElementsForCheckSpaceInAddTask = function(){
@@ -88,7 +108,9 @@
 
 
     /**
-     * Calculates the total height needed for the right container in the add task dialog.
+     * @description Calculates the total height needed for the right container in the add task dialog.
+     * @function calculateHeightForRightContainer
+     * @memberof taskComponents.layout
      * @param {HTMLElement} dialog 
      * @param {HTMLElement} header 
      * @param {HTMLElement} footer 

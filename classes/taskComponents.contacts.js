@@ -1,9 +1,20 @@
+/**
+ * @description TaskComponents class methods for managing contacts in tasks.
+ * This file contains methods for loading contacts from the database,
+ * displaying and hiding contact selection lists, rendering contact options,
+ * and handling contact selection for tasks.
+ * @see TaskComponents
+ * @mixin taskComponents.contacts
+ */
 (function() {
     const taskComponentsPrototype = TaskComponents.prototype;
 
     /**
-    * Loads all contacts from the database and sorts them.
+    * @description Loads all contacts from the database and sorts them.
     * Utilizes the getSortedContact function from db-functions.js.
+    * @function loadContactsAllFromDB
+    * @memberof taskComponents.contacts
+    * @returns {Promise<void>}
     */
     taskComponentsPrototype.loadContactsAllFromDB = async function() {
         const fb = new FirebaseDatabase();
@@ -11,7 +22,10 @@
     };
 
     /**
-     * Shows or hides the contact selection input field.
+     * @description Shows or hides the contact selection input field.
+     * Uses helper functions to update the UI accordingly.
+     * @function showAndHideContacts
+     * @memberof taskComponents.contacts
      * @param {string} showOrHide - Determines whether to show or hide the contact list.
      * @return {void}
      */
@@ -34,7 +48,9 @@
     };
 
     /**
-     * Sets the onclick function for the input field and button for showing/hiding contacts.
+     * @description Sets the onclick function for the input field and button for showing/hiding contacts.
+     * @function setInputAndButtonOnclickFunctionForContacts
+     * @memberof taskComponents.contacts
      * @param {string} showOrHide - Determines whether to show or hide the contact list.
      * @returns {void}
      */
@@ -48,7 +64,9 @@
     };
 
      /**
-     * Renders the show icon for the contact selection.
+     * @description Renders the show icon for the contact selection.
+     * @function renderShowIcon
+     * @memberof taskComponents.contacts
      * @param {string} elementID - The ID of the element to modify.
      * @returns {void}
      */
@@ -60,7 +78,9 @@
     };
 
     /**
-     * Renders the hide icon for the contact selection.
+     * @description Renders the hide icon for the contact selection.
+     * @function renderHideIcon
+     * @memberof taskComponents.contacts
      * @param {string} elementID - The ID of the element to modify.
      * @returns {void}
      */
@@ -72,9 +92,11 @@
     };
 
     /**
-     * Shows the contact list for selection.
+     * @description Shows the contact list for selection.
      * If a current contact list is provided, it uses that; otherwise, it uses the full contact list from the database.
      * Additionally, it adjusts the height of the contact list container based on the number of contacts.
+     * @function showContactListForSelect
+     * @memberof taskComponents.contacts
      * @param {Array} currentContactList
      * @returns {void}
      */
@@ -94,15 +116,15 @@
     };
 
     /**
-     * Hides the contact list dropdown for task selection.
-     *
+     * @description Hides the contact list dropdown for task selection.
      * This function collapses the contact list container and the contact list itself by setting their heights to zero
      * using `requestAnimationFrame` for smooth UI updates. It also clears the contact list's contents and updates
      * the `isContactListOpen` flag to indicate that the contact list is closed.
-     *
      * Side Effects:
      * - Modifies the DOM elements with IDs 'contact-List-container' and 'contact-List-for-task'.
      * - Sets the global variable `isContactListOpen` to `false`.
+     * @function hideContactListForSelect
+     * @memberof taskComponents.contacts
      * @returns {void}
      */
     taskComponentsPrototype.hideContactListForSelect = function() {
@@ -120,9 +142,11 @@
     }
 
     /**
-     * Renders the contact options for selection.
+     * @description Renders the contact options for selection.
      * Using TaskUtils to check if the contact is already assigned to the task.
      * If the contact is the current user, it indicates that in the display.
+     * @function renderContactOptions
+     * @memberof taskComponents.contacts
      * @param {Array} contactList
      * @return {void}
      */
@@ -138,8 +162,10 @@
     };
 
     /**
-     * Handles the selection of a contact button in the list.
+     * @description Handles the selection of a contact button in the list.
      * Uses TaskUtils to check if the contact is available and toggles its selection state.
+     * @function contactButtonOnListSelect
+     * @memberof taskComponents.contacts
      * @param {HTMLElement} currentContactBtn - The button element representing the selected contact.
      * @returns {void}
      */
@@ -154,9 +180,11 @@
     };
 
     /**
-     * Adds the selected contact to the task and updates the UI accordingly.
+     * @description Adds the selected contact to the task and updates the UI accordingly.
      * Uses TaskUtils to manage the contact assignment list.
      * Changes the styling of the selected contact to indicate its selection.
+     * @function checkInContact
+     * @memberof taskComponents.contacts
      * @param {HTMLElement} currentContact
      * @param {string} contactID
      * @returns {void}
@@ -173,9 +201,11 @@
     };
 
     /**
-     * Removes the selected contact from the task and updates the UI accordingly.
+     * @description Removes the selected contact from the task and updates the UI accordingly.
      * Uses TaskUtils to manage the contact assignment list.
      * Changes the styling of the selected contact to indicate its removal.
+     * @function checkOutContact
+     * @memberof taskComponents.contacts
      * @param {HTMLElement} currentContact
      * @param {string} contactID
      * @return {void}
@@ -192,8 +222,10 @@
     };
 
     /**
-     * Filters the contact list based on the input value.
+     * @description Filters the contact list based on the input value.
      * Uses TaskUtils to filter contacts from the full contact list.
+     * @function filterContactFromInputValue
+     * @memberof taskComponents.contacts
      * @param {string} inputValue
      * @returns {void}
      */
@@ -202,7 +234,9 @@
     };
 
     /**
-     * Shows or hides the badge container for assigned contacts.
+     * @description Shows or hides the badge container for assigned contacts.
+     * @function showOrHideBadgeContainer
+     * @memberof taskComponents.contacts
      * @param {string} showOrHide
      * @returns {void}
      */
@@ -219,8 +253,11 @@
     };
 
     /**
-     * Renders the assigned profile badges for the selected contacts.
+     * @description Renders the assigned profile badges for the selected contacts.
+     * Uses a helper function to create badges for each assigned contact.
      * If no contacts are assigned, the function returns early.
+     * @function renderAsignedProfilBadge
+     * @memberof taskComponents.contacts
      * @returns {void}
      */
     taskComponentsPrototype.renderAsignedProfilBadge = function() {
@@ -239,7 +276,9 @@
     };
 
     /**
-     * Sorts an array of contacts by name before rendering badges.
+     * @description Sorts an array of contacts by name before rendering badges.
+     * @function getSortedContact
+     * @memberof taskComponents.contacts
      * @param {Array} contactArray 
      * @returns {Array} Sorted array of contacts.
      */

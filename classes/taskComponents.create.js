@@ -1,8 +1,19 @@
+/**
+ * @description This file contains methods related to creating a new task.
+ * It extends the TaskComponents class with functionalities for handling task creation,
+ * including form submission, dialog management, and task data preparation.
+ * Loaded by add task page
+ * @see TaskComponents
+ * @mixin taskComponents.create
+ */
+
 (function () {
     const taskComponentsPrototype = TaskComponents.prototype;
 
     /**
-     * Gets the task details for submission.
+     * @description Gets the task details for submission.
+     * @function getTaskDetails
+     * @memberof taskComponents.create
      * @returns {Array} - The task details array.
      */
     Object.defineProperty(TaskComponents.prototype, "getTaskDetails", {
@@ -17,8 +28,10 @@
     });
 
     /**
-    * Clears the Add Task form by reloading the page.
+    * @description Clears the Add Task form by reloading the page.
     * This effectively resets all form fields and local data.
+    * @function addTaskFormClear
+    * @memberof taskComponents.create
     * @returns {void}
     */
     taskComponentsPrototype.addTaskFormClear = function() {
@@ -26,10 +39,12 @@
     };
 
     /**
-    * Handles the creation of a new task.
+    * @description Handles the creation of a new task.
     * Prepares the data from the form and the local data to create a new task.
     * Uses the CreateNewTask class to handle the task creation process.
     * After the task is created, it shows a confirmation dialog and navigates to the board view.
+    * @function addTaskCreateTask
+    * @memberof taskComponents.create
     * @param {Event} event - The event object from the form submission.
     * @returns {Promise<void>}
      */
@@ -54,7 +69,9 @@
     }
 
     /**
-     * Checks if the add task form is in a dialog.
+     * @description Checks if the add task form is in a dialog.
+     * @function getIsDialog
+     * @memberof taskComponents.create
      * @returns {boolean} True if the form is in a dialog, false otherwise.
      */
     taskComponentsPrototype.getIsDialog = function() {
@@ -74,9 +91,11 @@
     };
 
     /**
-    * Shows a confirmation dialog after a task is successfully added.
+    * @description Shows a confirmation dialog after a task is successfully added.
     * Closes the Add Task dialog if it was opened from a dialog view.
     * Navigates to the board view after the confirmation dialog is closed.
+    * @function addTaskAfterSafe
+    * @memberof taskComponents.create
     * @param {boolean} fromDialog - Indicates if the call is from a dialog.
     * @returns {void}
     */
@@ -92,7 +111,9 @@
     };
 
     /**
-     * Toggles the display of the Add Task confirmation dialog.
+     * @description Toggles the display of the Add Task confirmation dialog.
+     * @function toggleDialogDisplay
+     * @memberof taskComponents.create
      * @return {void}
      */
     taskComponentsPrototype.toggleDialogDisplay = function() {
@@ -100,7 +121,10 @@
     };
 
     /**
-    * Handles mouse click events within the Add Task window.
+    * @description Handles mouse click events within the Add Task window.
+    * Closes the contact and category selection lists if the click occurs outside of them.
+    * @function addTaskWindowMouseClick
+    * @memberof taskComponents.create
     * @param {MouseEvent} e - The mouse event object.
     * @returns {void}
     */
@@ -118,7 +142,9 @@
     };
 
     /**
-     * Reads the current task date into variables.
+     * @description Reads the current task date into variables.
+     * @function readCurrentTaskDateIntoVariables
+     * @memberof taskComponents.create
      * @returns {void}
      */
     taskComponentsPrototype.readCurrentTaskDateIntoVariables = function() {

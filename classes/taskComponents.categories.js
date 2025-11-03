@@ -1,9 +1,20 @@
+/**
+ * @description Extends the TaskComponents class with category-related functionalities.
+ * This module adds methods for loading categories from the database,
+ * displaying and hiding category lists, rendering category options,
+ * and handling category selection and input field interactions.
+ * @see TaskComponents
+ * @mixin taskComponents.categories
+ */
+
 (function() {
     const taskComponentsPrototype = TaskComponents.prototype;
 
     /**
-    * Loads categories from the database.
+    * @description Loads categories from the database.
     * Utilizes the getAllData function from db-functions.js.
+    * @function loadCategoriesFromDB
+    * @memberof taskComponents.categories
     * @returns {Promise<void>}
     */
     taskComponentsPrototype.loadCategoriesFromDB = async function() {
@@ -12,7 +23,10 @@
     };
 
     /**
-     * Shows or hides the category list for selection.
+     * @description Shows or hides the category list for selection.
+     * Toggles the visibility of the category list based on the provided parameter.
+     * @function showAndHideCategories
+     * @memberof taskComponents.categories
      * @param {string} showOrHide
      * @return {void}
      */
@@ -28,9 +42,11 @@
     };
 
     /**
-     * Shows the category list for selection.
+     * @description Shows the category list for selection.
      * If no categories are available, the function returns early.
      * Renders the category options and adjusts the height of the category list container based on the number of categories.
+     * @function showCategoryListForSelect
+     * @memberof taskComponents.categories
      * @returns {void}
      */
     taskComponentsPrototype.showCategoryListForSelect = function() {
@@ -50,8 +66,10 @@
     };
 
     /**
-     * Hides the category list for selection.
+     * @description Hides the category list for selection.
      * Uses `requestAnimationFrame` to smoothly collapse the category list container and the category list itself by setting their heights to zero.
+     * @function hideCategoryListForSelect
+     * @memberof taskComponents.categories
      * @returns {void}
      */
     taskComponentsPrototype.hideCategoryListForSelect = function() {
@@ -70,8 +88,10 @@
     };
 
     /**
-     * Renders the category options for selection.
+     * @description Renders the category options for selection.
      * If no categories are available, the function returns early.
+     * @function renderCategoryOptions
+     * @memberof taskComponents.categories
      * @param {Array} categories
      */
     taskComponentsPrototype.renderCategoryOptions = function(categories) {
@@ -84,12 +104,14 @@
     };
 
     /**
-     * Handles the selection of a category from the list.
+     * @description Handles the selection of a category from the list.
      * If no button is provided, an error is shown.
      * If the selected category is not found in the categories array, an error is shown.
      * Sets the current category and updates the input field value.
      * Hides the category list after selection and checks the category input value for validation.
      * Uses TaskUtils to find the index of the selected category in the categories array.
+     * @function categoryButtonOnListSelect
+     * @memberof taskComponents.categories
      * @param {HTMLElement} button - The button element representing the selected category.
      * @return {void}
      */
@@ -104,7 +126,9 @@
     };
 
     /**
-     * Sets the value of the category input field.
+     * @description Sets the value of the category input field.
+     * @function setCategoryInputfieldValue
+     * @memberof taskComponents.categories
      * @param {string} value - The value to set in the category input field.
      * @return {void}
      */
@@ -113,7 +137,9 @@
     };
 
     /**
-     * Sets the onclick attribute for the show/hide button.
+     * @description Sets the onclick attribute for the show/hide button.
+     * @function setCategoryShowOrHideButton
+     * @memberof taskComponents.categories
      * @param {string} showOrHide
      * @return {void}
      */
@@ -123,9 +149,11 @@
     };
 
     /**
-     * Handles the click event on the category input field.
+     * @description Handles the click event on the category input field.
      * If the category list is open, it blurs the input field, hides the category list, and checks the input value.
      * If the category list is closed, it shows the category list.
+     * @function onclickCategoryInput
+     * @memberof taskComponents.categories
      * @param {HTMLElement} inputField - The input field element for the category.
      * @return {void}
      */

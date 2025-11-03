@@ -1,3 +1,20 @@
+/**
+ * @description Base class for task components, providing common properties and methods.
+ * This class serves as a foundation for managing task-related functionalities,
+ * including loading contacts and categories, setting priorities, and handling task data.
+ * Loaded by add task page and board detail view page
+ * @class TaskComponents
+ * @namespace taskComponents
+ * @mixes taskComponents.categories
+ * @mixes taskComponents.contacts
+ * @mixes taskComponents.create
+ * @mixes taskComponents.layout
+ * @mixes taskComponents.priority
+ * @mixes taskComponents.subtasks
+ * @mixes taskComponents.validation
+ */
+
+
 class TaskComponents{
 
     contactAllListFromDB = [];
@@ -19,7 +36,12 @@ class TaskComponents{
     currentStateCategory;
 
 
-
+    /**
+     * Creates an instance of the TaskComponents class.
+     * @param {*} currentUser 
+     * @param {*} currentInstance 
+     * @param {*} currentStateCategory 
+     */
     constructor(currentUser, currentInstance, currentStateCategory) {
         this.currentUser = currentUser;
         this.currentInstance = currentInstance;

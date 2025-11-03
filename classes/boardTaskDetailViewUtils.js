@@ -142,7 +142,7 @@ class BoardTaskDetailViewUtils {
     /**
      * Set the height of the subtask container based on the heights of individual subtasks.
      * @param {Array<number>} subtaskHeightsArray 
-     * @returns 
+     * @returns {void}
      */
     setSubtaskContainerHeight(subtaskHeightsArray){
         const sum = subtaskHeightsArray.reduce((currentSum, currentHeight) => currentSum + currentHeight, 0);
