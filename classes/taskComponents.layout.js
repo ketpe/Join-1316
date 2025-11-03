@@ -106,22 +106,21 @@
         return [siteHeader, addTaskHeader, addTaskFooter, seperator, rightContainer];
     };
 
-
     /**
-     * @description Calculates the total height needed for the right container in the add task dialog.
+     * @description Calculates the total height needed for the right container in the add task view.
      * @function calculateHeightForRightContainer
      * @memberof taskComponents.layout
-     * @param {HTMLElement} dialog 
-     * @param {HTMLElement} header 
-     * @param {HTMLElement} footer 
+     * @param {HTMLElement} siteHeader 
+     * @param {HTMLElement} addTaskHeader 
+     * @param {HTMLElement} addTaskFooter 
      * @param {HTMLElement} rightContainer 
-     * @returns {Array} - An array containing the total height and the available height for the right container.
+     * @returns {Array} - An array containing the total height and the available height for the right container.    
      */
-    taskComponentsPrototype.calculateHeightForRightContainerInDialog = function(dialog, header, footer, rightContainer){
-        const sum = rightContainer.scrollHeight + header.offsetHeight + footer.offsetHeight + 200;
-        const rightContainerAvalable = dialog.offsetHeight - header.offsetHeight - footer.offsetHeight - 200;
+    taskComponentsPrototype.calculateHeightForRightContainer = function(siteHeader, addTaskHeader, addTaskFooter, rightContainer){
+        const sum = rightContainer.scrollHeight + siteHeader.offsetHeight + addTaskHeader.offsetHeight + addTaskFooter.offsetHeight + 200;
+        const rightContainerAvalable = window.innerHeight - siteHeader.offsetHeight - addTaskHeader.offsetHeight - addTaskFooter.offsetHeight - 200;
         return [sum, rightContainerAvalable];
-    };
+    }
    
 
 })();
