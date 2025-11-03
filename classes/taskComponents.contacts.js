@@ -227,14 +227,24 @@
         if (this.currentContactAssignList.length == 0) {return;}
         let badgeContainer = document.getElementById('contact-assigned-badge');
         badgeContainer.innerHTML = "";
-        for (let i = 0; i < this.currentContactAssignList.length; i++) {
+        const sortedContacts = this.getSortedContact(this.currentContactAssignList);
+        for (let i = 0; i < sortedContacts.length; i++) {
             if (i == 5) {
-                const invisibleContacts = this.currentContactAssignList.length - i;
+                const invisibleContacts = sortedContacts.length - i;
                 badgeContainer.innerHTML += getBadgeForContactOverflow(invisibleContacts);
                 break;
             }
-            badgeContainer.innerHTML += getAssignedContactBadge(this.currentContactAssignList[i]);
+            badgeContainer.innerHTML += getAssignedContactBadge(sortedContacts[i]);
         }
     };
+
+    /**
+     * Sorts an array of contacts by name before rendering badges.
+     * @param {Array} contactArray 
+     * @returns {Array} Sorted array of contacts.
+     */
+    taskComponentsPrototype.getSortedContact = function(contactArray) {
+        return contactArray.sort((a, b) => a.firstname.localeCompare(b.firstname));
+    }
 
 })();
