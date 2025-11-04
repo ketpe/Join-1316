@@ -73,8 +73,8 @@
         this.currentSubTasks = this.addTaskUtils.addSubtaskToArray(inputValueClean, this.currentSubTasks);
         this.clearSubInputField();
         this.renderSubtasks();
-        this.checkAvailableSpaceInAddTaskDialog();
-        this.checkAvailableSpaceInAddTask();
+        //this.checkAvailableSpaceInAddTaskDialog();
+        //this.checkAvailableSpaceInAddTask();
     };
 
     /**

@@ -48,7 +48,7 @@
 
 @media(max-height: 880px) {
     .add-task-fields {
-        overflow-y: scroll;
+        /* overflow-y: scroll; */
     }
 }
 

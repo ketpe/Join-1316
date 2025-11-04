@@ -90,14 +90,33 @@ legend {
     color: var(--input-error-color);
 }
 
+
 .a-t-f-i-container {
+    display: grid !important;
+    grid-template-columns: 440px 1px 440px;
+    column-gap: 24px;
+    align-items: stretch;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    margin-bottom: 130px;
+    max-width: 972px;
+}
+
+.a-t-f-i-midle {
+    background: var(--input-border-color);
+    margin: 0;
+    /* Grid übernimmt die Abstände */
+}
+
+
+/* .a-t-f-i-container {
     width: calc((2 * 440px) + (2 * 24px) + 2px);
     display: flex;
     justify-content: space-evenly;
-    /* align-items: center; */
     align-items: flex-start;
 
-}
+} */
 
 .a-t-f-i-left {
     width: 440px;
@@ -128,7 +147,7 @@ legend {
     margin-right: 24px;
 } */
 
-.a-t-f-i-midle {
+/* .a-t-f-i-midle {
     height: 100%;
     min-width: 1px;
     width: 1px;
@@ -138,7 +157,7 @@ legend {
     /* align-self: top; */
 }
 
-.a-t-f-i-midle-dialog {
+*/ .a-t-f-i-midle-dialog {
     height: 440px;
     /* height: auto !important; */
 }
@@ -749,7 +768,7 @@ legend {
     background-size: cover;
 }
 
-.sub-list-writing-btn-container .btn-separator, 
+.sub-list-writing-btn-container .btn-separator,
 .sub-list-edit-btn-container .btn-separator {
     width: 1px;
     height: 24px;

@@ -56,6 +56,8 @@ class TaskComponents{
         await this.loadContactsAllFromDB();
         await this.loadCategoriesFromDB();
         this.setNewPriority("Medium");
+        //this.checkAvailableSpaceInAddTaskDialog();
+        //this.checkAvailableSpaceInAddTask();
     }
 
     /**

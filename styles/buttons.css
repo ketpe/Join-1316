@@ -307,6 +307,9 @@
   background-color: var(--bg-btn-hover-special);
 }
 
+.btn-overlay-close.alignment-top{
+  align-self: flex-start;
+}
 
 .btn-submenu {
   width: 130px;

@@ -288,14 +288,14 @@ async function renderAddTaskIntoDialogSingle() {
  * @returns {void}
  */
 function changeAddTaskFormFieldSizeBoardDialogSingle() {
-    const [height, width] = addTaskUtils.getCurrentAddTaskSize;
+    /* const [height, width] = addTaskUtils.getCurrentAddTaskSize;
     const dialog = document.getElementById('add-task-dialog');
     const heightDialog = height - 100;
     dialog.style.height = heightDialog + "px";
     addTaskUtils.measureTheRemainingSpaceOfFieldsForBoardSingle(heightDialog)
         .then((result) => {
             document.querySelector('.add-task-mobile-fields').style.height = result + "px";
-        });
+        }); */
 }
 
 /**
@@ -308,10 +308,10 @@ function changeAddTaskFormFieldSizeBoardDialogSingle() {
  * @returns {void}
  */
 function changeAddTaskFormFieldSizeBoardDialog(params) {
-    const [height, width] = addTaskUtils.getCurrentAddTaskSize;
+    /* const [height, width] = addTaskUtils.getCurrentAddTaskSize;
     const dialog = document.getElementById('add-task-dialog');
     const heightDialog = height - 100;
-    dialog.style.height = heightDialog + "px";
+    dialog.style.height = heightDialog + "px"; */
 }
 
 /**

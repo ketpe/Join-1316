@@ -45,7 +45,7 @@ async function onLoadAddTask() {
     } else {
         await changeAddTaskToMobile(height, width);
     }
-    changeAddTaskFormFieldSize(height, width, currentView);
+    //changeAddTaskFormFieldSize(height, width, currentView);
     window.addEventListener('resize', addTaskPageResize);
     window.addEventListener('resize', updateLandscapeBlock);
 }
@@ -92,7 +92,7 @@ async function addTaskPageResize() {
             await changeAddTaskToDesktopSingle(height, width);
         }
 
-        changeAddTaskFormFieldSize(height, width, currentView);
+        //changeAddTaskFormFieldSize(height, width, currentView);
     } finally {
         resizeLock = false;
     }
