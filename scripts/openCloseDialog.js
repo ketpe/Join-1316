@@ -136,8 +136,8 @@ function addDialogHideClass(dialogId) {
  * @return {void}
  */
 async function renderAddContactIntoDialog() {
-    await includeHtml("dialog-content-contacts", "addContact.html");
-    resetContactForm();
+    document.getElementById('add-contact-dialog').innerHTML = '';
+    await includeHtml("add-contact-dialog", "addContact.html");
 }
 
 /**
@@ -159,11 +159,20 @@ async function renderDetailViewTemplate(taskId) {
  * @return {void}
  */
 async function renderAddContactIntoDialogMobile() {
+    document.getElementById('add-contact-dialog-mobile').innerHTML = '';
     await includeHtml("add-contact-dialog-mobile", "addContactMobile.html");
 
 }
+
+/**
+ * @function renderEditContactIntoDialog
+ * @memberof openCloseDialog
+ * @description Renders the edit contact form into the dialog
+ * @param {string} contactId - The ID of the contact to edit
+ * @return {void}
+ */
 function renderEditContactIntoDialog(contactId) {
-    includeHtml("dialog-content-contacts", "editContact.html")
+    includeHtml("add-contact-dialog", "editContact.html")
     getContactData(contactId);
 }
 
