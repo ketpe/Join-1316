@@ -7,7 +7,7 @@
  * @file scripts/addTaskDialog.js
  */
 
-const DIALOGINDESKTOP_WIDTH = 1071;
+const DIALOGINDESKTOP_WIDTH = 1301;
 const DIALOGINDESKTOP_HEIGHT = 890;
 
 let currentUser = "";
@@ -34,7 +34,7 @@ async function onAddTaskDialogOpen(stateCategory = "todo") {
 
     if (width <= 880) {
         navigateToAddTask(null, currentStateCategory);
-    } else if (height >= DIALOGINDESKTOP_HEIGHT && width >= DIALOGINDESKTOP_WIDTH) {
+    } else if (width >= DIALOGINDESKTOP_WIDTH) {
         currentDialogView = "desktop";
         await showAddTaskAsDialog();
         giveFunctionsToBoardBody();
@@ -44,7 +44,8 @@ async function onAddTaskDialogOpen(stateCategory = "todo") {
         giveFunctionsToBoardBody();
     }
 
-    currentDialogView == "desktop-single" ? changeAddTaskFormFieldSizeBoardDialogSingle() : changeAddTaskFormFieldSizeBoardDialog();
+    //currentDialogView == "desktop-single" ? changeAddTaskFormFieldSizeBoardDialogSingle() : changeAddTaskFormFieldSizeBoardDialog();
+    readCurrentDialogSize();
 }
 
 /**
@@ -65,16 +66,26 @@ async function resizeAddTaskBoardDialog(event) {
 
     if (width <= 880) {
         navigateToAddTask(null, currentStateCategory);
-    } else if (height >= DIALOGINDESKTOP_HEIGHT && width >= DIALOGINDESKTOP_WIDTH && currentDialogView != "desktop") {
+    } else if (width >= DIALOGINDESKTOP_WIDTH && currentDialogView != "desktop") {
         currentDialogView = "desktop";
         await showAddTaskAsDialog();
-    } else if ((height < DIALOGINDESKTOP_HEIGHT || width < DIALOGINDESKTOP_WIDTH) && currentDialogView != "desktop-single") {
+    } else if (width < DIALOGINDESKTOP_WIDTH && currentDialogView != "desktop-single") {
         currentDialogView = "desktop-single";
         await showAddTaskAsDialogSingle();
     }
 
-    currentDialogView == "desktop-single" ? changeAddTaskFormFieldSizeBoardDialogSingle() : changeAddTaskFormFieldSizeBoardDialog();
+    //currentDialogView == "desktop-single" ? changeAddTaskFormFieldSizeBoardDialogSingle() : changeAddTaskFormFieldSizeBoardDialog();
+    readCurrentDialogSize();
     resizeLockDialog = false;
+}
+
+function readCurrentDialogSize(){
+    const dialog = document.getElementById('add-task-dialog');
+    if(!dialog){return;}
+    const dialogHeight = window.innerHeight - 100;
+    const dialogWidth = 1136;
+    document.documentElement.style.setProperty('--addtask-dialog-height', `${dialogHeight}px`);
+    document.documentElement.style.setProperty('--addtask-dialog-width', `${dialogWidth}px`);
 }
 
 /**
@@ -334,6 +345,7 @@ function changeDialogStyleToSingle() {
     fields.classList.add('mb-24');
 }
 
+/**TODO - Klassen ändern, ohne beeinflussing von AddTask */
 
 /**
  * @description Changes the view of the Add Task form to be suitable for dialog presentation.
@@ -344,6 +356,8 @@ function changeDialogStyleToSingle() {
  * @return {void}
  */
 function changeAddTaskViewToDialog() {
+    document.getElementById('add-task-fields-container').classList.remove('a-t-f-i-container');
+    document.getElementById('add-task-fields-container').classList.add('a-t-f-i-container-dialog');
     document.getElementById('a-t-dialog-close-btn').classList.remove('display-hidden');
     document.getElementById('a-t-cancel-btn').classList.remove('display-hidden');
     document.getElementById('a-t-clear-btn').classList.add('display-hidden');
@@ -351,7 +365,7 @@ function changeAddTaskViewToDialog() {
     document.getElementById('add-task-form').classList.add('add-task-form-dialog');
     document.getElementById('a-t-middle-container').classList.add('a-t-f-i-midle-dialog');
     document.getElementById('due-date-hidden').classList.add('date-input-hidden-dialog');
-    document.querySelector('h1').classList.add('join-h1-dialog');
+    document.querySelector('#add-task-title').classList.add('join-h1-dialog');
     document.querySelector('.add-task-head').classList.add('mb-24');
 }
 

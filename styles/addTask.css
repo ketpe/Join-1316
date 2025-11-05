@@ -13,45 +13,6 @@
     height: 100%;
 }
 
-.add-task-form-dialog {
-    margin: auto;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    resize: both;
-}
-
-#dialog-content {
-    padding: 74px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.add-task-dialog {
-    padding: 0;
-    border: none !important;
-    margin: auto;
-    border-radius: 30px;
-    background-color: white;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0, 0.10);
-    transform: translateX(150%);
-    height: 870px;
-    width: 1061px;
-    overflow-y: hidden;
-}
-
-.add-task-board-dialog-single {
-    padding: 0;
-    border: none !important;
-    margin: auto;
-    border-radius: 30px;
-    background-color: white;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0, 0.10);
-    overflow-y: hidden;
-}
-
-
 .add-task-head {
     display: flex;
     justify-content: space-between;
@@ -107,17 +68,8 @@ legend {
 .a-t-f-i-midle {
     background: var(--input-border-color);
     margin: 0;
-    /* Grid übernimmt die Abstände */
+
 }
-
-
-/* .a-t-f-i-container {
-    width: calc((2 * 440px) + (2 * 24px) + 2px);
-    display: flex;
-    justify-content: space-evenly;
-    align-items: flex-start;
-
-} */
 
 .a-t-f-i-left {
     width: 440px;
@@ -140,28 +92,6 @@ legend {
     padding-inline-end: 12px;
 }
 
-/* .a-t-f-i-midle {
-    height: 100%;
-    min-width: 1px;
-    background-color: var(--input-border-color);
-    margin-left: 24px;
-    margin-right: 24px;
-} */
-
-/* .a-t-f-i-midle {
-    height: 100%;
-    min-width: 1px;
-    width: 1px;
-    background-color: var(--input-border-color);
-    margin-left: 24px;
-    margin-right: 24px;
-    
-}*/
-
- .a-t-f-i-midle-dialog {
-    height: 440px;
-    /* height: auto !important; */
-}
 
 .add-task-footer {
     position: absolute;
@@ -172,11 +102,6 @@ legend {
     z-index: 1000;
 }
 
-.add-task-footer-dialog {
-    position: relative;
-    bottom: 0px;
-    margin-top: 35px;
-}
 
 .add-task-footer p {
     font-family: 'Inter';
@@ -283,9 +208,7 @@ legend {
     outline: none;
 }
 
-.date-input-hidden-dialog {
-    transform: translateY(-108%) translateX(5px);
-}
+
 
 .date-trigger {
     transform: translateY(-238%) translateX(-70%);
