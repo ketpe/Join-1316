@@ -93,6 +93,10 @@ button {
     color: black;
 }
 
+.mt-0 {
+    margin-block-start: 0;
+}
+
 .join-h1-mobile {
     font-family: 'Inter';
     font-size: 47px;

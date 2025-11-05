@@ -47,18 +47,6 @@ async function newContact(event) {
 }
 
 /**
- * @function resetContactForm
- * @memberof addEditContacts
- * @description - Resets the contact form fields to their default values.
- * @returns {void}
- */
-function resetContactForm() {
-    document.getElementById('contact-name').value = '';
-    document.getElementById('contact-email').value = '';
-    document.getElementById('contact-phone').value = '';
-}
-
-/**
  * @function selectNewContact
  * @memberof addEditContacts
  * @description - Select the newly created contact and open its details.

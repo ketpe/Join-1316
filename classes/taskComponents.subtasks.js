@@ -27,6 +27,22 @@
     };
 
     /**
+     * @description Handles the blur event on the subtask input field.
+     * Hides the subtask writing buttons.
+     * @function onblurSubtaskInput
+     * @memberof taskComponents.subtasks
+     * @returns {void}
+     */
+    taskComponentsPrototype.onblurSubtaskInput = function(event, input) {
+        let fieldButtons = document.getElementById('sub-writing-buttons');
+        const relatedTarget = event.relatedTarget;
+        if (!fieldButtons.contains(relatedTarget)) {
+            this.toggleSubWritingButtons(false);
+            input.value = "";
+        }
+    }
+
+    /**
      * @description Toggles the visibility of the subtask writing buttons.
      * @function toggleSubWritingButtons
      * @memberof taskComponents.subtasks
@@ -49,8 +65,8 @@
     taskComponentsPrototype.subtaskInputfieldPressEnter = function(event, inputField) {
         if (event.code == "Enter" || event.code == "NumpadEnter") {
             this.toggleSubWritingButtons(false);
-            inputField.blur();
             this.adoptCurrentSubEntry();
+            inputField.blur();
         }
     };
 
@@ -65,16 +81,16 @@
      * @memberof taskComponents.subtasks
      * @returns {void}
      */
-    taskComponentsPrototype.adoptCurrentSubEntry = function() {
+    taskComponentsPrototype.adoptCurrentSubEntry = function(event) {
+        event?.preventDefault();
         let inputfield = document.getElementById('task-sub-task');
         if (!inputfield) { return; }
         const inputValueClean = (inputfield.value ?? "").trim();
         if (inputValueClean.length < 3) { return; }
         this.currentSubTasks = this.addTaskUtils.addSubtaskToArray(inputValueClean, this.currentSubTasks);
         this.clearSubInputField();
+        inputfield.blur();
         this.renderSubtasks();
-        this.checkAvailableSpaceInAddTaskDialog();
-        this.checkAvailableSpaceInAddTask();
     };
 
     /**
@@ -88,7 +104,7 @@
     taskComponentsPrototype.clearSubInputField = function() {
         let inputfield = document.getElementById('task-sub-task');
         if (!inputfield) { return; }
-        inputfield.value = "";
+        inputfield.value = ""; 
         this.toggleSubWritingButtons(false);
         inputfield.blur();
 

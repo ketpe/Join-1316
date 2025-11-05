@@ -59,7 +59,7 @@
         categoryListContainer.style.height = heightOfContainer + "px";
         categoryList.style.height = (heightOfContainer - 27) + "px";
         categoryList.style.marginTop = "28px";
-        categoryListContainer.classList.add("any-list-scroll");
+        /* categoryListContainer.classList.add("any-list-scroll"); */
         this.setCategoryInputfieldValue('Select task category');
         this.currentCategory = {};
         this.isCategoryListOpen = true;

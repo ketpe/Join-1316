@@ -1,4 +1,15 @@
-@media (max-width: 1290px) {
+
+@media(max-width: 1300px) {
+    .add-task-content {
+        max-width: 600px;
+        width: 100%;
+        margin-left: 24px;
+        margin-right: 24px;
+    }
+
+    .right-content {
+        display: flex;
+    }
 
     .a-t-f-i-left,
     .a-t-f-i-right {
@@ -29,28 +40,8 @@
     .add-task-footer {
         width: calc((2 * 380px) + (2 * 24px) + 2px);
     }
-
 }
 
-@media(max-width: 1180px) {
-    .add-task-content {
-        max-width: 600px;
-        width: 100%;
-        margin-left: 24px;
-        margin-right: 24px;
-    }
-
-    .right-content {
-        display: flex;
-        justify-content: center;
-    }
-}
-
-@media(max-height: 880px) {
-    .add-task-fields {
-        overflow-y: scroll;
-    }
-}
 
 @media(max-width: 800px) {
     .add-task-footer-mobile {
