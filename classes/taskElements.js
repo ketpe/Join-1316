@@ -232,13 +232,16 @@ class TaskElements{
                 <label class="task-mobile-label" for="task-sub-task">Subtasks</label>
                 <div class="sub-input-container">
                     <input class="a-t-input a-t-sub-input" type="text" name="task-sub-task" id="task-sub-task"
-                        onclick="${this.currentInstance}.onclickSubtaskInput(this)" placeholder="Add new subtask" onkeydown="${this.currentInstance}.subtaskInputfieldPressEnter(event, this)">
+                        onclick="${this.currentInstance}.onclickSubtaskInput(this)" placeholder="Add new subtask" 
+                        onkeydown="${this.currentInstance}.subtaskInputfieldPressEnter(event, this)"
+                        onfocusout="${this.currentInstance}.onblurSubtaskInput(event, this)"
+                        >
                     <div id="sub-writing-buttons" class="sub-input-writing-btn-container d-none">
                         <button type="button" title="delete current entry button" aria-label="Delete current entry" onclick="${this.currentInstance}.clearSubInputField()">
                             <div role="img" title="delete icon" aria-hidden="true"></div>
                         </button>
                         <div></div>
-                        <button type="button" title="adopt current entry" aria-label="Adopt current entry" onclick="${this.currentInstance}.adoptCurrentSubEntry()">
+                        <button type="button" title="adopt current entry" aria-label="Adopt current entry" onclick="${this.currentInstance}.adoptCurrentSubEntry(event)">
                             <div role="img" title="check icon" aria-hidden="true"></div>
                         </button>
                     </div>

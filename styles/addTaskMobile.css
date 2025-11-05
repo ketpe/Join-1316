@@ -17,6 +17,7 @@
 }
 
 .add-task-mobile-fields {
+    height:  calc((100vh - 390px));
     overflow-y: scroll;
     margin-left: auto;
     margin-right: auto;

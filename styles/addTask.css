@@ -2,6 +2,7 @@
     height: calc(100vh - (var(--header-height) + 20px));
 }
 
+
 .add-task-form-desktop {
     box-sizing: border-box;
     margin-left: 96px;
@@ -154,10 +155,10 @@ legend {
     background-color: var(--input-border-color);
     margin-left: 24px;
     margin-right: 24px;
-    /* align-self: top; */
-}
+    
+}*/
 
-*/ .a-t-f-i-midle-dialog {
+ .a-t-f-i-midle-dialog {
     height: 440px;
     /* height: auto !important; */
 }
@@ -451,6 +452,8 @@ legend {
 .a-t-sub-input {
     padding-right: 75px;
 }
+
+
 
 .btn-show-hide-category-list,
 .btn-show-hide-contact-list {

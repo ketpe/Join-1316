@@ -15,7 +15,7 @@ const MOBILE = "mobile";
 const DESKTOP = "desktop";
 const DESKTOPSINGLE = "desktopSingle";
 const minDesktopHeight = 880;
-const breakPointToDesktopSingle = 1180;
+const breakPointToDesktopSingle = 1300;
 const breakPointToMobile = 800;
 
 let currentUser = "";
