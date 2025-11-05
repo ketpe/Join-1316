@@ -8,6 +8,9 @@
 
 let backToLoginPage = false;
 let resizeLockPandL = false;
+let currentView = "";
+const MOBILE = "mobile";
+const DESKTOP = "desktop";
 
 
 /**
@@ -24,9 +27,9 @@ async function privacyOrLegalLoad(privacyOrLegal) {
     backToLoginPage = pageParam != null && pageParam.startsWith("true");
     const [height, width] = getCurrentWindowSize();
 
-    if(width <= 880){
+    if(width <= 880 && currentView !== MOBILE){
         await loadInMobileMode(privacyOrLegal);
-    }else{
+    }else if(width > 880 && currentView !== DESKTOP){
         await loadInDesktopMode(privacyOrLegal);
     }
     window.addEventListener('resize', () => privacyOrLegalResize(privacyOrLegal));
@@ -46,9 +49,9 @@ async function privacyOrLegalResize(privacyOrLegal){
     resizeLockPandL = true;
 
     const [height, width] = getCurrentWindowSize();
-    if(width <= 880){
+    if(width <= 880 && currentView !== MOBILE){
         await loadInMobileMode(privacyOrLegal);
-    }else{
+    }else if(width > 880 && currentView !== DESKTOP){
         await loadInDesktopMode(privacyOrLegal);
     }
 
@@ -79,7 +82,7 @@ async function loadInDesktopMode(pOrL) {
             includeHtml("header", "headerDesktop.html")
         ]);
     }
-
+    currentView = DESKTOP;
     setPrivacyOrLegalButtonActiv(pOrL, "desktop");
 }
 
@@ -108,7 +111,7 @@ async function loadInMobileMode(pOrL) {
             includeHtml("navbar", "navbarMobile.html")
         ]);
     }
-
+    currentView = MOBILE;
     setPrivacyOrLegalButtonActiv(pOrL, "mobile");
 }
 

@@ -9,6 +9,7 @@
  */
 
 let resizeLockHelp = false;
+let currentViewHelp = "";
 
 /**
  * @function onHelpLoad
@@ -20,9 +21,9 @@ let resizeLockHelp = false;
 async function onHelpLoad() {
     const [height, width] = getCurrentWindowSize();
 
-    if(width <= 880){
+    if(width <= 880 && currentViewHelp !== MOBILE){
         await loadHelpInMobileMode();
-    }else{
+    }else if(width > 880 && currentViewHelp !== DESKTOP){
         await loadHelpInDesktopMode();
     }
     window.addEventListener('resize', resizeHelp);
@@ -41,9 +42,9 @@ async function resizeHelp() {
     resizeLockHelp = true;
 
     const [height, width] = getCurrentWindowSize();
-    if(width <= 880){
+    if(width <= 880 && currentViewHelp !== MOBILE){
         await loadHelpInMobileMode();
-    }else{
+    }else if(width > 880 && currentViewHelp !== DESKTOP){
         await loadHelpInDesktopMode();
     }
 
@@ -64,6 +65,7 @@ async function loadHelpInDesktopMode(){
         includeHtml("header", "headerDesktop.html")
     ]);
     hideHelpButton();
+    currentViewHelp = DESKTOP;
 }
 
 /**
@@ -79,6 +81,7 @@ async function loadHelpInMobileMode() {
         includeHtml("header", "headerMobile.html"),
         includeHtml("navbar", "navbarMobile.html")
     ]);
+    currentViewHelp = MOBILE;
 }
 
 /**
