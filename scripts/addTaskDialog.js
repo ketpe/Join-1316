@@ -31,7 +31,6 @@ let currentStateCategory = "todo";
 async function onAddTaskDialogOpen(stateCategory = "todo") {
     currentStateCategory = stateCategory;
     const [height, width] = addTaskUtils.getCurrentAddTaskSize;
-
     if (width <= 880) {
         navigateToAddTask(null, currentStateCategory);
     } else if (width >= DIALOGINDESKTOP_WIDTH) {
@@ -43,8 +42,6 @@ async function onAddTaskDialogOpen(stateCategory = "todo") {
         showAddTaskAsDialogSingle();
         giveFunctionsToBoardBody();
     }
-
-    //currentDialogView == "desktop-single" ? changeAddTaskFormFieldSizeBoardDialogSingle() : changeAddTaskFormFieldSizeBoardDialog();
     readCurrentDialogSize();
 }
 
@@ -61,9 +58,7 @@ async function resizeAddTaskBoardDialog(event) {
     const dialog = document.getElementById('add-task-dialog');
     if (!dialog) { return; }
     if (!dialog.classList.contains('dialog-show')) { return; }
-
     const [height, width] = addTaskUtils.getCurrentAddTaskSize;
-
     if (width <= 880) {
         navigateToAddTask(null, currentStateCategory);
     } else if (width >= DIALOGINDESKTOP_WIDTH && currentDialogView != "desktop") {
@@ -73,12 +68,17 @@ async function resizeAddTaskBoardDialog(event) {
         currentDialogView = "desktop-single";
         await showAddTaskAsDialogSingle();
     }
-
-    //currentDialogView == "desktop-single" ? changeAddTaskFormFieldSizeBoardDialogSingle() : changeAddTaskFormFieldSizeBoardDialog();
     readCurrentDialogSize();
     resizeLockDialog = false;
 }
 
+/**
+ * @description Reads the current size of the Add Task dialog.
+ * Adjusts CSS variables for dialog height and width based on the window size.
+ * @function readCurrentDialogSize
+ * @memberof addTaskDialog
+ * @returns {void}
+ */
 function readCurrentDialogSize(){
     const dialog = document.getElementById('add-task-dialog');
     if(!dialog){return;}
@@ -226,9 +226,7 @@ function addTaskDialogClose(event) {
  * @returns {void}
  */
 function closeTheDialog(dialog, dialogID = "") {
-
     const dialogAddTask = dialog ? dialog : document.getElementById(dialogID);
-
     addDialogHideClass('add-task-dialog');
     setTimeout(function () {
         dialogAddTask.close();
@@ -289,42 +287,7 @@ async function renderAddTaskIntoDialogSingle() {
         changeDialogStyleToSingle();
     });
 }
-
-/**
- * @description Adjusts the form field sizes for the Add Task dialog in single-column mode.
- * This function calculates the appropriate heights for the dialog and its fields based on the current window size.
- * It ensures that the form fields are displayed correctly within the dialog.
- * @function changeAddTaskFormFieldSizeBoardDialogSingle
- * @memberof addTaskDialog
- * @returns {void}
- */
-function changeAddTaskFormFieldSizeBoardDialogSingle() {
-    /* const [height, width] = addTaskUtils.getCurrentAddTaskSize;
-    const dialog = document.getElementById('add-task-dialog');
-    const heightDialog = height - 100;
-    dialog.style.height = heightDialog + "px";
-    addTaskUtils.measureTheRemainingSpaceOfFieldsForBoardSingle(heightDialog)
-        .then((result) => {
-            document.querySelector('.add-task-mobile-fields').style.height = result + "px";
-        }); */
-}
-
-/**
- * @description Adjusts the form field sizes for the Add Task dialog in board mode.
- * This function calculates the appropriate heights for the dialog and its fields based on the current window size.
- * It ensures that the form fields are displayed correctly within the dialog.
- * @function changeAddTaskFormFieldSizeBoardDialog
- * @memberof addTaskDialog
- * @param {*} params
- * @returns {void}
- */
-function changeAddTaskFormFieldSizeBoardDialog(params) {
-    /* const [height, width] = addTaskUtils.getCurrentAddTaskSize;
-    const dialog = document.getElementById('add-task-dialog');
-    const heightDialog = height - 100;
-    dialog.style.height = heightDialog + "px"; */
-}
-
+ 
 /**
  * @description Changes the dialog style to single-column mode.
  * @function changeDialogStyleToSingle
@@ -345,7 +308,6 @@ function changeDialogStyleToSingle() {
     fields.classList.add('mb-24');
 }
 
-/**TODO - Klassen ändern, ohne beeinflussing von AddTask */
 
 /**
  * @description Changes the view of the Add Task form to be suitable for dialog presentation.
@@ -363,7 +325,6 @@ function changeAddTaskViewToDialog() {
     document.getElementById('a-t-clear-btn').classList.add('display-hidden');
     document.getElementById('add-task-form').classList.remove('add-task-form-desktop');
     document.getElementById('add-task-form').classList.add('add-task-form-dialog');
-    document.getElementById('a-t-middle-container').classList.add('a-t-f-i-midle-dialog');
     document.getElementById('due-date-hidden').classList.add('date-input-hidden-dialog');
     document.querySelector('#add-task-title').classList.add('join-h1-dialog');
     document.querySelector('.add-task-head').classList.add('mb-24');
