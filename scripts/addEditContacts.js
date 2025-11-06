@@ -347,47 +347,17 @@ function contactPhoneValidation() {
         validatePhone = false;
     }
 }
-
+/**
+ * @function checkValidation
+ * @memberof addEditContacts
+ * @description - Check the validation status of the contact form fields. This function calls the individual validation functions for each field and returns true if all fields are valid; otherwise, it returns false.
+ * @returns {boolean}
+ */
 function checkValidation() {
     contactNameValidation();
     contactEmailValidation();
     contactPhoneValidation();
     return (validateName && validateEmail && validatePhone) ? true : false;
-}
-/**
- * @function toggleBtnCreateContact
- * @memberof addEditContacts
- * @description - Toggle the state of the "Create Contact" button based on the validation status of the contact form fields. If all fields are valid, the button is enabled; otherwise, it is disabled.
- * @returns {void}
- */
-function toggleBtnCreateContact() {
-    // contactNameValidation();
-    // contactEmailValidation();
-    // contactPhoneValidation();
-    const btn = document.getElementById('btn-create-contact');
-    if (validateName && validateEmail && validatePhone) {
-        btn.disabled = false;
-    } else {
-        btn.disabled = true;
-    }
-}
-/**
- * @function toggleBtnEditContact
- * @memberof addEditContacts
- * @description - Toggle the state of the "Edit Contact" button based on the validation status of the contact form fields. If all fields are valid, the button is enabled; otherwise, it is disabled.
- * @param {HTMLElement} element - The "Edit Contact" button element.
- * @returns {void}
- */
-function toggleBtnEditContact(element) {
-    let btn = element;
-    contactNameValidation();
-    contactEmailValidation();
-    contactPhoneValidation();
-    if (validateName && validateEmail && validatePhone) {
-        btn.disabled = false;
-    } else {
-        btn.disabled = true;
-    }
 }
 
 /**
