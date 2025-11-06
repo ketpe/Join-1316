@@ -10,7 +10,7 @@
 
 let errorMessageArr = [];
 const namePattern = /\w{3,10}\s\w{3,10}/;
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 /**
  * @function signupinit
@@ -71,7 +71,7 @@ async function validateemail() {
     const emailElement = document.getElementById('email');
     if (!emailElement) { return; }
     const cleanEmailValue = (emailElement.value ?? "").trim();
-    if (cleanEmailValue.length >= 3 && emailPattern.test(cleanEmailValue) && !await checkEmailInDatabase(cleanEmailValue)) {
+    if (cleanEmailValue.length >= 3 && emailValidator(cleanEmailValue) && !await checkEmailInDatabase(cleanEmailValue)) {
         setInputFieldHasNoError(emailElement.id);
         return true;
     } else if (await checkEmailInDatabase(cleanEmailValue)) {
@@ -83,6 +83,27 @@ async function validateemail() {
         setInputFieldHasError(emailElement.id, "Incorrect email format.");
         return false;
     }
+}
+
+/**
+ * Checks if the provided email is valid according to RFC standards.
+ * Validates length, format, and domain rules.
+ * @function emailValidator
+ * @memberof signup
+ * @description Validate email format according to RFC standards.
+ * @param {string} email
+ * @returns {boolean}
+ */
+function emailValidator(email) {
+    if (email.length > 254) { return false; }
+    if (/\.{2,}/.test(email)) { return false; }
+    if (!emailPattern.test(email)) { return false; }
+    const [local, domain] = email.split('@');
+    if (!local || !domain) return false;
+    if (local.length > 64) return false;
+    if (domain.startsWith('-') || domain.endsWith('-')) return false;
+    if (domain.split('.').some(part => !part || part.length > 63)) return false;
+    return true;
 }
 
 /**
