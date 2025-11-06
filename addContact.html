@@ -18,19 +18,19 @@
             <section class="add-contact-form-and-picture">
                 <div role="img" class="add-contact-profil-picture" title="profil-avatar"></div>
                 <form class="add-contact-form form-for-add-contact" action="/post" method="dialog"
-                    onsubmit="return newContact(event)">
+                    class="add-contact-form form-for-add-contact" action="/post">
 
                     <div class="add-contact-input-field-container">
 
                         <label for="contact-name" class="visually-hidden">Contact Name</label>
-                        <input oninput="contactNameValidation(this.value)" type="text" id="contact-name"
+                        <input onblur="contactNameValidation(this.value)" type="text" id="contact-name"
                             class="add-contact-input input-name" placeholder="Name">
                         <div class="contact-error-text-container">
                             <p id="contact-name-required" class="error-text-hidden">This field is required. John Doe
                             </p>
                         </div>
                         <label for="contact-email" class="visually-hidden">Email</label>
-                        <input oninput="contactEmailValidation(this.value)" type="email" id="contact-email"
+                        <input onblur="contactEmailValidation(this.value)" type="email" id="contact-email"
                             class="add-contact-input input-mail" placeholder="Email">
                         <div class="contact-error-text-container">
                             <p id="contact-email-required" class="error-text-hidden">This field is required.
@@ -38,7 +38,7 @@
                         </div>
 
                         <label for="contact-phone" class="visually-hidden">Phone</label>
-                        <input oninput="contactPhoneValidation(this.value)" type="tel" id="contact-phone"
+                        <input onblur="contactPhoneValidation(this.value)" type="tel" id="contact-phone"
                             class="add-contact-input input-phone" placeholder="Phone">
                         <div class="contact-error-text-container">
                             <p id="contact-phone-required" class="error-text-hidden">This field is required. +1234567890
@@ -50,8 +50,8 @@
                                 <p class="">Cancel</p>
                                 <div aria-label="Close dialog" role="img" class="btn btn-outline btn-cancel-icon"></div>
                             </button>
-                            <button type="submit" id="btn-create-contact" onmouseover="toggleBtnCreateContact()"
-                                class="btn-create btn btn-fill btn-md" aria-label="Create contact" disabled="true">
+                            <button type="button" id="btn-create-contact" class="btn-create btn btn-fill btn-md"
+                                aria-label="Create contact" onclick="newContact(event)">
                                 <p class="">Create contact</p>
                                 <div aria-label="Create contact" role="img" class="btn-create-icon"></div>
                             </button>

@@ -244,13 +244,13 @@ function openContactDetailMobile(detailContact) {
 function openContactDetailDesktop(detailContact) {
     let renderDetailContact = document.getElementById('contact-detail-content');
     renderDetailContact.classList.remove('visually-hidden');
-    document.body.classList.add('hide-scrollbar');
+    // document.body.classList.add('hide-scrollbar');
     renderDetailContact.innerHTML = "";
     renderDetailContact.classList.remove('slide-Details-in');
     renderDetailContact.offsetWidth;
-    setTimeout(() => {
-        document.body.classList.remove('hide-scrollbar');
-    }, 800);
+    // setTimeout(() => {
+    //     document.body.classList.remove('hide-scrollbar');
+    // }, 800);
     renderDetailContact.classList.add('slide-Details-in');
     renderDetailContact.innerHTML += getContactDetailView(detailContact, "");
 }

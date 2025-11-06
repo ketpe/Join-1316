@@ -22,13 +22,13 @@
                 <div class="add-contact-input-field-container-mobile">
 
                     <label for="contact-name" class="visually-hidden">Contact Name</label>
-                    <input oninput="contactNameValidation(this.value)" type="text" id="contact-name"
+                    <input onblur="contactNameValidation(this.value)" type="text" id="contact-name"
                         class="add-contact-input-mobile input-name" placeholder="Name">
                     <label for="contact-email" class="visually-hidden">Email</label>
-                    <input oninput="contactEmailValidation(this.value)" type="email" id="contact-email"
+                    <input onblur="contactEmailValidation(this.value)" type="email" id="contact-email"
                         class="add-contact-input-mobile input-mail" placeholder="Email">
                     <label for="contact-phone" class="visually-hidden">Phone</label>
-                    <input oninput="contactPhoneValidation(this.value)" type="tel" id="contact-phone"
+                    <input onblur="contactPhoneValidation(this.value)" type="tel" id="contact-phone"
                         class="add-contact-input-mobile input-phone" placeholder="Phone">
                     <div class="contact-error-text-container">
                         <p id="contact-phone-required" class="error-text-hidden">This field is required. +1234567890
@@ -39,8 +39,8 @@
                         </p>
                     </div>
                     <div class="login-form-buttons-mobile">
-                        <button type="submit" id="btn-create-contact" onmouseover="toggleBtnCreateContact()"
-                            class="btn-create btn btn-fill btn-md" aria-label="Create contact" disabled="true">
+                        <button type="submit" id="btn-create-contact" class="btn-create btn btn-fill btn-md"
+                            aria-label="Create contact" disabled="true">
                             <p class="">Create contact</p>
                             <div aria-label="Create contact" role="img" class="btn-create-icon"></div>
                         </button>

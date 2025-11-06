@@ -36,6 +36,7 @@ let contactTaskConnectionList = [];
  */
 async function newContact(event) {
     if (event) event.preventDefault();
+    if (!checkValidation()) return;
     const uid = getNewUid();
     const contact = createContactObject(uid);
     const fb = new FirebaseDatabase();
@@ -44,6 +45,7 @@ async function newContact(event) {
     await renderContacts();
     selectNewContact(uid);
     validateName = validateEmail = validatePhone = false;
+    closeDialogByEvent(event, 'add-contact-dialog');
 }
 
 /**
@@ -115,6 +117,7 @@ function getInitials(firstname, lastname) {
  */
 async function editContact(event) {
     if (event) event.preventDefault();
+    if (!checkValidation()) return;
     const buttonID = event.submitter.id;
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
@@ -344,6 +347,13 @@ function contactPhoneValidation() {
         validatePhone = false;
     }
 }
+
+function checkValidation() {
+    contactNameValidation();
+    contactEmailValidation();
+    contactPhoneValidation();
+    return (validateName && validateEmail && validatePhone) ? true : false;
+}
 /**
  * @function toggleBtnCreateContact
  * @memberof addEditContacts
@@ -351,9 +361,9 @@ function contactPhoneValidation() {
  * @returns {void}
  */
 function toggleBtnCreateContact() {
-    contactNameValidation();
-    contactEmailValidation();
-    contactPhoneValidation();
+    // contactNameValidation();
+    // contactEmailValidation();
+    // contactPhoneValidation();
     const btn = document.getElementById('btn-create-contact');
     if (validateName && validateEmail && validatePhone) {
         btn.disabled = false;
