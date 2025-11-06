@@ -140,6 +140,10 @@
     border-color: var(--input-error-color) !important;
 }
 
+.input-has-error:focus {
+    border-color: var(--btn-bg-hover) !important;
+}
+
 .add-contact-profil-picture {
     width: 120px;
     height: 120px;
