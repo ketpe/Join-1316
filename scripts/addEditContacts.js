@@ -41,7 +41,7 @@ const emailPattern = /^(?!.*\.\.)(?!\.)(?!.*\.$)[A-Za-z0-9!#$%&'*+/=?^_`{|}~.-]+
 
 
 
-const phonePattern = /^\+?[1-9]\d{4,14}$/;
+const phonePattern = /^\+?\d{4,15}$/;
 
 /**
  * @function newContact
