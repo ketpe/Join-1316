@@ -26,6 +26,22 @@ let validateEmail = false;
 let validatePhone = false;
 let contactTaskConnectionList = [];
 
+/**
+ * @description Regular expression pattern for validating names (3-10 word characters for first and last name).
+ * @memberof addEditContacts
+ * @type {RegExp}
+ */
+const namePattern = /^[A-Za-zÄÖÜäöüß]{2,}(?:\s[A-Za-zÄÖÜäöüß]{2,})+$/;
+/**
+ * @description Regular expression pattern for validating email addresses. This pattern ensures that the email address follows standard formatting rules, including the presence of an "@" symbol and a valid domain.
+ * @memberof addEditContacts
+ * @type {RegExp}
+ */
+const emailPattern = /^(?!.*\.\.)(?!\.)(?!.*\.$)[A-Za-z0-9!#$%&'*+/=?^_`{|}~.-]+@(?:(?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,}$/i;
+
+
+
+const phonePattern = /^\+?[1-9]\d{4,14}$/;
 
 /**
  * @function newContact
@@ -81,6 +97,23 @@ function createContactObject(uid) {
         'initialColor': getRandomColor(),
     };
 }
+//!SECTION [NEW CONTACT FUNCTIONS]
+/**
+ * @function splitName
+ * @memberof addEditContacts
+ * @description - Split the full name into first and last names. This function takes a full name string, trims it, and splits it into parts. The first part is considered the first name, and the last part is considered the last name. If only one part is present, it is returned as the first name, and the last name is set as an empty string.
+ * @param {string} completeName - The full name of the contact.
+ * @returns {Object} - An object containing the first name and last name.
+ */
+function splitName(completeName) {
+    completeName = (completeName ?? '').trim().replace(/\s+/g, ' ');
+    if (completeName.length === 0) return { firstname: '', lastname: '' };
+    const parts = completeName.split(' ');
+    if (parts.length === 1) return { firstname: parts[0], lastname: '' };
+    const lastname = parts.pop();
+    const firstname = parts.join(' ');
+    return { firstname, lastname };
+}
 
 /**
  * @function getContactFormData
@@ -90,7 +123,7 @@ function createContactObject(uid) {
  */
 function getContactFormData() {
     const completeName = document.getElementById('contact-name').value;
-    const [firstname, lastname] = completeName.split(" ");
+    const { firstname, lastname } = splitName(completeName);
     const email = document.getElementById('contact-email').value;
     const phone = document.getElementById('contact-phone').value;
     return { firstname, lastname, email, phone };
@@ -105,7 +138,11 @@ function getContactFormData() {
  * @returns {string} - The initials of the contact.
  */
 function getInitials(firstname, lastname) {
-    return firstname.charAt(0).toUpperCase() + lastname.charAt(0).toUpperCase();
+    const f = (firstname ?? '').trim();
+    const l = (lastname ?? '').trim();
+    const firstChar = f.length ? f.charAt(0).toUpperCase() : '';
+    const lastChar = l.length ? l.charAt(0).toUpperCase() : '';
+    return (firstChar + lastChar) || (f.charAt(0) || '').toUpperCase();
 }
 
 /**
@@ -294,7 +331,6 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
 function contactNameValidation() {
     let nameValue = document.getElementById('contact-name').value;
     const cleanNameValue = (nameValue ?? "").trim();
-    const namePattern = /\w{3,10}\s\w{3,10}/;
     if (cleanNameValue.length > 0 && namePattern.test(cleanNameValue)) {
         showAndLeaveErrorMessage("contact-name-required", false);
         showAndLeaveErrorBorder("contact-name", false);
@@ -315,7 +351,6 @@ function contactNameValidation() {
 function contactEmailValidation() {
     let emailValue = document.getElementById('contact-email').value;
     const cleanEmailValue = (emailValue ?? "").trim();
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (cleanEmailValue.length > 0 && emailPattern.test(cleanEmailValue)) {
         showAndLeaveErrorMessage("contact-email-required", false);
         showAndLeaveErrorBorder("contact-email", false);
@@ -336,7 +371,6 @@ function contactEmailValidation() {
 function contactPhoneValidation() {
     let phoneValue = document.getElementById('contact-phone').value;
     const cleanPhoneValue = (phoneValue ?? "").trim();
-    const phonePattern = /^[\d\s\-+]{5,}$/;
     if (cleanPhoneValue.length > 0 && phonePattern.test(cleanPhoneValue)) {
         showAndLeaveErrorMessage("contact-phone-required", false);
         showAndLeaveErrorBorder("contact-phone", false);
