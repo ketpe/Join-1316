@@ -97,7 +97,7 @@ function createContactObject(uid) {
         'initialColor': getRandomColor(),
     };
 }
-/*!SECTION [NEW CONTACT FUNCTIONS] */
+/*NOTE - Hier kommen bis Zl 132  die neuen Funktionen*/
 
 /**
  * @function splitName
