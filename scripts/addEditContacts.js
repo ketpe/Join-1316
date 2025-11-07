@@ -97,7 +97,8 @@ function createContactObject(uid) {
         'initialColor': getRandomColor(),
     };
 }
-//!SECTION [NEW CONTACT FUNCTIONS]
+/*!SECTION [NEW CONTACT FUNCTIONS] */
+
 /**
  * @function splitName
  * @memberof addEditContacts

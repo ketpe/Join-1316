@@ -163,6 +163,7 @@ async function addContactsPageResize() {
  * @return {Promise<void>}
  */
 async function openContactDetail(element) {
+    if (element.classList.contains('contact-item-active')) return;
     const [height, width] = getCurrentWindowSize();
     toggleActiveContactClass(element);
     const fb = new FirebaseDatabase();
@@ -173,6 +174,7 @@ async function openContactDetail(element) {
         openContactDetailDesktop(detailContact);
     }
 }
+
 
 /**
  * @function toggleActiveContactClass
@@ -200,7 +202,7 @@ function toggleActiveContactClass(activeContact) {
 function clearActiveContactClass() {
     const detailContact = document.getElementById('contact-detail-content');
     detailContact.innerHTML = "";
-    renderContacts();
+    toggleActiveContactClass(null);
 }
 
 /**
