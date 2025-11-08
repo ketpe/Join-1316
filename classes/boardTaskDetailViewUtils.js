@@ -171,15 +171,18 @@ class BoardTaskDetailViewUtils {
         document.getElementById('detail-view-edit-btn').setAttribute('data-id', `${this.currentTaskID}`);
     }
 
+
+    /**TODO - Wird das noch benötigt? */
+
     /**
      * Measures the current dialog content height.
      * @returns {Array} - An array containing the header, main content, and footer heights.
      */
-    measureCurrentDialogContentHeight() {
+    /* measureCurrentDialogContentHeight() {
         const headerHeight = this.getOffsetHeightOfElement('.task-header');
         const footerHeight = this.getOffsetHeightOfElement('footer.task-detailview-actions') + 24;
-        const mainContentHeight = this.getOffsetHeightOfElement('main.task-main');
+        const mainContentHeight = document.querySelector('main.task-main').scrollHeight;
         return [headerHeight, mainContentHeight, footerHeight];
-    }
+    } */
 
 }

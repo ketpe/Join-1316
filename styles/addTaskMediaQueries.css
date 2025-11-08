@@ -121,10 +121,7 @@
         width: 90px;
         padding: 12px 10px;
 
-        div>span {
-            font-size: 14px;
-        }
-    }
+   }
 
     .prio-selected {
         font-size: 16px !important;
@@ -174,6 +171,9 @@
         font-size: 16px;
     }
 
+    .task-section{
+        padding: 12px 0px;
+    }
 
 }
 
@@ -205,11 +205,14 @@
         padding-right: 74px !important;
     }
 
+    .a-t-priority-button-container{
+        gap: 8px;
+    }
+
     .btn-priority {
-        width: 75px;
+        width: 78px;
 
         div>span {
-            font-size: 12px;
                 margin: 0 5px 0 0;
         }
     }
@@ -219,8 +222,8 @@
     }
 
     .btn-priority div>div {
-        width: 13px;
-        height: 10px;
+        width: 9px;
+        height: 9px;
     }
 
     .category-list-btn>p {

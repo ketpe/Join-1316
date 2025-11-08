@@ -9,7 +9,6 @@ let currentView = "";
 const minDesktopHeight = 880;
 const minDesktopWidth = 880;
 const breakPointToDesktopSingle = 1180;
-let [headerHeight, mainContentHeight, footerHeight] = [0, 0, 0];
 
 /**
  * @function onLoadBoard
@@ -121,7 +120,7 @@ async function onBoardPageResize() {
         setNavigationButtonActive('contacts', "desktop");
         kanbanUpdateSizeDesktop();
     }
-    setTaskViewEditDialogSize(height);
+    setTaskViewEditDialogSize();
 
 }
 

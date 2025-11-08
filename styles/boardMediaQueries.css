@@ -53,7 +53,7 @@
         gap: 16px;
         min-width: 310px;
         /* max-height: 640px; */
-        max-width: 396px;
+        /* max-width: 396px; */
     }
 
     .task-description {
@@ -84,10 +84,6 @@
 
     .task-detailview-actions {
         gap: 8px;
-    }
-
-    .task-main-edit {
-       /*  width: auto; */
     }
 
     .a-t-priority-button-container {
@@ -162,6 +158,12 @@
     }
 }
 
+@media(max-width: 425px) {
+
+    .detail-view-content{
+        max-height: calc(100vh - 10px);
+    }
+}
 
 @media(max-width: 375px) {
 
@@ -179,5 +181,6 @@
 
     .contact-profil-container p {
         font-size: 16px !important;
+        text-align: left;
     }
 }

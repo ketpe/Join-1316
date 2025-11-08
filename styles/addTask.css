@@ -127,6 +127,7 @@ legend {
     border-image: initial;
     padding-block: 0;
     padding-inline: 0;
+    gap: 16px;
 }
 
 
@@ -433,7 +434,7 @@ legend {
     align-items: center;
     border-radius: 10px;
     background-color: transparent;
-    margin-bottom: 1px;
+    margin-bottom: 0.1rem;
     cursor: pointer;
 }
 
@@ -507,7 +508,7 @@ legend {
 }
 
 .contact-check-icon {
-    width: 16px;
+    width: 17px;
     height: 16px;
     border-radius: 3px;
     border: none;
