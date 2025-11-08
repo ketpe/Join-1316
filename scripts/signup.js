@@ -8,9 +8,13 @@
  * @file scripts/signup.js
  */
 
-let errorMessageArr = [];
+
 const namePattern = /\w{3,10}\s\w{3,10}/;
-const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+const emailPattern = /^(?!.*\.\.)(?!\.)(?!.*\.$)[A-Za-z0-9!#$%&'*+/=?^_`{|}~.-]+@(?:(?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,}$/i;
+let nameIsOnInput = false;
+let emailIsOnInput = false;
+let passwordIsOnInput = false;
+let passwordConfirmIsOnInput = false;
 
 /**
  * @function signupinit
@@ -23,7 +27,6 @@ async function signupinit() {
     if (logInStatus !== "0") {
         navigateToLogin();
     }
-    errorMessageArr = [];
 
 }
 
@@ -43,20 +46,49 @@ function signInFieldOnBlur(input) {
 }
 
 /**
+ * @function signInFieldsOnInput
+ * @memberof signup
+ * @description Handle onInput event for sign-in fields.
+ * @param {HTMLInputElement} input
+ * @returns {void}
+ */
+function signInFieldsOnInput(input) {
+    if (!input) { return; }
+    hideErrorTextOfInputField(input.id);
+}
+
+/**
+ * Hide the error text of the input field.
+ * @function hideErrorTextOfInputField
+ * @memberof signup
+ * @description Hide the error text of the input field.
+ * @param {string} inputFieldID
+ * @returns {void}
+ */
+function hideErrorTextOfInputField(inputFieldID){
+    const errorTextElements = document.querySelectorAll('.login-signup-error-text-container p');
+    if(!errorTextElements.length){return;}
+    const errorTextElement = Array.from(errorTextElements).find(x => x.getAttribute('data-input') == inputFieldID);
+    if(!errorTextElement){return;}
+    errorTextElement.classList.add('d-none');
+}
+
+/**
  * @function validatefullname
  * @memberof signup
  * @description Validate the full name field.
  * @returns {Boolean}
  */
 function validatefullname() {
+    if (!nameIsOnInput) { return; }
     const nameElement = document.getElementById('fullname');
     if (!nameElement) { return; }
     const cleanNameValue = (nameElement.value ?? "").trim();
     if (cleanNameValue.length >= 3 && namePattern.test(cleanNameValue)) {
-        setInputFieldHasNoError(nameElement.id);
+        setInputFieldHasNoError(nameElement.id, "name-error-text");
         return true;
     } else {
-        setInputFieldHasError(nameElement.id, "Please enter both - first and last name.");
+        setInputFieldHasError(nameElement.id, "name-error-text",  "This field is required. John Doe");
         return false;
     }
 }
@@ -68,19 +100,18 @@ function validatefullname() {
  * @returns {Boolean}
  */
 async function validateemail() {
+    if (!emailIsOnInput) { return; }
     const emailElement = document.getElementById('email');
     if (!emailElement) { return; }
     const cleanEmailValue = (emailElement.value ?? "").trim();
     if (cleanEmailValue.length >= 3 && emailValidator(cleanEmailValue) && !await checkEmailInDatabase(cleanEmailValue)) {
-        setInputFieldHasNoError(emailElement.id);
+        setInputFieldHasNoError(emailElement.id, "email-error-text");
         return true;
     } else if (await checkEmailInDatabase(cleanEmailValue)) {
-        removeErrorMessageFromArray(emailElement.id);
-        setInputFieldHasError(emailElement.id, "Email is already in use.");
+        setInputFieldHasError(emailElement.id, "email-error-text", "Email is already in use.");
         return false;
     } else {
-        removeErrorMessageFromArray(emailElement.id);
-        setInputFieldHasError(emailElement.id, "Incorrect email format.");
+        setInputFieldHasError(emailElement.id, "email-error-text", "This field is required. example@domain.com");
         return false;
     }
 }
@@ -113,16 +144,21 @@ function emailValidator(email) {
  * @returns {Boolean}
  */
 function validatepasswordConfirm() {
+    if(!passwordIsOnInput || !passwordConfirmIsOnInput) { return; }
     const passwordElement = document.getElementById('password');
     const passwordConfirmElement = document.getElementById('passwordConfirm');
     if (!passwordElement || !passwordConfirmElement) { return; }
 
-    if (passwordElement.value === passwordConfirmElement.value) {
-        setInputFieldHasNoError(passwordConfirmElement.id);
+
+    if(passwordConfirmElement.value.length <= 3){
+        setInputFieldHasError(passwordConfirmElement.id, "login-confirm-error-text", "The password is too short.");
+    } 
+    else if (passwordElement.value === passwordConfirmElement.value) {
+        setInputFieldHasNoError(passwordConfirmElement.id, "login-confirm-error-text");
         return true;
     }
     else {
-        setInputFieldHasError(passwordConfirmElement.id, "Your passwords don't match. Please try again.");
+        setInputFieldHasError(passwordConfirmElement.id, "login-confirm-error-text", "Your passwords don't match. Please try again.");
         return false;
     }
 }
@@ -134,13 +170,14 @@ function validatepasswordConfirm() {
  * @returns {Boolean}
  */
 function validatepassword() {
+    if (!passwordIsOnInput) { return; }
     const passwordElement = document.getElementById('password');
     if (!passwordElement) { return; }
     if (passwordElement.value.length <= 3) {
-        setInputFieldHasError(passwordElement.id, "The password is too short.");
+        setInputFieldHasError(passwordElement.id, "login-error-text", "The password is too short.");
         return false;
     } else {
-        setInputFieldHasNoError(passwordElement.id);
+        setInputFieldHasNoError(passwordElement.id, "login-error-text");
         return true;
     }
 }
@@ -196,10 +233,13 @@ async function checkEmailInDatabase(email) {
  * @param {String} elementID
  * @returns {void}
  */
-function setInputFieldHasNoError(elementID) {
+function setInputFieldHasNoError(elementID, errorTextID) {
     toggleBorderColorByError(elementID, true);
-    removeErrorMessageFromArray(elementID);
-    handleErrorMessage();
+    const errorElement = document.getElementById(errorTextID);
+    if (errorElement) {
+        errorElement.textContent = "";
+        errorElement.classList.add("d-none");
+    }
 }
 
 /**
@@ -210,58 +250,14 @@ function setInputFieldHasNoError(elementID) {
  * @param {String} message
  * @returns {void}
  */
-function setInputFieldHasError(elementID, message) {
+function setInputFieldHasError(elementID, errorTextID, message) {
     toggleBorderColorByError(elementID, false);
-    addErrorMessageToArray(elementID, message);
-}
-
-/**
- * @function addErrorMessageToArray
- * @memberof signup
- * @description Add an error message for a specific element to the array.
- * @param {String} elementID
- * @param {String} message
- * @returns {void}
- */
-function addErrorMessageToArray(elementID, message) {
-    if (!errorMessageArr.some(x => x.field === elementID)) {
-        errorMessageArr.push({ field: elementID, message });
+    const errorElement = document.getElementById(errorTextID);
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.classList.remove("d-none");
     }
-    handleErrorMessage();
 }
-
-/**
- * @function removeErrorMessageFromArray
- * @memberof signup
- * @description Remove an error message for a specific element from the array.
- * @param {String} elementID
- * @returns {void}
- */
-function removeErrorMessageFromArray(elementID) {
-    const errorMessageItem = errorMessageArr.find(x => x.field == elementID);
-    if (!errorMessageItem) { return; }
-    const itemIndex = errorMessageArr.indexOf(errorMessageItem);
-    errorMessageArr.splice(itemIndex, 1);
-}
-
-/**
- * @function handleErrorMessage
- * @memberof signup
- * @description Handle error messages display.
- * @returns {void}
- */
-function handleErrorMessage() {
-    const errorElement = document.getElementById("login-error-text");
-    errorElement.classList.remove("d-none");
-    if (!errorElement) { return; }
-    if (errorMessageArr.length == 0) {
-        errorElement.textContent = "";
-        errorElement.classList.add('d-none');
-        return;
-    }
-    errorElement.textContent = errorMessageArr.length > 1 ? "Multiple fields contain errors. Please check." : errorMessageArr[0]['message'];
-}
-
 
 
 /**

@@ -194,6 +194,12 @@
 
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .contact-detail-content {
+        transition: none;
+    }
+}
+
 .contacts-header {
     display: flex;
     flex-direction: row;
@@ -226,7 +232,7 @@
 }
 
 .slide-Details-in {
-    animation: slide-Dialog-in 1000ms ease-in-out forwards;
+    animation: slide-Dialog-in 600ms ease-in-out forwards;
 }
 
 .first-line-detail-view {

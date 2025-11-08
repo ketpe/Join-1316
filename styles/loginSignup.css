@@ -245,9 +245,9 @@
 
 }
 
-#login-error-text {
+.login-error-text {
     font-family: 'Inter';
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 400;
     color: var(--input-error-color);
     margin: 0;
