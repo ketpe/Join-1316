@@ -29,7 +29,7 @@
 
                     <label for="fullname" class="visually-hidden">Contact Name</label>
 
-                    <div class="login-signup-input-container mb-8">
+                    <div class="login-signup-input-container">
                         <input type="text" id="fullname" class="login-signup-input" placeholder="Name" name="fullname"
                             onblur="signInFieldOnBlur(this)"
                             onfocus="nameIsOnInput = true"
@@ -43,7 +43,7 @@
 
                     <label for="email" class="visually-hidden">Username</label>
 
-                    <div class="login-signup-input-container mb-8">
+                    <div class="login-signup-input-container">
                         <input type="text" id="email" class="login-signup-input" placeholder="Email" name="email"
                             onblur="signInFieldOnBlur(this)"
                             onfocus="emailIsOnInput = true"
@@ -56,7 +56,7 @@
                     </span>
 
                     <label for="password" class="visually-hidden">Password</label>
-                    <div class="login-password-container mb-8">
+                    <div class="login-password-container">
                         <input type="password" id="password" class="login-signup-input login-password"
                             placeholder="Password" name="password"
                             onclick="togglePasswordVisibility(1, 'password', 'loginTogglePassword')"
@@ -74,14 +74,14 @@
                         <p id="login-error-text" class="login-error-text d-none" data-input="password">Password is too short.</p>
                     </span>
 
-                    <label for="password-confirm" class="visually-hidden">Password Confirm</label>
-                    <div class="login-password-container mb-8">
+                    <label for="passwordConfirm" class="visually-hidden">Password Confirm</label>
+                    <div class="login-password-container">
                         <input type="password" id="passwordConfirm" class="login-signup-input login-password"
                             placeholder="Confirm Password" name="password-confirm"
                             onclick="togglePasswordVisibility(1, 'passwordConfirm', 'loginTogglePasswordConfirm')"
                             onblur="signInFieldOnBlur(this)"
                             onfocus="passwordConfirmIsOnInput = true"
-                            oninput="signInFieldsOnInput(this)">
+                            oninput="signInFieldsOnInput(this)"/>
 
                         <button type="button" class="login-toggle-password login-password-lock" role="img"
                             aria-labelledby="Password visibility toggle button" id="loginTogglePasswordConfirm"
