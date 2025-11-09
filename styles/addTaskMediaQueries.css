@@ -1,5 +1,15 @@
+.a-t-f-i-left,
+.a-t-f-i-right,
+.a-t-f-i-container,
+.add-task-footer,
+.btn-priority,
+.join-h1-mobile,
+.a-t-input {
+  transition: width .3s ease, margin .3s ease, font-size .3s ease, gap .3s ease;
+}
 
-@media(max-width: 1300px) {
+
+@media (max-width: 1300px) {
     .add-task-content {
         max-width: 600px;
         width: 100%;
@@ -27,10 +37,10 @@
 
     .btn-priority {
         width: 120px;
+    }
 
-        div>p {
-            font-size: 16px;
-        }
+    .btn-priority div>p {
+        font-size: 16px;
     }
 
     .prio-selected {
@@ -42,8 +52,7 @@
     }
 }
 
-
-@media(max-width: 800px) {
+@media (max-width: 800px) {
     .add-task-footer-mobile {
         bottom: -10px;
     }
@@ -55,13 +64,13 @@
     }
 }
 
-@media(max-width: 470px) {
+@media (max-width: 470px) {
     .btn-priority {
         width: 100px;
+    }
 
-        div>span {
-            font-size: 16px;
-        }
+    .btn-priority div>span {
+        font-size: 16px;
     }
 
     .prio-selected {
@@ -78,7 +87,7 @@
     }
 }
 
-@media(max-width: 450px) {
+@media (max-width: 450px) {
     .add-task-header-mobile {
         padding-left: 10px;
         padding-right: 10px;
@@ -105,13 +114,10 @@
     .btn-create-task>div>span {
         font-size: 18px;
     }
-
-    
 }
 
-@media(max-width: 420px) {
-
-    .add-task-mobile-fields{
+@media (max-width: 420px) {
+    .add-task-mobile-fields {
         padding-left: 8px;
         padding-right: 8px;
     }
@@ -119,8 +125,7 @@
     .btn-priority {
         width: 94px;
         padding: 12px 10px;
-
-   }
+    }
 
     .prio-selected {
         font-size: 16px !important;
@@ -138,21 +143,19 @@
 
     .contact-profil-container {
         margin: 8px 10px;
+    }
 
-        p {
-            font-size: 18px !important;
-        }
+    .contact-profil-container p {
+        font-size: 18px !important;
     }
 
     .contact-ellipse {
         height: 35px !important;
         width: 35px !important;
     }
-
 }
 
-
-@media(max-width: 360px) {
+@media (max-width: 360px) {
     .add-task-header-mobile {
         padding-left: 4px;
         padding-right: 4px;
@@ -175,20 +178,20 @@
         padding-right: 15px;
     }
 
-    .a-t-sub-input{
+    .a-t-sub-input {
         padding-right: 74px !important;
     }
 
-    .a-t-priority-button-container{
+    .a-t-priority-button-container {
         gap: 8px;
     }
 
     .btn-priority {
         width: 83px;
+    }
 
-        div>span {
-                margin: 0 5px 0 0;
-        }
+    .btn-priority div>span {
+        margin: 0 5px 0 0;
     }
 
     .prio-selected {
@@ -207,8 +210,4 @@
     .btn-create-task>div>span {
         font-size: 16px;
     }
-   
-
 }
-
-
