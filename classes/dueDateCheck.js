@@ -23,11 +23,13 @@ class DueDateCheck {
      * @param {Object} taskComponents - The task components for UI feedback.
      * @param {string} currentInputValue - The current input value in the due date field.
      */
-    constructor(dueDateValue, currentDueDate, currentInputValue, taskComponents) {
+    constructor(dueDateValue, currentDueDate, currentInputValue, taskComponents, dueDateOnFocus) {
         this.dueDateValue = dueDateValue;
         this.currentDueDate = currentDueDate;
         this.taskComponents = taskComponents;
         this.currentInputValue = currentInputValue;
+        this.dueDateOnFocus = dueDateOnFocus;
+
     }
 
     /**
@@ -58,11 +60,11 @@ class DueDateCheck {
         }
 
         if ((dateCleanValue.length == 10 && !this.checkIsCorrectDate(dateCleanValue)) || dateCleanValue.length > 10) {
-            this.dueDateSetError();
+            this.dueDateSetError("Not a valid date");
             return false;
         } else if (dateCleanValue.length < 10) {
             this.checkDateCharSet(dateCleanValue)
-            this.dueDateSetError();
+            this.dueDateSetError("Date is too short");
             return false;
         } else {
             this.dueDate = dateCleanValue;
@@ -161,8 +163,8 @@ class DueDateCheck {
      * The date is not correct. Display an error message and highlight the date field.
      * @return {void}
      */
-    dueDateSetError() {
-        this.taskComponents.showAndLeaveErrorMessage("a-t-due-date-required", true);
+    dueDateSetError(errorMessage = "") {
+        this.taskComponents.showAndLeaveErrorMessage("a-t-due-date-required", true, errorMessage);
         this.taskComponents.showAndLeaveErrorBorder("due-date-display", true);
         this.result = false;
     }

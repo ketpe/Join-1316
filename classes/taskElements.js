@@ -37,6 +37,7 @@ class TaskElements{
                     oninput="${this.currentInstance}.addTaskTitleOnInput()" 
                     onblur="${this.currentInstance}.taskTitleValidation(this.value)"
                     value="${title}"
+                    onfocus="${this.currentInstance}.addTaskTitleOnFocusFunction()"
                     >
                 <div class="a-t-error-text-container">
                     <p id="a-t-title-required" class="error-text-hidden" role="alert">This field is required</p>
@@ -73,9 +74,10 @@ class TaskElements{
                 <label class="task-mobile-label" for="due-date-display">Due date ${isrequired ? '<span class="required-label">*</span>' : ''}</label>
                 <div class="date-field">
                     <input class="a-t-input date-input" id="due-date-display" type="text" maxlength="10" placeholder="dd/mm/yyyy" name="due-date" aria-required="true" aria-describedby="a-t-due-date-required"
-                        inputmode="numeric" onblur="${this.currentInstance}.dateFieldOnChange()"
-                        oninput="${this.currentInstance}.dateFieldOnChange()"
+                        inputmode="numeric" onblur="${this.currentInstance}.dateFieldValidation()"
+                        oninput="${this.currentInstance}.dateFieldValidation()"
                         value="${dueDateValue}"
+                        onfocus="${this.currentInstance}.addTaskDueDateOnFocusFunction()"
                         >
 
                     <label for="due-date-hidden" class="visually-hidden">Due date picker</label>

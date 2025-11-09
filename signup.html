@@ -65,8 +65,8 @@
                             oninput="signInFieldsOnInput(this)"
                             >
 
-                        <button type="button" class="login-toggle-password login-password-lock" role="img"
-                            aria-labelledby="Password visibility toggle button" id="loginTogglePassword"
+                        <button type="button" class="login-toggle-password login-password-lock" aria-hidden="true"
+                            id="loginTogglePassword"
                             title="Toggle password visibility"
                             onclick="togglePasswordVisibility(2, 'password', 'loginTogglePassword')"></button>
                     </div>
@@ -83,8 +83,8 @@
                             onfocus="passwordConfirmIsOnInput = true"
                             oninput="signInFieldsOnInput(this)"/>
 
-                        <button type="button" class="login-toggle-password login-password-lock" role="img"
-                            aria-labelledby="Password visibility toggle button" id="loginTogglePasswordConfirm"
+                        <button type="button" class="login-toggle-password login-password-lock" aria-hidden="true"
+                            id="loginTogglePasswordConfirm"
                             title="Toggle password visibility"
                             onclick="togglePasswordVisibility(2, 'passwordConfirm', 'loginTogglePasswordConfirm')"></button>
 
@@ -97,8 +97,8 @@
 
                 <div class="signup-confirm-container">
                     <input type="checkbox" id="signupConfirm" class="signup-confirm-button" title="Confirm Checkbox">
-                    <label for="signupConfirm" class="signup-confirm-label"></label>
-                    <span>I accept the <a href="./privacyPolicy.html?backToLogin=true">Privacy policy</a></span>
+                    <label for="signupConfirm" class="signup-confirm-label" aria-label="I accept the Privacy policy"></label>
+                    <span>I accept the <a id="signupConfirm" href="./privacyPolicy.html?backToLogin=true">Privacy policy</a></span>
                 </div>
 
                 <div class="login-form-buttons fixed-height signup-form-button">
@@ -118,8 +118,7 @@
             </div>
         </footer>
 
-        <dialog id="signUp-safe-dialog" class="signUp-safe-dialog visually-hidden" aria-labelledby="safe-dialog-title"
-            aria-modal="true">
+        <dialog id="signUp-safe-dialog" class="signUp-safe-dialog visually-hidden" aria-modal="true">
             <span>You Signed Up</span>
         </dialog>
 

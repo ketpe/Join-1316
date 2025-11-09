@@ -34,6 +34,8 @@ class TaskComponents{
     currentUser; 
     currentInstance; 
     currentStateCategory;
+    addTaskTitleOnFocus = false;
+    addTaskDueDateOnFocus = false;
 
 
     /**
