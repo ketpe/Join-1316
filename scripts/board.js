@@ -113,15 +113,15 @@ async function onBoardPageResize() {
     if ((width <= minDesktopWidth) && currentView != "mobile") {
         checkIfAddTaskDialogOpen();
         await loadHtmlComponentsForMobile();
-        setNavigationButtonActive('contacts', "mobile");
-        kanbanUpdateSizeMobile();
+        setNavigationButtonActive('board', "mobile");
+        // kanbanUpdateSizeMobile();
     } else if (width >= minDesktopWidth + 1 && currentView != "desktop") {
         await loadHtmlComponentsForDesktop();
-        setNavigationButtonActive('contacts', "desktop");
-        kanbanUpdateSizeDesktop();
+        setNavigationButtonActive('board', "desktop");
+        // kanbanUpdateSizeDesktop();
     }
+    currentView === "desktop" ? kanbanUpdateSizeDesktop() : kanbanUpdateSizeMobile();
     setTaskViewEditDialogSize();
-
 }
 
 /**
