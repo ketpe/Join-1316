@@ -114,11 +114,9 @@ async function onBoardPageResize() {
         checkIfAddTaskDialogOpen();
         await loadHtmlComponentsForMobile();
         setNavigationButtonActive('board', "mobile");
-        // kanbanUpdateSizeMobile();
     } else if (width >= minDesktopWidth + 1 && currentView != "desktop") {
         await loadHtmlComponentsForDesktop();
         setNavigationButtonActive('board', "desktop");
-        // kanbanUpdateSizeDesktop();
     }
     currentView === "desktop" ? kanbanUpdateSizeDesktop() : kanbanUpdateSizeMobile();
     setTaskViewEditDialogSize();
