@@ -104,6 +104,7 @@
 .contact-error-text-container {
     margin: 0;
     padding-bottom: 12px;
+    /* max-height: 20px; */
 }
 
 .contact-name-required {
@@ -202,6 +203,12 @@
     background-color: transparent;
 }
 
+.right-container-contacts-mobile {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
 .btn-create,
 .btn-cancel {
     margin: 0;
@@ -252,6 +259,7 @@
     padding: 66px 24px;
     gap: 12px;
     box-sizing: border-box;
+    position: relative;
 }
 
 .headline-add-contacts-mobile {
@@ -274,7 +282,7 @@
     background-size: cover;
     background-position: center;
     position: absolute;
-    top: 292px;
+    top: calc(0% - 60px);
     left: calc(50% - 60px);
 }
 
@@ -342,6 +350,8 @@
 
 .close-contact-overlay-mobile button {
     filter: brightness(0) invert(1);
+    position: fixed;
+    z-index: 10;
 }
 
 .add-contacts-headlines-mobile {
