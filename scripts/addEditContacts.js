@@ -156,7 +156,8 @@ function getInitials(firstname, lastname) {
 async function editContact(event) {
     if (event) event.preventDefault();
     if (!checkValidation()) return;
-    const buttonID = event.submitter.id;
+    console.log(event);
+    const buttonID = event.target.childNodes[0].ownerDocument.activeElement.id;
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
     const data = await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${buttonID}`, contact));
@@ -175,11 +176,11 @@ async function editContact(event) {
  */
 async function editContactMobile(event) {
     if (event) event.preventDefault();
-    const buttonID = event.submitter.id;
+    const buttonID = event.target.childNodes[0].ownerDocument.activeElement.id;
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
     const data = await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${buttonID}`, contact));
-    closeDialogByEvent(event, 'add-contact-dialog');
+    closeDialogByEvent(event, 'add-contact-dialog-mobile');
     const updatedContact = await fb.getDataByKey("id", buttonID, "contacts");
     if (typeof openContactDetailMobile === "function") {
         openContactDetailMobile(updatedContact);
@@ -394,7 +395,20 @@ function checkValidation() {
     contactPhoneValidation();
     return (validateName && validateEmail && validatePhone) ? true : false;
 }
-
+function clearErrorMessagesOnInput(inputId) {
+    if (inputId === 'contact-name') {
+        showAndLeaveErrorMessage("contact-name-required", false);
+        showAndLeaveErrorBorder("contact-name", false);
+    }
+    if (inputId === 'contact-email') {
+        showAndLeaveErrorMessage("contact-email-required", false);
+        showAndLeaveErrorBorder("contact-email", false);
+    }
+    if (inputId === 'contact-phone') {
+        showAndLeaveErrorMessage("contact-phone-required", false);
+        showAndLeaveErrorBorder("contact-phone", false);
+    }
+}
 /**
  * @function renderEditContactIntoDialog
  * @memberof addEditContacts
