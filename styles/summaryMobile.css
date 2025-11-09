@@ -136,7 +136,7 @@
     font-family: Inter;
     font-weight: 400;
     font-style: Regular;
-    font-size: 14px;
+    font-size: 16px;
     margin: 0;
 }
 
@@ -217,7 +217,7 @@
     font-family: Inter;
     font-weight: 400;
     font-style: Regular;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .btn-urgent-mobile:hover .urgent-time-underline-mobile {
@@ -292,7 +292,7 @@
     margin: 0;
     font-family: Inter;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .headings-separator-mobile {
@@ -309,7 +309,7 @@
     left: 0;
 }
 
-.greeting-mobile-container{
+.greeting-mobile-container {
     position: fixed;
     height: 100%;
     width: 100%;
@@ -320,7 +320,7 @@
     align-items: center;
 }
 
-.greeting-mobile-text-box{
+.greeting-mobile-text-box {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -328,14 +328,14 @@
     transform: translateY(-80%);
 }
 
-.greeting-mobile-timeofday{
+.greeting-mobile-timeofday {
     font-family: 'Inter';
     font-size: 36px;
     font-weight: 400;
     color: var(--bg-default);
 }
 
-.greeting-mobile-name{
+.greeting-mobile-name {
     font-family: 'Inter';
     font-size: 47px;
     font-weight: 700;
@@ -347,13 +347,13 @@
 
 @keyframes fadeBackgroundGreeting {
 
-        0%,
-        75% {
-            opacity: 1;
-        }
-
-        100% {
-            opacity: 0;
-            display: none;
-        }
+    0%,
+    75% {
+        opacity: 1;
     }
+
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
