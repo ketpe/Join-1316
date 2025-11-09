@@ -23,57 +23,56 @@ class DueDateCheck {
      * @param {Object} taskComponents - The task components for UI feedback.
      * @param {string} currentInputValue - The current input value in the due date field.
      */
-    constructor(dueDateValue, currentDueDate, currentInputValue, taskComponents, dueDateOnFocus) {
+    constructor(dueDateValue, currentDueDate, currentInputValue, taskComponents) {
         this.dueDateValue = dueDateValue;
         this.currentDueDate = currentDueDate;
         this.taskComponents = taskComponents;
         this.currentInputValue = currentInputValue;
-        this.dueDateOnFocus = dueDateOnFocus;
+
 
     }
 
     /**
-     * Starts the due date validation process.
-     * @returns {Array} The validation result and the due date.
-     */
-    startDueDateValidation() {
-        if (this.dueDateValue) {
-            return [this.checkTheDateValue(this.dueDateValue), this.dueDate];
-        } else {
-            this.dueDateSetError();
-            return [this.result = false, ""];
-        }
-    }
-
-    /**
-     * Checks the validity of the provided date value.
-     * @param {string} dateValue - The date value to check.
+     * Checks the validity on input of the provided date value.
      * @returns {boolean} True if the date is valid, false otherwise.
      */
-    checkTheDateValue(dateValue) {
-
-        const dateCleanValue = (dateValue ?? "").trim();
+    checkTheDateValueOnInput() {
+        if(this.dueDateValue.length !== this.dueDateValue.replace(/\s/g, "").length){
+            this.dueDateSetError("Spaces are not allowed");
+            return [false, ""];
+        }
+        const dateCleanValue = (this.dueDateValue ?? "").trim();
 
         if (this.currentDueDate === dateCleanValue) {
             this.dueDate = this.currentDueDate;
-            return true; 
+            return [true, this.dueDate];
         }
 
-        if ((dateCleanValue.length == 10 && !this.checkIsCorrectDate(dateCleanValue)) || dateCleanValue.length > 10) {
-            this.dueDateSetError("Not a valid date");
-            return false;
-        } else if (dateCleanValue.length < 10) {
-            this.checkDateCharSet(dateCleanValue)
+        this.taskComponents.showAndLeaveErrorMessage("a-t-due-date-required", false);
+        this.checkDateCharSet(dateCleanValue);
+        return [true, this.dueDate];
+    }
+
+
+    /**
+     * Checks the validity after input or lost focus of the provided date value.
+     * @returns {boolean} True if the date is valid, false otherwise.
+     */
+    checkTheDateValue(){
+        const dateCleanValue = (this.dueDateValue ?? "").trim();
+        if (dateCleanValue.length < 10) {
             this.dueDateSetError("Date is too short");
             return false;
-        } else {
-            this.dueDate = dateCleanValue;
+        }
+        else if((dateCleanValue.length == 10 && !this.checkIsCorrectDate(dateCleanValue)) || dateCleanValue.length > 10) {
+            return false;
+        }else{
             this.dueDateSetOk();
+            this.dueDate = dateCleanValue;
             return true;
         }
-
-        
     }
+
 
     /**
      * Check whether the date value conforms to the format. 
@@ -88,12 +87,18 @@ class DueDateCheck {
     checkIsCorrectDate(valueToCheck) {
         const regexString = /^(\d{2})\/(\d{2})\/(\d{4})$/;
         const matchDateWithRegex = valueToCheck.match(regexString);
-        if (!matchDateWithRegex) { return false; }
+        if (!matchDateWithRegex) { 
+            this.dueDateSetError("Not a valid date format");
+            return false; 
+        }
 
         const dateAsParts = this.getDatePartsOfDateValue(matchDateWithRegex);
         const valueDate = new Date(dateAsParts[2], dateAsParts[1], dateAsParts[0]);
 
-        if (valueDate < Date.now()) { return false; }
+        if (valueDate < Date.now()) { 
+            this.dueDateSetError("Date cannot be in the past");
+            return false; 
+        }
 
         return (
             valueDate.getFullYear() === dateAsParts[2] &&
@@ -122,7 +127,6 @@ class DueDateCheck {
      * @returns {void}
      */
     checkDateCharSet(dateValueString) {
-
         if(this.currentInputValue.length >= dateValueString.length){return;}
         const dateValueClean = dateValueString.replace(/\D/g, "");
         let constructedDate = "";

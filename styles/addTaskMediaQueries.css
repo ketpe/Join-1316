@@ -106,19 +106,18 @@
         font-size: 18px;
     }
 
-    .nav-mobile-btn {
-        height: 67px;
-        width: 74px;
-    }
-
-    .nav-mobile-btn p{
-        font-size: 14px !important;
-    }
+    
 }
 
 @media(max-width: 420px) {
+
+    .add-task-mobile-fields{
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
     .btn-priority {
-        width: 90px;
+        width: 94px;
         padding: 12px 10px;
 
    }
@@ -152,33 +151,8 @@
 
 }
 
-@media(max-width: 380px) {
-    .btn-clear-cancel {
-        width: 98px;
-        padding: 9px;
-    }
 
-    .btn-clear-cancel>div>span {
-        font-size: 16px;
-    }
-
-    .btn-create-task {
-        width: 155px;
-        padding: 9px;
-    }
-
-    .btn-create-task>div>span {
-        font-size: 16px;
-    }
-
-    .task-section{
-        padding: 12px 0px;
-    }
-
-}
-
-
-@media(max-width: 350px) {
+@media(max-width: 360px) {
     .add-task-header-mobile {
         padding-left: 4px;
         padding-right: 4px;
@@ -210,7 +184,7 @@
     }
 
     .btn-priority {
-        width: 78px;
+        width: 83px;
 
         div>span {
                 margin: 0 5px 0 0;
@@ -218,7 +192,7 @@
     }
 
     .prio-selected {
-        font-size: 13px !important;
+        font-size: 16px !important;
     }
 
     .btn-priority div>div {
@@ -233,14 +207,7 @@
     .btn-create-task>div>span {
         font-size: 16px;
     }
-
-    .nav-mobile-btn p{
-        font-size: 13px !important;
-    }
-
-    .contact-assigned-badge{
-        gap: 6px;
-    }
+   
 
 }
 
