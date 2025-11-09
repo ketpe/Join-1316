@@ -451,6 +451,7 @@ function cancelAddContact(event) {
     validateName = false;
     validateEmail = false;
     validatePhone = false;
+    closeDialog('add-contact-dialog');
 }
 
 /**
