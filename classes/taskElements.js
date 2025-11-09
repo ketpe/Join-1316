@@ -75,7 +75,7 @@ class TaskElements{
                 <div class="date-field">
                     <input class="a-t-input date-input" id="due-date-display" type="text" maxlength="10" placeholder="dd/mm/yyyy" name="due-date" aria-required="true" aria-describedby="a-t-due-date-required"
                         inputmode="numeric" onblur="${this.currentInstance}.dateFieldValidation()"
-                        oninput="${this.currentInstance}.dateFieldValidation()"
+                        oninput="${this.currentInstance}.dateFieldValidationOnInput()"
                         value="${dueDateValue}"
                         onfocus="${this.currentInstance}.addTaskDueDateOnFocusFunction()"
                         >

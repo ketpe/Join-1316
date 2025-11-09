@@ -61,20 +61,34 @@
 
     /**
     * @description Validates the due date field.
-    * Updates the currentDueDate and currentDueDateInputValue properties based on validation.
+    * Updates the currentDueDate and currentDueDateInputValue properties based on validation on input.
     * @function dateFieldOnChange
     * @memberof taskComponents.validation
     * @return {void}
     */
-    taskComponentsPrototype.dateFieldValidation = function() {
+    taskComponentsPrototype.dateFieldValidationOnInput = function() {
         let dateField = document.getElementById('due-date-display');
         if (!dateField) { return; }
+        if(dateField.value.length == 0){return;}
         const dueDateCheck = new DueDateCheck(dateField.value, this.currentDueDate, this.currentDueDateInputValue, this);
-        const [result, dueDate] = dueDateCheck.startDueDateValidation();
+        const [result, dueDate] = dueDateCheck.checkTheDateValueOnInput();
         this.currentDueDate = result ? dueDate : "";
         this.currentDueDateInputValue = dateField.value;
     };
 
+    /**
+     * @description Validates the due date field after input or lost focus.
+     * @function dateFieldValidation
+     * @memberof taskComponents.validation
+     * @returns {boolean} True if the due date is valid, false otherwise.
+     */
+    taskComponentsPrototype.dateFieldValidation = function() {
+        if(!this.addTaskDueDateOnFocus) {return;}
+        let dateField = document.getElementById('due-date-display');
+        if (!dateField) { return; }
+        const dueDateCheck = new DueDateCheck(dateField.value, this.currentDueDate, this.currentDueDateInputValue, this);
+        return dueDateCheck.checkTheDateValue();
+    };
 
     /**
      * @description Sets the focus state for the due date input field.
@@ -176,7 +190,7 @@
 
         const hasCategory = this.currentCategory && typeof this.currentCategory === 'object' && 'title' in this.currentCategory;
         createButton.disabled = !(
-            this.currentDueDate.length > 0 &&
+            this.dateFieldValidation() &&
             this.currentTitle.length > 0 &&
             this.currentPriority.length > 0 &&
             hasCategory);
