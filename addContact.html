@@ -27,16 +27,14 @@
                             oninput="clearErrorMessagesOnInput('contact-name')" type="text" id="contact-name"
                             class="add-contact-input input-name" placeholder="Name">
                         <div class="contact-error-text-container">
-                            <p id="contact-name-required" class="error-text-hidden">This field is required. John Doe
-                            </p>
+                            <p id="contact-name-required" class="error-text-hidden">This field is required.</p>
                         </div>
                         <label for="contact-email" class="visually-hidden">Email</label>
                         <input onblur="contactEmailValidation(this.value)"
                             oninput="clearErrorMessagesOnInput('contact-email')" type="email" id="contact-email"
                             class="add-contact-input input-mail" placeholder="Email">
                         <div class="contact-error-text-container">
-                            <p id="contact-email-required" class="error-text-hidden">This field is required.
-                                ex@domain.com</p>
+                            <p id="contact-email-required" class="error-text-hidden">This field is required.</p>
                         </div>
 
                         <label for="contact-phone" class="visually-hidden">Phone</label>
@@ -44,8 +42,7 @@
                             oninput="clearErrorMessagesOnInput('contact-phone')" type="tel" id="contact-phone"
                             class="add-contact-input input-phone" placeholder="Phone">
                         <div class="contact-error-text-container">
-                            <p id="contact-phone-required" class="error-text-hidden">This field is required. +1234567890
-                            </p>
+                            <p id="contact-phone-required" class="error-text-hidden">This field is required.</p>
                         </div>
                         <div class="login-form-buttons">
                             <button type="button" class=" btn-clear-cancel btn btn-outline btn-md"
@@ -54,7 +51,8 @@
                                 <div aria-label="Close dialog" role="img" class="btn btn-outline btn-cancel-icon"></div>
                             </button>
                             <button type="button" id="btn-create-contact" class="btn-create btn btn-fill btn-md"
-                                aria-label="Create contact" onclick="newContact(event)">
+                                aria-label="Create contact" onclick="newContact(event)" disabled="true"
+                                onmouseover="contactSaveMouseUp(event)">
                                 <p class="">Create contact</p>
                                 <div aria-label="Create contact" role="img" class="btn-create-icon"></div>
                             </button>

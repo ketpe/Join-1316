@@ -24,6 +24,12 @@ let validateEmail = false;
  * @type {boolean}
  */
 let validatePhone = false;
+
+/**
+ * @description List of contact-task connections for deletion purposes.
+ * @memberof addEditContacts
+ * @type {Array}
+ */
 let contactTaskConnectionList = [];
 
 /**
@@ -97,7 +103,6 @@ function createContactObject(uid) {
         'initialColor': getRandomColor(),
     };
 }
-/*NOTE - Hier kommen bis Zl 132  die neuen Funktionen*/
 
 /**
  * @function splitName
@@ -155,8 +160,6 @@ function getInitials(firstname, lastname) {
  */
 async function editContact(event) {
     if (event) event.preventDefault();
-    if (!checkValidation()) return;
-    console.log(event);
     const buttonID = event.target.childNodes[0].ownerDocument.activeElement.id;
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
@@ -167,6 +170,34 @@ async function editContact(event) {
     showSavedToast('edit');
 }
 
+/**
+ * @function contactSaveMouseUp
+ * @memberof addEditContacts
+ * @description Handle the mouse up event on the Save/Create button.
+ * @param {MouseEvent} event
+ * @returns {void}
+ */
+function contactSaveMouseUp(event) {
+    const button = document.getElementById('btn-create-contact');
+    if (!button) { return; }
+    if (event.target == button) {
+        leaveFocusOffAllFields();
+        button.disabled = !(checkValidation());
+    }
+}
+
+/**
+ * @function leaveFocusOffAllFields
+ * @memberof addEditContacts
+ * @description Remove focus from all input fields.
+ * @return {void}
+ */
+function leaveFocusOffAllFields() {
+    const inputElements = document.querySelectorAll("input");
+    inputElements.forEach((input) => {
+        input.blur();
+    });
+}
 /**
  * @function editContactMobile
  * @memberof addEditContacts
@@ -390,11 +421,15 @@ function contactPhoneValidation() {
  * @returns {boolean}
  */
 function checkValidation() {
-    contactNameValidation();
-    contactEmailValidation();
-    contactPhoneValidation();
     return (validateName && validateEmail && validatePhone) ? true : false;
 }
+
+/**
+ * @function clearErrorMessagesOnInput
+ * @memberof addEditContacts
+ * @description - Clear error messages for the specified input field. This function is called on input events to remove error messages and styles when the user starts typing.
+ * @param {*} inputId - The ID of the input field to clear error messages for.
+ */
 function clearErrorMessagesOnInput(inputId) {
     if (inputId === 'contact-name') {
         showAndLeaveErrorMessage("contact-name-required", false);

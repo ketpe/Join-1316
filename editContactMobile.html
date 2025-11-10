@@ -26,24 +26,21 @@
                         oninput="clearErrorMessagesOnInput('contact-name')" type="text" id="contact-name"
                         class="add-contact-input-mobile input-name" placeholder="Name">
                     <div class="contact-error-text-container">
-                        <p id="contact-name-required" class="error-text-hidden">This field is required. John Doe
-                        </p>
+                        <p id="contact-name-required" class="error-text-hidden">This field is required.</p>
                     </div>
                     <label for="contact-email" class="visually-hidden">Email</label>
                     <input onblur="contactEmailValidation(this.value)"
                         oninput="clearErrorMessagesOnInput('contact-email')" type="email" id="contact-email"
                         class="add-contact-input-mobile input-mail" placeholder="Email">
                     <div class="contact-error-text-container">
-                        <p id="contact-email-required" class="error-text-hidden">This field is required.
-                            ex@domain.com</p>
+                        <p id="contact-email-required" class="error-text-hidden">This field is required.</p>
                     </div>
                     <label for="contact-phone" class="visually-hidden">Phone</label>
                     <input onblur="contactPhoneValidation(this.value)"
                         oninput="clearErrorMessagesOnInput('contact-phone')" type="tel" id="contact-phone"
                         class="add-contact-input-mobile input-phone" placeholder="Phone">
                     <div class="contact-error-text-container">
-                        <p id="contact-phone-required" class="error-text-hidden">This field is required. +1234567890
-                        </p>
+                        <p id="contact-phone-required" class="error-text-hidden">This field is required.</p>
                     </div>
                     <div class="login-form-buttons-mobile">
                         <button type="button" id="" class=" btn-clear-cancel-mobile btn btn-outline btn-md"
@@ -51,7 +48,8 @@
                             <p class="">Delete</p>
                         </button>
                         <button type="button" class="btn-create btn btn-fill btn-md btn-md-auto-height"
-                            id="btn-create-contact" onclick="editContactMobile(event)">
+                            id="btn-create-contact" onclick="editContactMobile(event)"
+                            onmouseover="contactSaveMouseUp(event)">
                             <span class="">Save</span>
                             <div aria-label="Save contact" role="img" class="btn-create-icon"></div>
                         </button>
