@@ -11,20 +11,24 @@
 
     /**
      * @description Adds the task title on input change.
-     * Handles validation for the task title field.
+     * Removes the error message when the user starts typing.
      * @function addTaskTitleOnInput
      * @memberof taskComponents.validation
      * @returns {void}
      */
     taskComponentsPrototype.addTaskTitleOnInput = function() {
-        let titleValue = document.getElementById('task-title');
-        if (!titleValue.value) {
-            this.showAndLeaveErrorMessage("a-t-title-required", true);
-            this.showAndLeaveErrorBorder("task-title", true);
-        } else {
-            this.taskTitleValidation(titleValue.value);
-        }
+        this.showAndLeaveErrorMessage("a-t-title-required", false);  
     };
+
+    /**
+     * @description Sets the focus state for the task title input field.
+     * @function addTaskTitleOnFocusFunction
+     * @memberof taskComponents.validation
+     * @returns {void}
+     */
+    taskComponentsPrototype.addTaskTitleOnFocusFunction = function() {
+        this.addTaskTitleOnFocus = true;
+    }
 
     /**
     * @description Validates the task title.
@@ -36,14 +40,19 @@
     * @return {void}
     */
     taskComponentsPrototype.taskTitleValidation = function(titleValue = "") {
+        if(!this.addTaskTitleOnFocus) {return;}
         const cleanTitleValue = (titleValue ?? "").trim();
 
         if (cleanTitleValue.length > 3) {
             this.showAndLeaveErrorMessage("a-t-title-required", false);
             this.showAndLeaveErrorBorder("task-title", false);
             this.currentTitle = cleanTitleValue;
-        } else {
-            this.showAndLeaveErrorMessage("a-t-title-required", true);
+        } else if(cleanTitleValue.length < 4) {
+            this.showAndLeaveErrorMessage("a-t-title-required", true, "Title min 4 characters");
+            this.showAndLeaveErrorBorder("task-title", true);
+            this.currentTitle = "";
+        }else{
+            this.showAndLeaveErrorMessage("a-t-title-required", true, "This field is required");
             this.showAndLeaveErrorBorder("task-title", true);
             this.currentTitle = "";
         }
@@ -52,19 +61,60 @@
 
     /**
     * @description Validates the due date field.
-    * Updates the currentDueDate and currentDueDateInputValue properties based on validation.
+    * Updates the currentDueDate and currentDueDateInputValue properties based on validation on input.
     * @function dateFieldOnChange
     * @memberof taskComponents.validation
     * @return {void}
     */
-    taskComponentsPrototype.dateFieldOnChange = function() {
+    taskComponentsPrototype.dateFieldValidationOnInput = function() {
         let dateField = document.getElementById('due-date-display');
         if (!dateField) { return; }
+        if(dateField.value.length == 0){return;}
         const dueDateCheck = new DueDateCheck(dateField.value, this.currentDueDate, this.currentDueDateInputValue, this);
-        const [result, dueDate] = dueDateCheck.startDueDateValidation();
+        const [result, dueDate] = dueDateCheck.checkTheDateValueOnInput();
+        if(dateField.value.length == 10){
+            dueDateCheck.checkTheDateAfterInput();
+        }
         this.currentDueDate = result ? dueDate : "";
         this.currentDueDateInputValue = dateField.value;
     };
+
+    /**
+     * @description Validates the due date field after input or lost focus.
+     * @function dateFieldValidation
+     * @memberof taskComponents.validation
+     * @returns {boolean} True if the due date is valid, false otherwise.
+     */
+    taskComponentsPrototype.dateFieldValidation = function() {
+        if(!this.addTaskDueDateOnFocus) {return;}
+        const dateField = document.getElementById('due-date-display');
+        if (!dateField) { return; }
+        const dueDateCheck = new DueDateCheck(dateField.value, this.currentDueDate, this.currentDueDateInputValue, this);
+        return dueDateCheck.checkTheDateValue();
+    };
+
+    /**
+     * Checks the due date field validity when editing an existing task.
+     * @function dateFieldValidateOnEdit
+     * @memberof taskComponents.validation
+     * @returns {boolean}
+     */
+    taskComponentsPrototype.dateFieldValidateOnEdit = function() {
+        const dateField = document.getElementById('due-date-display');
+        if (!dateField) { return; }
+        const dueDateCheck = new DueDateCheck(dateField.value, this.currentDueDate, this.currentDueDateInputValue, this);
+        return dueDateCheck.checkTheDateValue();
+    };
+
+    /**
+     * @description Sets the focus state for the due date input field.
+     * @function addTaskDueDateOnFocusFunction
+     * @memberof taskComponents.validation
+     * @returns {void}
+     */
+    taskComponentsPrototype.addTaskDueDateOnFocusFunction = function() {
+        this.addTaskDueDateOnFocus = true;
+    }
 
     /**
      * @description Handles the click event on the date icon to show the date picker.
@@ -88,7 +138,7 @@
         let newDateArr = String(e.target.value).split('-');
         let newDateString = `${newDateArr[2]}/${newDateArr[1]}/${newDateArr[0]}`;
         document.getElementById('due-date-display').value = newDateString;
-        this.dateFieldOnChange();
+        this.dateFieldValidationOnInput();
     };
 
     /**
@@ -99,12 +149,13 @@
     * @param {boolean} visibility - Indicates whether to show or hide the error message.
     * @returns {void}
     */
-    taskComponentsPrototype.showAndLeaveErrorMessage = function(messageTarget, visibility = true) {
+    taskComponentsPrototype.showAndLeaveErrorMessage = function(messageTarget, visibility = true, messageText = "") {
         let errorField = document.getElementById(messageTarget);
         if (errorField == null) { return; }
         if (visibility) {
             errorField.classList.remove("error-text-hidden");
             errorField.classList.add('error-text-show');
+            errorField.textContent = messageText;
         } else {
             errorField.classList.add("error-text-hidden");
             errorField.classList.remove('error-text-show');
@@ -150,12 +201,11 @@
     * @return {void}
     */
     taskComponentsPrototype.addTaskCheckRequiredField = function(createButton) {
-
         if (!createButton) { return; }
-
+        let isDateFieldOK = createButton.id == "detail-edit-ok-btn" ? this.dateFieldValidateOnEdit() : this.dateFieldValidation();
         const hasCategory = this.currentCategory && typeof this.currentCategory === 'object' && 'title' in this.currentCategory;
         createButton.disabled = !(
-            this.currentDueDate.length > 0 &&
+            isDateFieldOK &&
             this.currentTitle.length > 0 &&
             this.currentPriority.length > 0 &&
             hasCategory);

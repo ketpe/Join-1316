@@ -74,12 +74,24 @@ button {
     margin-bottom: 8px;
 }
 
+.mb-16{
+    margin-bottom: 16px;
+}
+
 .mb-32 {
     margin-bottom: 32px;
 }
 
 .mb-26 {
     margin-bottom: 26px;
+}
+
+.mb-20{
+    margin-bottom: 20px;
+}
+
+.mb-40 {
+    margin-bottom: 40px;
 }
 
 .margin-zero {
@@ -219,6 +231,10 @@ a {
     animation: rotation 1s linear infinite;
 }
 
+.hide-scrollbar {
+    overflow: hidden !important;
+}
+
 
 @media (max-width: 880px) {
 
@@ -259,20 +275,24 @@ a {
 }
 
 
-.landscape-warning { display: none; }
+.landscape-warning {
+    display: none;
+}
 
 
 html.landscape-blocked .main-container,
-html.landscape-blocked main { display: none !important; }
+html.landscape-blocked main {
+    display: none !important;
+}
 
 html.landscape-blocked .landscape-warning {
-  display: block !important;
-  position: fixed;
-  inset: 0;
-  background: var(--default-bg-color);
-  color: #000;
-  z-index: 9999;
-  font-size: 2rem;
-  text-align: center;
-  padding-top: 40vh;
+    display: block !important;
+    position: fixed;
+    inset: 0;
+    background: var(--default-bg-color);
+    color: #000;
+    z-index: 9999;
+    font-size: 2rem;
+    text-align: center;
+    padding-top: 40vh;
 }

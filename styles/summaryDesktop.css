@@ -96,8 +96,8 @@
 }
 
 .todo-icon {
-    width: 69px;
-    height: 69px;
+    width: 70px;
+    height: 70px;
     background-image: url('../assets/todo-icon.svg');
     background-size: cover;
 }

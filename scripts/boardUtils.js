@@ -6,28 +6,20 @@
 /**
  * @function setTaskViewEditDialogSize
  * @memberof boardUtils
- * @description Set the height of the task edit dialog based on the current window size.
- * set height of main content area in task edit dialog and toggle scroll class.
- * @param {number} height - The height to set for the dialog.
+ * @description Sets the size of the task view/edit dialog based on its content.
  * @returns {void}
  */
-function setTaskViewEditDialogSize(height) {
+function setTaskViewEditDialogSize() {
     const editDialog = document.querySelector('#detail-view-task-dialog.dialog-show');
     if (!editDialog) { return; }
     const taskSection = editDialog.querySelector('.task-section');
     if (!taskSection) { return; }
     const taskMain = taskSection.querySelector('.task-main') ?? taskSection.querySelector('.task-main-edit');
     if (!taskMain) return;
-    const sumHeightsInDialog = headerHeight + mainContentHeight + footerHeight + 60;
 
-    if (height - 200 > sumHeightsInDialog) {
-        taskSection.style.height = (sumHeightsInDialog + 40) + "px";
-        taskMain.classList.remove('task-main-scroll');
-    } else {
-        taskSection.style.height = (height - 200) + "px";
-        taskMain.style.height = (height - 200 - headerHeight - footerHeight) + "px";
-        taskMain.classList.add('task-main-scroll');
-    }
+    const needScrollbar = taskMain.scrollHeight > Math.ceil(taskMain.clientHeight) + 1;
+    taskMain.style.overflowY = needScrollbar ? 'auto' : 'hidden';
+
 }
 
 /**

@@ -1,5 +1,5 @@
 /**
- * Class for validating and managing due date input for tasks.
+ * @description Class for validating and managing due date input for tasks.
  * Ensures the due date is in the correct format (DD/MM/YYYY) and not in the past.
  * Provides feedback to the user through UI components.
  * @class DueDateCheck
@@ -28,50 +28,62 @@ class DueDateCheck {
         this.currentDueDate = currentDueDate;
         this.taskComponents = taskComponents;
         this.currentInputValue = currentInputValue;
+
+
     }
 
     /**
-     * Starts the due date validation process.
-     * @returns {Array} The validation result and the due date.
-     */
-    startDueDateValidation() {
-        if (this.dueDateValue) {
-            return [this.checkTheDateValue(this.dueDateValue), this.dueDate];
-        } else {
-            this.dueDateSetError();
-            return [this.result = false, ""];
-        }
-    }
-
-    /**
-     * Checks the validity of the provided date value.
-     * @param {string} dateValue - The date value to check.
+     * Checks the validity on input of the provided date value.
      * @returns {boolean} True if the date is valid, false otherwise.
      */
-    checkTheDateValue(dateValue) {
-
-        const dateCleanValue = (dateValue ?? "").trim();
+    checkTheDateValueOnInput() {
+        if(this.dueDateValue.length !== this.dueDateValue.replace(/\s/g, "").length){
+            this.dueDateSetError("Spaces are not allowed");
+            return [false, ""];
+        }
+        const dateCleanValue = (this.dueDateValue ?? "").trim();
 
         if (this.currentDueDate === dateCleanValue) {
             this.dueDate = this.currentDueDate;
-            return true; 
+            return [true, this.dueDate];
         }
 
-        if ((dateCleanValue.length == 10 && !this.checkIsCorrectDate(dateCleanValue)) || dateCleanValue.length > 10) {
-            this.dueDateSetError();
+        this.taskComponents.showAndLeaveErrorMessage("a-t-due-date-required", false);
+        this.checkDateCharSet(dateCleanValue);
+
+        return [true, this.dueDate];
+    }
+
+    /**
+     * Checks the validity after input or lost focus of the provided date value.
+     * @returns {boolean} True if the date is valid, false otherwise.
+     */
+    checkTheDateAfterInput(){
+        const isDateOk = this.checkTheDateValue();
+        //isDateOk ? this.dueDateSetOk() : this.dueDateSetError("Is not a valid date.");
+        if(isDateOk){this.dueDateSetOk();}
+        return isDateOk;
+    }
+
+    /**
+     * Checks the validity after input or lost focus of the provided date value.
+     * @returns {boolean} True if the date is valid, false otherwise.
+     */
+    checkTheDateValue(){
+        const dateCleanValue = (this.dueDateValue ?? "").trim();
+        if (dateCleanValue.length < 10) {
+            this.dueDateSetError("Is not a valid date.");
             return false;
-        } else if (dateCleanValue.length < 10) {
-            this.checkDateCharSet(dateCleanValue)
-            this.dueDateSetError();
+        }
+        else if((dateCleanValue.length == 10 && !this.checkIsCorrectDate(dateCleanValue)) || dateCleanValue.length > 10) {
             return false;
-        } else {
-            this.dueDate = dateCleanValue;
+        }else{
             this.dueDateSetOk();
+            this.dueDate = dateCleanValue;
             return true;
         }
-
-        
     }
+
 
     /**
      * Check whether the date value conforms to the format. 
@@ -86,20 +98,37 @@ class DueDateCheck {
     checkIsCorrectDate(valueToCheck) {
         const regexString = /^(\d{2})\/(\d{2})\/(\d{4})$/;
         const matchDateWithRegex = valueToCheck.match(regexString);
-        if (!matchDateWithRegex) { return false; }
+        if (!matchDateWithRegex) { 
+            this.dueDateSetError("Not a valid date format");
+            return false; 
+        }
 
         const dateAsParts = this.getDatePartsOfDateValue(matchDateWithRegex);
         const valueDate = new Date(dateAsParts[2], dateAsParts[1], dateAsParts[0]);
 
-        if (valueDate < Date.now()) { return false; }
+        if (valueDate < Date.now()) { 
+            this.dueDateSetError("Date cannot be in the past");
+            return false; 
+        }
 
+        return (this.isTheDateKorrect(valueDate, dateAsParts));
+
+    }
+
+    /**
+     * Checks if the provided date is correct.
+     * @param {Date} valueDate 
+     * @param {Array<number>} dateAsParts 
+     * @returns {boolean}
+     */
+    isTheDateKorrect(valueDate, dateAsParts){
         return (
             valueDate.getFullYear() === dateAsParts[2] &&
             valueDate.getMonth() === dateAsParts[1] &&
             valueDate.getDate() === dateAsParts[0]
         );
-
     }
+
 
     /**
      * Convert date components from regex array to integers.
@@ -120,7 +149,6 @@ class DueDateCheck {
      * @returns {void}
      */
     checkDateCharSet(dateValueString) {
-
         if(this.currentInputValue.length >= dateValueString.length){return;}
         const dateValueClean = dateValueString.replace(/\D/g, "");
         let constructedDate = "";
@@ -134,6 +162,7 @@ class DueDateCheck {
         }
 
         this.setConstructedDateIntoTheField(constructedDate);
+
         
     }
 
@@ -161,8 +190,8 @@ class DueDateCheck {
      * The date is not correct. Display an error message and highlight the date field.
      * @return {void}
      */
-    dueDateSetError() {
-        this.taskComponents.showAndLeaveErrorMessage("a-t-due-date-required", true);
+    dueDateSetError(errorMessage = "") {
+        this.taskComponents.showAndLeaveErrorMessage("a-t-due-date-required", true, errorMessage);
         this.taskComponents.showAndLeaveErrorBorder("due-date-display", true);
         this.result = false;
     }

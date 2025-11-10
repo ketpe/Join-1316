@@ -59,7 +59,7 @@ async function renderContacts() {
  * @param {string} currentLetter
  * @param {Array} sortedContacts
  * @param {HTMLElement} contactList
- * 
+ *
  */
 function createContactList(currentLetter, sortedContacts, contactList) {
     for (const obj of sortedContacts) {
@@ -163,6 +163,7 @@ async function addContactsPageResize() {
  * @return {Promise<void>}
  */
 async function openContactDetail(element) {
+    if (element.classList.contains('contact-item-active')) return;
     const [height, width] = getCurrentWindowSize();
     toggleActiveContactClass(element);
     const fb = new FirebaseDatabase();
@@ -173,6 +174,7 @@ async function openContactDetail(element) {
         openContactDetailDesktop(detailContact);
     }
 }
+
 
 /**
  * @function toggleActiveContactClass
@@ -200,7 +202,7 @@ function toggleActiveContactClass(activeContact) {
 function clearActiveContactClass() {
     const detailContact = document.getElementById('contact-detail-content');
     detailContact.innerHTML = "";
-    renderContacts();
+    toggleActiveContactClass(null);
 }
 
 /**
@@ -244,9 +246,13 @@ function openContactDetailMobile(detailContact) {
 function openContactDetailDesktop(detailContact) {
     let renderDetailContact = document.getElementById('contact-detail-content');
     renderDetailContact.classList.remove('visually-hidden');
+    document.body.classList.add('hide-scrollbar');
     renderDetailContact.innerHTML = "";
     renderDetailContact.classList.remove('slide-Details-in');
     renderDetailContact.offsetWidth;
+    setTimeout(() => {
+        document.body.classList.remove('hide-scrollbar');
+    }, 800);
     renderDetailContact.classList.add('slide-Details-in');
     renderDetailContact.innerHTML += getContactDetailView(detailContact, "");
 }

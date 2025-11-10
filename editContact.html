@@ -18,32 +18,31 @@
                 <div class="initial-avatar" id="initial-avatar">
                     <p class="detail-view-initials"></p>
                 </div>
-                <form class="add-contact-form form-for-add-contact" action="/post" method="dialog"
-                    onsubmit="return editContact(event)">
+                <form class="add-contact-form form-for-add-contact" action="/post">
 
                     <div class="add-contact-input-field-container">
 
                         <label for="contact-name" class="visually-hidden">Contact Name</label>
-                        <input oninput="contactNameValidation(this.value)" type="text" id="contact-name"
+                        <input onblur="contactNameValidation(this.value)"
+                            oninput="clearErrorMessagesOnInput('contact-name')" type="text" id="contact-name"
                             class="add-contact-input input-name" placeholder="Name">
                         <div class="contact-error-text-container">
-                            <p id="contact-name-required" class="error-text-hidden">This field is required. John Doe
-                            </p>
+                            <p id="contact-name-required" class="error-text-hidden">This field is required.</p>
                         </div>
                         <label for="contact-email" class="visually-hidden">Email</label>
-                        <input oninput="contactEmailValidation(this.value)" type="email" id="contact-email"
+                        <input onblur="contactEmailValidation(this.value)"
+                            oninput="clearErrorMessagesOnInput('contact-email')" type="email" id="contact-email"
                             class="add-contact-input input-mail" placeholder="Email">
                         <div class="contact-error-text-container">
-                            <p id="contact-email-required" class="error-text-hidden">This field is required.
-                                example@domain.com</p>
+                            <p id="contact-email-required" class="error-text-hidden">This field is required.</p>
                         </div>
 
                         <label for="contact-phone" class="visually-hidden">Phone</label>
-                        <input oninput="contactPhoneValidation(this.value)" type="tel" id="contact-phone"
+                        <input onblur="contactPhoneValidation(this.value)"
+                            oninput="clearErrorMessagesOnInput('contact-phone')" type="tel" id="contact-phone"
                             class="add-contact-input input-phone" placeholder="Phone">
                         <div class="contact-error-text-container">
-                            <p id="contact-phone-required" class="error-text-hidden">This field is required. +1234567890
-                            </p>
+                            <p id="contact-phone-required" class="error-text-hidden">This field is required.</p>
                         </div>
                         <div class="login-form-buttons">
                             <button type="button" class="btn btn-outline btn-clear-cancel" onclick="cancelAddContact()">
@@ -53,9 +52,9 @@
                                 </div>
 
                             </button>
-                            <button type="submit" onmouseover="toggleBtnEditContact(this)"
-                                class="btn-create btn btn-fill btn-md btn-md-auto-height" id="btn-create-contact"
-                                disabled="true">
+                            <button type="button" class="btn-create btn btn-fill btn-md btn-md-auto-height"
+                                id="btn-create-contact" onclick="editContact(event)"
+                                onmouseover="contactSaveMouseUp(event)">
                                 <span class="">Save</span>
                                 <div aria-label="Save contact" role="img" class="btn-create-icon"></div>
                             </button>

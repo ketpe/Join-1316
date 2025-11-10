@@ -125,7 +125,7 @@
         font-family: Mulish;
         font-weight: 500;
         font-style: Medium;
-        font-size: 14px;
+        font-size: 16px;
         color: #fff;
         padding-left: 5px;
         margin: 0;
@@ -156,13 +156,13 @@
 }
 
 .board-task-title {
-    height: 19px;
 
     p {
         font-family: Inter;
         font-weight: 700;
         font-style: Bold;
         font-size: 16px;
+        margin-bottom: 0;
     }
 }
 
@@ -179,6 +179,7 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        margin: 0;
     }
 }
 
@@ -205,8 +206,10 @@
     font-family: Inter;
     font-weight: 400;
     font-style: Regular;
-    font-size: 12px;
+    font-size: 16px;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
 }
 
 .board-task-assigned-priority {
@@ -234,6 +237,7 @@
     height: 32px;
     gap: 10px;
     border-radius: 45px;
+    border: 1px solid white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -243,7 +247,7 @@
     font-family: Inter;
     font-weight: 400;
     font-style: Regular;
-    font-size: 12px;
+    font-size: 16px;
     text-align: center;
     vertical-align: middle;
     color: white;

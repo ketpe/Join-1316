@@ -24,8 +24,30 @@ let validateEmail = false;
  * @type {boolean}
  */
 let validatePhone = false;
+
+/**
+ * @description List of contact-task connections for deletion purposes.
+ * @memberof addEditContacts
+ * @type {Array}
+ */
 let contactTaskConnectionList = [];
 
+/**
+ * @description Regular expression pattern for validating names (3-10 word characters for first and last name).
+ * @memberof addEditContacts
+ * @type {RegExp}
+ */
+const namePattern = /^[A-Za-zÄÖÜäöüß]{2,}(?:\s[A-Za-zÄÖÜäöüß]{2,})+$/;
+/**
+ * @description Regular expression pattern for validating email addresses. This pattern ensures that the email address follows standard formatting rules, including the presence of an "@" symbol and a valid domain.
+ * @memberof addEditContacts
+ * @type {RegExp}
+ */
+const emailPattern = /^(?!.*\.\.)(?!\.)(?!.*\.$)[A-Za-z0-9!#$%&'*+/=?^_`{|}~.-]+@(?:(?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,}$/i;
+
+
+
+const phonePattern = /^\+?\d{4,15}$/;
 
 /**
  * @function newContact
@@ -36,6 +58,7 @@ let contactTaskConnectionList = [];
  */
 async function newContact(event) {
     if (event) event.preventDefault();
+    if (!checkValidation()) return;
     const uid = getNewUid();
     const contact = createContactObject(uid);
     const fb = new FirebaseDatabase();
@@ -44,6 +67,7 @@ async function newContact(event) {
     await renderContacts();
     selectNewContact(uid);
     validateName = validateEmail = validatePhone = false;
+    closeDialogByEvent(event, 'add-contact-dialog');
 }
 
 /**
@@ -81,6 +105,23 @@ function createContactObject(uid) {
 }
 
 /**
+ * @function splitName
+ * @memberof addEditContacts
+ * @description - Split the full name into first and last names. This function takes a full name string, trims it, and splits it into parts. The first part is considered the first name, and the last part is considered the last name. If only one part is present, it is returned as the first name, and the last name is set as an empty string.
+ * @param {string} completeName - The full name of the contact.
+ * @returns {Object} - An object containing the first name and last name.
+ */
+function splitName(completeName) {
+    completeName = (completeName ?? '').trim().replace(/\s+/g, ' ');
+    if (completeName.length === 0) return { firstname: '', lastname: '' };
+    const parts = completeName.split(' ');
+    if (parts.length === 1) return { firstname: parts[0], lastname: '' };
+    const lastname = parts.pop();
+    const firstname = parts.join(' ');
+    return { firstname, lastname };
+}
+
+/**
  * @function getContactFormData
  * @memberof addEditContacts
  * @description - Get the contact form data. This function retrieves the values from the contact form fields and splits the full name into first and last names.
@@ -88,7 +129,7 @@ function createContactObject(uid) {
  */
 function getContactFormData() {
     const completeName = document.getElementById('contact-name').value;
-    const [firstname, lastname] = completeName.split(" ");
+    const { firstname, lastname } = splitName(completeName);
     const email = document.getElementById('contact-email').value;
     const phone = document.getElementById('contact-phone').value;
     return { firstname, lastname, email, phone };
@@ -103,7 +144,11 @@ function getContactFormData() {
  * @returns {string} - The initials of the contact.
  */
 function getInitials(firstname, lastname) {
-    return firstname.charAt(0).toUpperCase() + lastname.charAt(0).toUpperCase();
+    const f = (firstname ?? '').trim();
+    const l = (lastname ?? '').trim();
+    const firstChar = f.length ? f.charAt(0).toUpperCase() : '';
+    const lastChar = l.length ? l.charAt(0).toUpperCase() : '';
+    return (firstChar + lastChar) || (f.charAt(0) || '').toUpperCase();
 }
 
 /**
@@ -115,7 +160,7 @@ function getInitials(firstname, lastname) {
  */
 async function editContact(event) {
     if (event) event.preventDefault();
-    const buttonID = event.submitter.id;
+    const buttonID = event.target.childNodes[0].ownerDocument.activeElement.id;
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
     const data = await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${buttonID}`, contact));
@@ -126,6 +171,34 @@ async function editContact(event) {
 }
 
 /**
+ * @function contactSaveMouseUp
+ * @memberof addEditContacts
+ * @description Handle the mouse up event on the Save/Create button.
+ * @param {MouseEvent} event
+ * @returns {void}
+ */
+function contactSaveMouseUp(event) {
+    const button = document.getElementById('btn-create-contact');
+    if (!button) { return; }
+    if (event.target == button) {
+        leaveFocusOffAllFields();
+        button.disabled = !(checkValidation());
+    }
+}
+
+/**
+ * @function leaveFocusOffAllFields
+ * @memberof addEditContacts
+ * @description Remove focus from all input fields.
+ * @return {void}
+ */
+function leaveFocusOffAllFields() {
+    const inputElements = document.querySelectorAll("input");
+    inputElements.forEach((input) => {
+        input.blur();
+    });
+}
+/**
  * @function editContactMobile
  * @memberof addEditContacts
  * @description - Edit an existing contact in mobile view. This function gathers the updated contact data from the form and sends it to the database. After updating, it closes the dialog and renders the updated contact list.
@@ -134,11 +207,11 @@ async function editContact(event) {
  */
 async function editContactMobile(event) {
     if (event) event.preventDefault();
-    const buttonID = event.submitter.id;
+    const buttonID = event.target.childNodes[0].ownerDocument.activeElement.id;
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
     const data = await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${buttonID}`, contact));
-    closeDialogByEvent(event, 'add-contact-dialog');
+    closeDialogByEvent(event, 'add-contact-dialog-mobile');
     const updatedContact = await fb.getDataByKey("id", buttonID, "contacts");
     if (typeof openContactDetailMobile === "function") {
         openContactDetailMobile(updatedContact);
@@ -291,7 +364,6 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
 function contactNameValidation() {
     let nameValue = document.getElementById('contact-name').value;
     const cleanNameValue = (nameValue ?? "").trim();
-    const namePattern = /\w{3,10}\s\w{3,10}/;
     if (cleanNameValue.length > 0 && namePattern.test(cleanNameValue)) {
         showAndLeaveErrorMessage("contact-name-required", false);
         showAndLeaveErrorBorder("contact-name", false);
@@ -312,7 +384,6 @@ function contactNameValidation() {
 function contactEmailValidation() {
     let emailValue = document.getElementById('contact-email').value;
     const cleanEmailValue = (emailValue ?? "").trim();
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (cleanEmailValue.length > 0 && emailPattern.test(cleanEmailValue)) {
         showAndLeaveErrorMessage("contact-email-required", false);
         showAndLeaveErrorBorder("contact-email", false);
@@ -333,7 +404,6 @@ function contactEmailValidation() {
 function contactPhoneValidation() {
     let phoneValue = document.getElementById('contact-phone').value;
     const cleanPhoneValue = (phoneValue ?? "").trim();
-    const phonePattern = /^[\d\s\-+]{5,}$/;
     if (cleanPhoneValue.length > 0 && phonePattern.test(cleanPhoneValue)) {
         showAndLeaveErrorMessage("contact-phone-required", false);
         showAndLeaveErrorBorder("contact-phone", false);
@@ -345,41 +415,35 @@ function contactPhoneValidation() {
     }
 }
 /**
- * @function toggleBtnCreateContact
+ * @function checkValidation
  * @memberof addEditContacts
- * @description - Toggle the state of the "Create Contact" button based on the validation status of the contact form fields. If all fields are valid, the button is enabled; otherwise, it is disabled.
- * @returns {void}
+ * @description - Check the validation status of the contact form fields. This function calls the individual validation functions for each field and returns true if all fields are valid; otherwise, it returns false.
+ * @returns {boolean}
  */
-function toggleBtnCreateContact() {
-    contactNameValidation();
-    contactEmailValidation();
-    contactPhoneValidation();
-    const btn = document.getElementById('btn-create-contact');
-    if (validateName && validateEmail && validatePhone) {
-        btn.disabled = false;
-    } else {
-        btn.disabled = true;
-    }
-}
-/**
- * @function toggleBtnEditContact
- * @memberof addEditContacts
- * @description - Toggle the state of the "Edit Contact" button based on the validation status of the contact form fields. If all fields are valid, the button is enabled; otherwise, it is disabled.
- * @param {HTMLElement} element - The "Edit Contact" button element.
- * @returns {void}
- */
-function toggleBtnEditContact(element) {
-    let btn = element;
-    contactNameValidation();
-    contactEmailValidation();
-    contactPhoneValidation();
-    if (validateName && validateEmail && validatePhone) {
-        btn.disabled = false;
-    } else {
-        btn.disabled = true;
-    }
+function checkValidation() {
+    return (validateName && validateEmail && validatePhone) ? true : false;
 }
 
+/**
+ * @function clearErrorMessagesOnInput
+ * @memberof addEditContacts
+ * @description - Clear error messages for the specified input field. This function is called on input events to remove error messages and styles when the user starts typing.
+ * @param {*} inputId - The ID of the input field to clear error messages for.
+ */
+function clearErrorMessagesOnInput(inputId) {
+    if (inputId === 'contact-name') {
+        showAndLeaveErrorMessage("contact-name-required", false);
+        showAndLeaveErrorBorder("contact-name", false);
+    }
+    if (inputId === 'contact-email') {
+        showAndLeaveErrorMessage("contact-email-required", false);
+        showAndLeaveErrorBorder("contact-email", false);
+    }
+    if (inputId === 'contact-phone') {
+        showAndLeaveErrorMessage("contact-phone-required", false);
+        showAndLeaveErrorBorder("contact-phone", false);
+    }
+}
 /**
  * @function renderEditContactIntoDialog
  * @memberof addEditContacts
@@ -436,6 +500,7 @@ function cancelAddContact(event) {
     validateName = false;
     validateEmail = false;
     validatePhone = false;
+    closeDialog('add-contact-dialog');
 }
 
 /**

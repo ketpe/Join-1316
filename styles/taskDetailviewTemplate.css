@@ -2,30 +2,39 @@
     border: none !important;
     border-radius: 30px;
     outline: none !important;
-    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.16);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+    overflow: hidden;
 }
 
-.detail-view-content{
-    /* max-height: 829px; */
+.detail-view-content {
+    max-height: calc(100vh - 142px);
+    display: flex;
+    overflow: hidden;
+    min-height: 0;
 }
 
 .task-section {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 24px;
+    box-sizing: border-box;
     max-width: 525px;
     min-width: 376px;
-    max-height: 747px;
     padding: 24px 32px;
-    gap: 24px;
-    display: flex;
-    flex-direction: column;
+    min-height: 0;
+    width: 100%;
+    max-height: 100%;
+    overflow: hidden;
 }
 
 .task-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex: 0 0 auto;
 }
 
-.task-header-edit{
+.task-header-edit {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -53,21 +62,30 @@
 .task-main {
     display: flex;
     flex-direction: column;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 16px;
+    scroll-behavior: smooth;
+
 }
 
-.task-main-scroll{
-    overflow-y: scroll;
-}
 
-.task-main-edit{
-    display: flex;
-    padding: 10px
-}
 
-.task-edit-fields{
+.task-main-edit {
     display: flex;
     flex-direction: column;
-    width: 440px;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 16px;
+    scroll-behavior: smooth;
+}
+
+.task-edit-fields {
+    display: flex;
+    flex-direction: column;
+    max-width: 440px;
+    width: 100%;
 }
 
 .task-description {
@@ -80,13 +98,13 @@
     margin-bottom: 25px;
 }
 
-.task-data-row{
+.task-data-row {
     display: flex;
     align-items: center;
     margin-bottom: 25px;
 }
 
-.task-data-row>legend{
+.task-data-row>legend {
     font-size: 20px;
     font-family: 'Inter';
     font-weight: 400;
@@ -95,7 +113,7 @@
     margin: 0;
 }
 
-.task-data-row p{
+.task-data-row p {
     font-family: 'Inter';
     font-size: 20px;
     font-weight: 400;
@@ -156,7 +174,7 @@
     background-image: url('../assets/prio-baja-default.svg');
 }
 
-.task-detail-view-contact-list{
+.task-detail-view-contact-list {
     width: 100%;
     height: 0;
     background-color: transparent;
@@ -236,7 +254,7 @@
     font-family: Inter;
     font-weight: 400;
     font-style: Regular;
-    font-size: 12px;
+    font-size: 16px;
     text-align: center;
     vertical-align: middle;
     color: white;
@@ -311,6 +329,8 @@
     gap: 24px;
     padding-top: 24px;
     padding-inline-end: 12px;
+    position: sticky;
+    bottom: 24px;
 }
 
 .btn-task-edit {

@@ -60,7 +60,7 @@
     justify-content: center;
     border: none;
     height: 76px;
-    width: 76px;
+    width: 90px;
     background-color: transparent;
     color: var(--btn-menu-text-color);
     gap: 4px;
@@ -114,7 +114,7 @@
     font-family: 'Open Sans';
     font-weight: 400;
     font-style: Regular;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 20px;
     margin: 0;
 }
@@ -144,7 +144,7 @@
     margin-bottom: 4px;
 }
 
-.nav-mobile-btn-compliance:disabled{
+.nav-mobile-btn-compliance:disabled {
     cursor: not-allowed;
 }
 
@@ -170,4 +170,21 @@
 .compliance-links-spezial a:hover {
     color: var(--btn-bg-hover);
     font-weight: 700;
+}
+
+@media(max-width: 450px) {
+    .nav-mobile-btn {
+        height: 67px;
+    }
+
+    .nav-mobile-btn p{
+        font-size: 16px !important;
+    }
+}
+
+
+@media(max-width: 360px){
+    .nav-mobile-btn{
+        gap: 1px;
+    }
 }

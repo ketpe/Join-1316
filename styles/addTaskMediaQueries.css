@@ -1,5 +1,5 @@
 
-@media(max-width: 1300px) {
+@media (max-width: 1300px) {
     .add-task-content {
         max-width: 600px;
         width: 100%;
@@ -27,10 +27,10 @@
 
     .btn-priority {
         width: 120px;
+    }
 
-        div>p {
-            font-size: 16px;
-        }
+    .btn-priority div>p {
+        font-size: 16px;
     }
 
     .prio-selected {
@@ -42,10 +42,70 @@
     }
 }
 
+@media(max-width: 880px) {
+    .task-section {
+        padding: 12px 6px;
+        gap: 16px;
+        min-width: 310px;
+    }
 
-@media(max-width: 800px) {
+    .task-description {
+        font-size: 16px;
+        margin-top: 13px;
+        margin-bottom: 16px;
+    }
+
+    .task-detailview-actions {
+        gap: 8px;
+    }
+
+    .a-t-priority-button-container {
+        margin-bottom: 26px;
+        margin-top: 0;
+    }
+
+    .field-frame-due-date {
+        margin-bottom: 28px;
+    }
+
+    .task-main-scroll {
+        padding-inline-end: 8px;
+    }
+
+    .a-t-input {
+        font-size: 16px;
+        height: calc(40px - (2px + 24px));
+    }
+
+    .a-t-input::placeholder {
+        font-size: 16px;
+    }
+
+    .date-field {
+        height: 39px;
+    }
+
+    .a-t-text-area {
+        max-height: calc(104px - (2 * 1px) - (2 * 16px));
+        font-size: 16px;
+    }
+
+    .date-trigger {
+        transform: translateY(-224%) translateX(-69%);
+    }
+}
+
+@media (max-width: 800px) {
     .add-task-footer-mobile {
         bottom: -10px;
+    }
+
+    .a-t-error-text-container {
+        margin-bottom: 10px;
+    }
+
+    .a-t-priority-button-container {
+        margin-top: 0px;
     }
 }
 
@@ -55,13 +115,13 @@
     }
 }
 
-@media(max-width: 470px) {
+@media (max-width: 470px) {
     .btn-priority {
         width: 100px;
+    }
 
-        div>span {
-            font-size: 16px;
-        }
+    .btn-priority div>span {
+        font-size: 16px;
     }
 
     .prio-selected {
@@ -78,7 +138,7 @@
     }
 }
 
-@media(max-width: 450px) {
+@media (max-width: 450px) {
     .add-task-header-mobile {
         padding-left: 10px;
         padding-right: 10px;
@@ -106,24 +166,45 @@
         font-size: 18px;
     }
 
-    .nav-mobile-btn {
-        height: 67px;
-        width: 74px;
+    .date-field {
+        height: 40px;
     }
 
-    .nav-mobile-btn p{
-        font-size: 14px !important;
+    .task-section {
+        min-width: 0;
+        width: 100%;
     }
 }
 
-@media(max-width: 420px) {
-    .btn-priority {
-        width: 90px;
-        padding: 12px 10px;
+@media(max-width: 425px) {
 
-        div>span {
-            font-size: 14px;
-        }
+    .detail-view-content {
+        max-height: calc(100vh - 10px);
+    }
+
+    .task-section {
+        padding: 12px 0px !important;
+    }
+
+    .contact-assigned-badge {
+        gap: 6px;
+    }
+
+    .add-task-form-buttons-mobile{
+        padding-right: 0px;
+    }
+
+}
+
+@media (max-width: 420px) {
+    .add-task-mobile-fields {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .btn-priority {
+        width: 94px;
+        padding: 12px 10px;
     }
 
     .prio-selected {
@@ -142,43 +223,19 @@
 
     .contact-profil-container {
         margin: 8px 10px;
+    }
 
-        p {
-            font-size: 18px !important;
-        }
+    .contact-profil-container p {
+        font-size: 18px !important;
     }
 
     .contact-ellipse {
         height: 35px !important;
         width: 35px !important;
     }
-
 }
 
-@media(max-width: 380px) {
-    .btn-clear-cancel {
-        width: 98px;
-        padding: 9px;
-    }
-
-    .btn-clear-cancel>div>span {
-        font-size: 16px;
-    }
-
-    .btn-create-task {
-        width: 155px;
-        padding: 9px;
-    }
-
-    .btn-create-task>div>span {
-        font-size: 16px;
-    }
-
-
-}
-
-
-@media(max-width: 350px) {
+@media (max-width: 360px) {
     .add-task-header-mobile {
         padding-left: 4px;
         padding-right: 4px;
@@ -201,26 +258,29 @@
         padding-right: 15px;
     }
 
-    .a-t-sub-input{
+    .a-t-sub-input {
         padding-right: 74px !important;
     }
 
-    .btn-priority {
-        width: 75px;
+    .a-t-priority-button-container {
+        gap: 8px;
+    }
 
-        div>span {
-            font-size: 12px;
-                margin: 0 5px 0 0;
-        }
+    .btn-priority {
+        width: 83px;
+    }
+
+    .btn-priority div>span {
+        margin: 0 5px 0 0;
     }
 
     .prio-selected {
-        font-size: 13px !important;
+        font-size: 16px !important;
     }
 
     .btn-priority div>div {
-        width: 13px;
-        height: 10px;
+        width: 9px;
+        height: 9px;
     }
 
     .category-list-btn>p {
@@ -230,15 +290,4 @@
     .btn-create-task>div>span {
         font-size: 16px;
     }
-
-    .nav-mobile-btn p{
-        font-size: 13px !important;
-    }
-
-    .contact-assigned-badge{
-        gap: 6px;
-    }
-
 }
-
-

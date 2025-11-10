@@ -118,7 +118,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .subMenuMobileBox {
+    .sub-menu-mobile-box {
         transition: none;
     }
 }

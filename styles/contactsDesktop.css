@@ -79,11 +79,10 @@
 }
 
 .contact-initials-text {
-
     font-family: Inter;
     font-weight: 400;
     font-style: Regular;
-    font-size: 12px;
+    font-size: 16px;
     text-align: center;
     vertical-align: middle;
     color: white;
@@ -94,7 +93,6 @@
     background-color: var(--input-border-color);
     width: 100%;
 }
-
 
 .contact-letter {
     height: 58px;
@@ -194,6 +192,12 @@
 
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .contact-detail-content {
+        transition: none;
+    }
+}
+
 .contacts-header {
     display: flex;
     flex-direction: row;
@@ -226,7 +230,7 @@
 }
 
 .slide-Details-in {
-    animation: slide-Dialog-in 1000ms ease-in-out forwards;
+    animation: slide-Dialog-in 600ms ease-in-out forwards;
 }
 
 .first-line-detail-view {
@@ -290,9 +294,7 @@
 }
 
 .action-delete-icon {
-
     background-image: url(../assets/delete-contacts-icon.svg);
-
 }
 
 .btn-contact-edit {
@@ -374,7 +376,6 @@
     color: var(--font-email-color);
 }
 
-
 .add-contact-safe-changes {
     position: absolute;
     z-index: 10000;
@@ -398,12 +399,9 @@
     color: white;
 }
 
-
 .safe-changes-toast-open {
     transform: translateX(calc(100vw / 2 - 100px)) translateY(calc(100vh / 2 - 25px));
 }
-
-
 
 .add-contact-safe-dialog {
     width: 326px;

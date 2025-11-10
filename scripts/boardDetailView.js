@@ -20,8 +20,7 @@ async function getDetailViewTask(taskId) {
     const currentUser = taskUtils.readCurrentUserID();
     boardTaskComponents = new TaskComponents(currentUser, "boardTaskComponents");
     boardTaskComponents.runWithDataAsView(tasks[0]);
-    [headerHeight, mainContentHeight, footerHeight] = new BoardTaskDetailViewUtils().measureCurrentDialogContentHeight();
-    setTaskViewEditDialogSize(window.innerHeight);
+    setTaskViewEditDialogSize();
 }
 
 /**
@@ -73,11 +72,7 @@ async function editCurrentTask(button) {
     const currentUser = taskUtils.readCurrentUserID();
     boardTaskComponents = new TaskComponents(currentUser, "boardTaskComponents");
     await boardTaskComponents.runWithDataAsEdit(task[0]);
-    [headerHeight, mainContentHeight, footerHeight] = new BoardTaskDetailViewUtils().measureCurrentDialogContentHeight();
-    headerHeight = 32;
-    mainContentHeight = window.innerHeight - 200 - 32 - 82;
-    footerHeight = 82;
-    setTaskViewEditDialogSize(window.innerHeight);
+    setTaskViewEditDialogSize();
 }
 
 /**
