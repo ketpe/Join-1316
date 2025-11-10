@@ -104,45 +104,10 @@ body {
     }
 }
 
-@media(max-height: 800px) {
-    .form-for-signup {
-        height: 530px !important;
-    }
-
-    .signup-container {
-        margin-top: 32px !important;
-    }
-
-    .login-container {
-        margin-top: 0px !important;
-    }
-
-    .form-for-login {
-        margin-bottom: 4px !important;
-        height: 417px !important;
-        margin-top: 140px !important;
-    }
-
-    .login-signup-input-field-container {
-        margin-bottom: 0 !important;
-    }
-
-    .login-signup-header {
-        margin-bottom: 49px !important;
-    }
-
-    .arrow-left {
-        top: 28px !important;
-    }
-}
 
 @media(max-height: 800px) {
     .form-for-signup {
         height: 530px !important;
-    }
-
-    .login-container {
-        margin-top: 0px !important;
     }
 
     .signup-container {
@@ -169,6 +134,22 @@ body {
 
     .mb-26 {
         margin-bottom: 18px !important;
+    }
+
+    .mb-20 {
+        margin-bottom: 12px;
+    }
+}
+
+@media(max-height: 700px) {
+    header.login-signup-header {
+        margin-bottom: 0 !important;
+    }
+
+    .login-join-logo.signup-logo {
+        height: calc(var(--logo-height) * 0.50);
+        width: calc(var(--logo-width) * 0.50);
+        top: 15px;
     }
 }
 
@@ -233,6 +214,10 @@ body {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+    }
+
+    .login-container {
+        margin-top: 0;
     }
 
     footer {
@@ -413,6 +398,10 @@ body {
 
     .login-toggle-password {
         right: 8px;
+    }
+
+    .login-signup-header p {
+        font-size: 18px;
     }
 }
 
