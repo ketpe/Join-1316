@@ -105,6 +105,222 @@
 
         
             
+<h4 class="name" id=".contactTaskConnectionList"><span class="type-signature">(static) </span>contactTaskConnectionList<span class="type-signature"> :Array</span></h4>
+
+
+
+
+<div class="description">
+    List of contact-task connections for deletion purposes.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line33">line 33</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".emailPattern"><span class="type-signature">(static, constant) </span>emailPattern<span class="type-signature"> :RegExp</span></h4>
+
+
+
+
+<div class="description">
+    Regular expression pattern for validating email addresses. This pattern ensures that the email address follows standard formatting rules, including the presence of an "@" symbol and a valid domain.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">RegExp</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line46">line 46</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".namePattern"><span class="type-signature">(static, constant) </span>namePattern<span class="type-signature"> :RegExp</span></h4>
+
+
+
+
+<div class="description">
+    Regular expression pattern for validating names (3-10 word characters for first and last name).
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">RegExp</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line40">line 40</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id=".validateEmail"><span class="type-signature">(static) </span>validateEmail<span class="type-signature"> :boolean</span></h4>
 
 
@@ -432,7 +648,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line428">line 428</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line492">line 492</a>
     </li></ul></dd>
     
 
@@ -475,6 +691,249 @@
 </dl>
 
     
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".checkValidation"><span class="type-signature">(static) </span>checkValidation<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    - Check the validation status of the contact form fields. This function calls the individual validation functions for each field and returns true if all fields are valid; otherwise, it returns false.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line417">line 417</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".clearErrorMessagesOnInput"><span class="type-signature">(static) </span>clearErrorMessagesOnInput<span class="signature">(inputId)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    - Clear error messages for the specified input field. This function is called on input events to remove error messages and styles when the user starts typing.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>inputId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The ID of the input field to clear error messages for.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line427">line 427</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -538,7 +997,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line306">line 306</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line378">line 378</a>
     </li></ul></dd>
     
 
@@ -644,7 +1103,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line285">line 285</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line358">line 358</a>
     </li></ul></dd>
     
 
@@ -750,7 +1209,162 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line327">line 327</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line398">line 398</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".contactSaveMouseUp"><span class="type-signature">(static) </span>contactSaveMouseUp<span class="signature">(event)</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Handle the mouse up event on the Save/Create button.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">MouseEvent</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line173">line 173</a>
     </li></ul></dd>
     
 
@@ -905,7 +1519,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line62">line 62</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line86">line 86</a>
     </li></ul></dd>
     
 
@@ -1015,7 +1629,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line148">line 148</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line221">line 221</a>
     </li></ul></dd>
     
 
@@ -1194,7 +1808,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line109">line 109</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line154">line 154</a>
     </li></ul></dd>
     
 
@@ -1349,7 +1963,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line128">line 128</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line201">line 201</a>
     </li></ul></dd>
     
 
@@ -1455,7 +2069,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line83">line 83</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line124">line 124</a>
     </li></ul></dd>
     
 
@@ -1637,7 +2251,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line97">line 97</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line138">line 138</a>
     </li></ul></dd>
     
 
@@ -1678,6 +2292,112 @@
     <dd>
         
 <span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".leaveFocusOffAllFields"><span class="type-signature">(static) </span>leaveFocusOffAllFields<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Remove focus from all input fields.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line189">line 189</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
 
 
     </dd>
@@ -1796,7 +2516,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line30">line 30</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line52">line 52</a>
     </li></ul></dd>
     
 
@@ -1974,7 +2694,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line166">line 166</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line239">line 239</a>
     </li></ul></dd>
     
 
@@ -2152,7 +2872,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line441">line 441</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line506">line 506</a>
     </li></ul></dd>
     
 
@@ -2307,7 +3027,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line202">line 202</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line275">line 275</a>
     </li></ul></dd>
     
 
@@ -2462,7 +3182,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line235">line 235</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line308">line 308</a>
     </li></ul></dd>
     
 
@@ -2568,7 +3288,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line217">line 217</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line290">line 290</a>
     </li></ul></dd>
     
 
@@ -2723,7 +3443,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line383">line 383</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line447">line 447</a>
     </li></ul></dd>
     
 
@@ -2878,7 +3598,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line405">line 405</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line469">line 469</a>
     </li></ul></dd>
     
 
@@ -3033,7 +3753,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line49">line 49</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line73">line 73</a>
     </li></ul></dd>
     
 
@@ -3211,7 +3931,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line271">line 271</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line344">line 344</a>
     </li></ul></dd>
     
 
@@ -3389,7 +4109,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line251">line 251</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line324">line 324</a>
     </li></ul></dd>
     
 
@@ -3544,7 +4264,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line456">line 456</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line521">line 521</a>
     </li></ul></dd>
     
 
@@ -3581,6 +4301,165 @@
     <dd>
         
 <span class="param-type">Promise.&lt;void></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".splitName"><span class="type-signature">(static) </span>splitName<span class="signature">(completeName)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    - Split the full name into first and last names. This function takes a full name string, trims it, and splits it into parts. The first part is considered the first name, and the last part is considered the last name. If only one part is present, it is returned as the first name, and the last name is set as an empty string.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>completeName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The full name of the contact.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line107">line 107</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - An object containing the first name and last name.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
 
 
     </dd>
@@ -3699,7 +4578,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line187">line 187</a>
+        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line260">line 260</a>
     </li></ul></dd>
     
 
@@ -3748,267 +4627,6 @@
 
 
         
-            
-
-    
-
-    
-    <h4 class="name" id=".toggleBtnCreateContact"><span class="type-signature">(static) </span>toggleBtnCreateContact<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    - Toggle the state of the "Create Contact" button based on the validation status of the contact form fields. If all fields are valid, the button is enabled; otherwise, it is disabled.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line347">line 347</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">void</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".toggleBtnEditContact"><span class="type-signature">(static) </span>toggleBtnEditContact<span class="signature">(element)</span><span class="type-signature"> &rarr; {void}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    - Toggle the state of the "Edit Contact" button based on the validation status of the contact form fields. If all fields are valid, the button is enabled; otherwise, it is disabled.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>element</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">HTMLElement</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The "Edit Contact" button element.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_addEditContacts.js.html">scripts/addEditContacts.js</a>, <a href="scripts_addEditContacts.js.html#line364">line 364</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">void</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
     
 
     
@@ -4030,7 +4648,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Nov 05 2025 20:55:18 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Nov 10 2025 20:21:08 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>
