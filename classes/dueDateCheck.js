@@ -1,5 +1,5 @@
 /**
- * Class for validating and managing due date input for tasks.
+ * @description Class for validating and managing due date input for tasks.
  * Ensures the due date is in the correct format (DD/MM/YYYY) and not in the past.
  * Provides feedback to the user through UI components.
  * @class DueDateCheck
@@ -50,9 +50,20 @@ class DueDateCheck {
 
         this.taskComponents.showAndLeaveErrorMessage("a-t-due-date-required", false);
         this.checkDateCharSet(dateCleanValue);
+
         return [true, this.dueDate];
     }
 
+    /**
+     * Checks the validity after input or lost focus of the provided date value.
+     * @returns {boolean} True if the date is valid, false otherwise.
+     */
+    checkTheDateAfterInput(){
+        const isDateOk = this.checkTheDateValue();
+        //isDateOk ? this.dueDateSetOk() : this.dueDateSetError("Is not a valid date.");
+        if(isDateOk){this.dueDateSetOk();}
+        return isDateOk;
+    }
 
     /**
      * Checks the validity after input or lost focus of the provided date value.
@@ -61,7 +72,7 @@ class DueDateCheck {
     checkTheDateValue(){
         const dateCleanValue = (this.dueDateValue ?? "").trim();
         if (dateCleanValue.length < 10) {
-            this.dueDateSetError("Date is too short");
+            this.dueDateSetError("Is not a valid date.");
             return false;
         }
         else if((dateCleanValue.length == 10 && !this.checkIsCorrectDate(dateCleanValue)) || dateCleanValue.length > 10) {
@@ -100,13 +111,24 @@ class DueDateCheck {
             return false; 
         }
 
+        return (this.isTheDateKorrect(valueDate, dateAsParts));
+
+    }
+
+    /**
+     * Checks if the provided date is correct.
+     * @param {Date} valueDate 
+     * @param {Array<number>} dateAsParts 
+     * @returns {boolean}
+     */
+    isTheDateKorrect(valueDate, dateAsParts){
         return (
             valueDate.getFullYear() === dateAsParts[2] &&
             valueDate.getMonth() === dateAsParts[1] &&
             valueDate.getDate() === dateAsParts[0]
         );
-
     }
+
 
     /**
      * Convert date components from regex array to integers.
@@ -140,6 +162,7 @@ class DueDateCheck {
         }
 
         this.setConstructedDateIntoTheField(constructedDate);
+
         
     }
 

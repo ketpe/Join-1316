@@ -88,7 +88,7 @@ function validatefullname() {
         setInputFieldHasNoError(nameElement.id, "name-error-text");
         return true;
     } else {
-        setInputFieldHasError(nameElement.id, "name-error-text",  "This field is required. John Doe");
+        setInputFieldHasError(nameElement.id, "name-error-text",  "First and last name are required.");
         return false;
     }
 }
@@ -111,7 +111,7 @@ async function validateemail() {
         setInputFieldHasError(emailElement.id, "email-error-text", "Email is already in use.");
         return false;
     } else {
-        setInputFieldHasError(emailElement.id, "email-error-text", "This field is required. example@domain.com");
+        setInputFieldHasError(emailElement.id, "email-error-text", "Not a valid email address.");
         return false;
     }
 }

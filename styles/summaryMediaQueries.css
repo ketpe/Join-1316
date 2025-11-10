@@ -71,7 +71,7 @@
     }
 
     .btn-urgent-mobile {
-        width: 86%;
+        width: 91%;
         max-height: 80px;
         padding: 19px 9px;
         gap: 8px;
@@ -101,6 +101,7 @@
         padding: 22px 0px;
         max-height: 87px;
         width: 87px;
+        gap: 3px;
     }
 
     .quantity-task-mobile {

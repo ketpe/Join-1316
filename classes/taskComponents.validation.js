@@ -48,7 +48,7 @@
             this.showAndLeaveErrorBorder("task-title", false);
             this.currentTitle = cleanTitleValue;
         } else if(cleanTitleValue.length < 4) {
-            this.showAndLeaveErrorMessage("a-t-title-required", true, "Title must be at least 4 characters long");
+            this.showAndLeaveErrorMessage("a-t-title-required", true, "Title min 4 characters");
             this.showAndLeaveErrorBorder("task-title", true);
             this.currentTitle = "";
         }else{
@@ -72,6 +72,9 @@
         if(dateField.value.length == 0){return;}
         const dueDateCheck = new DueDateCheck(dateField.value, this.currentDueDate, this.currentDueDateInputValue, this);
         const [result, dueDate] = dueDateCheck.checkTheDateValueOnInput();
+        if(dateField.value.length == 10){
+            dueDateCheck.checkTheDateAfterInput();
+        }
         this.currentDueDate = result ? dueDate : "";
         this.currentDueDateInputValue = dateField.value;
     };
@@ -84,7 +87,20 @@
      */
     taskComponentsPrototype.dateFieldValidation = function() {
         if(!this.addTaskDueDateOnFocus) {return;}
-        let dateField = document.getElementById('due-date-display');
+        const dateField = document.getElementById('due-date-display');
+        if (!dateField) { return; }
+        const dueDateCheck = new DueDateCheck(dateField.value, this.currentDueDate, this.currentDueDateInputValue, this);
+        return dueDateCheck.checkTheDateValue();
+    };
+
+    /**
+     * Checks the due date field validity when editing an existing task.
+     * @function dateFieldValidateOnEdit
+     * @memberof taskComponents.validation
+     * @returns {boolean}
+     */
+    taskComponentsPrototype.dateFieldValidateOnEdit = function() {
+        const dateField = document.getElementById('due-date-display');
         if (!dateField) { return; }
         const dueDateCheck = new DueDateCheck(dateField.value, this.currentDueDate, this.currentDueDateInputValue, this);
         return dueDateCheck.checkTheDateValue();
@@ -122,7 +138,7 @@
         let newDateArr = String(e.target.value).split('-');
         let newDateString = `${newDateArr[2]}/${newDateArr[1]}/${newDateArr[0]}`;
         document.getElementById('due-date-display').value = newDateString;
-        this.dateFieldOnChange();
+        this.dateFieldValidationOnInput();
     };
 
     /**
@@ -185,12 +201,11 @@
     * @return {void}
     */
     taskComponentsPrototype.addTaskCheckRequiredField = function(createButton) {
-
         if (!createButton) { return; }
-
+        let isDateFieldOK = createButton.id == "detail-edit-ok-btn" ? this.dateFieldValidateOnEdit() : this.dateFieldValidation();
         const hasCategory = this.currentCategory && typeof this.currentCategory === 'object' && 'title' in this.currentCategory;
         createButton.disabled = !(
-            this.dateFieldValidation() &&
+            isDateFieldOK &&
             this.currentTitle.length > 0 &&
             this.currentPriority.length > 0 &&
             hasCategory);

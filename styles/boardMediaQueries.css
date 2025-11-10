@@ -48,18 +48,6 @@
         font-size: 16px;
     }
 
-    .task-section {
-        padding: 12px 6px;
-        gap: 16px;
-        min-width: 310px;
-    }
-
-    .task-description {
-        font-size: 16px;
-        margin-top: 13px;
-        margin-bottom: 16px;
-    }
-
     label,
     legend {
         font-family: 'Open Sans' !important;
@@ -79,44 +67,13 @@
     .task-subtask {
         font-size: 16px;
     }
-
-    .task-detailview-actions {
-        gap: 8px;
-    }
-
-    .a-t-priority-button-container {
-        margin-bottom: 26px;
-    }
-
-
-    .task-main-scroll {
-        padding-inline-end: 8px;
-    }
-
+  
     .task-mobile-label {
         font-family: 'Inter' !important;
         font-size: 16px !important;
         color: black !important;
         font-weight: 400 !important;
-    }
-
-    .a-t-input {
-        font-size: 16px;
-        height: calc(40px - (2px + 24px));
-    }
-
-    .a-t-input::placeholder {
-        font-size: 16px;
-    }
-
-    .a-t-text-area {
-        max-height: calc(104px - (2 * 1px) - (2 * 16px));
-        font-size: 16px;
-    }
-
-    .date-trigger {
-        transform: translateY(-224%) translateX(-69%);
-    }
+    }    
 
     .btn-small {
         width: 77px !important;
@@ -149,19 +106,9 @@
     .join-h1 {
         font-size: 32px;
     }
-
-    .task-section {
-        min-width: 0;
-        width: 100%;
-    }
+    
 }
 
-@media(max-width: 425px) {
-
-    .detail-view-content{
-        max-height: calc(100vh - 10px);
-    }
-}
 
 @media(max-width: 375px) {
 
