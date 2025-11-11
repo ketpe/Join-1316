@@ -4,6 +4,7 @@
  * Loaded by all pages
  */
 
+const emailPattern = /^(?!.*\.\.)(?!\.)(?!.*\.$)[A-Za-z0-9!#$%&'*+/=?^_`{|}~.-]+@(?:(?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,}$/i;
 
 /**
  * Set onclick event to document body to close submenu when clicking outside
@@ -305,4 +306,25 @@ function hideLoadingAnimation() {
         overlay.classList.remove('is-loading-visible');
         loadingContainer.classList.add('visually-hidden');
     }, 500);
+}
+
+/**
+ * Checks if the provided email is valid according to RFC standards.
+ * Validates length, format, and domain rules.
+ * @function emailValidator
+ * @memberof signup
+ * @description Validate email format according to RFC standards.
+ * @param {string} email
+ * @returns {boolean}
+ */
+function emailValidator(email) {
+    if (email.length > 254) { return false; }
+    if (/\.{2,}/.test(email)) { return false; }
+    if (!emailPattern.test(email)) { return false; }
+    const [local, domain] = email.split('@');
+    if (!local || !domain) return false;
+    if (local.length > 64) return false;
+    if (domain.startsWith('-') || domain.endsWith('-')) return false;
+    if (domain.split('.').some(part => !part || part.length > 63)) return false;
+    return true;
 }

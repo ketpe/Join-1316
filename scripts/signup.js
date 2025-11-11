@@ -10,7 +10,6 @@
 
 
 const namePattern = /\w{3,10}\s\w{3,10}/;
-const emailPattern = /^(?!.*\.\.)(?!\.)(?!.*\.$)[A-Za-z0-9!#$%&'*+/=?^_`{|}~.-]+@(?:(?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,}$/i;
 let nameIsOnInput = false;
 let emailIsOnInput = false;
 let passwordIsOnInput = false;
@@ -80,11 +79,14 @@ function hideErrorTextOfInputField(inputFieldID){
  * @returns {Boolean}
  */
 function validatefullname() {
-    if (!nameIsOnInput) { return; }
+    if (!nameIsOnInput) { return false; }
     const nameElement = document.getElementById('fullname');
-    if (!nameElement) { return; }
+    if (!nameElement) { return false; }
     const cleanNameValue = (nameElement.value ?? "").trim();
-    if (cleanNameValue.length >= 3 && namePattern.test(cleanNameValue)) {
+    if(cleanNameValue.length >= 55){
+        setInputFieldHasError(nameElement.id, "name-error-text",  "Your Input is too long.");
+        return false;
+    } else if (cleanNameValue.length >= 3 && namePattern.test(cleanNameValue)) {
         setInputFieldHasNoError(nameElement.id, "name-error-text");
         return true;
     } else {
@@ -100,9 +102,9 @@ function validatefullname() {
  * @returns {Boolean}
  */
 async function validateemail() {
-    if (!emailIsOnInput) { return; }
+    if (!emailIsOnInput) { return false; }
     const emailElement = document.getElementById('email');
-    if (!emailElement) { return; }
+    if (!emailElement) { return false; }
     const cleanEmailValue = (emailElement.value ?? "").trim();
     if (cleanEmailValue.length >= 3 && emailValidator(cleanEmailValue) && !await checkEmailInDatabase(cleanEmailValue)) {
         setInputFieldHasNoError(emailElement.id, "email-error-text");
@@ -117,45 +119,27 @@ async function validateemail() {
 }
 
 /**
- * Checks if the provided email is valid according to RFC standards.
- * Validates length, format, and domain rules.
- * @function emailValidator
- * @memberof signup
- * @description Validate email format according to RFC standards.
- * @param {string} email
- * @returns {boolean}
- */
-function emailValidator(email) {
-    if (email.length > 254) { return false; }
-    if (/\.{2,}/.test(email)) { return false; }
-    if (!emailPattern.test(email)) { return false; }
-    const [local, domain] = email.split('@');
-    if (!local || !domain) return false;
-    if (local.length > 64) return false;
-    if (domain.startsWith('-') || domain.endsWith('-')) return false;
-    if (domain.split('.').some(part => !part || part.length > 63)) return false;
-    return true;
-}
-
-/**
  * @function validatepasswordConfirm
  * @memberof signup
  * @description Validate the password confirmation field.
  * @returns {Boolean}
  */
 function validatepasswordConfirm() {
-    if(!passwordIsOnInput || !passwordConfirmIsOnInput) { return; }
+    if(!passwordIsOnInput || !passwordConfirmIsOnInput) { return false; }
     const passwordElement = document.getElementById('password');
     const passwordConfirmElement = document.getElementById('passwordConfirm');
-    if (!passwordElement || !passwordConfirmElement) { return; }
-
-
+    if (!passwordElement || !passwordConfirmElement) { return false; }
     if(passwordConfirmElement.value.length <= 3){
         setInputFieldHasError(passwordConfirmElement.id, "login-confirm-error-text", "The password is too short.");
+        return false;
     } 
     else if (passwordElement.value === passwordConfirmElement.value) {
         setInputFieldHasNoError(passwordConfirmElement.id, "login-confirm-error-text");
         return true;
+    }
+    else if(!checkInputHasWhiteSpace(passwordConfirmElement.value)){
+        setInputFieldHasError(passwordConfirmElement.id, "login-confirm-error-text", "White spaces are not allowed.");
+        return false;
     }
     else {
         setInputFieldHasError(passwordConfirmElement.id, "login-confirm-error-text", "Your passwords don't match. Please try again.");
@@ -170,16 +154,24 @@ function validatepasswordConfirm() {
  * @returns {Boolean}
  */
 function validatepassword() {
-    if (!passwordIsOnInput) { return; }
+    if (!passwordIsOnInput) { return false; }
     const passwordElement = document.getElementById('password');
-    if (!passwordElement) { return; }
+    if (!passwordElement) { return false; }
     if (passwordElement.value.length <= 3) {
         setInputFieldHasError(passwordElement.id, "login-error-text", "The password is too short.");
+        return false;
+    }
+    else if(!checkInputHasWhiteSpace(passwordElement.value)){
+        setInputFieldHasError(passwordElement.id, "login-error-text", "White spaces are not allowed.");
         return false;
     } else {
         setInputFieldHasNoError(passwordElement.id, "login-error-text");
         return true;
     }
+}
+
+function checkInputHasWhiteSpace(inputValue){
+    return inputValue.length == inputValue.replace(/\s+/g, "").length;
 }
 
 /**
@@ -270,8 +262,8 @@ function setInputFieldHasError(elementID, errorTextID, message) {
  */
 async function signUpForm(event) {
     event.preventDefault();
-    let signUp = new FormData(event.target);
-    if (!checkAllRequiredField()) { return; }
+    if (!await checkAllRequiredField()) { return; }
+    const signUp = new FormData(event.target);
     const { firstname, lastname, initial } = splitNameToFirstLastAndInitial(signUp);
     const fb = new FirebaseDatabase();
     if (!fb.createNewSignedUser(null, firstname, lastname, signUp.get('password'), signUp.get('email'), null, initial, null)) { return; }
@@ -285,12 +277,12 @@ async function signUpForm(event) {
  * @param {MouseEvent} event
  * @returns {void}
  */
-function signupMouseUp(event) {
+async function signupMouseUp(event) {
     const button = document.getElementById('signup-button');
     if (!button) { return; }
     if (event.target == button) {
         leaveFocusOffAllFields();
-        button.disabled = !(checkAllRequiredField());
+        button.disabled = !(await checkAllRequiredField());
     }
 }
 
@@ -313,9 +305,9 @@ function leaveFocusOffAllFields() {
  * @description Check all required fields for validity.
  * @returns {boolean}
  */
-function checkAllRequiredField() {
+async function checkAllRequiredField() {
     const isNameVal = validatefullname();
-    const isMailVal = validateemail();
+    const isMailVal = await validateemail();
     const isPwdVal = validatepassword();
     const isPwdConfirmVal = validatepasswordConfirm();
     const isPolicyConfirmVal = validatePolicyAccept();
