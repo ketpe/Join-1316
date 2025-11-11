@@ -376,6 +376,9 @@
 
 .detail-c-view-email :last-child {
     color: var(--font-email-color);
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    padding-right: 48px;
 }
 
 .add-contact-safe-changes {

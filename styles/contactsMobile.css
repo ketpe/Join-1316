@@ -418,6 +418,10 @@
 
 .detail-c-view-email-mobile p:last-child {
     color: var(--font-email-color);
+    color: var(--font-email-color);
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    padding-right: 48px;
 }
 
 .mobile-menu-btn {
