@@ -1,7 +1,3 @@
-.nav-mobile-menu {
-    height: 80px
-}
-
 .contact-list-mobile {
     height: calc(100vh - 160px);
     width: 100%;
