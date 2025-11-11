@@ -44,7 +44,7 @@ const namePattern = /^[A-Za-zÄÖÜäöüß]{2,}(?:\s[A-Za-zÄÖÜäöüß]{2,})
  * @memberof addEditContacts
  * @type {RegExp}
  **/
-const phonePattern = /^\+?\d{4,15}$/;
+const phonePattern = /^(?:\+?\d{1,4})?(?:[ -]?\(?\d+\)?){1,6}$/;
 
 let nameIsOnInput = false;
 let emailIsOnInput = false;
@@ -427,9 +427,11 @@ async function checkEmailInDatabase(email) {
  */
 function contactPhoneValidation() {
     if (!phoneIsOnInput) { validatePhone = false; return; }
-    let phoneValue = document.getElementById('contact-phone').value;
-    const cleanPhoneValue = (phoneValue ?? "").trim();
-    if (cleanPhoneValue.length > 0 && phonePattern.test(cleanPhoneValue)) {
+    let phoneValue = document.getElementById('contact-phone');
+    let cleanPhoneValue = (phoneValue.value ?? "").trim();
+    cleanPhoneValue = cleanPhoneValue.replace(/\D/g, "");
+    phoneValue.value = cleanPhoneValue;
+    if (cleanPhoneValue.length >= 7 && cleanPhoneValue.length < 15 && phonePattern.test(cleanPhoneValue)) {
         showAndLeaveErrorMessage("contact-phone-required", false);
         showAndLeaveErrorBorder("contact-phone", false);
         validatePhone = true;
