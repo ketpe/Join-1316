@@ -34,97 +34,109 @@
     .join-h1-mobile{
         padding-top: 32px;
     }
+
+    .main-container{
+        overflow-x: hidden;
+    }
+
+
 }
 
 
-@media (max-width: 427px) {
+@media (max-width: 430px) {
+
+    .summary-content-mobile{
+        padding-left: 0;
+    }
+
 
     .nav-mobile-btn {
-        height: 67px;
-        width: 74px;
+        /* height: 67px;
+        width: 74px; */
     }
 
     .summary-header-mobile {
-        width: auto;
+        width: 100%;
+        padding-left: 36px;
     }
 
     .summary-user-mobile {
-        align-items: center;
+        /* align-items: center;
         justify-content: center;
         width: auto;
-        padding: 0;
+        padding: 0; */
     }
 
     .task-actions-mobile {
-        width: 100%;
+        /* width: 100%;
         height: auto;
         justify-content: center;
-        margin-bottom: 10px;
+        margin-bottom: 10px; */
+
+        justify-content: center;
+        gap: 28px;
     }
 
     .btn-task-mobile {
         padding: 19px 9px;
         width: 40%;
-        max-height: 80px;
+        /* max-height: 80px; */
         gap: 10px;
 
     }
 
     .btn-urgent-mobile {
         width: 91%;
-        max-height: 80px;
-        padding: 19px 9px;
+        /* padding: 19px 9px;
         gap: 8px;
-        margin-bottom: 0;
+        margin-bottom: 0; */
+        align-self: center;
     }
 
     .urgent-display {
-        gap: 13px;
+       /*  gap: 13px; */
     }
 
     .urgent-separator-mobile {
-        height: 50px;
+        /* height: 50px; */
     }
 
     .urgent-time-underline-mobile {
-        margin: 0;
+        /* margin: 0; */
     }
 
     .summary-tasks-mobile {
-        padding: 12px 12px;
-        height: 40%;
-        width: 40%;
-        flex-wrap: wrap;
+        gap: 6px;
     }
 
     .btn-summary-tasks-mobile {
         padding: 22px 0px;
-        max-height: 87px;
-        width: 87px;
+        /* max-height: 87px;
+        width: 87px; */
         gap: 3px;
     }
 
     .quantity-task-mobile {
-        font-size: calc(47px * 0.6);
+        /* font-size: calc(47px * 0.6); */
     }
 
     .number-of-Tasks-mobile {
-        font-size: calc(47px * 0.6);
+        /* font-size: calc(47px * 0.6); */
     }
 
     .todo-icon-mobile,
     .done-icon-mobile,
     .urgent-icon-mobile {
-        width: 30px;
-        height: 30px;
+        /* width: 30px;
+        height: 30px; */
     }
 
     .quantity-container{
-        gap: 5px;
+        /* gap: 5px; */
     }
 
     .greeting-mobile-name {
-        font-size: 37px
+        /* font-size: 37px */
     }
 }
 

@@ -220,12 +220,12 @@ function setHeightInMobileMode() {
 
     if(!header || !navbar || !summaryContent){return;}
 
-    height <= 845 ? summaryContent.classList.add('summary-section-mobile-scrollable') : summaryContent.classList.remove('summary-section-mobile-scrollable');
+    /* height <= 845 ? summaryContent.classList.add('summary-section-mobile-scrollable') : summaryContent.classList.remove('summary-section-mobile-scrollable');
     
     const headerHeight = header.offsetHeight;
     const navbarHeight = navbar.offsetHeight;
     const availableHeight = height - (headerHeight + navbarHeight + 20);
-    summaryContent.style.height = `${availableHeight}px`;
+    summaryContent.style.height = `${availableHeight}px`; */
 }
 
 
