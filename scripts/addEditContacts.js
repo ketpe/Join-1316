@@ -36,18 +36,19 @@ let contactTaskConnectionList = [];
  * @description Regular expression pattern for validating names (3-10 word characters for first and last name).
  * @memberof addEditContacts
  * @type {RegExp}
- */
+ **/
 const namePattern = /^[A-Za-zÄÖÜäöüß]{2,}(?:\s[A-Za-zÄÖÜäöüß]{2,})+$/;
+
 /**
- * @description Regular expression pattern for validating email addresses. This pattern ensures that the email address follows standard formatting rules, including the presence of an "@" symbol and a valid domain.
+ * @description Regular expression pattern for validating phone numbers (4-15 digits, optional leading +).
  * @memberof addEditContacts
  * @type {RegExp}
- */
-const emailPattern = /^(?!.*\.\.)(?!\.)(?!.*\.$)[A-Za-z0-9!#$%&'*+/=?^_`{|}~.-]+@(?:(?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,}$/i;
-
-
-
+ **/
 const phonePattern = /^\+?\d{4,15}$/;
+
+let nameIsOnInput = false;
+let emailIsOnInput = false;
+let phoneIsOnInput = false;
 
 /**
  * @function newContact
@@ -58,6 +59,7 @@ const phonePattern = /^\+?\d{4,15}$/;
  */
 async function newContact(event) {
     if (event) event.preventDefault();
+    await validateAllFields();
     if (!checkValidation()) return;
     const uid = getNewUid();
     const contact = createContactObject(uid);
@@ -160,6 +162,7 @@ function getInitials(firstname, lastname) {
  */
 async function editContact(event) {
     if (event) event.preventDefault();
+    if (!checkValidation()) return;
     const buttonID = event.target.childNodes[0].ownerDocument.activeElement.id;
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
@@ -173,16 +176,19 @@ async function editContact(event) {
 /**
  * @function contactSaveMouseUp
  * @memberof addEditContacts
- * @description Handle the mouse up event on the Save/Create button.
+ * @description Handle the mouse up event on the Save/Create button (Desktop & Mobile).
  * @param {MouseEvent} event
  * @returns {void}
  */
-function contactSaveMouseUp(event) {
-    const button = document.getElementById('btn-create-contact');
-    if (!button) { return; }
-    if (event.target == button) {
+async function contactSaveMouseUp(event) {
+    const desktopBtn = document.getElementById('btn-create-contact');
+    const mobileBtn = document.querySelector('.btn-create.btn-fill.btn-md.btn-md-auto-height'); // Mobile Button
+    // Prüfe, ob das Event-Target einer der beiden Buttons ist
+    if (event.target === desktopBtn || event.target === mobileBtn) {
         leaveFocusOffAllFields();
-        button.disabled = !(checkValidation());
+        const isValid = await checkValidation();
+        if (desktopBtn) desktopBtn.disabled = !isValid;
+        if (mobileBtn) mobileBtn.disabled = !isValid;
     }
 }
 
@@ -207,6 +213,7 @@ function leaveFocusOffAllFields() {
  */
 async function editContactMobile(event) {
     if (event) event.preventDefault();
+    if (!checkValidation()) return;
     const buttonID = event.target.childNodes[0].ownerDocument.activeElement.id;
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
@@ -362,6 +369,7 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
  * @returns {void}
  */
 function contactNameValidation() {
+    if (!nameIsOnInput) { validateName = false; return; }
     let nameValue = document.getElementById('contact-name').value;
     const cleanNameValue = (nameValue ?? "").trim();
     if (cleanNameValue.length > 0 && namePattern.test(cleanNameValue)) {
@@ -381,10 +389,11 @@ function contactNameValidation() {
  * @description - Validate the email field in the contact form. This function checks if the email field is filled out correctly and updates the validation status and error messages accordingly.
  * @returns {void}
  */
-function contactEmailValidation() {
+async function contactEmailValidation() {
+    if (!emailIsOnInput) { validateEmail = false; return; }
     let emailValue = document.getElementById('contact-email').value;
     const cleanEmailValue = (emailValue ?? "").trim();
-    if (cleanEmailValue.length > 0 && emailPattern.test(cleanEmailValue)) {
+    if (cleanEmailValue.length >= 3 && emailValidator(cleanEmailValue) && !await checkEmailInDatabase(cleanEmailValue)) {
         showAndLeaveErrorMessage("contact-email-required", false);
         showAndLeaveErrorBorder("contact-email", false);
         validateEmail = true;
@@ -395,6 +404,21 @@ function contactEmailValidation() {
     }
 }
 
+//REVIEW - Das müsste aus der signup.js(Z208) in die script
+/**
+ * @function checkEmailInDatabase
+ * @memberof signup
+ * @description Check if the email exists in the database.
+ * @param {string} email
+ * @returns {Promise<boolean>}
+ */
+async function checkEmailInDatabase(email) {
+    let fb = new FirebaseDatabase();
+    let found = await fb.getFirebaseLogin(() => fb.getDataByKey("email", email, "contacts"));
+    return found ? true : false;
+}
+
+
 /**
  * @function contactPhoneValidation
  * @memberof addEditContacts
@@ -402,6 +426,7 @@ function contactEmailValidation() {
  * @returns {void}
  */
 function contactPhoneValidation() {
+    if (!phoneIsOnInput) { validatePhone = false; return; }
     let phoneValue = document.getElementById('contact-phone').value;
     const cleanPhoneValue = (phoneValue ?? "").trim();
     if (cleanPhoneValue.length > 0 && phonePattern.test(cleanPhoneValue)) {
@@ -420,8 +445,17 @@ function contactPhoneValidation() {
  * @description - Check the validation status of the contact form fields. This function calls the individual validation functions for each field and returns true if all fields are valid; otherwise, it returns false.
  * @returns {boolean}
  */
-function checkValidation() {
+async function checkValidation() {
+    contactNameValidation();
+    await contactEmailValidation();
+    contactPhoneValidation();
     return (validateName && validateEmail && validatePhone) ? true : false;
+}
+
+async function validateAllFields() {
+    contactNameValidation();
+    await contactEmailValidation();
+    contactPhoneValidation();
 }
 
 /**
