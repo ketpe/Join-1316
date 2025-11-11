@@ -156,6 +156,7 @@
 }
 
 .board-task-title {
+    word-break: break-word;
 
     p {
         font-family: Inter;

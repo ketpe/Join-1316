@@ -46,16 +46,15 @@ async function loadHtmlComponentsForDesktop(height) {
     currentView = "desktop";
     clearBoardHtmlBody();
     await includeHtmlForNode("body", "boardDesktop.html");
-
     await Promise.all([
         includeHtml("navbar", "navbarDesktop.html"),
         includeHtml("header", "headerDesktop.html"),
-
     ]);
     showLoadingAnimation();
     await getBoardTasks();
     renderUserInitial();
     hideLoadingAnimation();
+    clampBoardTaskTitles();
 }
 
 /**
@@ -78,6 +77,7 @@ async function loadHtmlComponentsForMobile(height) {
     await getBoardTasks();
     renderUserInitial();
     hideLoadingAnimation();
+    clampBoardTaskTitles();
 }
 
 /**

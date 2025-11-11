@@ -104,3 +104,65 @@ function renderLimitedContactsTemplate(counter, total, assignedContactsTemplate)
     return assignedContactsTemplate;
 }
 
+/**
+ * @function getLineHeight
+ * @memberof boardUtils
+ * @description Gets the line height of an element.
+ * @param {HTMLElement} element - The element to get the line height from.
+ * @returns {number} - The line height of the element.
+ */
+function getLineHeight(element) {
+    const style = getComputedStyle(element);
+    let lh = parseFloat(style.lineHeight);
+    if (isNaN(lh)) lh = parseFloat(style.fontSize) * 1.2;
+    return lh;
+}
+
+/**
+ * @function getOriginalText
+ * @memberof boardUtils
+ * @description Gets the original text of an element.
+ * @param {HTMLElement} element - The element to get the original text from.
+ * @returns {string} - The original text of the element.
+ */
+function getOriginalText(element) {
+    let orig = element.getAttribute('data-original-text');
+    if (!orig) {
+        orig = element.textContent;
+        element.setAttribute('data-original-text', orig);
+    }
+    return orig;
+}
+
+/**
+ * @function clampTextToLines
+ * @memberof boardUtils
+ * @description Clamps the text of an element to a certain number of lines.
+ * @param {HTMLElement} element - The element whose text should be clamped.
+ * @param {number} lines - The number of lines to clamp to.
+ * @returns {void}
+ */
+function clampTextToLines(element, lines = 2) {
+    const lineHeight = getLineHeight(element);
+    const maxHeight = lineHeight * lines;
+    let orig = getOriginalText(element);
+    element.textContent = orig;
+    while (element.scrollHeight > maxHeight && element.textContent.length > 0) {
+        element.textContent = element.textContent.slice(0, -1);
+    }
+    if (element.textContent !== orig) {
+        element.textContent = element.textContent.trim().slice(0, -3) + '...';
+    }
+}
+/**
+ * @function clampBoardTaskTitles
+ * @memberof boardUtils
+ * @description Clamps the titles of all board tasks to two lines.
+ * @returns {void}
+ */
+function clampBoardTaskTitles() {
+    document.querySelectorAll('.board-task-title').forEach(title => {
+        const p = title.querySelector('p') || title;
+        clampTextToLines(p, 2);
+    });
+}
