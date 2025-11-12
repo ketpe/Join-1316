@@ -173,6 +173,7 @@
     font-style: Regular;
     font-size: 20px;
     vertical-align: middle;
+    max-width: 300px;
 }
 
 .contact-email {
@@ -183,6 +184,7 @@
     vertical-align: middle;
     color: var(--font-email-color);
     word-break: break-all;
+    max-width: 300px;
     /* overflow-wrap: anywhere; */
 }
 
@@ -242,7 +244,7 @@
 }
 
 .initial-avatar {
-    width: 120px;
+    min-width: 120px;
     height: 120px;
     display: flex;
     align-items: center;

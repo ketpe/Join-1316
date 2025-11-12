@@ -3,6 +3,7 @@
  * Ensures the due date is in the correct format (DD/MM/YYYY) and not in the past.
  * Provides feedback to the user through UI components.
  * @class DueDateCheck
+ * @namespace dueDateCheck
  * @property {string} dueDateValue - The due date value to validate.
  * @property {string} currentDueDate - The current due date value.
  * @property {Object} taskComponents - The task components for UI feedback.
@@ -17,7 +18,8 @@ class DueDateCheck {
     result = false;
 
     /**
-     * Creates an instance of the DueDateCheck class.
+     * @description Creates an instance of the DueDateCheck class.
+     * @memberof dueDateCheck
      * @param {string} dueDateValue - The due date value to validate.
      * @param {string} currentDueDate - The current due date value.
      * @param {Object} taskComponents - The task components for UI feedback.
@@ -33,7 +35,9 @@ class DueDateCheck {
     }
 
     /**
-     * Checks the validity on input of the provided date value.
+     * @description Checks the validity on input of the provided date value.
+     * @function checkTheDateValueOnInput
+     * @memberof dueDateCheck
      * @returns {boolean} True if the date is valid, false otherwise.
      */
     checkTheDateValueOnInput() {
@@ -55,7 +59,9 @@ class DueDateCheck {
     }
 
     /**
-     * Checks the validity after input or lost focus of the provided date value.
+     * @description Checks the validity after input or lost focus of the provided date value.
+     * @function checkTheDateAfterInput
+     * @memberof dueDateCheck
      * @returns {boolean} True if the date is valid, false otherwise.
      */
     checkTheDateAfterInput(){
@@ -66,7 +72,9 @@ class DueDateCheck {
     }
 
     /**
-     * Checks the validity after input or lost focus of the provided date value.
+     * @description Checks the validity after input or lost focus of the provided date value.
+     * @function checkTheDateValue
+     * @memberof dueDateCheck
      * @returns {boolean} True if the date is valid, false otherwise.
      */
     checkTheDateValue(){
@@ -86,12 +94,13 @@ class DueDateCheck {
 
 
     /**
-     * Check whether the date value conforms to the format. 
+     * @description Check whether the date value conforms to the format. 
      * Split the string into its individual date components. 
-     * Then attempt to convert them to numbers. 
      * Create a date from these numbers; this date cannot be in the past. 
      * Finally, the date components from the created date are compared with the components of the passed date. 
      * If they are equal, it returns true; otherwise, it returns false.
+     * @function checkIsCorrectDate
+     * @memberof dueDateCheck
      * @param {string} valueToCheck
      * @returns {boolean}
      */
@@ -106,13 +115,25 @@ class DueDateCheck {
         const dateAsParts = this.getDatePartsOfDateValue(matchDateWithRegex);
         const valueDate = new Date(dateAsParts[2], dateAsParts[1], dateAsParts[0]);
 
-        if (valueDate < Date.now()) { 
+        if (valueDate < this.getDateNow) { 
             this.dueDateSetError("Date cannot be in the past");
             return false; 
         }
 
         return (this.isTheDateKorrect(valueDate, dateAsParts));
 
+    }
+
+    /**
+     * @description Gets today's date with time set to 00:00:00.000.
+     * @getter getDateNow
+     * @memberof dueDateCheck
+     * @returns {Date} Today's date.
+     */
+    get getDateNow(){
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return today;
     }
 
     /**
@@ -131,7 +152,9 @@ class DueDateCheck {
 
 
     /**
-     * Convert date components from regex array to integers.
+     * @description Convert date components from regex array to integers.
+     * @function getDatePartsOfDateValue
+     * @memberof dueDateCheck
      * @param {RegExpMatchArray} matchDateWithRegex
      * @returns {number[]} day, month, year as numbers
      */
@@ -143,13 +166,15 @@ class DueDateCheck {
     }
 
     /**
-     * Check the character set of the date value string.
+     * @description Check the character set of the date value string.
      * This function checks if the date value string contains only valid characters (digits and slashes).
+     * @function checkDateCharSet
+     * @memberof dueDateCheck
      * @param {string} dateValueString 
      * @returns {void}
      */
     checkDateCharSet(dateValueString) {
-        if(this.currentInputValue.length >= dateValueString.length){return;}
+        if (this.currentInputValue.length >= dateValueString.length) { return; }
         const dateValueClean = dateValueString.replace(/\D/g, "");
         let constructedDate = "";
 
@@ -162,12 +187,13 @@ class DueDateCheck {
         }
 
         this.setConstructedDateIntoTheField(constructedDate);
-
-        
+       
     }
 
     /**
-     * Sets the constructed date into the display field and updates the dueDate property.
+     * @description Sets the constructed date into the display field and updates the dueDate property.
+     * @function setConstructedDateIntoTheField
+     * @memberof dueDateCheck
      * @param {string} cDate - The constructed date string to set.
      * @return {void}
      */
@@ -177,17 +203,11 @@ class DueDateCheck {
     }
     
     /**
-     * Test whether the character is a number.
-     * @param {string} n 
-     * @returns true or false
-     */
-    isNumeric(n) {
-        return !isNaN(parseFloat(n)) && isFinite(n);
-    }
-
-    /**
-     * Highlight the date field so the user can see that their entry was invalid.
+     * @description Highlight the date field so the user can see that their entry was invalid.
      * The date is not correct. Display an error message and highlight the date field.
+     * @function dueDateSetError
+     * @memberof dueDateCheck
+     * @param {string} errorMessage - The error message to display.
      * @return {void}
      */
     dueDateSetError(errorMessage = "") {
@@ -197,7 +217,10 @@ class DueDateCheck {
     }
 
     /**
-     * The date is correct. Display the date field with normal formatting.
+     * @description The date is correct. Display the date field with normal formatting.
+     * And clear any error messages.
+     * @function dueDateSetOk
+     * @memberof dueDateCheck
      * @return {void}
      */
     dueDateSetOk() {

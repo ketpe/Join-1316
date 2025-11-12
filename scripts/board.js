@@ -90,6 +90,7 @@ async function getBoardTaskWithLoadingAnimation() {
     showLoadingAnimation();
     await getBoardTasks();
     hideLoadingAnimation();
+    clampBoardTaskTitles();
 }
 
 /**
