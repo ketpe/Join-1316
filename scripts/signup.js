@@ -64,11 +64,11 @@ function signInFieldsOnInput(input) {
  * @param {string} inputFieldID
  * @returns {void}
  */
-function hideErrorTextOfInputField(inputFieldID){
+function hideErrorTextOfInputField(inputFieldID) {
     const errorTextElements = document.querySelectorAll('.login-signup-error-text-container p');
-    if(!errorTextElements.length){return;}
+    if (!errorTextElements.length) { return; }
     const errorTextElement = Array.from(errorTextElements).find(x => x.getAttribute('data-input') == inputFieldID);
-    if(!errorTextElement){return;}
+    if (!errorTextElement) { return; }
     errorTextElement.classList.add('d-none');
 }
 
@@ -83,14 +83,14 @@ function validatefullname() {
     const nameElement = document.getElementById('fullname');
     if (!nameElement) { return false; }
     const cleanNameValue = (nameElement.value ?? "").trim();
-    if(cleanNameValue.length >= 55){
-        setInputFieldHasError(nameElement.id, "name-error-text",  "Your Input is too long.");
+    if (cleanNameValue.length >= 55) {
+        setInputFieldHasError(nameElement.id, "name-error-text", "Your Input is too long.");
         return false;
     } else if (cleanNameValue.length >= 3 && namePattern.test(cleanNameValue)) {
         setInputFieldHasNoError(nameElement.id, "name-error-text");
         return true;
     } else {
-        setInputFieldHasError(nameElement.id, "name-error-text",  "First and last name are required.");
+        setInputFieldHasError(nameElement.id, "name-error-text", "First and last name are required.");
         return false;
     }
 }
@@ -125,19 +125,19 @@ async function validateemail() {
  * @returns {Boolean}
  */
 function validatepasswordConfirm() {
-    if(!passwordIsOnInput || !passwordConfirmIsOnInput) { return false; }
+    if (!passwordIsOnInput || !passwordConfirmIsOnInput) { return false; }
     const passwordElement = document.getElementById('password');
     const passwordConfirmElement = document.getElementById('passwordConfirm');
     if (!passwordElement || !passwordConfirmElement) { return false; }
-    if(passwordConfirmElement.value.length <= 3){
+    if (passwordConfirmElement.value.length <= 3) {
         setInputFieldHasError(passwordConfirmElement.id, "login-confirm-error-text", "The password is too short.");
         return false;
-    } 
+    }
     else if (passwordElement.value === passwordConfirmElement.value) {
         setInputFieldHasNoError(passwordConfirmElement.id, "login-confirm-error-text");
         return true;
     }
-    else if(!checkInputHasWhiteSpace(passwordConfirmElement.value)){
+    else if (!checkInputHasWhiteSpace(passwordConfirmElement.value)) {
         setInputFieldHasError(passwordConfirmElement.id, "login-confirm-error-text", "White spaces are not allowed.");
         return false;
     }
@@ -161,7 +161,7 @@ function validatepassword() {
         setInputFieldHasError(passwordElement.id, "login-error-text", "The password is too short.");
         return false;
     }
-    else if(!checkInputHasWhiteSpace(passwordElement.value)){
+    else if (!checkInputHasWhiteSpace(passwordElement.value)) {
         setInputFieldHasError(passwordElement.id, "login-error-text", "White spaces are not allowed.");
         return false;
     } else {
@@ -170,7 +170,7 @@ function validatepassword() {
     }
 }
 
-function checkInputHasWhiteSpace(inputValue){
+function checkInputHasWhiteSpace(inputValue) {
     return inputValue.length == inputValue.replace(/\s+/g, "").length;
 }
 
@@ -283,7 +283,21 @@ async function signupMouseUp(event) {
     if (event.target == button) {
         leaveFocusOffAllFields();
         button.disabled = !(await checkAllRequiredField());
+        resetAllInputs();
     }
+}
+
+/**
+ * @function resetAllInputs
+ * @memberof signup
+ * @description Reset all input field flags.
+ * @return {void}
+ */
+function resetAllInputs() {
+    nameIsOnInput = false;
+    emailIsOnInput = false;
+    passwordIsOnInput = false;
+    passwordConfirmIsOnInput = false;
 }
 
 /**
