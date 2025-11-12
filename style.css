@@ -129,6 +129,8 @@ button {
 .join-h1-dialog {
     margin-block-start: 0;
     margin-block-end: 0;
+    word-break: break-all;
+    overflow-wrap: break-word;
 }
 
 .join-h1-dialog-sm {
