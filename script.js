@@ -328,3 +328,16 @@ function emailValidator(email) {
     if (domain.split('.').some(part => !part || part.length > 63)) return false;
     return true;
 }
+
+/**
+ * @function checkEmailInDatabase
+ * @memberof signup
+ * @description Check if the email exists in the database.
+ * @param {string} email
+ * @returns {Promise<boolean>}
+ */
+async function checkEmailInDatabase(email) {
+    let fb = new FirebaseDatabase();
+    let found = await fb.getFirebaseLogin(() => fb.getDataByKey("email", email, "contacts"));
+    return found ? true : false;
+}

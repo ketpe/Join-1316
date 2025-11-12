@@ -50,6 +50,8 @@ let nameIsOnInput = false;
 let emailIsOnInput = false;
 let phoneIsOnInput = false;
 
+let currentContactEmail = "";
+
 /**
  * @function newContact
  * @memberof addEditContacts
@@ -59,8 +61,7 @@ let phoneIsOnInput = false;
  */
 async function newContact(event) {
     if (event) event.preventDefault();
-    await validateAllFields();
-    if (!checkValidation()) return;
+    if (!validateAllFields()) return;
     const uid = getNewUid();
     const contact = createContactObject(uid);
     const fb = new FirebaseDatabase();
@@ -162,7 +163,7 @@ function getInitials(firstname, lastname) {
  */
 async function editContact(event) {
     if (event) event.preventDefault();
-    if (!checkValidation()) return;
+    if (!validateAllFields()) return;
     const buttonID = event.target.childNodes[0].ownerDocument.activeElement.id;
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
@@ -171,7 +172,9 @@ async function editContact(event) {
     clearActiveContactClass();
     renderContacts();
     showSavedToast('edit');
+    resetAllVariables();
 }
+
 
 /**
  * @function contactSaveMouseUp
@@ -182,13 +185,13 @@ async function editContact(event) {
  */
 async function contactSaveMouseUp(event) {
     const desktopBtn = document.getElementById('btn-create-contact');
-    const mobileBtn = document.querySelector('.btn-create.btn-fill.btn-md.btn-md-auto-height'); // Mobile Button
-    // Prüfe, ob das Event-Target einer der beiden Buttons ist
+    const mobileBtn = document.querySelector('.btn-create.btn-fill.btn-md.btn-md-auto-height'); 
     if (event.target === desktopBtn || event.target === mobileBtn) {
         leaveFocusOffAllFields();
         const isValid = await checkValidation();
         if (desktopBtn) desktopBtn.disabled = !isValid;
         if (mobileBtn) mobileBtn.disabled = !isValid;
+        //resetAllVariables();
     }
 }
 
@@ -223,6 +226,7 @@ async function editContactMobile(event) {
     if (typeof openContactDetailMobile === "function") {
         openContactDetailMobile(updatedContact);
     }
+    resetAllVariables();
 }
 
 /**
@@ -369,7 +373,6 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
  * @returns {void}
  */
 function contactNameValidation() {
-    if (!nameIsOnInput) { validateName = false; return; }
     let nameValue = document.getElementById('contact-name').value;
     const cleanNameValue = (nameValue ?? "").trim();
     if (cleanNameValue.length > 0 && namePattern.test(cleanNameValue)) {
@@ -390,34 +393,37 @@ function contactNameValidation() {
  * @returns {void}
  */
 async function contactEmailValidation() {
-    if (!emailIsOnInput) { validateEmail = false; return; }
     let emailValue = document.getElementById('contact-email').value;
     const cleanEmailValue = (emailValue ?? "").trim();
-    if (cleanEmailValue.length >= 3 && emailValidator(cleanEmailValue) && !await checkEmailInDatabase(cleanEmailValue)) {
-        showAndLeaveErrorMessage("contact-email-required", false);
-        showAndLeaveErrorBorder("contact-email", false);
-        validateEmail = true;
+    if (cleanEmailValue === currentContactEmail) {
+        setConatctEmailIsOk();
+    } else if (cleanEmailValue.length >= 3 && emailValidator(cleanEmailValue) && !await checkEmailInDatabase(cleanEmailValue)) {
+        setConatctEmailIsOk();
     } else {
-        showAndLeaveErrorMessage("contact-email-required", true);
-        showAndLeaveErrorBorder("contact-email", true);
-        validateEmail = false;
+        setConatctEmailIsInvalid();
     }
 }
 
-//REVIEW - Das müsste aus der signup.js(Z208) in die script
-/**
- * @function checkEmailInDatabase
- * @memberof signup
- * @description Check if the email exists in the database.
- * @param {string} email
- * @returns {Promise<boolean>}
- */
-async function checkEmailInDatabase(email) {
-    let fb = new FirebaseDatabase();
-    let found = await fb.getFirebaseLogin(() => fb.getDataByKey("email", email, "contacts"));
-    return found ? true : false;
+function setConatctEmailIsOk() {
+    showAndLeaveErrorMessage("contact-email-required", false);
+    showAndLeaveErrorBorder("contact-email", false);
+    validateEmail = true;
 }
 
+function setConatctEmailIsInvalid() {
+    showAndLeaveErrorMessage("contact-email-required", true);
+    showAndLeaveErrorBorder("contact-email", true);
+    validateEmail = false;
+}
+
+function resetAllVariables(){
+    validateName = false;
+    validateEmail = false;
+    validatePhone = false;
+    nameIsOnInput = false;
+    emailIsOnInput = false;
+    phoneIsOnInput = false;
+}
 
 /**
  * @function contactPhoneValidation
@@ -426,7 +432,6 @@ async function checkEmailInDatabase(email) {
  * @returns {void}
  */
 function contactPhoneValidation() {
-    if (!phoneIsOnInput) { validatePhone = false; return; }
     let phoneValue = document.getElementById('contact-phone');
     let cleanPhoneValue = (phoneValue.value ?? "").trim();
     cleanPhoneValue = cleanPhoneValue.replace(/\D/g, "");
@@ -448,16 +453,26 @@ function contactPhoneValidation() {
  * @returns {boolean}
  */
 async function checkValidation() {
-    contactNameValidation();
-    await contactEmailValidation();
-    contactPhoneValidation();
-    return (validateName && validateEmail && validatePhone) ? true : false;
+    if(nameIsOnInput){
+        contactNameValidation();
+        if(!validateName){return false;}
+    }
+    if(emailIsOnInput){
+        await contactEmailValidation();
+        if(!validateEmail){return false;}
+    }
+    if(phoneIsOnInput){
+        contactPhoneValidation();
+        if(!validatePhone){return false;}
+    }
+
+    return currentContactEmail.length > 0;
 }
 
+//[nameValid, mailValid, phoneValid]
+
 async function validateAllFields() {
-    contactNameValidation();
-    await contactEmailValidation();
-    contactPhoneValidation();
+    return validateName && validateEmail && validatePhone;
 }
 
 /**
@@ -491,6 +506,7 @@ function renderEditContactIntoDialog(id) {
     const fb = new FirebaseDatabase();
     includeHtml("add-contact-dialog", "editContact.html").then(() => {
         fb.getDataByKey("id", id, "contacts").then(contact => {
+            currentContactEmail = contact.email;
             document.getElementById('contact-name').value = `${contact.firstname} ${contact.lastname}`;
             document.getElementById('contact-email').value = contact.email;
             document.getElementById('contact-phone').value = contact.phone;

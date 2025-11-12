@@ -206,19 +206,6 @@ function splitNameToFirstLastAndInitial(signUp) {
 }
 
 /**
- * @function checkEmailInDatabase
- * @memberof signup
- * @description Check if the email exists in the database.
- * @param {string} email
- * @returns {Promise<boolean>}
- */
-async function checkEmailInDatabase(email) {
-    let fb = new FirebaseDatabase();
-    let found = await fb.getFirebaseLogin(() => fb.getDataByKey("email", email, "contacts"));
-    return found ? true : false;
-}
-
-/**
  * @function setInputFieldHasNoError
  * @memberof signup
  * @description Set the input field to a valid state (no error).
