@@ -46,10 +46,30 @@ const namePattern = /^[A-Za-zÄÖÜäöüß]{2,}(?:\s[A-Za-zÄÖÜäöüß]{2,})
  **/
 const phonePattern = /^(?:\+?\d{1,4})?(?:[ -]?\(?\d+\)?){1,6}$/;
 
+/**
+ * @description Indicates if the name input field is currently being edited.
+ * @memberof addEditContacts
+ * @type {boolean}
+ */
 let nameIsOnInput = false;
+/**
+ * @description Indicates if the name input field is currently being edited.
+ * @memberof addEditContacts
+ * @type {boolean}
+ */
 let emailIsOnInput = false;
+/**
+ * @description Indicates if the phone input field is currently being edited.
+ * @memberof addEditContacts
+ * @type {boolean}
+ */
 let phoneIsOnInput = false;
 
+/**
+ * @description Current contact email for validation purposes.
+ * @memberof addEditContacts
+ * @type {string}
+ */
 let currentContactEmail = "";
 
 /**
@@ -207,6 +227,7 @@ function leaveFocusOffAllFields() {
         input.blur();
     });
 }
+
 /**
  * @function editContactMobile
  * @memberof addEditContacts
@@ -395,36 +416,46 @@ function contactNameValidation() {
 async function contactEmailValidation() {
     let emailValue = document.getElementById('contact-email').value;
     const cleanEmailValue = (emailValue ?? "").trim();
-
-    // Prüfen, ob currentContactEmail leer ist oder sich von der Eingabe unterscheidet
     if (!currentContactEmail || cleanEmailValue !== currentContactEmail) {
-        if (
-            cleanEmailValue.length >= 3 &&
-            emailValidator(cleanEmailValue) &&
-            !await checkEmailInDatabase(cleanEmailValue)
-        ) {
+        if (cleanEmailValue.length >= 3 && emailValidator(cleanEmailValue) && !await checkEmailInDatabase(cleanEmailValue)) {
             setConatctEmailIsOk();
         } else {
             setConatctEmailIsInvalid();
         }
     } else {
-        // Wenn currentContactEmail gesetzt ist und gleich der Eingabe, ist alles ok
         setConatctEmailIsOk();
     }
 }
 
+/**
+ * @function setConatctEmailIsOk
+ * @memberof addEditContacts
+ * @description - Set the contact email validation status to OK. This function updates the validation status and hides any error messages related to the email field.
+ * @returns {void}
+ */
 function setConatctEmailIsOk() {
     showAndLeaveErrorMessage("contact-email-required", false);
     showAndLeaveErrorBorder("contact-email", false);
     validateEmail = true;
 }
 
+/**
+ * @function setConatctEmailIsInvalid
+ * @memberof addEditContacts
+ * @description - Set the contact email validation status to invalid. This function updates the validation status and shows error messages related to the email field.
+ * @returns {void}
+ */
 function setConatctEmailIsInvalid() {
     showAndLeaveErrorMessage("contact-email-required", true);
     showAndLeaveErrorBorder("contact-email", true);
     validateEmail = false;
 }
 
+/**
+ * @function checkEmailInDatabase
+ * @memberof addEditContacts
+ * @description - Check if the email already exists in the database. This function queries the database to see if the provided email is already associated with an existing contact.
+ */
 function resetAllVariables() {
     validateName = false;
     validateEmail = false;
@@ -455,6 +486,7 @@ function contactPhoneValidation() {
         validatePhone = false;
     }
 }
+
 /**
  * @function checkValidation
  * @memberof addEditContacts
