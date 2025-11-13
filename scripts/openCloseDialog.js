@@ -4,8 +4,6 @@
  * @description Opens and closes dialogs with specific content rendering functions.
  */
 
-
-
 /**
  * @function openDialog
  * @memberof openCloseDialog
