@@ -270,7 +270,7 @@ async function signupMouseUp(event) {
     if (event.target == button) {
         leaveFocusOffAllFields();
         button.disabled = !(await checkAllRequiredField());
-        resetAllInputs();
+        // resetAllInputs();
     }
 }
 
