@@ -64,18 +64,41 @@ let contactTaskConnectionList = [];
  * @description Regular expression pattern for validating names (3-10 word characters for first and last name).
  * @memberof addEditContacts
  * @type {RegExp}
- */
+ **/
 const namePattern = /^[A-Za-zÄÖÜäöüß]{2,}(?:\s[A-Za-zÄÖÜäöüß]{2,})+$/;
+
 /**
- * @description Regular expression pattern for validating email addresses. This pattern ensures that the email address follows standard formatting rules, including the presence of an "@" symbol and a valid domain.
+ * @description Regular expression pattern for validating phone numbers (4-15 digits, optional leading +).
  * @memberof addEditContacts
  * @type {RegExp}
+ **/
+const phonePattern = /^(?:\+?\d{1,4})?(?:[ -]?\(?\d+\)?){1,6}$/;
+
+/**
+ * @description Indicates if the name input field is currently being edited.
+ * @memberof addEditContacts
+ * @type {boolean}
  */
-const emailPattern = /^(?!.*\.\.)(?!\.)(?!.*\.$)[A-Za-z0-9!#$%&amp;'*+/=?^_`{|}~.-]+@(?:(?!-)[A-Za-z0-9-]{1,63}(?&lt;!-)\.)+[A-Za-z]{2,}$/i;
+let nameIsOnInput = false;
+/**
+ * @description Indicates if the name input field is currently being edited.
+ * @memberof addEditContacts
+ * @type {boolean}
+ */
+let emailIsOnInput = false;
+/**
+ * @description Indicates if the phone input field is currently being edited.
+ * @memberof addEditContacts
+ * @type {boolean}
+ */
+let phoneIsOnInput = false;
 
-
-
-const phonePattern = /^\+?\d{4,15}$/;
+/**
+ * @description Current contact email for validation purposes.
+ * @memberof addEditContacts
+ * @type {string}
+ */
+let currentContactEmail = "";
 
 /**
  * @function newContact
@@ -86,7 +109,7 @@ const phonePattern = /^\+?\d{4,15}$/;
  */
 async function newContact(event) {
     if (event) event.preventDefault();
-    if (!checkValidation()) return;
+    if (!validateAllFields()) return;
     const uid = getNewUid();
     const contact = createContactObject(uid);
     const fb = new FirebaseDatabase();
@@ -188,29 +211,35 @@ function getInitials(firstname, lastname) {
  */
 async function editContact(event) {
     if (event) event.preventDefault();
-    const buttonID = event.target.childNodes[0].ownerDocument.activeElement.id;
+    if (!validateAllFields()) return;
+    const contactID = document.querySelector('#btn-create-contact').getAttribute('data-id');
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
-    const data = await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${buttonID}`, contact));
+    await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${contactID}`, contact));
     closeDialogByEvent(event, 'add-contact-dialog');
     clearActiveContactClass();
     renderContacts();
     showSavedToast('edit');
+    resetAllVariables();
 }
+
 
 /**
  * @function contactSaveMouseUp
  * @memberof addEditContacts
- * @description Handle the mouse up event on the Save/Create button.
+ * @description Handle the mouse up event on the Save/Create button (Desktop &amp; Mobile).
  * @param {MouseEvent} event
  * @returns {void}
  */
-function contactSaveMouseUp(event) {
-    const button = document.getElementById('btn-create-contact');
-    if (!button) { return; }
-    if (event.target == button) {
+async function contactSaveMouseUp(event) {
+    const Btn = document.getElementById('btn-create-contact');
+    // const mobileBtn = document.querySelector('.btn-create.btn-fill.btn-md.btn-md-auto-height');
+    if (event.target === Btn) {
         leaveFocusOffAllFields();
-        button.disabled = !(checkValidation());
+        let isValid = await checkValidation();
+        if (Btn) Btn.disabled = !isValid;
+        // if (mobileBtn) mobileBtn.disabled = !isValid;
+        //resetAllVariables();
     }
 }
 
@@ -226,6 +255,7 @@ function leaveFocusOffAllFields() {
         input.blur();
     });
 }
+
 /**
  * @function editContactMobile
  * @memberof addEditContacts
@@ -235,15 +265,17 @@ function leaveFocusOffAllFields() {
  */
 async function editContactMobile(event) {
     if (event) event.preventDefault();
-    const buttonID = event.target.childNodes[0].ownerDocument.activeElement.id;
+    if (!validateAllFields()) return;
+    const contactID = document.querySelector('#btn-create-contact').getAttribute('data-id');
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
-    const data = await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${buttonID}`, contact));
+    await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${contactID}`, contact));
     closeDialogByEvent(event, 'add-contact-dialog-mobile');
-    const updatedContact = await fb.getDataByKey("id", buttonID, "contacts");
+    const updatedContact = await fb.getDataByKey("id", contactID, "contacts");
     if (typeof openContactDetailMobile === "function") {
         openContactDetailMobile(updatedContact);
     }
+    resetAllVariables();
 }
 
 /**
@@ -275,9 +307,9 @@ function createUpdateContactObject() {
 async function onDeleteContact(event, element) {
     if (event) event.preventDefault();
 
-    if (!element.id || element.id.length == 0) { return; }
+    if (!element.getAttribute('data-id') || element.getAttribute('data-id').length == 0) { return; }
 
-    const result = await startDeleteOneContact(element.id);
+    const result = await startDeleteOneContact(element.getAttribute('data-id'));
     if (result) {
         clearActiveContactClass();
         renderContacts();
@@ -390,9 +422,10 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
  * @returns {void}
  */
 function contactNameValidation() {
+    if (!nameIsOnInput) { return; }
     let nameValue = document.getElementById('contact-name').value;
     const cleanNameValue = (nameValue ?? "").trim();
-    if (cleanNameValue.length > 0 &amp;&amp; namePattern.test(cleanNameValue)) {
+    if (cleanNameValue.length >= 3 &amp;&amp; namePattern.test(cleanNameValue) &amp;&amp; cleanNameValue.length &lt;= 55) {
         showAndLeaveErrorMessage("contact-name-required", false);
         showAndLeaveErrorBorder("contact-name", false);
         validateName = true;
@@ -409,18 +442,56 @@ function contactNameValidation() {
  * @description - Validate the email field in the contact form. This function checks if the email field is filled out correctly and updates the validation status and error messages accordingly.
  * @returns {void}
  */
-function contactEmailValidation() {
+async function contactEmailValidation() {
     let emailValue = document.getElementById('contact-email').value;
     const cleanEmailValue = (emailValue ?? "").trim();
-    if (cleanEmailValue.length > 0 &amp;&amp; emailPattern.test(cleanEmailValue)) {
-        showAndLeaveErrorMessage("contact-email-required", false);
-        showAndLeaveErrorBorder("contact-email", false);
-        validateEmail = true;
+    if (!currentContactEmail || cleanEmailValue !== currentContactEmail) {
+        if (cleanEmailValue.length >= 3 &amp;&amp; emailValidator(cleanEmailValue) &amp;&amp; !await checkEmailInDatabase(cleanEmailValue)) {
+            setConatctEmailIsOk();
+        } else {
+            setConatctEmailIsInvalid();
+        }
     } else {
-        showAndLeaveErrorMessage("contact-email-required", true);
-        showAndLeaveErrorBorder("contact-email", true);
-        validateEmail = false;
+        setConatctEmailIsOk();
     }
+}
+
+/**
+ * @function setConatctEmailIsOk
+ * @memberof addEditContacts
+ * @description - Set the contact email validation status to OK. This function updates the validation status and hides any error messages related to the email field.
+ * @returns {void}
+ */
+function setConatctEmailIsOk() {
+    showAndLeaveErrorMessage("contact-email-required", false);
+    showAndLeaveErrorBorder("contact-email", false);
+    validateEmail = true;
+}
+
+/**
+ * @function setConatctEmailIsInvalid
+ * @memberof addEditContacts
+ * @description - Set the contact email validation status to invalid. This function updates the validation status and shows error messages related to the email field.
+ * @returns {void}
+ */
+function setConatctEmailIsInvalid() {
+    showAndLeaveErrorMessage("contact-email-required", true);
+    showAndLeaveErrorBorder("contact-email", true);
+    validateEmail = false;
+}
+
+/**
+ * @function checkEmailInDatabase
+ * @memberof addEditContacts
+ * @description - Check if the email already exists in the database. This function queries the database to see if the provided email is already associated with an existing contact.
+ */
+function resetAllVariables() {
+    validateName = false;
+    validateEmail = false;
+    validatePhone = false;
+    nameIsOnInput = false;
+    emailIsOnInput = false;
+    phoneIsOnInput = false;
 }
 
 /**
@@ -430,9 +501,12 @@ function contactEmailValidation() {
  * @returns {void}
  */
 function contactPhoneValidation() {
-    let phoneValue = document.getElementById('contact-phone').value;
-    const cleanPhoneValue = (phoneValue ?? "").trim();
-    if (cleanPhoneValue.length > 0 &amp;&amp; phonePattern.test(cleanPhoneValue)) {
+    if (!phoneIsOnInput) { return; }
+    let phoneValue = document.getElementById('contact-phone');
+    let cleanPhoneValue = (phoneValue.value ?? "").trim();
+    cleanPhoneValue = cleanPhoneValue.replace(/\D/g, "");
+    phoneValue.value = cleanPhoneValue;
+    if (cleanPhoneValue.length >= 7 &amp;&amp; cleanPhoneValue.length &lt; 15 &amp;&amp; phonePattern.test(cleanPhoneValue)) {
         showAndLeaveErrorMessage("contact-phone-required", false);
         showAndLeaveErrorBorder("contact-phone", false);
         validatePhone = true;
@@ -442,14 +516,51 @@ function contactPhoneValidation() {
         validatePhone = false;
     }
 }
+
 /**
  * @function checkValidation
  * @memberof addEditContacts
- * @description - Check the validation status of the contact form fields. This function calls the individual validation functions for each field and returns true if all fields are valid; otherwise, it returns false.
+ * @description - Check the validation status of all contact form fields. This function validates each field based on whether it has been modified and returns the overall validation status.
  * @returns {boolean}
  */
-function checkValidation() {
-    return (validateName &amp;&amp; validateEmail &amp;&amp; validatePhone) ? true : false;
+async function checkValidation() {
+    let { cVName, cVEmail, cVPhone } = getfieldCheckVariables();
+    if (nameIsOnInput) {
+        contactNameValidation();
+        cVName = currentContactEmail === "" ? validateName : !!validateName;
+    }
+    if (emailIsOnInput) {
+        await contactEmailValidation();
+        cVEmail = currentContactEmail === "" ? validateEmail : !!validateEmail;
+    }
+    if (phoneIsOnInput) {
+        contactPhoneValidation();
+        cVPhone = currentContactEmail === "" ? validatePhone : !!validatePhone;
+    }
+    return cVName &amp;&amp; cVEmail &amp;&amp; cVPhone &amp;&amp; currentContactEmail !== "";
+}
+
+/**
+ * @function getfieldCheckVariables
+ * @memberof addEditContacts
+ * @description - Get the field check variables for validation. This function determines whether each field should be validated based on the current contact email state.
+ * @returns {Object} - An object containing the validation status for name, email, and phone fields.
+ */
+function getfieldCheckVariables() {
+    let cVName = currentContactEmail === "" ? false : true;
+    let cVEmail = currentContactEmail === "" ? false : true;
+    let cVPhone = currentContactEmail === "" ? false : true;
+    return { cVName, cVEmail, cVPhone };
+}
+
+/**
+ * @function validateAllFields
+ * @memberof addEditContacts
+ * @description - Validate all contact form fields. This function checks the validation status of each field and returns true if all fields are valid.
+ * @returns {boolean} - True if all fields are valid, false otherwise.
+ */
+async function validateAllFields() {
+    return validateName &amp;&amp; validateEmail &amp;&amp; validatePhone;
 }
 
 /**
@@ -457,6 +568,7 @@ function checkValidation() {
  * @memberof addEditContacts
  * @description - Clear error messages for the specified input field. This function is called on input events to remove error messages and styles when the user starts typing.
  * @param {*} inputId - The ID of the input field to clear error messages for.
+ * @return {void}
  */
 function clearErrorMessagesOnInput(inputId) {
     if (inputId === 'contact-name') {
@@ -472,6 +584,31 @@ function clearErrorMessagesOnInput(inputId) {
         showAndLeaveErrorBorder("contact-phone", false);
     }
 }
+
+/**
+ * @function renderAddContactIntoDialog
+ * @memberof openCloseDialog
+ * @description Renders the add contact form into the dialog
+ * @return {void}
+ */
+async function renderAddContactIntoDialog() {
+    document.getElementById('add-contact-dialog').innerHTML = '';
+    await includeHtml("add-contact-dialog", "addContact.html");
+    resetAllVariables();
+}
+
+/**
+ * @function renderAddContactIntoDialogMobile
+ * @memberof openCloseDialog
+ * @description Renders the add contact form into the dialog for mobile devices
+ * @return {void}
+ */
+async function renderAddContactIntoDialogMobile() {
+    document.getElementById('add-contact-dialog-mobile').innerHTML = '';
+    await includeHtml("add-contact-dialog-mobile", "addContactMobile.html");
+    resetAllVariables();
+}
+
 /**
  * @function renderEditContactIntoDialog
  * @memberof addEditContacts
@@ -480,16 +617,18 @@ function clearErrorMessagesOnInput(inputId) {
  * @return {void}
  */
 function renderEditContactIntoDialog(id) {
+    resetAllVariables();
     const fb = new FirebaseDatabase();
     includeHtml("add-contact-dialog", "editContact.html").then(() => {
         fb.getDataByKey("id", id, "contacts").then(contact => {
+            currentContactEmail = contact.email;
             document.getElementById('contact-name').value = `${contact.firstname} ${contact.lastname}`;
             document.getElementById('contact-email').value = contact.email;
             document.getElementById('contact-phone').value = contact.phone;
             document.getElementById('initial-avatar').classList.add(contact.initialColor);
             document.querySelector('#initial-avatar .detail-view-initials').innerText = contact.initial;
-            document.querySelector('.btn-create').id = contact.id;
-            document.querySelector('.btn-clear-cancel').id = contact.id;
+            document.querySelector('.btn-create').setAttribute('data-id', contact.id);
+            document.querySelector('.btn-clear-cancel').setAttribute('data-id', contact.id);
         });
     });
 }
@@ -502,17 +641,19 @@ function renderEditContactIntoDialog(id) {
  * @return {void}
  */
 function renderEditContactIntoDialogMobile(id) {
+    resetAllVariables();
     closeDialog('btns-action-menu-mobile');
     const fb = new FirebaseDatabase();
     includeHtml("add-contact-dialog-mobile", "editContactMobile.html").then(() => {
         fb.getDataByKey("id", id, "contacts").then(contact => {
+            currentContactEmail = contact.email;
             document.getElementById('contact-name').value = `${contact.firstname} ${contact.lastname}`;
             document.getElementById('contact-email').value = contact.email;
             document.getElementById('contact-phone').value = contact.phone;
             document.getElementById('initial-avatar').classList.add(contact.initialColor);
             document.querySelector('#initial-avatar .detail-view-initials').innerText = contact.initial;
-            document.querySelector('.btn-create').id = contact.id;
-            document.querySelector('.btn-clear-cancel-mobile').id = contact.id;
+            document.querySelector('.btn-create').setAttribute('data-id', contact.id);
+            document.querySelector('.btn-clear-cancel-mobile').setAttribute('data-id', contact.id);
         });
     });
 }
@@ -576,13 +717,13 @@ async function showSavedToast(actionType) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardDatabase.html">boardDatabase</a></li><li><a href="boardDetailView.html">boardDetailView</a></li><li><a href="boardSearch.html">boardSearch</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="boardTasks.html">boardTasks</a></li><li><a href="boardUtils.html">boardUtils</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li><li><a href="taskComponents_.html">taskComponents</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskCache.html">AddTaskCache</a></li><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Mixins</h3><ul><li><a href="taskComponents.categories.html">categories</a></li><li><a href="taskComponents.contacts.html">contacts</a></li><li><a href="taskComponents.create.html">create</a></li><li><a href="taskComponents.layout.html">layout</a></li><li><a href="taskComponents.priority.html">priority</a></li><li><a href="taskComponents.subtasks.html">subtasks</a></li><li><a href="taskComponents.validation.html">validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardDatabase.html">boardDatabase</a></li><li><a href="boardDetailView.html">boardDetailView</a></li><li><a href="boardSearch.html">boardSearch</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="boardTasks.html">boardTasks</a></li><li><a href="boardUtils.html">boardUtils</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="dueDateCheck_.html">dueDateCheck</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li><li><a href="taskComponents_.html">taskComponents</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskCache.html">AddTaskCache</a></li><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li><li><a href="dueDateCheck.DueDateCheck.html">DueDateCheck</a></li></ul><h3>Mixins</h3><ul><li><a href="taskComponents.categories.html">categories</a></li><li><a href="taskComponents.contacts.html">contacts</a></li><li><a href="taskComponents.create.html">create</a></li><li><a href="taskComponents.layout.html">layout</a></li><li><a href="taskComponents.priority.html">priority</a></li><li><a href="taskComponents.subtasks.html">subtasks</a></li><li><a href="taskComponents.validation.html">validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Nov 10 2025 20:21:08 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Nov 13 2025 19:35:00 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

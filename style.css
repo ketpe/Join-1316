@@ -74,7 +74,7 @@ button {
     margin-bottom: 8px;
 }
 
-.mb-16{
+.mb-16 {
     margin-bottom: 16px;
 }
 
@@ -86,7 +86,7 @@ button {
     margin-bottom: 26px;
 }
 
-.mb-20{
+.mb-20 {
     margin-bottom: 20px;
 }
 
@@ -129,6 +129,8 @@ button {
 .join-h1-dialog {
     margin-block-start: 0;
     margin-block-end: 0;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .join-h1-dialog-sm {

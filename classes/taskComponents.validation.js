@@ -6,7 +6,7 @@
  * @see TaskComponents
  */
 
-(function() {
+(function () {
     const taskComponentsPrototype = TaskComponents.prototype;
 
     /**
@@ -16,8 +16,8 @@
      * @memberof taskComponents.validation
      * @returns {void}
      */
-    taskComponentsPrototype.addTaskTitleOnInput = function() {
-        this.showAndLeaveErrorMessage("a-t-title-required", false);  
+    taskComponentsPrototype.addTaskTitleOnInput = function () {
+        this.showAndLeaveErrorMessage("a-t-title-required", false);
     };
 
     /**
@@ -26,7 +26,7 @@
      * @memberof taskComponents.validation
      * @returns {void}
      */
-    taskComponentsPrototype.addTaskTitleOnFocusFunction = function() {
+    taskComponentsPrototype.addTaskTitleOnFocusFunction = function () {
         this.addTaskTitleOnFocus = true;
     }
 
@@ -39,19 +39,19 @@
     * @param {string} titleValue - The value of the task title.
     * @return {void}
     */
-    taskComponentsPrototype.taskTitleValidation = function(titleValue = "") {
-        if(!this.addTaskTitleOnFocus) {return;}
+    taskComponentsPrototype.taskTitleValidation = function (titleValue = "") {
+        if (!this.addTaskTitleOnFocus) { return; }
         const cleanTitleValue = (titleValue ?? "").trim();
 
         if (cleanTitleValue.length > 3) {
             this.showAndLeaveErrorMessage("a-t-title-required", false);
             this.showAndLeaveErrorBorder("task-title", false);
             this.currentTitle = cleanTitleValue;
-        } else if(cleanTitleValue.length < 4) {
+        } else if (cleanTitleValue.length < 4) {
             this.showAndLeaveErrorMessage("a-t-title-required", true, "Title min 4 characters");
             this.showAndLeaveErrorBorder("task-title", true);
             this.currentTitle = "";
-        }else{
+        } else {
             this.showAndLeaveErrorMessage("a-t-title-required", true, "This field is required");
             this.showAndLeaveErrorBorder("task-title", true);
             this.currentTitle = "";
@@ -66,13 +66,13 @@
     * @memberof taskComponents.validation
     * @return {void}
     */
-    taskComponentsPrototype.dateFieldValidationOnInput = function() {
+    taskComponentsPrototype.dateFieldValidationOnInput = function () {
         let dateField = document.getElementById('due-date-display');
         if (!dateField) { return; }
-        if(dateField.value.length == 0){return;}
+        if (dateField.value.length == 0) { return; }
         const dueDateCheck = new DueDateCheck(dateField.value, this.currentDueDate, this.currentDueDateInputValue, this);
         const [result, dueDate] = dueDateCheck.checkTheDateValueOnInput();
-        if(dateField.value.length == 10){
+        if (dateField.value.length == 10) {
             dueDateCheck.checkTheDateAfterInput();
         }
         this.currentDueDate = result ? dueDate : "";
@@ -85,8 +85,8 @@
      * @memberof taskComponents.validation
      * @returns {boolean} True if the due date is valid, false otherwise.
      */
-    taskComponentsPrototype.dateFieldValidation = function() {
-        if(!this.addTaskDueDateOnFocus) {return;}
+    taskComponentsPrototype.dateFieldValidation = function () {
+        if (!this.addTaskDueDateOnFocus) { return; }
         const dateField = document.getElementById('due-date-display');
         if (!dateField) { return; }
         const dueDateCheck = new DueDateCheck(dateField.value, this.currentDueDate, this.currentDueDateInputValue, this);
@@ -99,7 +99,7 @@
      * @memberof taskComponents.validation
      * @returns {boolean}
      */
-    taskComponentsPrototype.dateFieldValidateOnEdit = function() {
+    taskComponentsPrototype.dateFieldValidateOnEdit = function () {
         const dateField = document.getElementById('due-date-display');
         if (!dateField) { return; }
         const dueDateCheck = new DueDateCheck(dateField.value, this.currentDueDate, this.currentDueDateInputValue, this);
@@ -112,7 +112,7 @@
      * @memberof taskComponents.validation
      * @returns {void}
      */
-    taskComponentsPrototype.addTaskDueDateOnFocusFunction = function() {
+    taskComponentsPrototype.addTaskDueDateOnFocusFunction = function () {
         this.addTaskDueDateOnFocus = true;
     }
 
@@ -122,7 +122,7 @@
      * @memberof taskComponents.validation
      * @return {void}
      */
-    taskComponentsPrototype.onDateIconClick = function() {
+    taskComponentsPrototype.onDateIconClick = function () {
         let datePicker = document.getElementById('due-date-hidden');
         datePicker.showPicker();
     };
@@ -134,7 +134,7 @@
      * @param {Event} e - The change event object.
      * @return {void}
      */
-    taskComponentsPrototype.datePickerSelectionChange = function(e) {
+    taskComponentsPrototype.datePickerSelectionChange = function (e) {
         let newDateArr = String(e.target.value).split('-');
         let newDateString = `${newDateArr[2]}/${newDateArr[1]}/${newDateArr[0]}`;
         document.getElementById('due-date-display').value = newDateString;
@@ -149,7 +149,7 @@
     * @param {boolean} visibility - Indicates whether to show or hide the error message.
     * @returns {void}
     */
-    taskComponentsPrototype.showAndLeaveErrorMessage = function(messageTarget, visibility = true, messageText = "") {
+    taskComponentsPrototype.showAndLeaveErrorMessage = function (messageTarget, visibility = true, messageText = "") {
         let errorField = document.getElementById(messageTarget);
         if (errorField == null) { return; }
         if (visibility) {
@@ -170,7 +170,7 @@
      * @param {boolean} visibility - Indicates whether to show or hide the error border.
      * @returns {void}
      */
-    taskComponentsPrototype.showAndLeaveErrorBorder = function(inputTarget, visibility = true) {
+    taskComponentsPrototype.showAndLeaveErrorBorder = function (inputTarget, visibility = true) {
         let inputField = document.getElementById(inputTarget);
         if (inputField == null) { return; }
         if (visibility) {
@@ -187,10 +187,15 @@
     * @param {HTMLElement} button - The button element that was clicked.
     * @return {void}
     */
-    taskComponentsPrototype.addTaskSubmitOnMouse = function(button) {
-        document.getElementById('task-title').blur();
-        document.getElementById('due-date-display').blur();
-        this.addTaskCheckRequiredField(button);
+    taskComponentsPrototype.addTaskSubmitOnMouse = function (event) {
+
+        const button = document.getElementById('createTaskButton') || document.getElementById('detail-edit-ok-btn');
+        if (!button) { return; }
+        if (event.target == button) {
+            document.getElementById('task-title').blur();
+            document.getElementById('due-date-display').blur();
+            this.addTaskCheckRequiredField(button);
+        }
     };
 
     /**
@@ -200,7 +205,7 @@
     * @param {HTMLElement} createButton - The create button element.
     * @return {void}
     */
-    taskComponentsPrototype.addTaskCheckRequiredField = function(createButton) {
+    taskComponentsPrototype.addTaskCheckRequiredField = function (createButton) {
         if (!createButton) { return; }
         let isDateFieldOK = createButton.id == "detail-edit-ok-btn" ? this.dateFieldValidateOnEdit() : this.dateFieldValidation();
         const hasCategory = this.currentCategory && typeof this.currentCategory === 'object' && 'title' in this.currentCategory;
@@ -212,17 +217,17 @@
 
         createButton.disabled ? createButton.setAttribute('aria-disabled', 'true') : createButton.removeAttribute('aria-disabled');
 
-    }   
+    }
 
-     /**
-     * @description Checks the value of the category input field for validity.
-     * If the input field is empty or has the default placeholder value, it shows an error message and border.
-     * If a valid category is selected, it hides the error message and border.
-     * @function checkCategoryInputValue
-     * @memberof taskComponents.validation
-     * @returns {void}
-     */
-    taskComponentsPrototype.checkCategoryInputValue = function() {
+    /**
+    * @description Checks the value of the category input field for validity.
+    * If the input field is empty or has the default placeholder value, it shows an error message and border.
+    * If a valid category is selected, it hides the error message and border.
+    * @function checkCategoryInputValue
+    * @memberof taskComponents.validation
+    * @returns {void}
+    */
+    taskComponentsPrototype.checkCategoryInputValue = function () {
         let categoryInput = document.getElementById('task-category');
         if (!categoryInput) { return; }
         if (categoryInput.value == "Select task category") {

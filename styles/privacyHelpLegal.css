@@ -107,4 +107,17 @@
         width: 28px;
         background-image: url("../assets/arrow-left-default.svg");
     }
+
+    .join-h1-dialog-sm{
+        padding-inline-end: 36px;
+    }
+
+    ul{
+        padding-inline-end: 36px;
+    }
+
+    .join-h3{
+        padding-inline-end: 36px;
+    }
+
 }

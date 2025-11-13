@@ -34,7 +34,28 @@ async function privacyOrLegalLoad(privacyOrLegal) {
     }
     window.addEventListener('resize', () => privacyOrLegalResize(privacyOrLegal));
     window.addEventListener('resize', updateLandscapeBlock);
+    await setHeaderElements();
 }
+
+
+/**
+ * Sets the header elements visibility based on login status.
+ * @function setHeaderElements
+ * @memberof privacyLegal
+ * @returns {Promise<void>} 
+ */
+async function setHeaderElements() {
+    let logInStatus = getLogStatus();
+    if(logInStatus !== "0"){
+        await renderUserInitial();
+    }else{
+        const headerElements = document.querySelector("div.help-profile-actions") || document.querySelector('div.help-profile-actions-mobile');
+        if(!headerElements){return;}
+        headerElements.classList.add('d-none');
+    }
+    
+}
+
 
 /**
  * @function privacyOrLegalResize
@@ -54,8 +75,9 @@ async function privacyOrLegalResize(privacyOrLegal){
     }else if(width > 880 && currentView !== DESKTOP){
         await loadInDesktopMode(privacyOrLegal);
     }
-
+    await setHeaderElements();
     resizeLockPandL = false;
+
 }
 
 /**

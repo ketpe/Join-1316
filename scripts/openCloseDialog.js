@@ -4,8 +4,6 @@
  * @description Opens and closes dialogs with specific content rendering functions.
  */
 
-
-
 /**
  * @function openDialog
  * @memberof openCloseDialog
@@ -129,16 +127,6 @@ function addDialogHideClass(dialogId) {
     dialog.classList.remove('dialog-show');
 }
 
-/**
- * @function renderAddContactIntoDialog
- * @memberof openCloseDialog
- * @description Renders the add contact form into the dialog
- * @return {void}
- */
-async function renderAddContactIntoDialog() {
-    document.getElementById('add-contact-dialog').innerHTML = '';
-    await includeHtml("add-contact-dialog", "addContact.html");
-}
 
 /**
  * @function renderDetailViewTemplate
@@ -152,40 +140,6 @@ async function renderDetailViewTemplate(taskId) {
     getDetailViewTask(taskId);
 }
 
-/**
- * @function renderAddContactIntoDialogMobile
- * @memberof openCloseDialog
- * @description Renders the add contact form into the dialog for mobile devices
- * @return {void}
- */
-async function renderAddContactIntoDialogMobile() {
-    document.getElementById('add-contact-dialog-mobile').innerHTML = '';
-    await includeHtml("add-contact-dialog-mobile", "addContactMobile.html");
-
-}
-
-/**
- * @function renderEditContactIntoDialog
- * @memberof openCloseDialog
- * @description Renders the edit contact form into the dialog
- * @param {string} contactId - The ID of the contact to edit
- * @return {void}
- */
-function renderEditContactIntoDialog(contactId) {
-    includeHtml("add-contact-dialog", "editContact.html")
-    getContactData(contactId);
-}
-
-/**
- * @function renderEditContactIntoDialogMobile
- * @memberof openCloseDialog
- * @description Renders the edit contact form into the dialog for mobile devices
- * @param {string} contactId - The ID of the contact to edit
- */
-function renderEditContactIntoDialogMobile(contactId) {
-    includeHtml("add-contact-dialog-mobile", "editContactMobile.html");
-    getContactData(contactId);
-}
 
 /**
  * @function openSwapMobileMenu
@@ -198,9 +152,7 @@ function openSwapMobileMenu(event, id) {
     event.stopPropagation();
     const overlay = document.getElementById(`swap-overlay-${id}`);
     overlay.style.display = 'block';
-    const btn = document.getElementById(`swap-mobile-btn-${id}`);
     const dialog = document.getElementById(`swap-mobile-menu-${id}`);
-    const parent = btn.closest('.kanban-task');
     dialog.style.display = 'block';
 }
 

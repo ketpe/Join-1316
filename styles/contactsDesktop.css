@@ -2,6 +2,7 @@
     height: calc(100vh - var(--header-height));
     max-width: var(--contacts-scrollbar-width);
     box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
+    flex: 0 0 auto;
 }
 
 .contacts-main {
@@ -71,7 +72,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 42px;
+    min-width: 42px;
     height: 42px;
     border: 2px solid (inherit);
     border-radius: 50%;
@@ -173,6 +174,7 @@
     font-style: Regular;
     font-size: 20px;
     vertical-align: middle;
+    max-width: 300px;
 }
 
 .contact-email {
@@ -182,6 +184,9 @@
     font-size: 16px;
     vertical-align: middle;
     color: var(--font-email-color);
+    word-break: break-all;
+    max-width: 300px;
+    /* overflow-wrap: anywhere; */
 }
 
 .contact-detail-view {
@@ -189,7 +194,7 @@
     flex-direction: column;
     align-items: start;
     gap: 21px;
-
+    flex: 1 1 0%;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -240,7 +245,7 @@
 }
 
 .initial-avatar {
-    width: 120px;
+    min-width: 120px;
     height: 120px;
     display: flex;
     align-items: center;
@@ -374,6 +379,9 @@
 
 .detail-c-view-email :last-child {
     color: var(--font-email-color);
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    padding-right: 48px;
 }
 
 .add-contact-safe-changes {

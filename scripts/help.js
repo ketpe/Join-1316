@@ -28,6 +28,7 @@ async function onHelpLoad() {
     }
     window.addEventListener('resize', resizeHelp);
     window.addEventListener('resize', updateLandscapeBlock);
+    await renderUserInitial();
 }
 
 /**

@@ -1,3 +1,17 @@
+.right-content,
+.summary-user-mobile,
+.btn-task-mobile,
+.btn-urgent-mobile,
+.btn-summary-tasks-mobile,
+.summary-header-mobile {
+    transition: 
+        all 0.3s ease,
+        padding 0.3s ease,
+        gap 0.1s ease,
+        width 0.3s ease,
+        font-size 0.25s ease;
+}
+
 @media (max-width: 1290px) {
     .summary-content {
         padding-left: 2vw;
@@ -30,102 +44,94 @@
     }
 }
 
-@media(max-width: 880px){
-    .join-h1-mobile{
+@media(max-width: 880px) {
+    .join-h1-mobile {
         padding-top: 32px;
     }
+
+    .main-container {
+        overflow-x: hidden;
+    }
+
+    .right-content {
+        display: grid;
+        place-items: center;
+        min-height: calc(100vh - 80px - 76px);
+        box-sizing: border-box;
+        padding: 0 16px;
+    }
+
 }
 
 
-@media (max-width: 427px) {
+@media (max-width: 430px) {
 
-    .nav-mobile-btn {
-        height: 67px;
-        width: 74px;
-    }
-
-    .summary-header-mobile {
-        width: auto;
-    }
-
-    .summary-user-mobile {
-        align-items: center;
-        justify-content: center;
-        width: auto;
-        padding: 0;
+    .summary-content-mobile {
+        padding-left: 0;
     }
 
     .task-actions-mobile {
-        width: 100%;
-        height: auto;
         justify-content: center;
-        margin-bottom: 10px;
+        gap: 28px;
     }
 
     .btn-task-mobile {
         padding: 19px 9px;
         width: 40%;
-        max-height: 80px;
         gap: 10px;
-
     }
 
     .btn-urgent-mobile {
         width: 91%;
-        max-height: 80px;
-        padding: 19px 9px;
-        gap: 8px;
-        margin-bottom: 0;
-    }
-
-    .urgent-display {
-        gap: 13px;
-    }
-
-    .urgent-separator-mobile {
-        height: 50px;
-    }
-
-    .urgent-time-underline-mobile {
-        margin: 0;
+        align-self: center;
     }
 
     .summary-tasks-mobile {
-        padding: 12px 12px;
-        height: 40%;
-        width: 40%;
-        flex-wrap: wrap;
+        gap: 6px;
     }
 
     .btn-summary-tasks-mobile {
-        padding: 22px 0px;
-        max-height: 87px;
-        width: 87px;
         gap: 3px;
     }
 
-    .quantity-task-mobile {
-        font-size: calc(47px * 0.6);
+}
+
+@media(max-width: 400px) {
+    .btn-urgent-mobile {
+        gap: 16px
+    }
+
+    .urgent-display {
+        gap: 9px;
     }
 
     .number-of-Tasks-mobile {
-        font-size: calc(47px * 0.6);
+        font-size: 41px;
     }
 
-    .todo-icon-mobile,
-    .done-icon-mobile,
-    .urgent-icon-mobile {
-        width: 30px;
-        height: 30px;
+    .description-of-task-mobile {
+        overflow-wrap: break-word;
     }
 
-    .quantity-container{
+    .btn-summary-tasks-mobile {
+        padding: 11px 11px
+    }
+}
+
+@media(max-width: 370px) {
+
+    .urgent-display {
+        gap: 4px;
+    }
+
+    .quantity-task-mobile {
+        font-size: 41px;
+    }
+
+    .quantity-container {
         gap: 5px;
     }
 
-    .greeting-mobile-name {
-        font-size: 37px
-    }
 }
 
 @media (max-width: 350px) {
@@ -133,5 +139,31 @@
         white-space: normal;
     }
 
-    
+    .btn-urgent-mobile {
+        gap: 6px
+    }
+
+    .urgent-icon-mobile {
+        width: 35px;
+        height: 36px;
+    }
+
+}
+
+@media(max-height: 750px) {
+    .summary-user-mobile {
+        gap: 7px;
+    }
+
+    .summary-header-mobile{
+        margin-bottom: 16px;
+    }
+
+    .btn-urgent-mobile{
+        margin-bottom: 8px;
+    }
+
+    .task-actions-mobile{
+        margin-bottom: 8px;
+    }
 }

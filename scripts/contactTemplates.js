@@ -43,8 +43,8 @@ function getContactListContent(obj) {
  * @function getContactDetailView
  * @memberof contactTemplates
  * @description Creates the HTML template for the contact detail view.
- * @param {object} cd 
- * @param {String} mobileSuffix 
+ * @param {object} cd
+ * @param {String} mobileSuffix
  * @returns {string} HTML template for the contact detail view
  */
 function getContactDetailView(cd, mobileSuffix) {
@@ -59,7 +59,7 @@ function getContactDetailView(cd, mobileSuffix) {
                 <div class="action-icons action-edit-icon"></div>
                 <p>Edit</p>
             </button>
-            <button type="button" onclick="onDeleteContact(event,this)" id="${cd.id}" class="btn-contact-action btn-contact-delete">
+            <button type="button" onclick="onDeleteContact(event,this)" data-id="${cd.id}" id="btn-contact-delete" class="btn-contact-action btn-contact-delete">
                 <div class="action-icons action-delete-icon"></div>
                 <p>Delete</p>
             </button>
@@ -98,7 +98,7 @@ function getMobileBtnTemplate(cd) {
  * @function getBtnsInMobileDetails
  * @memberof contactTemplates
  * @param {object} cd
- * @returns {string} HTML template for the mobile action buttons    
+ * @returns {string} HTML template for the mobile action buttons
  */
 function getBtnsInMobileDetails(cd) {
     return `<button type="button"
@@ -107,7 +107,7 @@ function getBtnsInMobileDetails(cd) {
                         <div class="action-icons action-edit-icon"></div>
                         <p>Edit</p>
                     </button>
-                    <button type="button" onclick="onDeleteContactMobile(event,this)" id="${cd.id}"
+                    <button type="button" onclick="onDeleteContactMobile(event,this)" data-id="${cd.id}" id="btn-contact-delete"
                         class="btn-contact-action btn-contact-delete-mobile">
                         <div class="action-icons action-delete-icon"></div>
                         <p>Delete</p>

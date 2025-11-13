@@ -46,16 +46,11 @@ async function loadHtmlComponentsForDesktop(height) {
     currentView = "desktop";
     clearBoardHtmlBody();
     await includeHtmlForNode("body", "boardDesktop.html");
-
     await Promise.all([
         includeHtml("navbar", "navbarDesktop.html"),
         includeHtml("header", "headerDesktop.html"),
-
     ]);
-    showLoadingAnimation();
-    await getBoardTasks();
-    renderUserInitial();
-    hideLoadingAnimation();
+    await getBoardTaskWithLoadingAnimation();
 }
 
 /**
@@ -74,22 +69,23 @@ async function loadHtmlComponentsForMobile(height) {
         includeHtml("header", "headerMobile.html"),
         includeHtml("navbar", "navbarMobile.html"),
     ]);
-    showLoadingAnimation();
-    await getBoardTasks();
-    renderUserInitial();
-    hideLoadingAnimation();
+    await getBoardTaskWithLoadingAnimation();
 }
 
 /**
  * @function getBoardTaskWithLoadingAnimation
  * @memberof board
  * @description Fetches board tasks with a loading animation.
+ * It shows a loading animation, retrieves board tasks from the database, renders user initials, hides the loading animation, 
+ * and clamps task titles for better display.
  * @returns {Promise<void>}
  */
 async function getBoardTaskWithLoadingAnimation() {
     showLoadingAnimation();
     await getBoardTasks();
+    renderUserInitial();
     hideLoadingAnimation();
+    clampBoardTaskTitles();
 }
 
 /**

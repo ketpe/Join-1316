@@ -32,6 +32,7 @@
  * Loaded by all pages
  */
 
+const emailPattern = /^(?!.*\.\.)(?!\.)(?!.*\.$)[A-Za-z0-9!#$%&amp;'*+/=?^_`{|}~.-]+@(?:(?!-)[A-Za-z0-9-]{1,63}(?&lt;!-)\.)+[A-Za-z]{2,}$/i;
 
 /**
  * Set onclick event to document body to close submenu when clicking outside
@@ -39,7 +40,7 @@
 setOnClickEventToDocument();
 
 /**
- * Initialize the webpage by including HTML components and rendering user initials.
+ * @description Initialize the webpage by including HTML components and rendering user initials.
  * @function init
  * @memberof script
  * @returns {Promise&lt;void>}
@@ -55,11 +56,10 @@ async function init() {
 }
 
 /**
- * Render the user's initial in the UI.
+ * @description Render the user's initial in the UI.
  * @function renderUserInitial
  * @memberof script
  * @returns {Promise&lt;void>}
-
  */
 async function renderUserInitial() {
     let logInStatus = getLogStatus();
@@ -74,11 +74,10 @@ async function renderUserInitial() {
 }
 
 /**
- * Set onclick event to document body to close submenu when clicking outside
+ * @description Set onclick event to document body to close submenu when clicking outside
  * @function setOnClickEventToDocument
  * @memberof script
  * @return {void}
-
  */
 function setOnClickEventToDocument() {
     const body = document.querySelector('body');
@@ -88,14 +87,13 @@ function setOnClickEventToDocument() {
 
 
 /**
- * Show submenu in desktop or mobile mode
+ * @description Show submenu in desktop or mobile mode
  * @function showSubmenu
  * @memberof script
  * @param {string} id
  * @param {Event} event
  * @param {string} desktopOrMobile
  * @returns {void}
- * 
  */
 function showSubmenu(id, event, desktopOrMobile) {
     if (event) event.stopPropagation();
@@ -108,28 +106,25 @@ function showSubmenu(id, event, desktopOrMobile) {
     if (desktopOrMobile == "mobile") {
         subMenu.classList.toggle('is-submenu-mobile-open');
     }
-
 };
 
 /**
- * Prevent event bubbling.
+ * @description Prevent event bubbling.
  * @function noBubbling
  * @memberof script
  * @param {Event} event
  * @returns {void}
- * 
  */
 function noBubbling(event) {
     event.stopPropagation()
 };
 
 /**
- * Close the submenu when clicking outside of it
+ * @description Close the submenu when clicking outside of it
  * @function subMenuClose
  * @memberof script
  * @param {Event} event
  * @returns {void}
- * 
  */
 function subMenuClose(event) {
 
@@ -145,13 +140,12 @@ function subMenuClose(event) {
 }
 
 /**
- * Show an error message for a specific element.
+ * @description Show an error message for a specific element.
  * @function showErrorMessage
  * @memberof script
  * @param {String} elementId
  * @param {String} errorMessage
  * @return {void}
- * 
  */
 function showErrorMessage(elementId, errorMessage = "") {
     let errorText = document.getElementById(elementId);
@@ -164,12 +158,11 @@ function showErrorMessage(elementId, errorMessage = "") {
 }
 
 /**
- * Remove the error message for a specific element.
+ * @description Remove the error message for a specific element.
  * @function removeErrorMessage
  * @memberof script
  * @param {String} elementId
  * @return {void}
- * 
  */
 function removeErrorMessage(elementId) {
     let errorText = document.getElementById(elementId);
@@ -179,11 +172,10 @@ function removeErrorMessage(elementId) {
 }
 
 /**
- * Get a random color class from the predefined list.
+ * @description Get a random color class from the predefined list.
  * @function getRandomColor
  * @memberof script
  * @returns {String} A random color class.
- * 
  */
 function getRandomColor() {
     const colorClasses = [
@@ -195,25 +187,23 @@ function getRandomColor() {
 }
 
 /**
- * Generates a new unique identifier (UUID).
+ * @description Generates a new unique identifier (UUID).
  * @function getNewUid
  * @memberof script
  * @returns {string} A new UUID.
- * 
  */
 function getNewUid() {
     return crypto.randomUUID();
 }
 
 /**
- * Toggles the visibility of the password input field.
+ * @description Toggles the visibility of the password input field.
  * @function togglePasswordVisibility
  * @memberof script
  * @param {Number} toggleCounter 
  * @param {String} passwortInputID 
  * @param {String} toggleIconID 
  * @return {void}
- * 
  */
 function togglePasswordVisibility(toggleCounter, passwortInputID, toggleIconID) {
     let passwordInput = document.getElementById(passwortInputID);
@@ -232,13 +222,12 @@ function togglePasswordVisibility(toggleCounter, passwortInputID, toggleIconID) 
 }
 
 /**
- * Toggles the border color of an element based on field has validation error.
+ * @description Toggles the border color of an element based on field has validation error.
  * @function toggleBorderColorByError
  * @memberof script
  * @param {String} elementId 
  * @param {Boolean} loginErrorBorder 
  * @return {void}
- * 
  */
 function toggleBorderColorByError(elementId = null, loginErrorBorder = false) {
     const elements = elementId
@@ -252,22 +241,21 @@ function toggleBorderColorByError(elementId = null, loginErrorBorder = false) {
     });
 }
 
-/** Get the current window size.
+/** 
+ * @description Get the current window size.
  * @function getCurrentWindowSize
  * @memberof script
  * @returns {number[]} An array containing the height and width of the window.
- * 
  */
 function getCurrentWindowSize() {
     return [window.innerHeight, window.innerWidth];
 }
 
 /**
- * Check if user or guest is logged in, if not navigate to login page.
+ * @description Check if user or guest is logged in, if not navigate to login page.
  * @function checkUserOrGuestIsloggedIn
  * @memberof script
  * @return {void}
- * 
  */
 function checkUserOrGuestIsloggedIn() {
     let logInStatus = getLogStatus();
@@ -277,11 +265,10 @@ function checkUserOrGuestIsloggedIn() {
 }
 
 /**
- * Shows a loading overlay.
+ * @description Shows a loading overlay.
  * @function showOverlay
  * @memberof script
  * @returns {void}
- * 
  */
 function showOverlay(){
     const overlay = document.getElementById('loadingOverlay');
@@ -290,11 +277,10 @@ function showOverlay(){
 }
 
 /**
- * Hides the loading overlay.
+ * @description Hides the loading overlay.
  * @function hideOverlay
  * @memberof script
  * @returns {void}
- * 
  */
 function hideOverlay() {
     const overlay = document.getElementById('loadingOverlay');
@@ -303,11 +289,10 @@ function hideOverlay() {
 }
 
 /**
- * Shows a loading animation.
+ * @description Shows a loading animation.
  * @function showLoadingAnimation
  * @memberof script
  * @returns {void}
- * 
  */
 function showLoadingAnimation() {
     const overlay = document.getElementById('loadingOverlay');
@@ -319,11 +304,10 @@ function showLoadingAnimation() {
 }
 
 /**
- * Hides the loading animation after a short delay.
+ * @description Hides the loading animation after a short delay.
  * @function hideLoadingAnimation
  * @memberof script
  * @returns {void}
- * 
  */
 function hideLoadingAnimation() {
     setTimeout(() => {
@@ -333,6 +317,40 @@ function hideLoadingAnimation() {
         overlay.classList.remove('is-loading-visible');
         loadingContainer.classList.add('visually-hidden');
     }, 500);
+}
+
+/**
+ * @description Checks if the provided email is valid according to RFC standards.
+ * Validates length, format, and domain rules.
+ * @function emailValidator
+ * @memberof signup
+ * @description Validate email format according to RFC standards.
+ * @param {string} email
+ * @returns {boolean}
+ */
+function emailValidator(email) {
+    if (email.length > 254) { return false; }
+    if (/\.{2,}/.test(email)) { return false; }
+    if (!emailPattern.test(email)) { return false; }
+    const [local, domain] = email.split('@');
+    if (!local || !domain) return false;
+    if (local.length > 64) return false;
+    if (domain.startsWith('-') || domain.endsWith('-')) return false;
+    if (domain.split('.').some(part => !part || part.length > 63)) return false;
+    return true;
+}
+
+/**
+ * @function checkEmailInDatabase
+ * @memberof signup
+ * @description Check if the email exists in the database.
+ * @param {string} email
+ * @returns {Promise&lt;boolean>}
+ */
+async function checkEmailInDatabase(email) {
+    let fb = new FirebaseDatabase();
+    let found = await fb.getFirebaseLogin(() => fb.getDataByKey("email", email, "contacts"));
+    return found ? true : false;
 }</code></pre>
         </article>
     </section>
@@ -343,13 +361,13 @@ function hideLoadingAnimation() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardDatabase.html">boardDatabase</a></li><li><a href="boardDetailView.html">boardDetailView</a></li><li><a href="boardSearch.html">boardSearch</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="boardTasks.html">boardTasks</a></li><li><a href="boardUtils.html">boardUtils</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li><li><a href="taskComponents_.html">taskComponents</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskCache.html">AddTaskCache</a></li><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="DueDateCheck.html">DueDateCheck</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li></ul><h3>Mixins</h3><ul><li><a href="taskComponents.categories.html">categories</a></li><li><a href="taskComponents.contacts.html">contacts</a></li><li><a href="taskComponents.create.html">create</a></li><li><a href="taskComponents.layout.html">layout</a></li><li><a href="taskComponents.priority.html">priority</a></li><li><a href="taskComponents.subtasks.html">subtasks</a></li><li><a href="taskComponents.validation.html">validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-scripts_firebase.html">scripts/firebase</a></li></ul><h3>Namespaces</h3><ul><li><a href="addEditContacts.html">addEditContacts</a></li><li><a href="addTaskTemplate.html">addTaskTemplate</a></li><li><a href="app.html">app</a></li><li><a href="board.html">board</a></li><li><a href="boardDatabase.html">boardDatabase</a></li><li><a href="boardDetailView.html">boardDetailView</a></li><li><a href="boardSearch.html">boardSearch</a></li><li><a href="boardTaskTemplate.html">boardTaskTemplate</a></li><li><a href="boardTasks.html">boardTasks</a></li><li><a href="boardUtils.html">boardUtils</a></li><li><a href="contactTemplates.html">contactTemplates</a></li><li><a href="contacts.html">contacts</a></li><li><a href="dragAndDrop.html">dragAndDrop</a></li><li><a href="dueDateCheck_.html">dueDateCheck</a></li><li><a href="greeting.html">greeting</a></li><li><a href="help.html">help</a></li><li><a href="landscapeBlock.html">landscapeBlock</a></li><li><a href="login.html">login</a></li><li><a href="navigations.html">navigations</a></li><li><a href="openCloseDialog.html">openCloseDialog</a></li><li><a href="privacyLegal.html">privacyLegal</a></li><li><a href="script.html">script</a></li><li><a href="summary.html">summary</a></li><li><a href="taskComponents_.html">taskComponents</a></li></ul><h3>Classes</h3><ul><li><a href="AddTaskCache.html">AddTaskCache</a></li><li><a href="AddTaskMobileUtil.html">AddTaskMobileUtil</a></li><li><a href="AddTaskUtils.html">AddTaskUtils</a></li><li><a href="BoardTaskDetailDeleteUtil.html">BoardTaskDetailDeleteUtil</a></li><li><a href="BoardTaskDetailEditUtils.html">BoardTaskDetailEditUtils</a></li><li><a href="BoardTaskDetailViewUtils.html">BoardTaskDetailViewUtils</a></li><li><a href="Contact.html">Contact</a></li><li><a href="ContactAssigned.html">ContactAssigned</a></li><li><a href="CreateNewTask.html">CreateNewTask</a></li><li><a href="EditTaskSafeUtil.html">EditTaskSafeUtil</a></li><li><a href="FirebaseDatabase.html">FirebaseDatabase</a></li><li><a href="Subtask.html">Subtask</a></li><li><a href="SubtaskToTask.html">SubtaskToTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskComponents.html">TaskComponents</a></li><li><a href="TaskElements.html">TaskElements</a></li><li><a href="dueDateCheck.DueDateCheck.html">DueDateCheck</a></li></ul><h3>Mixins</h3><ul><li><a href="taskComponents.categories.html">categories</a></li><li><a href="taskComponents.contacts.html">contacts</a></li><li><a href="taskComponents.create.html">create</a></li><li><a href="taskComponents.layout.html">layout</a></li><li><a href="taskComponents.priority.html">priority</a></li><li><a href="taskComponents.subtasks.html">subtasks</a></li><li><a href="taskComponents.validation.html">validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Nov 10 2025 20:21:08 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Nov 13 2025 19:35:00 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

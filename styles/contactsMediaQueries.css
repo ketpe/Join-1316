@@ -47,7 +47,7 @@
     }
 
     .initial-avatar {
-        width: calc(120px * 0.7);
+        min-width: calc(120px * 0.7);
         height: calc(120px * 0.7);
     }
 

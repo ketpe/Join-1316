@@ -22,25 +22,28 @@
 
                 <div class="add-contact-input-field-container-mobile">
                     <label for="contact-name" class="visually-hidden">Contact Name</label>
-                    <input onblur="contactNameValidation(this.value)"
+                    <input onblur="contactNameValidation(this.value)" onfocus="nameIsOnInput = true"
                         oninput="clearErrorMessagesOnInput('contact-name')" type="text" id="contact-name"
                         class="add-contact-input-mobile input-name" placeholder="Name">
                     <div class="contact-error-text-container">
-                        <p id="contact-name-required" class="error-text-hidden">This field is required.</p>
+                        <p id="contact-name-required" class="error-text-hidden">This field is required. Validation
+                            failed.</p>
                     </div>
                     <label for="contact-email" class="visually-hidden">Email</label>
-                    <input onblur="contactEmailValidation(this.value)"
+                    <input onblur="contactEmailValidation(this.value)" onfocus="emailIsOnInput = true"
                         oninput="clearErrorMessagesOnInput('contact-email')" type="email" id="contact-email"
                         class="add-contact-input-mobile input-mail" placeholder="Email">
                     <div class="contact-error-text-container">
-                        <p id="contact-email-required" class="error-text-hidden">This field is required.</p>
+                        <p id="contact-email-required" class="error-text-hidden">This field is required. Validation
+                            failed.</p>
                     </div>
                     <label for="contact-phone" class="visually-hidden">Phone</label>
-                    <input onblur="contactPhoneValidation(this.value)"
+                    <input onblur="contactPhoneValidation(this.value)" onfocus="phoneIsOnInput = true"
                         oninput="clearErrorMessagesOnInput('contact-phone')" type="tel" id="contact-phone"
                         class="add-contact-input-mobile input-phone" placeholder="Phone">
                     <div class="contact-error-text-container">
-                        <p id="contact-phone-required" class="error-text-hidden">This field is required.</p>
+                        <p id="contact-phone-required" class="error-text-hidden">This field is required. Validation
+                            failed.</p>
                     </div>
                     <div class="login-form-buttons-mobile">
                         <button type="button" id="" class=" btn-clear-cancel-mobile btn btn-outline btn-md"
@@ -48,7 +51,7 @@
                             <p class="">Delete</p>
                         </button>
                         <button type="button" class="btn-create btn btn-fill btn-md btn-md-auto-height"
-                            id="btn-create-contact" onclick="editContactMobile(event)"
+                            id="btn-create-contact" onclick="editContactMobile(event)" disabled="true"
                             onmouseover="contactSaveMouseUp(event)">
                             <span class="">Save</span>
                             <div aria-label="Save contact" role="img" class="btn-create-icon"></div>
