@@ -174,9 +174,6 @@ function getInitials(firstname, lastname) {
     return (firstChar + lastChar) || (f.charAt(0) || '').toUpperCase();
 }
 
-
-/**REVIEW - Zeile 193 hat gelegentlisch Konsolenfehler gemacht -> Vorschlag ID über den Query Selector aus Zeile 191 lesen */
-
 /**
  * @function editContact
  * @memberof addEditContacts
@@ -187,13 +184,10 @@ function getInitials(firstname, lastname) {
 async function editContact(event) {
     if (event) event.preventDefault();
     if (!validateAllFields()) return;
-
-    const btn = document.querySelector('.login-form-buttons button');
-
-    //const buttonID = event.target.childNodes[0].ownerDocument.activeElement.id;
+    const contactID = document.querySelector('#btn-create-contact').getAttribute('data-id');
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
-    const data = await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${btn.id}`, contact));
+    await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${contactID}`, contact));
     closeDialogByEvent(event, 'add-contact-dialog');
     clearActiveContactClass();
     renderContacts();
@@ -210,13 +204,13 @@ async function editContact(event) {
  * @returns {void}
  */
 async function contactSaveMouseUp(event) {
-    const desktopBtn = document.getElementById('btn-create-contact');
-    const mobileBtn = document.querySelector('.btn-create.btn-fill.btn-md.btn-md-auto-height');
-    if (event.target === desktopBtn || event.target === mobileBtn) {
+    const Btn = document.getElementById('btn-create-contact');
+    // const mobileBtn = document.querySelector('.btn-create.btn-fill.btn-md.btn-md-auto-height');
+    if (event.target === Btn) {
         leaveFocusOffAllFields();
         let isValid = await checkValidation();
-        if (desktopBtn) desktopBtn.disabled = !isValid;
-        if (mobileBtn) mobileBtn.disabled = !isValid;
+        if (Btn) Btn.disabled = !isValid;
+        // if (mobileBtn) mobileBtn.disabled = !isValid;
         //resetAllVariables();
     }
 }
@@ -243,13 +237,13 @@ function leaveFocusOffAllFields() {
  */
 async function editContactMobile(event) {
     if (event) event.preventDefault();
-    if (!checkValidation()) return;
-    const buttonID = event.target.childNodes[0].ownerDocument.activeElement.id;
+    if (!validateAllFields()) return;
+    const contactID = document.querySelector('#btn-create-contact').getAttribute('data-id');
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
-    const data = await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${buttonID}`, contact));
+    await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${contactID}`, contact));
     closeDialogByEvent(event, 'add-contact-dialog-mobile');
-    const updatedContact = await fb.getDataByKey("id", buttonID, "contacts");
+    const updatedContact = await fb.getDataByKey("id", contactID, "contacts");
     if (typeof openContactDetailMobile === "function") {
         openContactDetailMobile(updatedContact);
     }
@@ -285,9 +279,9 @@ function createUpdateContactObject() {
 async function onDeleteContact(event, element) {
     if (event) event.preventDefault();
 
-    if (!element.id || element.id.length == 0) { return; }
+    if (!element.getAttribute('data-id') || element.getAttribute('data-id').length == 0) { return; }
 
-    const result = await startDeleteOneContact(element.id);
+    const result = await startDeleteOneContact(element.getAttribute('data-id'));
     if (result) {
         clearActiveContactClass();
         renderContacts();
@@ -400,6 +394,7 @@ function showAndLeaveErrorBorder(inputTarget, visibilty = true) {
  * @returns {void}
  */
 function contactNameValidation() {
+    if (!nameIsOnInput) { return; }
     let nameValue = document.getElementById('contact-name').value;
     const cleanNameValue = (nameValue ?? "").trim();
     if (cleanNameValue.length > 0 && namePattern.test(cleanNameValue)) {
@@ -478,6 +473,7 @@ function resetAllVariables() {
  * @returns {void}
  */
 function contactPhoneValidation() {
+    if (!phoneIsOnInput) { return; }
     let phoneValue = document.getElementById('contact-phone');
     let cleanPhoneValue = (phoneValue.value ?? "").trim();
     cleanPhoneValue = cleanPhoneValue.replace(/\D/g, "");
@@ -559,6 +555,31 @@ function clearErrorMessagesOnInput(inputId) {
         showAndLeaveErrorBorder("contact-phone", false);
     }
 }
+
+/**
+ * @function renderAddContactIntoDialog
+ * @memberof openCloseDialog
+ * @description Renders the add contact form into the dialog
+ * @return {void}
+ */
+async function renderAddContactIntoDialog() {
+    document.getElementById('add-contact-dialog').innerHTML = '';
+    await includeHtml("add-contact-dialog", "addContact.html");
+    resetAllVariables();
+}
+
+/**
+ * @function renderAddContactIntoDialogMobile
+ * @memberof openCloseDialog
+ * @description Renders the add contact form into the dialog for mobile devices
+ * @return {void}
+ */
+async function renderAddContactIntoDialogMobile() {
+    document.getElementById('add-contact-dialog-mobile').innerHTML = '';
+    await includeHtml("add-contact-dialog-mobile", "addContactMobile.html");
+    resetAllVariables();
+}
+
 /**
  * @function renderEditContactIntoDialog
  * @memberof addEditContacts
@@ -567,6 +588,7 @@ function clearErrorMessagesOnInput(inputId) {
  * @return {void}
  */
 function renderEditContactIntoDialog(id) {
+    resetAllVariables();
     const fb = new FirebaseDatabase();
     includeHtml("add-contact-dialog", "editContact.html").then(() => {
         fb.getDataByKey("id", id, "contacts").then(contact => {
@@ -576,8 +598,8 @@ function renderEditContactIntoDialog(id) {
             document.getElementById('contact-phone').value = contact.phone;
             document.getElementById('initial-avatar').classList.add(contact.initialColor);
             document.querySelector('#initial-avatar .detail-view-initials').innerText = contact.initial;
-            document.querySelector('.btn-create').id = contact.id;
-            document.querySelector('.btn-clear-cancel').id = contact.id;
+            document.querySelector('.btn-create').setAttribute('data-id', contact.id);
+            document.querySelector('.btn-clear-cancel').setAttribute('data-id', contact.id);
         });
     });
 }
@@ -590,17 +612,19 @@ function renderEditContactIntoDialog(id) {
  * @return {void}
  */
 function renderEditContactIntoDialogMobile(id) {
+    resetAllVariables();
     closeDialog('btns-action-menu-mobile');
     const fb = new FirebaseDatabase();
     includeHtml("add-contact-dialog-mobile", "editContactMobile.html").then(() => {
         fb.getDataByKey("id", id, "contacts").then(contact => {
+            currentContactEmail = contact.email;
             document.getElementById('contact-name').value = `${contact.firstname} ${contact.lastname}`;
             document.getElementById('contact-email').value = contact.email;
             document.getElementById('contact-phone').value = contact.phone;
             document.getElementById('initial-avatar').classList.add(contact.initialColor);
             document.querySelector('#initial-avatar .detail-view-initials').innerText = contact.initial;
-            document.querySelector('.btn-create').id = contact.id;
-            document.querySelector('.btn-clear-cancel-mobile').id = contact.id;
+            document.querySelector('.btn-create').setAttribute('data-id', contact.id);
+            document.querySelector('.btn-clear-cancel-mobile').setAttribute('data-id', contact.id);
         });
     });
 }
