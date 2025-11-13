@@ -185,10 +185,10 @@ async function editContact(event) {
  */
 async function contactSaveMouseUp(event) {
     const desktopBtn = document.getElementById('btn-create-contact');
-    const mobileBtn = document.querySelector('.btn-create.btn-fill.btn-md.btn-md-auto-height'); 
+    const mobileBtn = document.querySelector('.btn-create.btn-fill.btn-md.btn-md-auto-height');
     if (event.target === desktopBtn || event.target === mobileBtn) {
         leaveFocusOffAllFields();
-        const isValid = await checkValidation();
+        let isValid = await checkValidation();
         if (desktopBtn) desktopBtn.disabled = !isValid;
         if (mobileBtn) mobileBtn.disabled = !isValid;
         //resetAllVariables();
@@ -395,12 +395,21 @@ function contactNameValidation() {
 async function contactEmailValidation() {
     let emailValue = document.getElementById('contact-email').value;
     const cleanEmailValue = (emailValue ?? "").trim();
-    if (cleanEmailValue === currentContactEmail) {
-        setConatctEmailIsOk();
-    } else if (cleanEmailValue.length >= 3 && emailValidator(cleanEmailValue) && !await checkEmailInDatabase(cleanEmailValue)) {
-        setConatctEmailIsOk();
+
+    // Prüfen, ob currentContactEmail leer ist oder sich von der Eingabe unterscheidet
+    if (!currentContactEmail || cleanEmailValue !== currentContactEmail) {
+        if (
+            cleanEmailValue.length >= 3 &&
+            emailValidator(cleanEmailValue) &&
+            !await checkEmailInDatabase(cleanEmailValue)
+        ) {
+            setConatctEmailIsOk();
+        } else {
+            setConatctEmailIsInvalid();
+        }
     } else {
-        setConatctEmailIsInvalid();
+        // Wenn currentContactEmail gesetzt ist und gleich der Eingabe, ist alles ok
+        setConatctEmailIsOk();
     }
 }
 
@@ -416,7 +425,7 @@ function setConatctEmailIsInvalid() {
     validateEmail = false;
 }
 
-function resetAllVariables(){
+function resetAllVariables() {
     validateName = false;
     validateEmail = false;
     validatePhone = false;
@@ -449,28 +458,45 @@ function contactPhoneValidation() {
 /**
  * @function checkValidation
  * @memberof addEditContacts
- * @description - Check the validation status of the contact form fields. This function calls the individual validation functions for each field and returns true if all fields are valid; otherwise, it returns false.
+ * @description - Check the validation status of all contact form fields. This function validates each field based on whether it has been modified and returns the overall validation status.
  * @returns {boolean}
  */
 async function checkValidation() {
-    if(nameIsOnInput){
+    let { cVName, cVEmail, cVPhone } = getfieldCheckVariables();
+    if (nameIsOnInput) {
         contactNameValidation();
-        if(!validateName){return false;}
+        cVName = currentContactEmail === "" ? validateName : !!validateName;
     }
-    if(emailIsOnInput){
+    if (emailIsOnInput) {
         await contactEmailValidation();
-        if(!validateEmail){return false;}
+        cVEmail = currentContactEmail === "" ? validateEmail : !!validateEmail;
     }
-    if(phoneIsOnInput){
+    if (phoneIsOnInput) {
         contactPhoneValidation();
-        if(!validatePhone){return false;}
+        cVPhone = currentContactEmail === "" ? validatePhone : !!validatePhone;
     }
-
-    return currentContactEmail.length > 0;
+    return cVName && cVEmail && cVPhone && currentContactEmail !== "";
 }
 
-//[nameValid, mailValid, phoneValid]
+/**
+ * @function getfieldCheckVariables
+ * @memberof addEditContacts
+ * @description - Get the field check variables for validation. This function determines whether each field should be validated based on the current contact email state.
+ * @returns
+ */
+function getfieldCheckVariables() {
+    let cVName = currentContactEmail === "" ? false : true;
+    let cVEmail = currentContactEmail === "" ? false : true;
+    let cVPhone = currentContactEmail === "" ? false : true;
+    return { cVName, cVEmail, cVPhone };
+}
 
+/**
+ * @function validateAllFields
+ * @memberof addEditContacts
+ * @description - Validate all contact form fields. This function checks the validation status of each field and returns true if all fields are valid.
+ * @returns
+ */
 async function validateAllFields() {
     return validateName && validateEmail && validatePhone;
 }
