@@ -95,10 +95,7 @@ async function loadHtmlComponentsForDesktop() {
     ]);
 
     setNavigationButtonActive('contact', "desktop");
-    showLoadingAnimation();
-    await renderContacts();
-    renderUserInitial();
-    hideLoadingAnimation();
+    await startRenderingWithLoadingAnimation();
 }
 
 /**
@@ -118,6 +115,16 @@ async function loadHtmlComponentsForMobile() {
         includeHtml("navbar", "navbarMobile.html"),
     ]);
     setNavigationButtonActive('contact', "mobile");
+    await startRenderingWithLoadingAnimation();
+}
+
+/**
+ * @function startRenderingWithLoadingAnimation
+ * @memberof contacts
+ * @description Starts rendering the contact list with a loading animation.
+ * @returns {Promise<void>}
+ */
+async function startRenderingWithLoadingAnimation() {
     showLoadingAnimation();
     await renderContacts();
     renderUserInitial();
@@ -133,8 +140,6 @@ async function loadHtmlComponentsForMobile() {
 function clearContactsHtmlBody() {
     document.querySelector('body').innerHTML = "";
 }
-
-
 
 /**
  * @function addContactsPageResize

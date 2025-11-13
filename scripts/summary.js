@@ -57,7 +57,6 @@ async function onSummaryPageResize() {
         setNavigationButtonActive('summary', "desktop");
     }
     if (currentView === "mobile") {
-        setHeightInMobileMode();
         removeMobileGreetingAnimation();
     }
 }
@@ -121,7 +120,6 @@ async function loadHtmlComponentsForMobile() {
         includeHtml("header", "headerMobile.html"),
         includeHtml("navbar", "navbarMobile.html"),
     ]);
-    setHeightInMobileMode();
     await loadingSummaryMobileData();
 }
 
@@ -196,7 +194,7 @@ function setMobileGreetingAnimation() {
 /**
  * @function removeMobileGreetingAnimation
  * @memberof summary
- * Removes the mobile greeting animation.
+ * @description Removes the mobile greeting animation.
  * @returns {void}
  */
 function removeMobileGreetingAnimation() {
@@ -207,36 +205,13 @@ function removeMobileGreetingAnimation() {
 }
 
 /**
- * @function setHeightInMobileMode
- * @memberof summary
- * Sets the height for the mobile view.
- * @returns {void}
- */
-function setHeightInMobileMode() {
-    const [height, width] = getCurrentWindowSize();
-    const header = document.getElementById('header');
-    const navbar = document.getElementById('navbar');
-    const summaryContent = document.getElementById('summary');
-
-    if(!header || !navbar || !summaryContent){return;}
-
-    /* height <= 845 ? summaryContent.classList.add('summary-section-mobile-scrollable') : summaryContent.classList.remove('summary-section-mobile-scrollable');
-    
-    const headerHeight = header.offsetHeight;
-    const navbarHeight = navbar.offsetHeight;
-    const availableHeight = height - (headerHeight + navbarHeight + 20);
-    summaryContent.style.height = `${availableHeight}px`; */
-}
-
-
-/**
  * @function loadTasksforSummary
  * @memberof summary
- * Loads tasks from Firebase, calculates summary statistics, and updates the UI.
  * @async
  * @function loadTasksforSummary
  * @returns {Promise<void>}
- * @description This function fetches all tasks from the Firebase database, computes various summary statistics such as the number of tasks in different states and the next due date, and then updates the HTML elements to display this information.
+ * @description This function fetches all tasks from the Firebase database, computes various summary statistics such as the number of tasks in different states and the next due date, 
+ * and then updates the HTML elements to display this information.
  */
 async function loadTasksforSummary() {
     checkUserOrGuestIsloggedIn();
@@ -252,7 +227,6 @@ async function loadTasksforSummary() {
 /**
  * @function getSummaryCounts
  * @memberof summary
- * Updates the summaryVariables object based on the current tasks.
  * @param {Array} tasks
  * @param {Object} summaryVariables
  * @returns {Object} summaryVariables
@@ -272,7 +246,6 @@ function getSummaryCounts(tasks, summaryVariables) {
 /**
  * @function getVariablesForSummary
  * @memberof summary
- * This function initializes and returns an object to hold summary statistics.
  * @returns {Object} summaryVariables
  * @description The returned object contains properties for counting tasks in various states and priorities, all initialized to zero.
  */
@@ -286,10 +259,10 @@ function getVariablesForSummary() {
     };
     return summaryVariables;
 }
+
 /**
  * @function renderNewSummary
  * @memberof summary
- * Renders the summary information on the UI.
  * @param {Array} tasks
  * @param {Object} summaryVariables
  * @param {Date} nextDueDate
@@ -309,7 +282,6 @@ function renderNewSummary(tasks, summaryVariables, nextDueDate) {
 /**
  * @function parseDueDate
  * @memberof summary
- * Parses a due date string in the format "DD/MM/YYYY" and returns a Date object.
  * @param {string} dueDateStr
  * @returns {Date}  A Date object representing the parsed due date.
  * @description This function splits the input string by '/' to extract the day, month, and year, then constructs a Date object in the format "YYYY-MM-DD".
@@ -322,7 +294,6 @@ function parseDueDate(dueDateStr) {
 /**
  * @function getFutureDueDates
  * @memberof summary
- * Gets the future due dates from the list of tasks.
  * @param {Array} tasks
  * @returns {Array<Date>} An array of Date objects representing the future due dates.
  * @description This function maps over the tasks to parse their due dates, then filters out any dates that are in the past or invalid.
@@ -337,7 +308,6 @@ function getFutureDueDates(tasks) {
 /**
  * @function getNextDueDate
  * @memberof summary
- * Gets the next due date from the list of future due dates.
  * @param {Array<Date>} futureDates
  * @returns {Date|null} The next due date or null if there are no future dates.
  * @description This function finds the earliest date in the array of future dates using Math.min and returns it as a Date object. If there are no future dates, it returns null.
@@ -349,7 +319,6 @@ function getNextDueDate(futureDates) {
 /**
  * @function formatDate
  * @memberof summary
- * Formats a date object into a human-readable string.
  * @param {Date} date
  * @returns {string} A formatted date string.
  * @description This function extracts the day, month, and year from the Date object and returns a string in the format "Month Day, Year". If the date is null or undefined, it returns an empty string.
@@ -365,7 +334,6 @@ function formatDate(date) {
 /**
  * @function checkDate
  * @memberof summary
- * Checks and returns the next due date in a formatted string.
  * @param {Array} tasks
  * @returns {string} A formatted date string representing the next due date.
  * @description This function retrieves future due dates from the tasks, determines the next due date, formats it, and returns the formatted string.

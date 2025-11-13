@@ -143,30 +143,6 @@ async function renderDetailViewTemplate(taskId) {
 }
 
 
-
-/**
- * @function renderEditContactIntoDialog
- * @memberof openCloseDialog
- * @description Renders the edit contact form into the dialog
- * @param {string} contactId - The ID of the contact to edit
- * @return {void}
- */
-// function renderEditContactIntoDialog(contactId) {
-//     includeHtml("add-contact-dialog", "editContact.html")
-//     getContactData(contactId);
-// }
-
-/**
- * @function renderEditContactIntoDialogMobile
- * @memberof openCloseDialog
- * @description Renders the edit contact form into the dialog for mobile devices
- * @param {string} contactId - The ID of the contact to edit
- */
-// function renderEditContactIntoDialogMobile(contactId) {
-//     includeHtml("add-contact-dialog-mobile", "editContactMobile.html");
-//     getContactData(contactId);
-// }
-
 /**
  * @function openSwapMobileMenu
  * @memberof openCloseDialog
@@ -178,9 +154,7 @@ function openSwapMobileMenu(event, id) {
     event.stopPropagation();
     const overlay = document.getElementById(`swap-overlay-${id}`);
     overlay.style.display = 'block';
-    const btn = document.getElementById(`swap-mobile-btn-${id}`);
     const dialog = document.getElementById(`swap-mobile-menu-${id}`);
-    const parent = btn.closest('.kanban-task');
     dialog.style.display = 'block';
 }
 

@@ -12,7 +12,7 @@ const emailPattern = /^(?!.*\.\.)(?!\.)(?!.*\.$)[A-Za-z0-9!#$%&'*+/=?^_`{|}~.-]+
 setOnClickEventToDocument();
 
 /**
- * Initialize the webpage by including HTML components and rendering user initials.
+ * @description Initialize the webpage by including HTML components and rendering user initials.
  * @function init
  * @memberof script
  * @returns {Promise<void>}
@@ -28,11 +28,10 @@ async function init() {
 }
 
 /**
- * Render the user's initial in the UI.
+ * @description Render the user's initial in the UI.
  * @function renderUserInitial
  * @memberof script
  * @returns {Promise<void>}
-
  */
 async function renderUserInitial() {
     let logInStatus = getLogStatus();
@@ -47,11 +46,10 @@ async function renderUserInitial() {
 }
 
 /**
- * Set onclick event to document body to close submenu when clicking outside
+ * @description Set onclick event to document body to close submenu when clicking outside
  * @function setOnClickEventToDocument
  * @memberof script
  * @return {void}
-
  */
 function setOnClickEventToDocument() {
     const body = document.querySelector('body');
@@ -61,14 +59,13 @@ function setOnClickEventToDocument() {
 
 
 /**
- * Show submenu in desktop or mobile mode
+ * @description Show submenu in desktop or mobile mode
  * @function showSubmenu
  * @memberof script
  * @param {string} id
  * @param {Event} event
  * @param {string} desktopOrMobile
  * @returns {void}
- * 
  */
 function showSubmenu(id, event, desktopOrMobile) {
     if (event) event.stopPropagation();
@@ -81,28 +78,25 @@ function showSubmenu(id, event, desktopOrMobile) {
     if (desktopOrMobile == "mobile") {
         subMenu.classList.toggle('is-submenu-mobile-open');
     }
-
 };
 
 /**
- * Prevent event bubbling.
+ * @description Prevent event bubbling.
  * @function noBubbling
  * @memberof script
  * @param {Event} event
  * @returns {void}
- * 
  */
 function noBubbling(event) {
     event.stopPropagation()
 };
 
 /**
- * Close the submenu when clicking outside of it
+ * @description Close the submenu when clicking outside of it
  * @function subMenuClose
  * @memberof script
  * @param {Event} event
  * @returns {void}
- * 
  */
 function subMenuClose(event) {
 
@@ -118,13 +112,12 @@ function subMenuClose(event) {
 }
 
 /**
- * Show an error message for a specific element.
+ * @description Show an error message for a specific element.
  * @function showErrorMessage
  * @memberof script
  * @param {String} elementId
  * @param {String} errorMessage
  * @return {void}
- * 
  */
 function showErrorMessage(elementId, errorMessage = "") {
     let errorText = document.getElementById(elementId);
@@ -137,12 +130,11 @@ function showErrorMessage(elementId, errorMessage = "") {
 }
 
 /**
- * Remove the error message for a specific element.
+ * @description Remove the error message for a specific element.
  * @function removeErrorMessage
  * @memberof script
  * @param {String} elementId
  * @return {void}
- * 
  */
 function removeErrorMessage(elementId) {
     let errorText = document.getElementById(elementId);
@@ -152,11 +144,10 @@ function removeErrorMessage(elementId) {
 }
 
 /**
- * Get a random color class from the predefined list.
+ * @description Get a random color class from the predefined list.
  * @function getRandomColor
  * @memberof script
  * @returns {String} A random color class.
- * 
  */
 function getRandomColor() {
     const colorClasses = [
@@ -168,25 +159,23 @@ function getRandomColor() {
 }
 
 /**
- * Generates a new unique identifier (UUID).
+ * @description Generates a new unique identifier (UUID).
  * @function getNewUid
  * @memberof script
  * @returns {string} A new UUID.
- * 
  */
 function getNewUid() {
     return crypto.randomUUID();
 }
 
 /**
- * Toggles the visibility of the password input field.
+ * @description Toggles the visibility of the password input field.
  * @function togglePasswordVisibility
  * @memberof script
  * @param {Number} toggleCounter 
  * @param {String} passwortInputID 
  * @param {String} toggleIconID 
  * @return {void}
- * 
  */
 function togglePasswordVisibility(toggleCounter, passwortInputID, toggleIconID) {
     let passwordInput = document.getElementById(passwortInputID);
@@ -205,13 +194,12 @@ function togglePasswordVisibility(toggleCounter, passwortInputID, toggleIconID) 
 }
 
 /**
- * Toggles the border color of an element based on field has validation error.
+ * @description Toggles the border color of an element based on field has validation error.
  * @function toggleBorderColorByError
  * @memberof script
  * @param {String} elementId 
  * @param {Boolean} loginErrorBorder 
  * @return {void}
- * 
  */
 function toggleBorderColorByError(elementId = null, loginErrorBorder = false) {
     const elements = elementId
@@ -225,22 +213,21 @@ function toggleBorderColorByError(elementId = null, loginErrorBorder = false) {
     });
 }
 
-/** Get the current window size.
+/** 
+ * @description Get the current window size.
  * @function getCurrentWindowSize
  * @memberof script
  * @returns {number[]} An array containing the height and width of the window.
- * 
  */
 function getCurrentWindowSize() {
     return [window.innerHeight, window.innerWidth];
 }
 
 /**
- * Check if user or guest is logged in, if not navigate to login page.
+ * @description Check if user or guest is logged in, if not navigate to login page.
  * @function checkUserOrGuestIsloggedIn
  * @memberof script
  * @return {void}
- * 
  */
 function checkUserOrGuestIsloggedIn() {
     let logInStatus = getLogStatus();
@@ -250,11 +237,10 @@ function checkUserOrGuestIsloggedIn() {
 }
 
 /**
- * Shows a loading overlay.
+ * @description Shows a loading overlay.
  * @function showOverlay
  * @memberof script
  * @returns {void}
- * 
  */
 function showOverlay(){
     const overlay = document.getElementById('loadingOverlay');
@@ -263,11 +249,10 @@ function showOverlay(){
 }
 
 /**
- * Hides the loading overlay.
+ * @description Hides the loading overlay.
  * @function hideOverlay
  * @memberof script
  * @returns {void}
- * 
  */
 function hideOverlay() {
     const overlay = document.getElementById('loadingOverlay');
@@ -276,11 +261,10 @@ function hideOverlay() {
 }
 
 /**
- * Shows a loading animation.
+ * @description Shows a loading animation.
  * @function showLoadingAnimation
  * @memberof script
  * @returns {void}
- * 
  */
 function showLoadingAnimation() {
     const overlay = document.getElementById('loadingOverlay');
@@ -292,11 +276,10 @@ function showLoadingAnimation() {
 }
 
 /**
- * Hides the loading animation after a short delay.
+ * @description Hides the loading animation after a short delay.
  * @function hideLoadingAnimation
  * @memberof script
  * @returns {void}
- * 
  */
 function hideLoadingAnimation() {
     setTimeout(() => {
@@ -309,7 +292,7 @@ function hideLoadingAnimation() {
 }
 
 /**
- * Checks if the provided email is valid according to RFC standards.
+ * @description Checks if the provided email is valid according to RFC standards.
  * Validates length, format, and domain rules.
  * @function emailValidator
  * @memberof signup

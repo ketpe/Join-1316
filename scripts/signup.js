@@ -125,26 +125,58 @@ async function validateemail() {
  * @returns {Boolean}
  */
 function validatepasswordConfirm() {
-    if (!passwordIsOnInput || !passwordConfirmIsOnInput) { return false; }
-    const passwordElement = document.getElementById('password');
-    const passwordConfirmElement = document.getElementById('passwordConfirm');
-    if (!passwordElement || !passwordConfirmElement) { return false; }
-    if (passwordConfirmElement.value.length <= 3) {
-        setInputFieldHasError(passwordConfirmElement.id, "login-confirm-error-text", "The password is too short.");
+    if (!shouldValidatePassword()) { return false; }
+    const { passwordElement, confirmElement } = getPasswordElements();
+    if (!passwordElement || !confirmElement) { return false; }
+
+    const errorElementId = "login-confirm-error-text";
+    const errorMessage = getPasswordConfirmError(passwordElement.value, confirmElement.value);
+
+    if (errorMessage) {
+        setInputFieldHasError(confirmElement.id, errorElementId, errorMessage);
         return false;
     }
-    else if (passwordElement.value === passwordConfirmElement.value) {
-        setInputFieldHasNoError(passwordConfirmElement.id, "login-confirm-error-text");
-        return true;
-    }
-    else if (!checkInputHasWhiteSpace(passwordConfirmElement.value)) {
-        setInputFieldHasError(passwordConfirmElement.id, "login-confirm-error-text", "White spaces are not allowed.");
-        return false;
-    }
-    else {
-        setInputFieldHasError(passwordConfirmElement.id, "login-confirm-error-text", "Your passwords don't match. Please try again.");
-        return false;
-    }
+
+    setInputFieldHasNoError(confirmElement.id, errorElementId);
+    return true;
+}
+
+/**
+ * @function shouldValidatePassword
+ * @memberof signup
+ * @description Determine if password confirmation should be validated.
+ * @returns {boolean}
+ */
+function shouldValidatePassword() {
+    return passwordIsOnInput && passwordConfirmIsOnInput;
+}
+
+/**
+ * @description Get the password and confirmation input elements.
+ * @function getPasswordElements
+ * @memberof signup
+ * @returns {Object} - An object containing the password and confirmation input elements.
+ */
+function getPasswordElements() {
+    return {
+        passwordElement: document.getElementById('password'),
+        confirmElement: document.getElementById('passwordConfirm')
+    };
+}
+
+/**
+ * @function getPasswordConfirmError
+ * @memberof signup
+ * @description Get the error message for password confirmation validation.
+ * @param {string} passwordValue 
+ * @param {string} confirmValue 
+ * @returns {string} - The error message, or an empty string if no error.  
+ */
+function getPasswordConfirmError(passwordValue, confirmValue) {
+    if (confirmValue.length <= 3) {return "The password is too short."; }
+    if (!checkInputHasWhiteSpace(confirmValue)) { return "White spaces are not allowed.";}
+    if (passwordValue !== confirmValue) { return "Your passwords don't match. Please try again.";}
+    return "";
 }
 
 /**

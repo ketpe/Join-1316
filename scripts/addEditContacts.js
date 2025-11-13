@@ -397,7 +397,7 @@ function contactNameValidation() {
     if (!nameIsOnInput) { return; }
     let nameValue = document.getElementById('contact-name').value;
     const cleanNameValue = (nameValue ?? "").trim();
-    if (cleanNameValue.length > 0 && namePattern.test(cleanNameValue)) {
+    if (cleanNameValue.length >= 3 && namePattern.test(cleanNameValue) && cleanNameValue.length <= 55) {
         showAndLeaveErrorMessage("contact-name-required", false);
         showAndLeaveErrorBorder("contact-name", false);
         validateName = true;
