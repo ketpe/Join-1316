@@ -174,6 +174,9 @@ function getInitials(firstname, lastname) {
     return (firstChar + lastChar) || (f.charAt(0) || '').toUpperCase();
 }
 
+
+/**REVIEW - Zeile 193 hat gelegentlisch Konsolenfehler gemacht -> Vorschlag ID über den Query Selector aus Zeile 191 lesen */
+
 /**
  * @function editContact
  * @memberof addEditContacts
@@ -184,10 +187,13 @@ function getInitials(firstname, lastname) {
 async function editContact(event) {
     if (event) event.preventDefault();
     if (!validateAllFields()) return;
-    const buttonID = event.target.childNodes[0].ownerDocument.activeElement.id;
+
+    const btn = document.querySelector('.login-form-buttons button');
+
+    //const buttonID = event.target.childNodes[0].ownerDocument.activeElement.id;
     const contact = createUpdateContactObject();
     const fb = new FirebaseDatabase();
-    const data = await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${buttonID}`, contact));
+    const data = await fb.getFirebaseLogin(() => fb.updateData(`/contacts/${btn.id}`, contact));
     closeDialogByEvent(event, 'add-contact-dialog');
     clearActiveContactClass();
     renderContacts();

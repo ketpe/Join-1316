@@ -9,7 +9,7 @@
  */
 
 
-const namePattern = /\w{3,10}\s\w{3,10}/;
+const namePattern = /^[A-Za-zÄÖÜäöüß]{2,}(?:\s[A-Za-zÄÖÜäöüß]{2,})+$/;
 let nameIsOnInput = false;
 let emailIsOnInput = false;
 let passwordIsOnInput = false;
@@ -170,6 +170,13 @@ function validatepassword() {
     }
 }
 
+/**
+ * @function checkInputHasWhiteSpace
+ * @memberof signup
+ * @description Check if the input value contains any white space characters.
+ * @param {string} inputValue 
+ * @returns {boolean} 
+ */
 function checkInputHasWhiteSpace(inputValue) {
     return inputValue.length == inputValue.replace(/\s+/g, "").length;
 }
@@ -270,21 +277,7 @@ async function signupMouseUp(event) {
     if (event.target == button) {
         leaveFocusOffAllFields();
         button.disabled = !(await checkAllRequiredField());
-        // resetAllInputs();
     }
-}
-
-/**
- * @function resetAllInputs
- * @memberof signup
- * @description Reset all input field flags.
- * @return {void}
- */
-function resetAllInputs() {
-    nameIsOnInput = false;
-    emailIsOnInput = false;
-    passwordIsOnInput = false;
-    passwordConfirmIsOnInput = false;
 }
 
 /**
