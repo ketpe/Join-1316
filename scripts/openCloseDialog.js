@@ -4,8 +4,6 @@
  * @description Opens and closes dialogs with specific content rendering functions.
  */
 
-
-
 /**
  * @function openDialog
  * @memberof openCloseDialog
@@ -141,31 +139,6 @@ async function renderDetailViewTemplate(taskId) {
     await includeHtml("dialog-content-detail-view-task", "taskTemplate.html");
     getDetailViewTask(taskId);
 }
-
-
-
-/**
- * @function renderEditContactIntoDialog
- * @memberof openCloseDialog
- * @description Renders the edit contact form into the dialog
- * @param {string} contactId - The ID of the contact to edit
- * @return {void}
- */
-// function renderEditContactIntoDialog(contactId) {
-//     includeHtml("add-contact-dialog", "editContact.html")
-//     getContactData(contactId);
-// }
-
-/**
- * @function renderEditContactIntoDialogMobile
- * @memberof openCloseDialog
- * @description Renders the edit contact form into the dialog for mobile devices
- * @param {string} contactId - The ID of the contact to edit
- */
-// function renderEditContactIntoDialogMobile(contactId) {
-//     includeHtml("add-contact-dialog-mobile", "editContactMobile.html");
-//     getContactData(contactId);
-// }
 
 /**
  * @function openSwapMobileMenu
