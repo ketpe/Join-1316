@@ -397,7 +397,7 @@ function contactNameValidation() {
     if (!nameIsOnInput) { return; }
     let nameValue = document.getElementById('contact-name').value;
     const cleanNameValue = (nameValue ?? "").trim();
-    if (cleanNameValue.length > 0 && namePattern.test(cleanNameValue)) {
+    if (cleanNameValue.length >= 3 && namePattern.test(cleanNameValue) && cleanNameValue.length <= 55) {
         showAndLeaveErrorMessage("contact-name-required", false);
         showAndLeaveErrorBorder("contact-name", false);
         validateName = true;
@@ -516,7 +516,7 @@ async function checkValidation() {
  * @function getfieldCheckVariables
  * @memberof addEditContacts
  * @description - Get the field check variables for validation. This function determines whether each field should be validated based on the current contact email state.
- * @returns
+ * @returns {Object} - An object containing the validation status for name, email, and phone fields.
  */
 function getfieldCheckVariables() {
     let cVName = currentContactEmail === "" ? false : true;
@@ -529,7 +529,7 @@ function getfieldCheckVariables() {
  * @function validateAllFields
  * @memberof addEditContacts
  * @description - Validate all contact form fields. This function checks the validation status of each field and returns true if all fields are valid.
- * @returns
+ * @returns {boolean} - True if all fields are valid, false otherwise.
  */
 async function validateAllFields() {
     return validateName && validateEmail && validatePhone;
@@ -540,6 +540,7 @@ async function validateAllFields() {
  * @memberof addEditContacts
  * @description - Clear error messages for the specified input field. This function is called on input events to remove error messages and styles when the user starts typing.
  * @param {*} inputId - The ID of the input field to clear error messages for.
+ * @return {void}
  */
 function clearErrorMessagesOnInput(inputId) {
     if (inputId === 'contact-name') {

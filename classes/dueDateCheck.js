@@ -66,7 +66,6 @@ class DueDateCheck {
      */
     checkTheDateAfterInput(){
         const isDateOk = this.checkTheDateValue();
-        //isDateOk ? this.dueDateSetOk() : this.dueDateSetError("Is not a valid date.");
         if(isDateOk){this.dueDateSetOk();}
         return isDateOk;
     }

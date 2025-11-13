@@ -140,6 +140,7 @@ async function renderDetailViewTemplate(taskId) {
     getDetailViewTask(taskId);
 }
 
+
 /**
  * @function openSwapMobileMenu
  * @memberof openCloseDialog
@@ -151,9 +152,7 @@ function openSwapMobileMenu(event, id) {
     event.stopPropagation();
     const overlay = document.getElementById(`swap-overlay-${id}`);
     overlay.style.display = 'block';
-    const btn = document.getElementById(`swap-mobile-btn-${id}`);
     const dialog = document.getElementById(`swap-mobile-menu-${id}`);
-    const parent = btn.closest('.kanban-task');
     dialog.style.display = 'block';
 }
 
